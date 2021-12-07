@@ -1,2 +1,2 @@
-# Got a Latte Do
-1st group project - "Got a Latte Do"
+# Gotta Latte Do
+1st group project - "Gotta Latte Do"
