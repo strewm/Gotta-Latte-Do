@@ -1,2 +1,2 @@
-# Remember the Bootbamp
+# Remember the Bootcamp
 1st group project - "Remember the Bootbamp"
