@@ -1,2 +1,2 @@
-# Remember the Bootcamp
-1st group project - "Remember the Bootcamp"
+# Got a Latte Do
+1st group project - "Got a Latte Do"
