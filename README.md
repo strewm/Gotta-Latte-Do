@@ -1,2 +1,2 @@
-# Week-12---Group-Project
+# Remember the Bootbamp
 1st group project - "Remember the Bootbamp"
