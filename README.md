@@ -1,2 +1,2 @@
-# Remember the Bootbamp
-1st group project - "Remember the Bootbamp"
+# Gotta Latte Do
+1st group project - "Gotta Latte Do"
