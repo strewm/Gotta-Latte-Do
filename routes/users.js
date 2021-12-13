@@ -55,6 +55,14 @@ const userValidators = [
 ];
 
 
+router.get("/signup", csrfProtection, asyncHandler(async (req, res) => {
+  const user = db.User.build();
+  res.render("user-signup", {
+    title: "Register",
+    user,
+    csrfToken: req.csrfToken(),
+  });
+}));
 
 
 
