@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     Task.belongsToMany(models.List, {foreignKey: 'taskId', through: "TaskList", otherKey: 'ListId'})
     Task.belongsTo(models.User, {foreignKey: 'userId'});
     Task.belongsTo(models.User, {foreignKey: 'givenTo'});
-    Task.hasMany(model.Comment, {foreignKey: 'taskId'});
+    Task.hasMany(models.Comment, {foreignKey: 'taskId'});
   };
   return Task;
 };
