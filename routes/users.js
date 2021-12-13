@@ -65,6 +65,85 @@ router.get("/signup", csrfProtection, asyncHandler(async (req, res) => {
 }));
 
 
+router.post(
+  "/signup",
+  csrfProtection,
+  userValidators,
+  handleValidationErrors,
+  asyncHandler(async (req, res) => {
+    const { username, email, password } = req.body;
+
+    const user = db.User.build({
+        username,
+        email
+    });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.hashedPassword = hashedPassword;
+
+    await user.save();
+
+    loginUser(req, res, user);
+
+    res.redirect("/");
+  })
+);
+
+
+router.get("/login", csrfProtection, (req, res) => {
+  res.render("user-login", {
+    title: "Login",
+    csrfToken: req.csrfToken(),
+  });
+});
+
+const loginValidators = [
+  check("email")
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a value for Email Address"),
+  check("password")
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a value for Password"),
+];
+
+router.post(
+  "/login",
+  csrfProtection,
+  loginValidators,
+  handleValidationErrors,
+  asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+    const user = await db.User.findOne({ where: { email } });
+
+      if (user !== null) {
+
+        const passwordMatch = await bcrypt.compare(
+          password,
+          user.hashedPassword.toString()
+        );
+
+        if (passwordMatch) {
+          loginUser(req, res, user);
+          return res.redirect("/");
+        }
+
+        errors.push("Login failed for the provided email address and password");
+        res.render("user-login", {
+          title: "Login",
+          email,
+          errors,
+          csrfToken: req.csrfToken(),
+        });
+      }
+  }));
+
+
+
+router.post("/logout", (req, res) => {
+  logoutUser(req, res);
+  res.redirect("/login");
+});
+
 
 
 
