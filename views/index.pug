@@ -7,5 +7,21 @@ append head
   script(src="/javascripts/index.js" type="module" defer)
 
 block content
-  h1= title
-  p Welcome to your Project Skeleton
+  nav.navbar
+    div.container
+      a.nav-logo
+      ul.navlist
+        li Tour
+        li What's New
+        li Upgrade
+        li Help
+        li Log in
+        li
+          a.btn(href='/signup') Sign up for free
+    main.main
+      header.main-header
+        .main-container
+          h1 The smart to-do app for busy people.
+          a.hero-btn Sign Up Free
+    section.main-content
+      article.main-article
