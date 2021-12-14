@@ -15,7 +15,7 @@ const fetchTasks = async () => {
     const tasksHtml = tasks.map(({ id, description }) => `
     <div class="task-info">
         <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-        <label for=${id} class="task-check-box">${description}</label>
+        <label for=${id} id=${id} class="task-check-box">${description}</label>
     </div>
     `)
 
@@ -29,21 +29,32 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error(e);
     }
 
-    const tasks = document.querySelectorAll('.task-info');
-    console.log(tasks);
+    // const tasks = document.querySelectorAll('.task-info');
+    // console.log(tasks);
 
-    tasks.forEach( (task) => {
-        document.addEventListener("click", async (e) => {
-            const target = e.target;
-            console.log("EVENT TARGET", target);
-            console.log("I'VE BEEN CLICKED");
-            console.log(task.childNodes[1].id);
-            try {
-                await fetchTask(task.childNodes[1].id);
-            } catch (e) {
-                console.error(e);
-            }
-        })
+    // tasks.forEach( (task) => {
+    //     document.addEventListener("click", async (e) => {
+    //         const target = e.target;
+    //         console.log("EVENT TARGET", target);
+    //         console.log("I'VE BEEN CLICKED");
+    //         console.log(task.childNodes[1].id);
+    //         try {
+    //             await fetchTask(task.childNodes[1].id);
+    //         } catch (e) {
+    //             console.error(e);
+    //         }
+    //     })
+    // })
+
+    const tasksListContainer = document.querySelector(".task-list");
+    tasksListContainer.addEventListener("click", async(e) => {
+      const taskId = e.target.id;
+      console.log(taskId)
+      try {
+        await fetchTask(taskId);
+      } catch (e) {
+        console.error(e);
+      }
     })
 
 

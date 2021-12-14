@@ -12,7 +12,7 @@ export const fetchTask = async (taskId) => {
     const taskInfo = document.querySelector('.fiona');
     console.log('TASK', task, task.description);
     const taskHtml = `
-        <div>
+        <div style="margin-left: 300px">
             <p>${task.description}</p>
             <p>${task.isCompleted}</p>
             <p>${task.dueDate}</p>
