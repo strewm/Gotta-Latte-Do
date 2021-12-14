@@ -14,16 +14,17 @@ const validateLists = [
 ]
 
 const listNotFoundError = (id) => {
-  const error = Error(`Task with id of ${id} could not be found`)
-  error.title = 'Task not found'
+  const error = Error(`List with id of ${id} could not be found`)
+  error.title = 'List not found'
   error.status = 404;
   return error;
 }
 
 router.get('/', asyncHandler(async (req, res) => {
   const userId = res.locals.userId
+  const listTasks = await Task.findAll({where: {userId}})
   const lists = await List.findAll({where: {userId}})
-  res.status(201).json({lists});
+  res.status(201).json({lists, listTasks});
 }))
 
 router.post('/', validateLists, handleValidationErrors, asyncHandler(async(req, res) => {
@@ -59,7 +60,7 @@ router.put('/:id(\\d+)', csrfProtection, validateLists, handleValidationErrors, 
   }
 }))
 
-router.delete('/lists/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
+router.delete('/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
   const list = await List.findByPk(req.params.id);
   if (list) {
     await list.destroy()
