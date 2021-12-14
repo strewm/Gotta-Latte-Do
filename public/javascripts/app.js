@@ -37,19 +37,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         await fetchTask(taskId);
 
         const createComment = document.querySelector('.create-comment');
-        console.log(createComment);
 
         createComment.addEventListener('submit', async (event) => {
           event.stopPropagation();
           event.preventDefault();
           const commentData = new FormData(createComment);
-          console.log(commentData);
           const message = commentData.get("message");
           const taskId = commentData.get("taskId");
 
           const body = { message };
 
           postComment(taskId, body);
+
         })
 
       } catch (e) {

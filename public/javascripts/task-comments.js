@@ -41,14 +41,17 @@ export const fetchComments = async (taskId) => {
     }
 
     const { comments } = await res.json();
-    console.log(comments);
 
     const commentsDiv = document.querySelector(`#comments-${taskId}`);
     const commentsHtml = comments.map(({ id, userId, message }) => `
-        <div class="comment-info">
+        <div class="comment-container-${id}">
             <p id='comment-${id}'>
                 ${userId}:
                 <span>${message}</span>
+            <span class='comment-buttons'>
+                <button class='edit-comment-butt' id='${id}'>Edit
+                <button class='delete-comment-butt' id='${id}'>Delete</button>
+            </span>
             </p>
         </div>
     `
@@ -56,11 +59,30 @@ export const fetchComments = async (taskId) => {
 
     commentsDiv.innerHTML = commentsHtml.join("");
 
+    const deleteComments = document.querySelectorAll('.delete-comment-butt');
+
+    for (let i = 0; i < deleteComments.length; i++) {
+        const deleteButton = deleteComments[i];
+        deleteButton.addEventListener('click', async(e) => {
+            e.preventDefault();
+            const commentId = e.target.id;
+            const res = await fetch(`/comments/${commentId}`, {
+                method: 'DELETE'
+            })
+
+            const comment = document.querySelector(`.comment-container-${commentId}`);
+            comment.remove();
+        })
+    }
+
 
 }
 
 
 export const postComment = async (taskId, body) => {
+
+    const createComment = document.querySelector('.create-comment');
+
     try {
         const res = await fetch(`/tasks/${taskId}/comments`, {
             method: "POST",
@@ -68,6 +90,27 @@ export const postComment = async (taskId, body) => {
             headers: {
                 "Content-Type": "application/json",
             }
+        })
+
+        if (res.status === 401) {
+            window.location.href = "/log-in";
+            return;
+          }
+        if (!res.ok) {
+            throw res;
+          }
+          createComment.reset();
+          await fetchComments(taskId);
+        } catch (err) {
+            handleErrors(err)
+        }
+}
+
+
+export const deleteComment = async (commentId) => {
+    try {
+        const res = await fetch(`/comments/${commentId}`, {
+            method: "DELETE",
         })
 
         if (res.status === 401) {
