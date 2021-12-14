@@ -59,7 +59,7 @@ form.addEventListener("submit", async (e) => {
 
 
 
-    const body = { description, dueDate, isCompleted, givenTo }
+    const body = { description, dueDate, isCompleted, givenTo, _csrf: csrf }
 
     try {
         const res = await fetch("http://localhost:8080/tasks", {
