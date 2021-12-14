@@ -1,7 +1,7 @@
-var express = require('express');
+const express = require('express');
 const { csrfProtection, asyncHandler, handleValidationErrors } = require("../utils");
 const db = require('../db/models');
-const { Contacts } = db;
+const { Contact } = db;
 
 var router = express.Router();
 
@@ -14,12 +14,20 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
-  const contacts = await Contacts.findAll({
+  console.log(res.locals.userId)
+  const contacts = await Contact.findAll({
     where: {
       userId: res.locals.userId
     }
   })
-  res.render('app', { csrfToken: req.csrfToken(), contacts })
+
+  if (!contacts.length) {
+    res.render('/', { csrfToken: req.csrfToken()})
+  } else {
+    console.log(contacts)
+    res.render('index', { csrfToken: req.csrfToken(), contacts })
+  }
+
 }))
 
 module.exports = router;
