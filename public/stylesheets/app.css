@@ -30,7 +30,9 @@
     padding-bottom: 3px;
     padding-left: 15px;
     padding-right: 15px;
+    margin-left: 5px;
     border-radius: 10px;
+    border: none;
     align-items: center;
 }
 
