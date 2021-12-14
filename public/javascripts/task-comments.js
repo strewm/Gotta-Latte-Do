@@ -15,8 +15,7 @@ export const fetchTask = async (taskId) => {
     let month = tomorrow[tomorrow.length - 2]
     let day = tomorrow[tomorrow.length - 1]
 
-    console.log(Number('01') + 1)
-
+    // TODO - make sure new month and new day are in the correct format
 
     if (day === '31' &&
         (month === '01' ||
