@@ -34,6 +34,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     tasks.forEach( (task) => {
         document.addEventListener("click", async (e) => {
+            const target = e.target;
+            console.log("EVENT TARGET", target);
             console.log("I'VE BEEN CLICKED");
             console.log(task.childNodes[1].id);
             try {
