@@ -2,16 +2,22 @@ extends layout
 
 append head
     link(rel="stylesheet" href="/stylesheets/app.css")
-    //- script(src="/javascripts/index.js" type="module" defer)
+    script(src="../javascripts/app.js" type="module" defer)
+
+    //- img.navbar#settingsGear(src="../images/gear.png")
+
 
 block content
     .page
         nav.navbar
-            input.navbar#searchBar(type="text", placeholder="Search here")
+            input.navbar#searchBar(type="text", placeholder="Search here...")
             div.navbar#notifications Notifications
             div.navbar#settings Settings
                 div.settingGroup.settingHide
-                    div.settingHeader User
+                    div.settingHeaderGroup
+                        img.settingHeader#userProfile(src="../images/favicon.png")
+                        div.settingHeader#userName= locals.currUser.username
+                        //- div.settingHead#userEmail= locals.currUser.email
                     ul.settingListGroup
                         li.settingList: a(href='/#') Help
                         li.settingList: a(href='/#') Keyboard shortcuts

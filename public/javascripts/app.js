@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (e) {
       console.error(e);
     }
-  });
+});
 
 const form = document.querySelector(".create-task");
 
@@ -52,7 +52,7 @@ form.addEventListener("submit", async (e) => {
 
     //convert checkbox to boolean value
     if (checkStatus === 'on') {
-       isCompleted = true;
+        isCompleted = true;
     } else {
         isCompleted = false;
     }
@@ -85,6 +85,23 @@ form.addEventListener("submit", async (e) => {
         handleErrors(err)
     }
 })
+
+
+window.addEventListener('DOMContentLoaded', async () => {
+  const settings = document.querySelector('#settings');
+
+  settings.addEventListener('click', event => {
+    event.stopPropagation();
+    document.querySelector('.settingGroup').classList.remove('.settingHide');
+  });
+
+  window.addEventListener('click', () => {
+    document.querySelector('.settingGroup').classList.add('.settingHide');
+  });
+
+})
+
+
 
 const signOutButton = document.querySelector("#signOut");
 

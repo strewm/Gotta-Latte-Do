@@ -37,15 +37,13 @@ router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
     }
   })
 
-    res.render('app', { csrfToken: req.csrfToken(), contactsAll, tasks })
+  const currUser = await User.findByPk(res.locals.userId)
+
+  res.render('app', { csrfToken: req.csrfToken(), contactsAll, tasks, currUser })
 
 
 }))
 
-// // Get method that allows Sav to see /app
-// router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
-//   res.render('app', { csrfToken: req.csrfToken() })
-// }))
 
 
 module.exports = router;
