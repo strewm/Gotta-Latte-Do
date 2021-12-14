@@ -10,6 +10,7 @@ block content
             input.navbar#searchBar(type="text", placeholder="Search here")
             div.navbar#notifications Notifications
             div.navbar#settings Settings
+            button.navbar#logout(type='submit') Logout
         div.sidebar
             ul Inbox
                 //- li All Tasks
@@ -23,17 +24,7 @@ block content
             div.tabbedGroup
                 a.tabbedLink#incomplete Incomplete
                 a.tabbedLink#complete Complete
-        form(action="/new-task", method="post")
-            div.taskContainer
-                label.descripLabel(for="description")
-                input.descrip(type="text", placeholder="Add a task...", id="description", name="description" required=true)
-                //- textarea(name="description", cols="30", rows="10")
-                label.dueDateLabel(for="dueDate") Due Date
-                input.dueDate(type="date", id="dueDate", name="dueDate" required=true)
-                label.isCompletedLabel(for="isCompleted") Completed?
-                input.isCompleted(type="checkbox", id="checkbox", name="isCompleted")
-                //- label.contactsLabel(for="givenTo") Contacts
-                //- select(id="givenTo", name="givenTo")
-                //-     each contact in contacts
-                //-         option(value=contact.id)= contact.contact
-                button.createTaskButton Create Task
+        include includes/add-task
+        .task-list
+
+    script(type="module" src="javascripts/app.js")

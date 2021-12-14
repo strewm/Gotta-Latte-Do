@@ -24,13 +24,15 @@
     justify-content: flex-end;
 }
 
-#searchBar, #notifications, #settings {
+#searchBar, #notifications, #settings, #logout {
     background-color: #C7A383;
     padding-top: 3px;
     padding-bottom: 3px;
     padding-left: 15px;
     padding-right: 15px;
+    margin-left: 5px;
     border-radius: 10px;
+    border: none;
     align-items: center;
 }
 
@@ -121,4 +123,18 @@
 
 .sidebar ul:hover {
     color: #E0A979;
+}
+
+/* %%%%%%%%%%%%%%%%%%%%% Tasks Section %%%%%%%%%%%%%%%%%%%%% */
+.task-list {
+    margin-left: 200px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.task-check-box {
+    background-color: #fff;
 }

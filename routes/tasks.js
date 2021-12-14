@@ -30,13 +30,38 @@ router.get('/users/:id(\\d+)/tasks', csrfProtection, asyncHandler(async(req, res
 }))
 
 
-router.post('/users/:id(\\d+)/tasks', validateTask, handleValidationErrors, csrfProtection, asyncHandler(async(req, res) => {
-  const { description, dueDate, givenTo } = req.body;
+// router.post('/users/:id(\\d+)/tasks', validateTask, handleValidationErrors, csrfProtection, asyncHandler(async(req, res) => {
+//   const { description, dueDate, givenTo } = req.body;
+//   const userId = res.locals.userId
+//   const task = await Task.create({
+//     userId,
+//     description,
+//     dueDate,
+//     givenTo
+//   })
+//   res.status(201).json({task});
+// }));
+
+router.get('/', asyncHandler(async(req, res) => {
+  const userId = res.locals.userId
+  console.log(userId)
+  const tasks = await Task.findAll({
+    where: {
+      userId
+    }
+  })
+  res.status(201).json({tasks});
+
+}));
+
+router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, res) => {
+  const { description, dueDate, isCompleted, givenTo } = req.body;
   const userId = res.locals.userId
   const task = await Task.create({
     userId,
     description,
     dueDate,
+    isCompleted,
     givenTo
   })
   res.status(201).json({task});

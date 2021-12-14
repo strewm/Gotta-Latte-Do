@@ -114,7 +114,7 @@ router.post(
   asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     const user = await db.User.findOne({ where: { email } });
-
+    let errors = [];
       if (user !== null) {
 
         const passwordMatch = await bcrypt.compare(
@@ -124,7 +124,7 @@ router.post(
 
         if (passwordMatch) {
           loginUser(req, res, user);
-          return res.redirect("/");
+          return res.redirect("/app");
         }
 
         errors.push("Login failed for the provided email address and password");
@@ -141,7 +141,7 @@ router.post(
 
 router.post("/logout", (req, res) => {
   logoutUser(req, res);
-  res.redirect("/login");
+  res.redirect("/");
 });
 
 
