@@ -1,0 +1,20 @@
+extends layout
+
+append head
+    link(rel="stylesheet" href="/stylesheets/app.css")
+    script(src="/javascripts/index.js" type="module" defer)
+
+block content
+    form(action="/new-task", method="post")
+        label(for="description") Description
+        input(type="text", name="description" required=true)
+        //- textarea(name="description", cols="30", rows="10")
+        label(for="dueDate") Due Date
+        input(type="date", name="dueDate" required=true)
+        label(for="isCompleted") Age
+        input(type="checkbox", name="isCompleted")
+        label(for="givenTo") Contacts
+        select(name="givenTo")
+            each contact in contacts
+            option(value=contact.id)= contact.contact
+        button Create Task
