@@ -1,0 +1,12 @@
+.descripLabel, .dueDateLabel, .isCompletedLabel {
+    font-size: 30px;
+    color: blue;
+}
+
+.createTaskButton {
+    padding: 20px;
+}
+
+.dueDate {
+    font-size: 30px;
+}
