@@ -1,12 +1,21 @@
 a {
     text-decoration: none;
 }
+
 h1 {
     font-family: MuseoSansRounded, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 500;
     line-height: 1.1;
     color: #ffffff;
   }
+
+footer {
+    margin-top: 0;
+    background-color: #fff;
+    border-top: 1px solid #e8e8e8;
+    padding: 50px 0;
+    display: block;
+}
 
 .navbar {
     font-family: MuseoSansRounded, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -140,4 +149,57 @@ h1 {
     padding: 0;
     display: block;
     box-sizing: border-box;
+}
+
+
+.hero-image {
+    width: 1903px;
+    text-align: center;
+    color: #fff;
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.inner-image {
+    display: inline-block;
+    vertical-align: middle;
+    *vertical-align: auto;
+    *zoom: 1;
+    *display: inline;
+    background-image: url('/images/front_image.png');
+    background-repeat: no-repeat;
+    background-size: 585px auto;
+    width: 585px;
+    height: 390px;
+    margin: -47px 0 0 12px;
+}
+
+.hero-header {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 33px 20px 8px;
+}
+
+.hero-p {
+    font-size: 20px;
+    line-height: 26px;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 auto 75px auto;
+    max-width: 340px;
+}
+
+.footer {
+    width: 970px;
+    margin: auto;
+}
+
+.copyright {
+    font-size: 13px;
+    font-weight: bold;
+    color: #898a92;
+    display: inline-block;
+    padding: 10px 4px 10px 10px;
+    margin-left: 53px;
 }
