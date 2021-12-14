@@ -92,6 +92,8 @@ logoutButton.addEventListener("click", async (e) => {
         method: "POST"
       })
 
+      window.location.href = "/";
+
 
     }catch (err) {
       handleErrors(err)
