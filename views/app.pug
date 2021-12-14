@@ -2,26 +2,35 @@ extends layout
 
 append head
     link(rel="stylesheet" href="/stylesheets/app.css")
-    script(src="/javascripts/index.js" type="module" defer)
+    //- script(src="/javascripts/index.js" type="module" defer)
 
 block content
-    nav.navbar
-        input.navbar#searchBar(type="text", placeholder="Search here")
-        div.navbar#notifications Notifications
-        div.navbar#settings Settings
-    div.mainPage
-        div.header
-            h2 test
+    .page
+        nav.navbar
+            input.navbar#searchBar(type="text", placeholder="Search here")
+            div.navbar#notifications Notifications
+            div.navbar#settings Settings
         div.sidebar
-            h2 test???
+            ul Inbox
+                //- li All Tasks
+                //- li Today
+                //- li Tomorrow
+                //- li This Week
+                //- li Given to Others
+            ul Lists
+            ul Contacts
+        div.tabbedContainer
+            div.tabbedGroup
+                a.tabbedLink#incomplete Incomplete
+                a.tabbedLink#complete Complete
         form(action="/new-task", method="post")
             div.taskContainer
-                label.descripLabel(for="description") Description
+                label.descripLabel(for="description")
                 input.descrip(type="text", placeholder="Add a task...", id="description", name="description" required=true)
                 //- textarea(name="description", cols="30", rows="10")
                 label.dueDateLabel(for="dueDate") Due Date
                 input.dueDate(type="date", id="dueDate", name="dueDate" required=true)
-                label.isCompletedLabel(for="isCompleted") Age
+                label.isCompletedLabel(for="isCompleted") Completed?
                 input.isCompleted(type="checkbox", id="checkbox", name="isCompleted")
                 //- label.contactsLabel(for="givenTo") Contacts
                 //- select(id="givenTo", name="givenTo")
