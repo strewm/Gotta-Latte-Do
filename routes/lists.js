@@ -37,7 +37,7 @@ router.post('/', validateLists, handleValidationErrors, asyncHandler(async(req, 
 }))
 
 
-router.get('/lists/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
+router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
   const list = await List.findByPk(req.params.id);
     if (list) {
       res.json({list})
@@ -46,7 +46,7 @@ router.get('/lists/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next
     }
 }))
 
-router.put('/lists/:id(\\d+)', csrfProtection, validateLists, handleValidationErrors, asyncHandler(async(req, res, next) => {
+router.put('/:id(\\d+)', csrfProtection, validateLists, handleValidationErrors, asyncHandler(async(req, res, next) => {
   const { title } = req.body;
   const list = await List.findByPk(req.params.id);
   if (list) {
