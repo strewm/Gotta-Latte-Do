@@ -1,5 +1,5 @@
 import { handleErrors } from "./utils.js";
-import { fetchTask } from "./task-comments.js";
+import { fetchTask, fetchComments } from "./task-comments.js";
 
 
 const fetchTasks = async () => {

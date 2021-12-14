@@ -14,7 +14,6 @@ const validateComment =
 router.get('/tasks/:id(\\d+)/comments', asyncHandler(async (req, res) => {
     const comments = await Comment.findAll({
         where: {
-            userId: res.locals.userId,
             taskId: req.params.id
         }
     })
