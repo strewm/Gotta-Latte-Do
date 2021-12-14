@@ -20,6 +20,27 @@ const fetchTasks = async () => {
     tasksListContainer.innerHTML = tasksHtml.join("");
 }
 
+const fetchContactTasks = async (id) => {
+  console.log(id.id)
+  const res = await fetch(`http://localhost:8080/tasks/task/${id.id}`)
+  console.log(id.id)
+  if (res.status === 401) {
+      window.location.href = "/log-in";
+      return;
+    }
+
+  const { tasks } = await res.json();
+  const tasksListContainer = document.querySelector(".task-list");
+  const tasksHtml = tasks.map(({ id, description }) => `
+  <div>
+      <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+      <label for=${id} class="task-check-box">${description}</label>
+  </div>
+  `)
+
+  tasksListContainer.innerHTML = tasksHtml.join("");
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
     try {
       await fetchTasks();
@@ -32,15 +53,6 @@ const form = document.querySelector(".create-task");
 
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    let csrf;
-
-    if(document.cookie) {
-      let allCookies = document.cookie.split('; ');
-      let csurf = allCookies.find(cookie => cookie.includes('_csrf'));
-      let [name, value] = csurf.split("=");
-
-      csrf = value;
-    }
 
     const formData = new FormData(form);
     const description = formData.get("description")
@@ -59,7 +71,7 @@ form.addEventListener("submit", async (e) => {
 
 
 
-    const body = { description, dueDate, isCompleted, givenTo, _csrf: csrf }
+    const body = { description, dueDate, isCompleted, givenTo }
 
     try {
         const res = await fetch("http://localhost:8080/tasks", {
@@ -84,6 +96,14 @@ form.addEventListener("submit", async (e) => {
     } catch (err) {
         handleErrors(err)
     }
+})
+
+const contacts = document.querySelector('.contact-list-sidebar')
+
+contacts.addEventListener("click", async (e) => {
+  const target = e.target;
+  console.log(target)
+  fetchContactTasks(target)
 })
 
 const logoutButton = document.querySelector("#logout");

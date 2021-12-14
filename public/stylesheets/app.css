@@ -61,6 +61,18 @@
 
 
 /* %%%%%%%%%%%%%%%%%%%%% MAIN: Task area %%%%%%%%%%%%%%%%%%%%% */
+.my-tasks {
+    margin-left: 215px;
+    background-color: white;
+    color: #8A715B;
+}
+
+.my-tasks h1 {
+    background-color: white;
+    color: #8A715B;
+    margin: 15px 0px 0px 0px;
+}
+
 .taskContainer {
     margin-left: 200px;
     padding: 15px;
@@ -123,6 +135,34 @@
 
 .sidebar ul:hover {
     color: #E0A979;
+}
+
+.add-contacts {
+    color: #ffffff !important;
+    text-decoration: none;
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 1px 4px;
+}
+
+.add-contacts:hover {
+    background-color: white;
+    color: #8A715B !important;
+    border: 1px solid #8A715B;
+}
+
+.contact-list {
+    color: #ffffff !important;
+    list-style: disc;
+    margin-left: 15px;
+    cursor: pointer;
+
+}
+
+.contact-sidebar {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    color: #ffffff;
 }
 
 /* %%%%%%%%%%%%%%%%%%%%% Tasks Section %%%%%%%%%%%%%%%%%%%%% */
