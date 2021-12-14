@@ -51,7 +51,21 @@ router.get('/tasks/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next
   }
 }))
 
+router.put ('/tasks/:id(\\d+)', csrfProtection, validateTask, handleValidationErrors, asyncHandler(async(req, res, next) => {
+  const { description, dueDate, givenTo } = req.body;
+  const task = await Task.findByPk(req.params.id);
+  if (task) {
+    await Task.update({
+      description,
+      dueDate,
+      givenTo
+    })
+    res.json({task});
+  } else {
+    next(taskNotFoundError(req.params.id));
+  }
 
+}))
 
 
 
