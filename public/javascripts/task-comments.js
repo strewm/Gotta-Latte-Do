@@ -94,6 +94,7 @@ export const fetchComments = async (taskId) => {
             messageSpan.innerHTML = `
                 <form class='edit-comment'>
                     <label for='message'></label>
+                    <input type='hidden' name='taskId' id='${taskId}' value=${taskId}></input>
                     <input name='message' type='text' placeholder='${currMessage}'></input>
                     <button type='submit' class='submit-edit-comment-butt' id='${commentId}'>Edit Comment
                 </form>
@@ -113,6 +114,7 @@ export const fetchComments = async (taskId) => {
                 const newMessageForm = new FormData(document.querySelector('.edit-comment'));
                 const message = newMessageForm.get("message");
                 const taskId = newMessageForm.get("taskId");
+                console.log(taskId)
 
                 const body = { message };
 
@@ -129,7 +131,7 @@ export const fetchComments = async (taskId) => {
                 const userId = document.querySelector(`#comment-${commentId}-userId`).innerText
                 commentContainer.innerHTML = `
                 <span id='comment-${commentId}'>
-                    ${userId}:
+                    ${userId}
                     <span id='comment-${commentId}-message'>${message}</span>
                 </span>
                 <span class='comment-buttons-${commentId}'>
@@ -137,14 +139,10 @@ export const fetchComments = async (taskId) => {
                     <button class='delete-comment-butt' id='${commentId}'>Delete</button>
                 </span>
                 `
-
+                await fetchComments(taskId);
             })
-
-
         })
     }
-
-
 }
 
 
