@@ -125,10 +125,14 @@
 
 /* %%%%%%%%%%%%%%%%%%%%% Tasks Section %%%%%%%%%%%%%%%%%%%%% */
 .task-list {
-    margin-left: 210px;
+    margin-left: 200px;
     padding: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-start;
+}
+
+.task-check-box {
+    background-color: #fff;
 }

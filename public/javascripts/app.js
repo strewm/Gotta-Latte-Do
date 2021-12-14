@@ -10,8 +10,11 @@ const fetchTasks = async () => {
 
     const { tasks } = await res.json();
     const tasksListContainer = document.querySelector(".task-list");
-    const tasksHtml = tasks.map(({ description }) => `
-    <li>${description}</li>
+    const tasksHtml = tasks.map(({ id, description }) => `
+    <div>
+        <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+        <label for=${id} class="task-check-box">${description}</label>
+    </div>
     `)
 
     tasksListContainer.innerHTML = tasksHtml.join("");
