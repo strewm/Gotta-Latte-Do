@@ -17,6 +17,12 @@ const validateTask = [
   .withMessage('Must provide a valid date')
 ]
 
+const taskNotFoundError = (id) => {
+  const error = Error(`Task with id of ${id} could not be found`)
+  error.title = 'Task not found'
+  error.status = 404;
+  return error;
+}
 
 router.get('/users/:id(\\d+)/tasks', csrfProtection, asyncHandler(async(req, res) => {
   const tasks = await Task.findAll({where: {userId: req.params.id}});
@@ -34,7 +40,17 @@ router.post('/users/:id(\\d+)/tasks', validateTask, handleValidationErrors, csrf
     givenTo
   })
   res.status(201).json({task});
+}));
+
+router.get('/tasks/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
+  const task = await Task.findByPk(req.params.id);
+  if (task) {
+    res.json({task});
+  } else {
+    next(taskNotFoundError(req.params.id));
+  }
 }))
+
 
 
 
