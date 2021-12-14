@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tasksListContainer = document.querySelector(".task-list");
     tasksListContainer.addEventListener("click", async(e) => {
       const taskId = e.target.id;
-      console.log(taskId)
+
       try {
         await fetchTask(taskId);
 

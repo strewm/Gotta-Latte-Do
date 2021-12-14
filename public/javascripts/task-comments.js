@@ -8,7 +8,61 @@ export const fetchTask = async (taskId) => {
         return;
     }
 
+
+    const today = new Date().toJSON().slice(0,10)
+
+    let tomorrow = today.split('-');
+    let month = tomorrow[tomorrow.length - 2]
+    let day = tomorrow[tomorrow.length - 1]
+
+
+    if (day === '31' &&
+        (month === '01' ||
+        month === '03' ||
+        month === '05' ||
+        month === '07' ||
+        month === '08' ||
+        month === '10' ||
+        month === '12')) {
+            day = 1;
+            if (month !== '12') {
+                month = (Number(month) + 1).toString
+            } else {
+                month = 1;
+            }
+    } else if (
+        day === '30' && (
+        month === '02' ||
+        month === '04' ||
+        month === '06' ||
+        month === '09' ||
+        month === '11' ))
+        {
+        day = 1;
+        month = (Number(month) + 1).toString
+    } else {
+        day = (Number(day) + 1).toString();
+    }
+
+    tomorrow[tomorrow.length - 1] = day;
+    tomorrow[tomorrow.length - 2] = month;
+
+    tomorrow = tomorrow.join('-');
+
     const { task } = await res.json();
+
+    let due = task.dueDate;
+
+    if (task.dueDate.slice(0,10) === today) {
+        due = 'Today';
+    }
+
+    if (task.dueDate.slice(0,10) === tomorrow) {
+        due = 'Tomorrow';
+    }
+
+
+
     const taskInfo = document.querySelector('.fiona');
     if (!task.givenTo) task.givenTo = '';
     const taskHtml = `
@@ -16,7 +70,7 @@ export const fetchTask = async (taskId) => {
             <button id="task-info">X</button>
             <p>${task.description}</p>
             <p>Task Completed? ${task.isCompleted}</p>
-            <p>Due: ${task.dueDate}</p>
+            <p>Due: ${due}</p>
             <p>${task.givenTo}</p>
 
             <p>Comments</p>
