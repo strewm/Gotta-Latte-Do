@@ -21,12 +21,8 @@ router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
     }
   })
 
-  if (!contacts.length) {
-    res.render('/app', { csrfToken: req.csrfToken()})
-  } else {
-    console.log(contacts)
-    res.render('/app', { csrfToken: req.csrfToken(), contacts })
-  }
+    res.render('app', { csrfToken: req.csrfToken(), contacts })
+
 
 }))
 

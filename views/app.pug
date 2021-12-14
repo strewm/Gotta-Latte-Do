@@ -23,8 +23,9 @@ block content
             div.tabbedGroup
                 a.tabbedLink#incomplete Incomplete
                 a.tabbedLink#complete Complete
-        form(action="/new-task", method="post")
+        form(class='create-task')
             div.taskContainer
+                input(type='hidden' name='_csrf' value=csrfToken)
                 label.descripLabel(for="description")
                 input.descrip(type="text", placeholder="Add a task...", id="description", name="description" required=true)
                 //- textarea(name="description", cols="30", rows="10")
@@ -36,4 +37,5 @@ block content
                 //- select(id="givenTo", name="givenTo")
                 //-     each contact in contacts
                 //-         option(value=contact.id)= contact.contact
-                button.createTaskButton Create Task
+                button.createTaskButton(type='submit') Create Task
+    script(type="module" src="javascripts/app.js")
