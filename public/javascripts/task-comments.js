@@ -43,14 +43,14 @@ export const fetchComments = async (taskId) => {
 
     const commentsDiv = document.querySelector(`#comments-${taskId}`);
     const commentsHtml = comments.map(({ id, userId, message }) => `
-        <div class="comment-container-${id}">
+        <div class="comment-container-${id} comment-container">
             <span id='comment-${id}'>
-                <span id='comment-${id}-userId'>
+                <span id='comment-${id}-userId' class='comment-user'>
                     ${userId}:
                 </span>
-                <span id='comment-${id}-message'>${message}</span>
+                <span id='comment-${id}-message' class='comment-message'>${message}</span>
             </span>
-            <span class='comment-buttons-${id}'>
+            <span class='comment-buttons-${id} comment-buttons'>
                 <button class='edit-comment-butt' id='${id}'>Edit
                 <button class='delete-comment-butt' id='${id}'>Delete</button>
             </span>
