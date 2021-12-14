@@ -103,3 +103,5 @@ logoutButton.addEventListener("click", async (e) => {
       handleErrors(err)
   }
 })
+
+const 
