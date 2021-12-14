@@ -64,6 +64,12 @@ router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, r
     isCompleted,
     givenTo
   })
+  // console.log('This is the ID', task.id)
+  const newTask = task.id;
+  const taskList = await TaskList.create({
+    listId,
+    taskId: newTask
+  })
   res.status(201).json({task});
 }));
 

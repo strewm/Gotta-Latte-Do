@@ -11,8 +11,8 @@ const fetchLists = async () => {
   const { lists } = await res.json();
   console.log(lists);
   document.addEventListener('click', (e) => {
-    const listContainer = document.querySelector('.tanner')
-    const listHTML = lists.map(({ id, title }) => {
+    const listContainer = document.querySelector('.')
+    const listHTML = lists.map(({ id, title, taskList }) => {
       `<div class=${id}>
       <p class='list-p'${title}</p>
       </div>`
@@ -29,3 +29,12 @@ const fetchLists = async () => {
     }
   })
 }
+
+const form = document.querySelector('.list-form');
+
+form.addEventListener('submit', async(e) => {
+  e.preventDefault();
+  const formData = new FormData(form);
+  const title = formData.get(title);
+  console.log(title);
+})

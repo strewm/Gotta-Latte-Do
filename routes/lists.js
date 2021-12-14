@@ -20,11 +20,15 @@ const listNotFoundError = (id) => {
   return error;
 }
 
-router.get('/', asyncHandler(async (req, res) => {
-  const userId = res.locals.userId
-  const listTasks = await Task.findAll({where: {userId}})
-  const lists = await List.findAll({where: {userId}})
-  res.status(201).json({lists, listTasks});
+router.get('/', asyncHandler(async (req, res, next) => {
+  // const userId = res.locals.userId
+  // const listTasks = await Task.findAll({where: {userId}})
+  // const lists = await List.findAll({where: {userId}})
+  // res.status(201).json({lists, listTasks});
+  if(!res.locals.userId) {
+    res.redirect('/users/login')
+  }
+  res.render('add-list')
 }))
 
 router.post('/', validateLists, handleValidationErrors, asyncHandler(async(req, res) => {

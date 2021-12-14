@@ -18,7 +18,11 @@ block content
                 //- li Tomorrow
                 //- li This Week
                 //- li Given to Others
-            ul.lists Lists
+            ul Lists
+                .list-sidebar
+                div
+                    a.add-list(href='/list/')
+                    
             ul Contacts
         div.tabbedContainer
             div.tabbedGroup
@@ -29,4 +33,3 @@ block content
         .fiona
         .tanner
     script(type="module" src="javascripts/app.js")
-    script(type="module" src="javascripts/lists.js")
