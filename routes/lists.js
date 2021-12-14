@@ -59,7 +59,15 @@ router.put('/lists/:id(\\d+)', csrfProtection, validateLists, handleValidationEr
   }
 }))
 
-
+router.delete('/lists/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
+  const list = await List.findByPk(req.params.id);
+  if (list) {
+    await list.destroy()
+    res.status(204).end()
+  } else {
+    next(listNotFoundError(req.params.id))
+  }
+}))
 
 
 
