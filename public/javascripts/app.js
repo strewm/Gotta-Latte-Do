@@ -1,5 +1,5 @@
 import { handleErrors } from "./utils.js";
-import { fetchTask, fetchComments } from "./task-comments.js";
+import { fetchTask, fetchComments, postComment } from "./task-comments.js";
 
 
 const fetchTasks = async () => {
@@ -38,6 +38,29 @@ document.addEventListener("DOMContentLoaded", async () => {
       } catch (e) {
         console.error(e);
       }
+
+      try {
+        await fetchComments(taskId);
+      } catch (e) {
+        console.error(e);
+      }
+
+      const createComment = document.querySelector('.create-comment');
+
+      createComment.addEventListener('submit', async (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        const commentData = new FormData(createComment);
+        const message = commentData.get("message");
+        const taskId = commentData.get("taskId");
+
+        const body = { message };
+
+        postComment(taskId, body);
+
+      })
+
+
     })
   });
 

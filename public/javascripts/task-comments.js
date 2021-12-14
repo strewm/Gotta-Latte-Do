@@ -1,4 +1,4 @@
-
+import { handleErrors } from "./utils.js";
 
 export const fetchTask = async (taskId) => {
     const res = await fetch(`/tasks/${taskId}`);
@@ -10,7 +10,6 @@ export const fetchTask = async (taskId) => {
 
     const { task } = await res.json();
     const taskInfo = document.querySelector('.fiona');
-    console.log('TASK', task, task.description);
     if (!task.givenTo) task.givenTo = '';
     const taskHtml = `
         <div id='task-${task.id}' style="margin-left: 300px">
@@ -20,9 +19,13 @@ export const fetchTask = async (taskId) => {
             <p>${task.givenTo}</p>
 
             <p>Comments</p>
-            <button type='submit' role='button'>Add Comment</button>
-            <div id='comments-${task.id}'>
-            </div>
+            <form class='create-comment'>
+                <label for='message'></label>
+                <input type='hidden' name='taskId' id='${task.id}' value=${task.id}></input>
+                <input name='message' type='text' placeholder='Add a comment...'></input>
+                <button type='submit' role='button'>Add Comment</button>
+            </form>
+            <div id='comments-${task.id}'></div>
         </div>
     `
 
@@ -37,9 +40,10 @@ export const fetchComments = async (taskId) => {
         return;
     }
 
-    const { comments } = await res.json;
+    const { comments } = await res.json();
+    console.log(comments);
 
-    const commentsDiv = document.querySelector(`comments-${taskId}`);
+    const commentsDiv = document.querySelector(`#comments-${taskId}`);
     const commentsHtml = comments.map(({ id, userId, message }) => `
         <div class="comment-info">
             <p id='comment-${id}'>
@@ -52,4 +56,29 @@ export const fetchComments = async (taskId) => {
 
     commentsDiv.innerHTML = commentsHtml.join("");
 
+
+}
+
+
+export const postComment = async (taskId, body) => {
+    try {
+        const res = await fetch(`/tasks/${taskId}/comments`, {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+
+        if (res.status === 401) {
+            window.location.href = "/log-in";
+            return;
+          }
+        if (!res.ok) {
+            throw res;
+          }
+          await fetchComments(taskId);
+        } catch (err) {
+            handleErrors(err)
+        }
 }
