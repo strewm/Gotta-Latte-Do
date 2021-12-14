@@ -5,16 +5,26 @@ append head
     script(src="/javascripts/index.js" type="module" defer)
 
 block content
-    form(action="/new-task", method="post")
-        label.descripLabel(for="description") Description
-        input.descrip(type="text", id="description", name="description" required=true)
-        //- textarea(name="description", cols="30", rows="10")
-        label.dueDateLabel(for="dueDate") Due Date
-        input.dueDate(type="date", id="dueDate", name="dueDate" required=true)
-        label.isCompletedLabel(for="isCompleted") Age
-        input.isCompleted(type="checkbox", id="checkbox", name="isCompleted")
-        label.contactsLabel(for="givenTo") Contacts
-        //- select(id="givenTo", name="givenTo")
-        //-     each contact in contacts
-        //-         option(value=contact.id)= contact.contact
-        button.createTaskButton Create Task
+    nav.navbar
+        input.navbar#searchBar(type="text", placeholder="Search here")
+        div.navbar#notifications Notifications
+        div.navbar#settings Settings
+    div.mainPage
+        div.header
+            h2 test
+        div.sidebar
+            h2 test???
+        form(action="/new-task", method="post")
+            div.taskContainer
+                label.descripLabel(for="description") Description
+                input.descrip(type="text", placeholder="Add a task...", id="description", name="description" required=true)
+                //- textarea(name="description", cols="30", rows="10")
+                label.dueDateLabel(for="dueDate") Due Date
+                input.dueDate(type="date", id="dueDate", name="dueDate" required=true)
+                label.isCompletedLabel(for="isCompleted") Age
+                input.isCompleted(type="checkbox", id="checkbox", name="isCompleted")
+                //- label.contactsLabel(for="givenTo") Contacts
+                //- select(id="givenTo", name="givenTo")
+                //-     each contact in contacts
+                //-         option(value=contact.id)= contact.contact
+                button.createTaskButton Create Task

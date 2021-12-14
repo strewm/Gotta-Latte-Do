@@ -1,7 +1,33 @@
-var express = require('express');
+// var express = require('express');
+// const { csrfProtection, asyncHandler, handleValidationErrors } = require("../utils");
+// const db = require('../db/models');
+// const { Contacts } = db;
+
+// var router = express.Router();
+
+// /* GET home page. */
+// router.get('/', function(req, res, next) {
+//   if (res.locals.authenticated) {
+//     return res.redirect('/app')
+//   }
+//   res.render('index', { title: 'Gotta Latte Do' });
+// });
+
+// router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
+//   const contacts = await Contacts.findAll({
+//     where: {
+//       userId: res.locals.userId
+//     }
+//   })
+//   res.render('app', { csrfToken: req.csrfToken(), contacts })
+// }))
+
+// module.exports = router;
+
+const express = require('express');
 const { csrfProtection, asyncHandler, handleValidationErrors } = require("../utils");
 const db = require('../db/models');
-const { Contacts } = db;
+const { Contact } = db;
 
 var router = express.Router();
 
@@ -14,12 +40,18 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
-  const contacts = await Contacts.findAll({
-    where: {
-      userId: res.locals.userId
-    }
-  })
-  res.render('app', { csrfToken: req.csrfToken(), contacts })
+  res.render('app', { csrfToken: req.csrfToken() })
+  // const contacts = await Contact.findAll({
+  //   where: {
+  //     userId: res.locals.userId
+  //   }
+  // })
+  // if (!contacts.length) {
+  //   res.render('/', { csrfToken: req.csrfToken()})
+  // } else {
+  //   console.log(contacts)
+  //   res.render('/app', { csrfToken: req.csrfToken(), contacts })
+  // }
 }))
 
 module.exports = router;

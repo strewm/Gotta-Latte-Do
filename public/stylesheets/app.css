@@ -1,12 +1,82 @@
+/* %%%%%%%%%%%%%%%%%%%%% Whole page %%%%%%%%%%%%%%%%%%%%% */
+* {
+    background-color: #FAECDA;
+    font-family: MuseoSansRounded, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    /* font-weight: 3; */
+}
+
+
+
+/* %%%%%%%%%%%%%%%%%%%%% Layout whole page %%%%%%%%%%%%%%%%%%%%% */
+.mainPage {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    grid-template-areas:
+    "sidebar header"
+    "sidebar main";
+}
+
+.header {
+    grid-area: header;
+}
+
+.sidebar {
+    grid-area: sidebar;
+}
+
+.taskContainer {
+    grid-area: main;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+/* %%%%%%%%%%%%%%%%%%%%% Navigation bar %%%%%%%%%%%%%%%%%%%%% */
+.navbar {
+    display: flex;
+    flex-flow: row-wrap;
+    justify-content: space-around;
+
+    background-color: #8A715B;
+    color: #FFFFFF;
+    padding: 4px;
+    line-height: 23px;
+    font-size: 15px;
+}
+
+#searchBar {
+    background-color: #C7A383;
+}
+
+#notifications {
+    background-color: #C7A383;
+}
+
+#settings {
+    background-color: #C7A383;
+}
+
+
+
+/* %%%%%%%%%%%%%%%%%%%%% MAIN: Task area %%%%%%%%%%%%%%%%%%%%% */
+/* .taskContainer {
+    display: flex;
+    justify-content: space-between;
+} */
+
 .descripLabel, .dueDateLabel, .isCompletedLabel {
-    font-size: 30px;
+    font-size: 20px;
     color: blue;
 }
 
 .createTaskButton {
-    padding: 20px;
+    padding: 10px;
 }
 
 .dueDate {
-    font-size: 30px;
+    font-size: 20px;
 }
+
+
+
+/* %%%%%%%%%%%%%%%%%%%%% SIDEBAR: Lists / organization %%%%%%%%%%%%%%%%%%%%% */
