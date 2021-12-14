@@ -1,3 +1,4 @@
+import { handleErrors } from './utils';
 
 
 const fetchLists = async () => {
@@ -36,5 +37,13 @@ form.addEventListener('submit', async(e) => {
   e.preventDefault();
   const formData = new FormData(form);
   const title = formData.get(title);
+
+
+  const body = { title };
+
+  try {
+    const res = await fetch('/lists')
+  } catch (e) {
+  }
   console.log(title);
 })

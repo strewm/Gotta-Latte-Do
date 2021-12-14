@@ -7,7 +7,7 @@ block content
     div.form_error
     form.list-form
         input(type='hidden' name='_csrf' value=csrfToken)
-        +field('Title', 'title', list.test)
+        +field('Title', 'title', user.title)
         div
             button(type='submit') Add List
         div
