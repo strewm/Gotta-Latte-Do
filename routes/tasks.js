@@ -55,7 +55,7 @@ router.put ('/tasks/:id(\\d+)', csrfProtection, validateTask, handleValidationEr
   const { description, dueDate, givenTo } = req.body;
   const task = await Task.findByPk(req.params.id);
   if (task) {
-    await Task.update({
+    await task.update({
       description,
       dueDate,
       givenTo
@@ -64,9 +64,18 @@ router.put ('/tasks/:id(\\d+)', csrfProtection, validateTask, handleValidationEr
   } else {
     next(taskNotFoundError(req.params.id));
   }
-
 }))
 
+
+router.delete('/tasks/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
+  const task = await Task.findByPk(req.params.id);
+  if (task) {
+    await task.destroy()
+    res.status(204).end()
+  } else {
+    next(taskNotFoundError(req.params.id))
+  }
+}))
 
 
 module.exports = router;
