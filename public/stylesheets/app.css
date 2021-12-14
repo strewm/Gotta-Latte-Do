@@ -24,7 +24,7 @@
     justify-content: flex-end;
 }
 
-#searchBar, #notifications, #settings, #logout {
+#searchBar, #notifications, #settings {
     background-color: #C7A383;
     padding-top: 3px;
     padding-bottom: 3px;
@@ -137,4 +137,50 @@
 
 .task-check-box {
     background-color: #fff;
+}
+
+
+/* %%%%%%%%%%%%%%%%%%%%% Settings Dropdown %%%%%%%%%%%%%%%%%%%%% */
+.settingGroup {
+    background-color: #FAECDA;
+    border: 1px solid #C7A383;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #C7A383;
+    padding: 0.5em;
+    position: absolute;
+    right: 5px;
+    top: 2.5em;
+    width: 200px;
+}
+
+/* .settingHide {
+    display: none;
+} */
+
+.settingHeader, .settingListGroup, #signOut {
+    list-style-type: none;
+    color: #8A715B;
+}
+
+.settingHeader {
+    font-size: 15px;
+}
+
+.settingList a {
+    text-decoration: none;
+    font-size: 12px;
+}
+
+#signOut {
+    border: none;
+    font-size: 12px;
+    padding: 0;
+}
+
+.settingList:hover {
+    color: yellowgreen;
+}
+
+#signOut:hover {
+    color: yellowgreen;
 }

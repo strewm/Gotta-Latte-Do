@@ -10,7 +10,14 @@ block content
             input.navbar#searchBar(type="text", placeholder="Search here")
             div.navbar#notifications Notifications
             div.navbar#settings Settings
-            button.navbar#logout(type='submit') Logout
+                div.settingGroup.settingHide
+                    div.settingHeader User
+                    ul.settingListGroup
+                        li.settingList: a(href='/#') Help
+                        li.settingList: a(href='/#') Keyboard shortcuts
+                        li.settingList: a(href='/#') Account Settings
+                        li.settingList: button#signOut(type='submit') Sign Out
+            //- button.navbar#logout(type='submit') Logout
         div.sidebar
             ul Inbox
                 //- li All Tasks

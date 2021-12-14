@@ -86,9 +86,9 @@ form.addEventListener("submit", async (e) => {
     }
 })
 
-const logoutButton = document.querySelector("#logout");
+const signOutButton = document.querySelector("#signOut");
 
-logoutButton.addEventListener("click", async (e) => {
+signOutButton.addEventListener("click", async (e) => {
     console.log('hello')
     e.preventDefault();
     try {
