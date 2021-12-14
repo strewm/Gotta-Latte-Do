@@ -34,7 +34,6 @@ export const fetchTask = async (taskId) => {
 
 export const fetchComments = async (taskId) => {
     const res = await fetch(`/tasks/${taskId}/comments`);
-
     if (res.status === 401) {
         window.location.href = '/log-in';
         return;
@@ -45,19 +44,25 @@ export const fetchComments = async (taskId) => {
     const commentsDiv = document.querySelector(`#comments-${taskId}`);
     const commentsHtml = comments.map(({ id, userId, message }) => `
         <div class="comment-container-${id}">
-            <p id='comment-${id}'>
-                ${userId}:
-                <span>${message}</span>
-            <span class='comment-buttons'>
+            <span id='comment-${id}'>
+                <span id='comment-${id}-userId'>
+                    ${userId}:
+                </span>
+                <span id='comment-${id}-message'>${message}</span>
+            </span>
+            <span class='comment-buttons-${id}'>
                 <button class='edit-comment-butt' id='${id}'>Edit
                 <button class='delete-comment-butt' id='${id}'>Delete</button>
             </span>
-            </p>
         </div>
     `
     )
 
     commentsDiv.innerHTML = commentsHtml.join("");
+
+    // TODO: only show edit/delete if userId of comment matches logged in user
+
+
 
     const deleteComments = document.querySelectorAll('.delete-comment-butt');
 
@@ -72,6 +77,70 @@ export const fetchComments = async (taskId) => {
 
             const comment = document.querySelector(`.comment-container-${commentId}`);
             comment.remove();
+        })
+    }
+
+    const editComments = document.querySelectorAll('.edit-comment-butt');
+
+    for (let i = 0; i < editComments.length; i++) {
+        const editButton = editComments[i];
+        editButton.addEventListener('click', async(e) => {
+            e.preventDefault();
+            const commentId = e.target.id;
+            const messageSpan = document.querySelector(`#comment-${commentId}-message`);
+
+            const currMessage = messageSpan.innerText;
+
+            messageSpan.innerHTML = `
+                <form class='edit-comment'>
+                    <label for='message'></label>
+                    <input name='message' type='text' placeholder='${currMessage}'></input>
+                    <button type='submit' class='submit-edit-comment-butt' id='${commentId}'>Edit Comment
+                </form>
+            `
+
+            const commentButtons = document.querySelector(`.comment-buttons-${commentId}`);
+            commentButtons.innerHTML = `
+                <span class='comment-buttons-${commentId}'>
+                </span>
+            `
+
+            const submitEdit = document.querySelector(`.submit-edit-comment-butt`);
+
+            submitEdit.addEventListener('click', async(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const newMessageForm = new FormData(document.querySelector('.edit-comment'));
+                const message = newMessageForm.get("message");
+                const taskId = newMessageForm.get("taskId");
+
+                const body = { message };
+
+                const res = await fetch(`/comments/${commentId}`, {
+                    method: "PUT",
+                    body: JSON.stringify(body),
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+
+
+                const commentContainer = document.querySelector(`.comment-container-${commentId}`);
+                const userId = document.querySelector(`#comment-${commentId}-userId`).innerText
+                commentContainer.innerHTML = `
+                <span id='comment-${commentId}'>
+                    ${userId}:
+                    <span id='comment-${commentId}-message'>${message}</span>
+                </span>
+                <span class='comment-buttons-${commentId}'>
+                    <button class='edit-comment-butt' id='${commentId}'>Edit
+                    <button class='delete-comment-butt' id='${commentId}'>Delete</button>
+                </span>
+                `
+
+            })
+
+
         })
     }
 
@@ -125,3 +194,27 @@ export const deleteComment = async (commentId) => {
             handleErrors(err)
         }
 }
+
+export const editComment = async (commentId, body) => {
+    try {
+        const res = await fetch(`/comments/${commentId}`, {
+            method: "PUT",
+            body: JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+
+        if (res.status === 401) {
+            window.location.href = "/log-in";
+            return;
+          }
+        if (!res.ok) {
+            throw res;
+          }
+          await fetchComments(taskId);
+        } catch (err) {
+            handleErrors(err)
+        }
+
+    }
