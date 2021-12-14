@@ -1,5 +1,7 @@
 var express = require('express');
 const { csrfProtection, asyncHandler, handleValidationErrors } = require("../utils");
+const db = require('../db/models');
+const { Contacts } = db;
 
 var router = express.Router();
 
@@ -11,8 +13,13 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Gotta Latte Do' });
 });
 
-router.get('/app', csrfProtection, function(req, res, next) {
-  res.render('app', { csrfToken: req.csrfToken() })
-})
+router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
+  const contacts = await Contacts.findAll({
+    where: {
+      userId: res.locals.userId
+    }
+  })
+  res.render('app', { csrfToken: req.csrfToken(), contacts })
+}))
 
 module.exports = router;
