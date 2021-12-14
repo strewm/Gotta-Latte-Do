@@ -11,14 +11,15 @@ block content
     .page
         nav.navbar
             input.navbar#searchBar(type="text", placeholder="Search here...")
-            div.navbar#notifications Notifications
-            div.navbar#settings Settings
+            div.navbar#settings
+                img.navbar#settingsGear(src="../images/gear.png")
                 div.settingGroup.settingHide
                     div.settingHeaderGroup
                         img.settingHeader#userProfile(src="../images/favicon.png")
                         div.settingHeader#userName= locals.currUser.username
                         //- div.settingHead#userEmail= locals.currUser.email
                     ul.settingListGroup
+                        li.settingList: a(href='/#') Notifications
                         li.settingList: a(href='/#') Help
                         li.settingList: a(href='/#') Keyboard shortcuts
                         li.settingList: a(href='/#') Account Settings

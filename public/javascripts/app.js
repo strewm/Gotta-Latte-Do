@@ -88,14 +88,17 @@ form.addEventListener("submit", async (e) => {
 
 
 window.addEventListener('DOMContentLoaded', async () => {
+  console.log("event listener loaded!!!")
   const settings = document.querySelector('#settings');
 
   settings.addEventListener('click', event => {
+    console.log("settings clicked!!!")
     event.stopPropagation();
     document.querySelector('.settingGroup').classList.remove('.settingHide');
   });
 
   window.addEventListener('click', () => {
+    console.log("outside of settings clicked!!!")
     document.querySelector('.settingGroup').classList.add('.settingHide');
   });
 
