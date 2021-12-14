@@ -36,4 +36,31 @@ router.post('/', validateLists, handleValidationErrors, asyncHandler(async(req, 
   res.status(201).json({list});
 }))
 
+
+router.get('/lists/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
+  const list = await List.findByPk(req.params.id);
+    if (list) {
+      res.json({list})
+    } else {
+      next(listNotFoundError(req.params.id));
+    }
+}))
+
+router.put('/lists/:id(\\d+)', csrfProtection, validateLists, handleValidationErrors, asyncHandler(async(req, res, next) => {
+  const { title } = req.body;
+  const list = await List.findByPk(req.params.id);
+  if (list) {
+    await list.update({
+      title
+    })
+    res.json({list});
+  } else {
+    next(listNotFoundError(req.params.id));
+  }
+}))
+
+
+
+
+
 module.exports = router;
