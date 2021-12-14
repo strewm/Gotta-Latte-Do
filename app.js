@@ -9,6 +9,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const taskRouter = require('./routes/tasks')
+const commentsRouter = require('./routes/comments')
 
 const { restoreUser } = require('./auth');
 const { AnimationObjectGroup } = require('three');
@@ -42,7 +43,8 @@ store.sync();
 app.use(restoreUser);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/tasks', taskRouter)
+app.use('/tasks', taskRouter);
+app.use(commentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
