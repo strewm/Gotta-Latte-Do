@@ -21,8 +21,8 @@ export const fetchTask = async (taskId) => {
             <p>Comments</p>
             <form class='create-comment'>
                 <label for='message'></label>
-                <input type='hidden' name='taskId' id='${task.id}' value=${task.id}></input>
                 <input name='message' type='text' placeholder='Add a comment...'></input>
+                <input type='hidden' name='taskId' id='${task.id}' value=${task.id}></input>
                 <button type='submit' role='button'>Add Comment</button>
             </form>
             <div id='comments-${task.id}'></div>

@@ -35,6 +35,23 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.log(taskId)
       try {
         await fetchTask(taskId);
+
+        const createComment = document.querySelector('.create-comment');
+        console.log(createComment);
+
+        createComment.addEventListener('submit', async (event) => {
+          event.stopPropagation();
+          event.preventDefault();
+          const commentData = new FormData(createComment);
+          console.log(commentData);
+          const message = commentData.get("message");
+          const taskId = commentData.get("taskId");
+
+          const body = { message };
+
+          postComment(taskId, body);
+        })
+
       } catch (e) {
         console.error(e);
       }
@@ -45,24 +62,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error(e);
       }
 
-      const createComment = document.querySelector('.create-comment');
-
-      createComment.addEventListener('submit', async (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        const commentData = new FormData(createComment);
-        const message = commentData.get("message");
-        const taskId = commentData.get("taskId");
-
-        const body = { message };
-
-        postComment(taskId, body);
-
-      })
-
-
     })
-  });
+
+  }
+  );
+
 
 const form = document.querySelector(".create-task");
 
