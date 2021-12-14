@@ -13,6 +13,7 @@ export const fetchTask = async (taskId) => {
     if (!task.givenTo) task.givenTo = '';
     const taskHtml = `
         <div id='task-${task.id}' style="margin-left: 300px">
+            <button id="task-info">X</button>
             <p>${task.description}</p>
             <p>Task Completed? ${task.isCompleted}</p>
             <p>Due: ${task.dueDate}</p>
@@ -30,6 +31,15 @@ export const fetchTask = async (taskId) => {
     `
 
     taskInfo.innerHTML = taskHtml;
+    taskInfo.hidden = false;
+
+    const hideTaskInfoButt = document.querySelector('#task-info');
+
+    hideTaskInfoButt.addEventListener('click', async (e) => {
+        taskInfo.hidden = true;
+    })
+
+
 }
 
 export const fetchComments = async (taskId) => {
