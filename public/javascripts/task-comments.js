@@ -15,6 +15,8 @@ export const fetchTask = async (taskId) => {
     let month = tomorrow[tomorrow.length - 2]
     let day = tomorrow[tomorrow.length - 1]
 
+    console.log(Number('01') + 1)
+
 
     if (day === '31' &&
         (month === '01' ||
@@ -24,11 +26,11 @@ export const fetchTask = async (taskId) => {
         month === '08' ||
         month === '10' ||
         month === '12')) {
-            day = 1;
+            day = '01';
             if (month !== '12') {
-                month = (Number(month) + 1).toString
+                month = (Number(month) + 1).toString()
             } else {
-                month = 1;
+                month = '01';
             }
     } else if (
         day === '30' && (
@@ -38,8 +40,8 @@ export const fetchTask = async (taskId) => {
         month === '09' ||
         month === '11' ))
         {
-        day = 1;
-        month = (Number(month) + 1).toString
+        day = '01';
+        month = (Number(month) + 1).toString()
     } else {
         day = (Number(day) + 1).toString();
     }
