@@ -59,7 +59,7 @@ form.addEventListener("submit", async (e) => {
 
 
 
-    const body = { description, dueDate, isCompleted, givenTo,  _csrf: csrf }
+    const body = { description, dueDate, isCompleted, givenTo }
 
     try {
         const res = await fetch("http://localhost:8080/tasks", {
@@ -67,8 +67,7 @@ form.addEventListener("submit", async (e) => {
             body: JSON.stringify(body),
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRF-TOKEN": csrf,
-                "X-XSRF-TOKEN": csrf
+
             }
         })
 

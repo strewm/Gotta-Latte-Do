@@ -54,7 +54,7 @@ router.get('/', asyncHandler(async(req, res) => {
 
 }));
 
-router.post('/', validateTask, handleValidationErrors, csrfProtection, asyncHandler(async(req, res) => {
+router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, res) => {
   const { description, dueDate, isCompleted, givenTo } = req.body;
   const userId = res.locals.userId
   const task = await Task.create({
