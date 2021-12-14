@@ -14,6 +14,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
+  if(!res.locals.userId) {
+    res.redirect('/users/login')
+  }
   console.log(res.locals.userId)
   const contacts = await Contact.findAll({
     where: {

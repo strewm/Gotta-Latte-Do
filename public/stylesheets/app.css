@@ -24,7 +24,7 @@
     justify-content: flex-end;
 }
 
-#searchBar, #notifications, #settings {
+#searchBar, #notifications, #settings, #logout {
     background-color: #C7A383;
     padding-top: 3px;
     padding-bottom: 3px;

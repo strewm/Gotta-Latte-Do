@@ -81,3 +81,19 @@ form.addEventListener("submit", async (e) => {
         handleErrors(err)
     }
 })
+
+const logoutButton = document.querySelector("#logout");
+
+logoutButton.addEventListener("click", async (e) => {
+    console.log('hello')
+    e.preventDefault();
+    try {
+      await fetch("http://localhost:8080/users/logout", {
+        method: "POST"
+      })
+
+
+    }catch (err) {
+      handleErrors(err)
+  }
+})
