@@ -32,13 +32,23 @@ const form = document.querySelector(".create-task");
 
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    let csrf;
+
+    if(document.cookie) {
+      let allCookies = document.cookie.split('; ');
+      let csurf = allCookies.find(cookie => cookie.includes('_csrf'));
+      let [name, value] = csurf.split("=");
+
+      csrf = value;
+    }
+
     const formData = new FormData(form);
     const description = formData.get("description")
     const dueDate = formData.get("dueDate")
     const checkStatus = formData.get("isCompleted")
     const givenTo = formData.get("givenTo")
     let isCompleted;
-    let csrf;
+
 
     //convert checkbox to boolean value
     if (checkStatus === 'on') {
@@ -47,15 +57,9 @@ form.addEventListener("submit", async (e) => {
         isCompleted = false;
     }
 
-    if(document.cookie) {
-        let allCookies = document.cookie.split('; ');
-        let csurf = allCookies.find(cookie => cookie.includes('_csrf'));
-        let [name, value] = csurf.split("=");
 
-        csrf = value;
-    }
 
-    const body = { description, dueDate, isCompleted, givenTo }
+    const body = { description, dueDate, isCompleted, givenTo,  _csrf: csrf }
 
     try {
         const res = await fetch("http://localhost:8080/tasks", {
@@ -63,7 +67,8 @@ form.addEventListener("submit", async (e) => {
             body: JSON.stringify(body),
             headers: {
                 "Content-Type": "application/json",
-                'X-CSRF-TOKEN': csrf
+                "X-CSRF-TOKEN": csrf,
+                "X-XSRF-TOKEN": csrf
             }
         })
 

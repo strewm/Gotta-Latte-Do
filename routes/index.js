@@ -1,7 +1,7 @@
 const express = require('express');
 const { csrfProtection, asyncHandler, handleValidationErrors } = require("../utils");
 const db = require('../db/models');
-const { Contact, Task } = db;
+const { Contact, Task, User } = db;
 
 var router = express.Router();
 
@@ -17,11 +17,18 @@ router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
   if(!res.locals.userId) {
     res.redirect('/users/login')
   }
-  console.log(res.locals.userId)
+
   const contacts = await Contact.findAll({
     where: {
       userId: res.locals.userId
     }
+  })
+
+  let contactsAll = [];
+
+  contacts.forEach(async (ele) => {
+    let contactsList = await User.findByPk(ele.contactId)
+    contactsAll.push(contactsList)
   })
 
   const tasks = await Task.findAll({
@@ -30,7 +37,7 @@ router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
     }
   })
 
-    res.render('app', { csrfToken: req.csrfToken(), contacts, tasks })
+    res.render('app', { csrfToken: req.csrfToken(), contactsAll, tasks })
 
 
 }))
