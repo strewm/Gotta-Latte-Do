@@ -1,12 +1,29 @@
 import { handleErrors } from "./utils.js";
 
 const fetchTasks = async () => {
-    const tasks = await Task.findAll({
-        where: {
-            userId: res.locals.userId
-        }
-    })
+    const res = await fetch("http://localhost:8080/tasks")
+
+    if (res.status === 401) {
+        window.location.href = "/log-in";
+        return;
+      }
+
+    const { tasks } = await res.json();
+    const tasksListContainer = document.querySelector(".task-list");
+    const tasksHtml = tasks.map(({ description }) => `
+    <li>${description}</li>
+    `)
+
+    tasksListContainer.innerHTML = tasksHtml.join("");
 }
+
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+      await fetchTasks();
+    } catch (e) {
+      console.error(e);
+    }
+  });
 
 const form = document.querySelector(".create-task");
 
@@ -54,6 +71,9 @@ form.addEventListener("submit", async (e) => {
         if (!res.ok) {
             throw res;
           }
+
+        form.reset();
+        await fetchTasks();
     } catch (err) {
         handleErrors(err)
     }

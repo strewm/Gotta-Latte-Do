@@ -1,7 +1,7 @@
 const express = require('express');
 const { csrfProtection, asyncHandler, handleValidationErrors } = require("../utils");
 const db = require('../db/models');
-const { Contact } = db;
+const { Contact, Task } = db;
 
 var router = express.Router();
 
@@ -21,7 +21,13 @@ router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
     }
   })
 
-    res.render('app', { csrfToken: req.csrfToken(), contacts })
+  const tasks = await Task.findAll({
+    where: {
+      userId: res.locals.userId
+    }
+  })
+
+    res.render('app', { csrfToken: req.csrfToken(), contacts, tasks })
 
 
 }))
