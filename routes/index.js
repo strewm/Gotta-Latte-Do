@@ -30,4 +30,10 @@ router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
 
 }))
 
+// // Get method that allows Sav to see /app
+// router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
+//   res.render('app', { csrfToken: req.csrfToken() })
+// }))
+
+
 module.exports = router;

@@ -1,0 +1,124 @@
+/* %%%%%%%%%%%%%%%%%%%%% Whole page %%%%%%%%%%%%%%%%%%%%% */
+* {
+    background-color: #FAECDA;
+    font-family: MuseoSansRounded, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    /* font-weight: 3; */
+}
+
+
+/* %%%%%%%%%%%%%%%%%%%%% Navigation bar %%%%%%%%%%%%%%%%%%%%% */
+.navbar {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    align-items: center;
+
+    background-color: #8A715B;
+    color: #FFFFFF;
+    padding: 9px;
+    line-height: 20px;
+    font-size: 15px;
+}
+
+#settings {
+    justify-content: flex-end;
+}
+
+#searchBar, #notifications, #settings {
+    background-color: #C7A383;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 10px;
+    align-items: center;
+}
+
+/* %%%%%%%%%%%%%%%%%%%%% MAIN: Tabbed containers %%%%%%%%%%%%%%%%%%%%% */
+.tabbedContainer {
+    background-color: #E0A979;
+}
+
+.tabbedGroup {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 10px 0px 10px;
+    border-bottom: 1px solid #C7A383;
+}
+
+.tabbedLink {
+    border: 1px solid #C7A383;
+    border-bottom: 0;
+    border-radius: 2px;
+    padding: 10px;
+    margin: 0 5px;
+    color: #FFFFFF;
+    line-height: 20px;
+    background-color: #E0A979;
+}
+
+
+/* %%%%%%%%%%%%%%%%%%%%% MAIN: Task area %%%%%%%%%%%%%%%%%%%%% */
+.taskContainer {
+    margin-left: 200px;
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.descripLabel, .dueDateLabel, .isCompletedLabel {
+    font-size: 15px;
+    color: #8A715B;
+    /* padding: 5px; */
+}
+
+.descrip, .dueDate, .createTaskButton {
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 5px;
+    height: 40px;
+    border: 2px solid #8A715B;
+}
+
+/* .descrip {
+    padding: 2px;
+}
+
+.dueDate {
+    font-size: 15px;
+}
+
+.createTaskButton {
+    padding: 15px;
+} */
+
+
+/* %%%%%%%%%%%%%%%%%%%%% SIDEBAR: Lists / organization %%%%%%%%%%%%%%%%%%%%% */
+/* .sidebar {
+    background-color: #C7A383;
+    color: #FFFFFF;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1px;
+} */
+
+
+.sidebar {
+    background-color: #C7A383;
+    color: #FFFFFF;
+    font-size: 12px;
+    padding: 20px;
+    height: 100%;
+    width: 200px;
+    position: fixed;
+}
+
+.sidebar ul:hover {
+    color: #E0A979;
+}
