@@ -212,6 +212,27 @@
     border: 1px solid #8A715B;
 }
 
+.add-lists {
+    color: #ffffff !important;
+    text-decoration: none;
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 1px 4px;
+}
+
+.add-lists:hover {
+    background-color: white;
+    color: #8A715B !important;
+    border: 1px solid #8A715B;
+}
+
+.list-list {
+    color: #ffffff !important;
+    list-style: disc;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
 .contact-list {
     color: #ffffff !important;
     list-style: disc;
@@ -221,6 +242,12 @@
 }
 
 .contact-sidebar {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    color: #ffffff;
+}
+
+.list-sidebar {
     display: grid;
     grid-template-columns: 90% 10%;
     color: #ffffff;

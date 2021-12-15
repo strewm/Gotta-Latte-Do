@@ -32,7 +32,14 @@ block content
                 //- li Tomorrow
                 //- li This Week
                 //- li Given to Others
-            ul Lists
+            ul
+              .list-sidebar
+                div Lists
+                div
+                  a.add-lists(href='/lists/new') +
+              div.list-list-sidebar
+                each list in myLists
+                  li.list-list(id=`${list.id}`)=list.title
             ul
               div.contact-sidebar
                 div Contacts

@@ -1,0 +1,15 @@
+extends layout
+
+include utils
+
+block content
+    +validationErrorSummary(errors)
+    div.form_error
+    form.list-form
+        input(type='hidden' name='_csrf' value=csrfToken)
+        +field('Title', 'title', user.title)
+        div
+            button(type='submit') Add List
+        div
+            a(href='/app') Cancel
+    script(type="module" src="../javascripts/list.js")
