@@ -99,8 +99,8 @@ export const fetchTask = async (taskId) => {
         <div class='task-${task.id} task-container'>
             <div class='task-info-buttons'>
                 <button id="task-info">X</button>
-                <button id='edit-task-button-${task.id}' class="edit-task-button">Edit Task</button>
-                <button id='delete-task-button-${task.id}' class="delete-task-button">Delete Task</button>
+                <button id='edit-task-button-${task.id}' class="edit-task-butt">Edit Task</button>
+                <button id='delete-task-button-${task.id}' class="delete-task-butt">Delete Task</button>
             </div>
 
             <div class='task-information-${task.id}'>
@@ -146,16 +146,16 @@ export const fetchTask = async (taskId) => {
     })
 
     const editTaskButt = document.querySelector(`#edit-task-button-${task.id}`);
-    console.log(editTaskButt);
 
     editTaskButt.addEventListener('click', async(e) => {
         e.preventDefault();
+        e.stopPropagation();
         console.log('EDIT CLICK')
+        editTaskButt.disabled = true;
 
         try {
 
             const editForm = document.querySelector('.edit-form');
-            editForm.hidden = false;
 
             const form = document.createElement('form');
             form.setAttribute('class', 'edit-task');
@@ -189,7 +189,8 @@ export const fetchTask = async (taskId) => {
 
                 try {
                     editTask(taskId, body);
-                    editForm.hidden = true;
+                    editForm.removeChild(form);
+                    editTaskButt.disabled = false;
 
                 } catch (e) {
                     console.error(e);

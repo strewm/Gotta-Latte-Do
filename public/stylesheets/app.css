@@ -187,14 +187,14 @@ align-items: center; */
 }
 
 /* Edit task button  */
-.edit-task-button {
+.edit-task-butt {
     border: none;
     font-size: 15px;
     padding: 0;
 }
 
 /* Delete task button  */
-.delete-task-button {
+.delete-task-butt {
     border: none;
     font-size: 15px;
     padding: 0;
