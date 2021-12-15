@@ -96,7 +96,7 @@ export const fetchTask = async (taskId) => {
     const taskInfo = document.querySelector('.fiona');
     // if (!task.givenTo) task.givenTo = '';
     const taskHtml = `
-        <div class='task-${task.id} task-info' style="margin-left: 300px">
+        <div class='task-${task.id} task-container' style="margin-left: 300px">
             <div class='task-info-buttons'>
                 <button id="task-info">X</button>
                 <button id='edit-task-button-${task.id}'>Edit Task</button>
@@ -151,11 +151,11 @@ export const fetchTask = async (taskId) => {
     editTaskButt.addEventListener('click', async(e) => {
         e.preventDefault();
         console.log('EDIT CLICK')
+        editTaskButt.disabled = true;
 
         try {
 
             const editForm = document.querySelector('.edit-form');
-            editForm.hidden = false;
 
             const form = document.createElement('form');
             form.setAttribute('class', 'edit-task');
@@ -189,7 +189,8 @@ export const fetchTask = async (taskId) => {
 
                 try {
                     editTask(taskId, body);
-                    editForm.hidden = true;
+                    editForm.removeChild(form);
+                    editTaskButt.disabled = false;
 
                 } catch (e) {
                     console.error(e);
