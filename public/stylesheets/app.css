@@ -8,7 +8,7 @@
 .page {
     display: grid;
     grid-template-columns: 1.5fr 4fr 2fr;
-    grid-template-rows: 75px 1fr 9fr;
+    grid-template-rows: 75px 0.75fr 9fr;
     grid-template-areas:
     "header header header"
     "sidebar tabs summary"
@@ -65,6 +65,9 @@
     grid-area: tabs;
 
     background-color: #E0A979;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 
 .tabbedGroup {
@@ -72,7 +75,6 @@
     justify-content: flex-end;
     padding: 10px 10px 0px 10px;
     border-bottom: 1px solid #C7A383;
-
 }
 
 .tabbedLink {
@@ -82,8 +84,9 @@
     padding: 10px;
     margin: 0 5px;
     color: #FFFFFF;
-    line-height: 20px;
+    /* line-height: 20px; */
     background-color: #E0A979;
+    font-size: 15px;
 }
 
 
@@ -214,7 +217,7 @@
 .summaryContainer {
     grid-area: summary;
     background-color: #C7A383;
-    padding: 5px;
+    padding: 15px;
     /* border-radius: 10px;
     margin: 5px 5px 5px 0; */
 
