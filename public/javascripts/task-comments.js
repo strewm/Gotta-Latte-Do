@@ -155,6 +155,7 @@ export const fetchTask = async (taskId) => {
         try {
 
             const editForm = document.querySelector('.edit-form');
+            editForm.hidden = false;
 
             const form = document.createElement('form');
             form.setAttribute('class', 'edit-task');
@@ -188,6 +189,7 @@ export const fetchTask = async (taskId) => {
 
                 try {
                     editTask(taskId, body);
+                    editForm.hidden = true;
 
                 } catch (e) {
                     console.error(e);
