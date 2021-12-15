@@ -1,4 +1,84 @@
-import { handleErrors } from "./utils.js";
+import { handleErrors, dateFormatter } from "./utils.js";
+import { fetchTasks } from './app.js';
+
+const deleteAllComments = async (taskId) => {
+    const commentsDiv = document.querySelector(`#comments-${taskId}`);
+    const commentsDivChildren = commentsDiv.children;
+
+    for (let i = 0; i < commentsDivChildren.length; i++) {
+        let commentId = commentsDivChildren[i].children[0].id;
+        let arr = commentId.split('-');
+        let id = arr[arr.length - 1];
+
+        try {
+            const res = await fetch(`/comments/${id}`, {
+                method: "DELETE",
+            })
+
+            if (res.status === 401) {
+                window.location.href = "/log-in";
+                return;
+              }
+            if (!res.ok) {
+                throw res;
+              }
+            } catch (err) {
+                handleErrors(err)
+            }
+    }
+
+    return;
+
+}
+
+const deleteTask = async (taskId) => {
+
+    await deleteAllComments(taskId);
+
+    try {
+        const res = await fetch(`/tasks/${taskId}`, {
+            method: "DELETE",
+        })
+
+        if (res.status === 401) {
+            window.location.href = "/log-in";
+            return;
+          }
+        if (!res.ok) {
+            throw res;
+          }
+          await fetchTasks(taskId);
+          return;
+        } catch (err) {
+            handleErrors(err)
+        }
+}
+
+const editTask = async (taskId, body) => {
+    try {
+        const res = await fetch(`/tasks/${taskId}`, {
+            method: "PUT",
+            body: JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+
+        if (res.status === 401) {
+            window.location.href = "/log-in";
+            return;
+          }
+        if (!res.ok) {
+            throw res;
+          }
+          await fetchTasks();
+        } catch (err) {
+            handleErrors(err)
+        }
+}
+
+
+
 
 export const fetchTask = async (taskId) => {
     const res = await fetch(`/tasks/${taskId}`);
@@ -8,79 +88,37 @@ export const fetchTask = async (taskId) => {
         return;
     }
 
-
-    const today = new Date().toJSON().slice(0,10)
-
-    let tomorrow = today.split('-');
-    let month = tomorrow[tomorrow.length - 2]
-    let day = tomorrow[tomorrow.length - 1]
-
-    // TODO - make sure new month and new day are in the correct format
-
-    if (day === '31' &&
-        (month === '01' ||
-        month === '03' ||
-        month === '05' ||
-        month === '07' ||
-        month === '08' ||
-        month === '10' ||
-        month === '12')) {
-            day = '01';
-            if (month !== '12') {
-                month = (Number(month) + 1).toString()
-            } else {
-                month = '01';
-            }
-    } else if (
-        day === '30' && (
-        month === '02' ||
-        month === '04' ||
-        month === '06' ||
-        month === '09' ||
-        month === '11' ))
-        {
-        day = '01';
-        month = (Number(month) + 1).toString()
-    } else {
-        day = (Number(day) + 1).toString();
-    }
-
-    tomorrow[tomorrow.length - 1] = day;
-    tomorrow[tomorrow.length - 2] = month;
-
-    tomorrow = tomorrow.join('-');
-
     const { task } = await res.json();
 
-    let due = task.dueDate;
 
-    if (task.dueDate.slice(0,10) === today) {
-        due = 'Today';
-    }
-
-    if (task.dueDate.slice(0,10) === tomorrow) {
-        due = 'Tomorrow';
-    }
-
-
+    const due = dateFormatter(task);
 
     const taskInfo = document.querySelector('.fiona');
-    if (!task.givenTo) task.givenTo = '';
+    // if (!task.givenTo) task.givenTo = '';
     const taskHtml = `
-        <div id='task-${task.id}' style="margin-left: 300px">
-            <button id="task-info">X</button>
-            <p>${task.description}</p>
-            <p>Task Completed? ${task.isCompleted}</p>
-            <p>Due: ${due}</p>
-            <p>${task.givenTo}</p>
+        <div class='task-${task.id} task-container' style="margin-left: 300px">
+            <div class='task-info-buttons'>
+                <button id="task-info">X</button>
+                <button id='edit-task-button-${task.id}' class='edit-task-butt'>Edit Task</button>
+                <button id='delete-task-button-${task.id}'>Delete Task</button>
+            </div>
 
-            <p>Comments</p>
-            <form class='create-comment'>
-                <label for='message'></label>
-                <input name='message' type='text' placeholder='Add a comment...'></input>
-                <input type='hidden' name='taskId' id='${task.id}' value=${task.id}></input>
-                <button type='submit' role='button'>Add Comment</button>
-            </form>
+            <div class='task-information-${task.id}'>
+                <p>${task.description}</p>
+                <p>Task Completed? ${task.isCompleted}</p>
+                <p>Due: ${due}</p>
+            </div>
+
+            <div class='comment-container-${task.id}'>
+                <p>Comments</p>
+                <form class='create-comment'>
+                    <label for='message'></label>
+                    <input name='message' type='text' placeholder='Add a comment...'></input>
+                    <input type='hidden' name='taskId' id='${task.id}' value=${task.id}></input>
+                    <button type='submit' role='button'>Add Comment</button>
+                </form>
+            </div>
+
             <div id='comments-${task.id}'></div>
         </div>
     `
@@ -92,8 +130,78 @@ export const fetchTask = async (taskId) => {
 
     hideTaskInfoButt.addEventListener('click', async (e) => {
         taskInfo.hidden = true;
+
+        let stateObj = { id: "100" }
+        window.history.replaceState(stateObj, "Task", `/app`)
     })
 
+    const deleteTaskButt = document.querySelector(`#delete-task-button-${task.id}`);
+
+    deleteTaskButt.addEventListener('click', async(e) => {
+        e.preventDefault();
+
+        deleteTask(task.id);
+        const taskInfo = document.querySelector(`.task-${task.id}`);
+        taskInfo.hidden = true;
+    })
+
+    const editTaskButt = document.querySelector(`#edit-task-button-${task.id}`);
+
+    editTaskButt.addEventListener('click', async(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('EDIT CLICK')
+        editTaskButt.disabled = true;
+
+        try {
+
+            const editForm = document.querySelector('.edit-form');
+
+            const form = document.createElement('form');
+            form.setAttribute('class', 'edit-task');
+            form.innerHTML = `
+                <label for='description'></label>
+                <input type='text' placeholder='${task.message}' id='description' name='description' required></input>
+                <label for='dueDate'>Due Date</label>
+                <input type='date' id='dueDate' name='dueDate' required></input>
+                <label for='isCompleted'>Completed?</label>
+                <input type='checkbox' id='checkbox' name='isComplicated'>
+                <button class='editTaskButton' type='submit'>Edit Task</button>
+            `
+            editForm.appendChild(form);
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+                const description = formData.get('description');
+                const dueDate = formData.get('dueDate');
+                const checkStatus = formData.get('isCompleted');
+                let isCompleted;
+
+                if (checkStatus === 'on') {
+                    isCompleted = true;
+                } else {
+                    isCompleted = false;
+                }
+
+                const body = { description, dueDate, isCompleted };
+
+                try {
+                    editTask(taskId, body);
+                    editForm.removeChild(form);
+                    editTaskButt.disabled = false;
+
+                } catch (e) {
+                    console.error(e);
+                }
+            })
+
+
+        } catch (e) {
+            console.error(e);
+        }
+    })
 
 }
 
@@ -107,17 +215,17 @@ export const fetchComments = async (taskId) => {
     const { comments } = await res.json();
 
     const commentsDiv = document.querySelector(`#comments-${taskId}`);
-    const commentsHtml = comments.map(({ id, userId, message }) => `
-        <div class="comment-container-${id} comment-container">
-            <span id='comment-${id}'>
-                <span id='comment-${id}-userId' class='comment-user'>
-                    ${userId}:
+    const commentsHtml = comments.map((comment) => `
+        <div class="comment-container-${comment.id} comment-container">
+            <span id='comment-${comment.id}'>
+                <span id='comment-${comment.id}-userId' class='comment-user'>
+                    ${comment.User.username}:
                 </span>
-                <span id='comment-${id}-message' class='comment-message'>${message}</span>
+                <span id='comment-${comment.id}-message' class='comment-message'>${comment.message}</span>
             </span>
-            <span class='comment-buttons-${id} comment-buttons'>
-                <button class='edit-comment-butt' id='${id}'>Edit
-                <button class='delete-comment-butt' id='${id}'>Delete</button>
+            <span class='comment-buttons-${comment.id} comment-buttons'>
+                <button class='edit-comment-butt' id='${comment.id}'>Edit
+                <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
             </span>
         </div>
     `
@@ -191,17 +299,19 @@ export const fetchComments = async (taskId) => {
                     }
                 })
 
+                const { comment } = await res.json();
 
-                const commentContainer = document.querySelector(`.comment-container-${commentId}`);
-                const userId = document.querySelector(`#comment-${commentId}-userId`).innerText
+
+                const commentContainer = document.querySelector(`.comment-container-${comment.id}`);
+                // const userId = document.querySelector(`#comment-${comment.id}-userId`).innerText
                 commentContainer.innerHTML = `
-                <span id='comment-${commentId}'>
-                    ${userId}
-                    <span id='comment-${commentId}-message'>${message}</span>
+                <span id='comment-${comment.id}'>
+                    ${comment.User.id}
+                    <span id='comment-${comment.id}-message'>${comment.message}</span>
                 </span>
-                <span class='comment-buttons-${commentId}'>
-                    <button class='edit-comment-butt' id='${commentId}'>Edit
-                    <button class='delete-comment-butt' id='${commentId}'>Delete</button>
+                <span class='comment-buttons-${comment.id}'>
+                    <button class='edit-comment-butt' id='${comment.id}'>Edit
+                    <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
                 </span>
                 `
                 await fetchComments(taskId);

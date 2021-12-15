@@ -2,8 +2,8 @@ import { handleErrors } from "./utils.js";
 import { fetchTask, fetchComments, postComment } from "./task-comments.js";
 
 
-const fetchTasks = async () => {
-    const res = await fetch("http://localhost:8080/tasks")
+export const fetchTasks = async () => {
+    const res = await fetch("/tasks")
 
     if (res.status === 401) {
         window.location.href = "/log-in";
@@ -25,7 +25,7 @@ const fetchTasks = async () => {
 
 const fetchContactTasks = async (id) => {
   console.log(id.id)
-  const res = await fetch(`http://localhost:8080/tasks/task/${id.id}`)
+  const res = await fetch(`/tasks/task/${id.id}`)
   console.log(id.id)
   if (res.status === 401) {
       window.location.href = "/log-in";
@@ -37,7 +37,7 @@ const fetchContactTasks = async (id) => {
   const tasksHtml = tasks.map(({ id, description }) => `
   <div>
       <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-      <label for=${id} class="task-check-box">${description}</label>
+      <label for=${id} class="task-check-box" id=${id}>${description}</label>
   </div>
   `)
 
@@ -54,6 +54,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tasksListContainer = document.querySelector(".task-list");
     tasksListContainer.addEventListener("click", async(e) => {
       const taskId = e.target.id;
+
+      let stateObj = { id: "100" }
+      window.history.replaceState(stateObj, "Task", `/tasks/#${taskId}`)
 
       try {
         await fetchTask(taskId);
@@ -117,7 +120,7 @@ form.addEventListener("submit", async (e) => {
     const body = { description, dueDate, isCompleted, givenTo, title }
 
     try {
-        const res = await fetch("http://localhost:8080/tasks", {
+        const res = await fetch("/tasks", {
             method: "POST",
             body: JSON.stringify(body),
             headers: {
@@ -241,6 +244,12 @@ window.addEventListener('DOMContentLoaded', async () => {
   window.addEventListener('click', () => {
     // console.log("outside of settings clicked!!!")
     document.querySelector('.settingGroup').classList.add('settingHide');
+
+    const editForm = document.querySelector('.edit-form');
+    const form = document.querySelector('.edit-task');
+    editForm.removeChild(form);
+    const editTaskButt = document.querySelector('.edit-task-butt');
+    editTaskButt.disabled = false;
   });
 
 })
@@ -253,7 +262,7 @@ signOutButton.addEventListener("click", async (e) => {
   console.log('hello')
   e.preventDefault();
   try {
-    await fetch("http://localhost:8080/users/logout", {
+    await fetch("/users/logout", {
       method: "POST"
     })
 
