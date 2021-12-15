@@ -232,11 +232,38 @@
     margin-left: 15px;
     cursor: pointer;
 }
+.list-lists {
+    color: #ffffff !important;
+    list-style: disc;
+    margin-left: 15px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
 
 .list-grid {
     display: grid;
     grid-template-columns: 90% 10%;
     color: #ffffff;
+}
+
+.lists-grid {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    color: #ffffff;
+}
+
+.delete-list {
+    color: #ffffff !important;
+    text-decoration: none;
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 1px 6px 3px 6px;
+
+}
+.delete-list:hover {
+    background-color: white;
+    color: #8A715B !important;
+    border: 1px solid #8A715B;
 }
 
 .delete-contact {

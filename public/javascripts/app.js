@@ -172,6 +172,28 @@ deleteContact.addEventListener("click", async (e) => {
   }
 })
 
+const deleteList = document.querySelector('.list-list-sidebar')
+
+deleteList.addEventListener("click", async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+  const targetRemoval = e.target.parentNode.parentNode
+  const deleteListId = e.target.id;
+
+  targetRemoval.remove();
+  try {
+    console.log(typeof deleteContactId)
+    console.log('delete thiiiiiiiis')
+    await fetch(`http://localhost:8080/lists/${deleteListId}`, {
+      method: "DELETE",
+    })
+
+  } catch (err) {
+    handleErrors(err)
+  }
+})
+
+
 const logoutButton = document.querySelector("#logout");
 
 window.addEventListener('DOMContentLoaded', async () => {

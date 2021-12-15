@@ -44,7 +44,16 @@ const validateLists = [
     } catch (e) {
         next()
     }
-
 }))
+
+  router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
+    const list = await List.findByPk(req.params.id);
+    if (list) {
+      await list.destroy()
+      res.status(204).end()
+    } else {
+      next(listNotFoundError(req.params.id))
+    }
+  }))
 
 module.exports = router;
