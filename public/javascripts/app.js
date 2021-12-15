@@ -201,23 +201,29 @@ deleteList.addEventListener("click", async (e) => {
     <h2>Edit List Name</h2>
     <div id='list-edit'>
       <form class='list-edit-form'>
-      <input type='text' class='list-edit' id=${listId} name=${listId} placeholder=${listName.title}>
-      <label for=${listId} class='list-label'${listName.title} </label>
-      <button type='submit'>Submit</button>
+      <input type='text' class='list-edit' id='title' name='title' placeholder=${listName.title}>
+      <label for='title' class='list-label'${listName.title} </label>
+      <button class='submitButton'>Submit</button>
       </form>
     </div>
       `
+      const listUpdate = document.querySelector('.list-edit-form')
+      listUpdate.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const formData = new FormData(listUpdate);
+        const title = formData.get('title')
+        const body = { title }
+        await fetch(`http://localhost:8080/lists/${listId}`, {
+          method: 'PATCH',
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+      })
   }
 })
-
-// const listEdit = document.querySelector('.list-lists');
-// const listForm = document.querySelector('.updateList');
-
-// listEdit.addEventListener('click', async (e) => {
-//   e.stopPropagation();
-//   e.preventDefault();
-//   const
-// })
 
 
 const logoutButton = document.querySelector("#logout");
@@ -233,7 +239,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   });
 
   window.addEventListener('click', () => {
-    console.log("outside of settings clicked!!!")
+    // console.log("outside of settings clicked!!!")
     document.querySelector('.settingGroup').classList.add('settingHide');
   });
 

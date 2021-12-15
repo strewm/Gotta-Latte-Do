@@ -49,6 +49,15 @@ const validateLists = [
         next()
     }
 }))
+  router.patch('/:id(\\d+)', asyncHandler(async (req, res) => {
+    const { title } = req.body;
+    const list = await List.findByPk(req.params.id);
+    await list.update({
+      title
+    })
+    res.status(200).json({list});
+  }))
+
 
   router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
     const list = await List.findByPk(req.params.id);
