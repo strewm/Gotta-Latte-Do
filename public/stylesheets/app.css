@@ -165,7 +165,6 @@
     margin: 20px 10px 20px 10px;
     padding: 15px;
     border-radius: 25px;
-    color: blue;
     background-color: #FAECDA;
 }
 
@@ -182,7 +181,7 @@ align-items: center; */
 
 /* Exit button */
 .task-container {
-    border: solid;
+    border: 1px solid #8A715B;
     font-size: 15px;
     padding: 10px;
 
@@ -200,15 +199,16 @@ align-items: center; */
 /* Task buttons  */
 .task-butts {
     border: 1px solid #8A715B;
-    font-size: 15px;
+    font-size: 12px;
     padding: 5px;
     border-radius: 5px;
-    /* margin: 5px; */
 
     color: #8A715B;
 }
 
-
+/* .task-butts-2 {
+    justify-self: flex-end;
+} */
 
 #task-info-x {
     font-weight: bold;
@@ -219,6 +219,63 @@ align-items: center; */
     justify-content: center;
     align-items: center;
 
+}
+
+.task-info-header {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* Comments section header  */
+.comment-header {
+    margin-bottom: 0;
+}
+
+/* Enter new comment field  */
+.create-comment {
+    margin: 5px 0 5px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.add-comment-field {
+    border: 1px solid #8A715B;
+    font-size: 12px;
+    padding: 3px;
+    border-radius: 5px;
+    width: 100%;
+
+    color: #8A715B;
+}
+
+.add-comment-butt {
+    border: 1px solid #8A715B;
+    font-size: 12px;
+    padding: 3px;
+    border-radius: 5px;
+    margin: 3px 0 3px 3px;
+
+    color: #8A715B;
+}
+
+/* Populated comments container  */
+.comment-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment-butts {
+    border: 1px solid #8A715B;
+    font-size: 12px;
+    padding: 3px;
+    border-radius: 5px;
+
+    color: #8A715B;
+}
+
+.createdAt {
+    font-size: 7px;
 }
 
 

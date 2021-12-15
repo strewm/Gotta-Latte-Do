@@ -106,24 +106,26 @@ export const fetchTask = async (taskId) => {
         <div class='task-${task.id} task-container'>
             <div class='task-info-buttons'>
                 <button id="task-info-x" class="task-butts">x</button>
-                <button id='edit-task-button-${task.id}' class="task-butts">Edit Task</button>
-                <button id='delete-task-button-${task.id}' class="task-butts">Delete Task</button>
+                <div class='task-edit-delete-butts'>
+                    <button id='edit-task-button-${task.id}' class="task-butts">Edit Task</button>
+                    <button id='delete-task-button-${task.id}' class="task-butts">Delete Task</button>
+                </div>
             </div>
 
             <div class='task-information-${task.id}'>
-                <p>Task: ${task.description}</p>
+                <p class='task-info-header'>${task.description}</p>
                 <label for="completedTask">Task Completed? </label>
                 <input type="checkbox" class="completedTask" name="completedTask">
                 <p>Due: ${due}</p>
             </div>
 
             <div class='comment-container-${task.id}'>
-                <p>Comments</p>
+                <p class='comment-header'>Comments:</p>
                 <form class='create-comment'>
                     <label for='message'></label>
-                    <input name='message' type='text' placeholder='Add a comment...'></input>
+                    <input name='message' type='text' placeholder='Add a comment...' class='add-comment-field'></input>
                     <input type='hidden' name='taskId' id='${task.id}' value=${task.id}></input>
-                    <button type='submit' role='button'>Add Comment</button>
+                    <button type='submit' role='button' class='add-comment-butt'>Add Comment</button>
                 </form>
             </div>
 
@@ -141,7 +143,7 @@ export const fetchTask = async (taskId) => {
     } else {
         check.checked = false;
     }
-    
+
     const hideTaskInfoButt = document.querySelector('#task-info-x');
 
     hideTaskInfoButt.addEventListener('click', async (e) => {
@@ -240,10 +242,11 @@ export const fetchComments = async (taskId) => {
                 <span id='comment-${comment.id}-message' class='comment-message'>${comment.message}</span>
             </span>
             <span class='comment-buttons-${comment.id} comment-buttons'>
-                <button class='edit-comment-butt' id='${comment.id}'>Edit
-                <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
+                <button class='edit-comment-butt comment-butts' id='${comment.id}'>Edit</button>
+                <button class='delete-comment-butt comment-butts' id='${comment.id}'>Delete</button>
             </span>
         </div>
+        <div class='createdAt'>${comment.createdAt}</div>
     `
     )
 
