@@ -54,6 +54,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     tasksListContainer.addEventListener("click", async(e) => {
       const taskId = e.target.id;
 
+      let stateObj = { id: "100" }
+      window.history.replaceState(stateObj, "Task", `/tasks/#${taskId}`)
+
       try {
         await fetchTask(taskId);
 

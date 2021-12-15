@@ -92,6 +92,9 @@ export const fetchTask = async (taskId) => {
 
     hideTaskInfoButt.addEventListener('click', async (e) => {
         taskInfo.hidden = true;
+
+        let stateObj = { id: "100" }
+        window.history.replaceState(stateObj, "Task", `/app`)
     })
 
 
