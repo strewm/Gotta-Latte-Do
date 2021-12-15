@@ -46,7 +46,11 @@ router.put(
     handleValidationErrors,
     asyncHandler(async (req, res) => {
         const { message } = req.body;
-        const comment = await Comment.findByPk(req.params.id);
+        const comment = await Comment.findByPk(req.params.id, {
+            include: [
+                {model: User}
+            ]
+        });
         await comment.update({ message });
         res.json({ comment });
     }

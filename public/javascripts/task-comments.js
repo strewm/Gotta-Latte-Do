@@ -54,6 +54,29 @@ const deleteTask = async (taskId) => {
         }
 }
 
+const editTask = async (taskId, body) => {
+    try {
+        const res = await fetch(`/tasks/${taskId}`, {
+            method: "PUT",
+            body: JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+
+        if (res.status === 401) {
+            window.location.href = "/log-in";
+            return;
+          }
+        if (!res.ok) {
+            throw res;
+          }
+          await fetchTasks();
+        } catch (err) {
+            handleErrors(err)
+        }
+}
+
 
 
 
@@ -120,6 +143,63 @@ export const fetchTask = async (taskId) => {
         deleteTask(task.id);
         const taskInfo = document.querySelector(`.task-${task.id}`);
         taskInfo.hidden = true;
+    })
+
+    const editTaskButt = document.querySelector(`#edit-task-button-${task.id}`);
+    console.log(editTaskButt);
+
+    editTaskButt.addEventListener('click', async(e) => {
+        e.preventDefault();
+        console.log('EDIT CLICK')
+
+        try {
+
+            const editForm = document.querySelector('.edit-form');
+            editForm.hidden = false;
+
+            const form = document.createElement('form');
+            form.setAttribute('class', 'edit-task');
+            form.innerHTML = `
+                <label for='description'></label>
+                <input type='text' placeholder='${task.message}' id='description' name='description' required></input>
+                <label for='dueDate'>Due Date</label>
+                <input type='date' id='dueDate' name='dueDate' required></input>
+                <label for='isCompleted'>Completed?</label>
+                <input type='checkbox' id='checkbox' name='isComplicated'>
+                <button class='editTaskButton' type='submit'>Edit Task</button>
+            `
+            editForm.appendChild(form);
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+                const description = formData.get('description');
+                const dueDate = formData.get('dueDate');
+                const checkStatus = formData.get('isCompleted');
+                let isCompleted;
+
+                if (checkStatus === 'on') {
+                    isCompleted = true;
+                } else {
+                    isCompleted = false;
+                }
+
+                const body = { description, dueDate, isCompleted };
+
+                try {
+                    editTask(taskId, body);
+                    editForm.hidden = true;
+
+                } catch (e) {
+                    console.error(e);
+                }
+            })
+
+
+        } catch (e) {
+            console.error(e);
+        }
     })
 
 }
@@ -218,17 +298,19 @@ export const fetchComments = async (taskId) => {
                     }
                 })
 
+                const { comment } = await res.json();
 
-                const commentContainer = document.querySelector(`.comment-container-${commentId}`);
-                const userId = document.querySelector(`#comment-${commentId}-userId`).innerText
+
+                const commentContainer = document.querySelector(`.comment-container-${comment.id}`);
+                // const userId = document.querySelector(`#comment-${comment.id}-userId`).innerText
                 commentContainer.innerHTML = `
-                <span id='comment-${commentId}'>
-                    ${userId}
-                    <span id='comment-${commentId}-message'>${message}</span>
+                <span id='comment-${comment.id}'>
+                    ${comment.User.id}
+                    <span id='comment-${comment.id}-message'>${comment.message}</span>
                 </span>
-                <span class='comment-buttons-${commentId}'>
-                    <button class='edit-comment-butt' id='${commentId}'>Edit
-                    <button class='delete-comment-butt' id='${commentId}'>Delete</button>
+                <span class='comment-buttons-${comment.id}'>
+                    <button class='edit-comment-butt' id='${comment.id}'>Edit
+                    <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
                 </span>
                 `
                 await fetchComments(taskId);
