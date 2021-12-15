@@ -176,20 +176,48 @@ const deleteList = document.querySelector('.list-list-sidebar')
 deleteList.addEventListener("click", async (e) => {
   e.stopPropagation();
   e.preventDefault();
-  const targetRemoval = e.target.parentNode.parentNode
   const deleteListId = e.target.id;
+  if (e.target.innerText === '-') {
+    const targetRemoval = e.target.parentNode.parentNode
+    targetRemoval.remove();
+    try {
 
-  targetRemoval.remove();
-  try {
+      await fetch(`http://localhost:8080/lists/${deleteListId}`, {
+        method: "DELETE",
+      })
 
-    await fetch(`http://localhost:8080/lists/${deleteListId}`, {
-      method: "DELETE",
+    } catch (err) {
+      handleErrors(err)
+    }
+  } else if (e.target.className === 'list-lists') {
+    const listId = e.target.id;
+    const listForm = document.querySelector('.updateList');
+    const listTitle = await fetch(`http://localhost:8080/lists/${listId}`, {
+      method: "GET",
     })
-
-  } catch (err) {
-    handleErrors(err)
+    const { listName } = await listTitle.json();
+    console.log(listName);
+    listForm.innerHTML = `
+    <h2>Edit List Name</h2>
+    <div id='list-edit'>
+      <form class='list-edit-form'>
+      <input type='text' class='list-edit' id=${listId} name=${listId} placeholder=${listName.title}>
+      <label for=${listId} class='list-label'${listName.title} </label>
+      <button type='submit'>Submit</button>
+      </form>
+    </div>
+      `
   }
 })
+
+// const listEdit = document.querySelector('.list-lists');
+// const listForm = document.querySelector('.updateList');
+
+// listEdit.addEventListener('click', async (e) => {
+//   e.stopPropagation();
+//   e.preventDefault();
+//   const
+// })
 
 
 const logoutButton = document.querySelector("#logout");

@@ -20,7 +20,11 @@ const validateLists = [
     error.status = 404;
     return error;
   }
-
+  router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
+    const listId = req.params.id
+    const listName = await List.findByPk(listId);
+    res.status(200).json({listName});
+  }))
 
   router.get('/new', csrfProtection, asyncHandler(async (req, res, next) => {
     if(!res.locals.userId) {
