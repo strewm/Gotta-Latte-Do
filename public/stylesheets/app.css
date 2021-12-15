@@ -80,7 +80,7 @@
 .tabbedLink {
     border: 1px solid #C7A383;
     border-bottom: 0;
-    border-radius: 2px;
+    border-radius: 5px;
     padding: 10px;
     margin: 0 5px;
     color: #FFFFFF;
@@ -108,9 +108,13 @@
 
 .my-tasks h1 {
     padding: 15px;
+    margin: 0px;
+    border-top: 1px solid #C7A383;
+    border-bottom: 1px dotted #C7A383;
 
     background-color: #FAECDA;
     color: #8A715B;
+    font-size: 25px;
     /* margin: 15px 0px 0px 0px; */
 }
 
@@ -122,10 +126,10 @@
     align-items: flex-start;
 }
 
-.descripLabel, .dueDateLabel, .isCompletedLabel {
+.descripLabel, .dueDateLabel, .isCompletedLabel, .contactsLabel {
     font-size: 15px;
     color: #8A715B;
-    /* padding: 5px; */
+    padding: 5px;
 }
 
 .descrip, .dueDate, .createTaskButton {
@@ -136,10 +140,12 @@
     border: 2px solid #8A715B;
 }
 
-/* .descrip {
-    padding: 2px;
+.descrip {
+    padding: 5px;
+    width: 550px;
 }
 
+/*
 .dueDate {
     font-size: 15px;
 }
@@ -164,36 +170,16 @@
     background-color: #fff;
 }
 
-/* .my-tasks > h1 {
-    color: blue;
-
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-} */
-
 
 
 /* %%%%%%%%%%%%%%%%%%%%% Sidebar (left): Lists / organization %%%%%%%%%%%%%%%%%%%%% */
-/* .sidebar {
-    background-color: #C7A383;
-    color: #FFFFFF;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 1px;
-} */
 
-.logo {
-    height: 175px;
-    width: auto;
-    transform: rotate(-90deg);
-    background-color: #C7A383;
-    margin-left: 25px;
-    padding: 0;
-}
+/* .logo {
+    height: auto;
+    width: 150px;
+    transform: rotate(-90deg); /* This is messing w image placement, make new rotated file*/
+    /* background-color: #C7A383;
+} */
 
 .sidebar {
     grid-area: sidebar;
@@ -202,9 +188,10 @@
     color: #FFFFFF;
     font-size: 12px;
     padding: 20px;
-    /* height: 100%;
-    width: 200px;
-    position: fixed; */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .sidebar ul:hover {
