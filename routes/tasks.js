@@ -118,8 +118,9 @@ router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, r
 
 router.get('/:id(\\d+)', asyncHandler(async(req, res, next) => {
   const task = await Task.findByPk(req.params.id);
+
   if (task) {
-    res.json({task});
+    res.json({ task });
   } else {
     next(taskNotFoundError(req.params.id));
   }

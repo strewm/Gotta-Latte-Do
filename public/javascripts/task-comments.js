@@ -71,7 +71,7 @@ export const fetchTask = async (taskId) => {
     const due = dateFormatter(task);
 
     const taskInfo = document.querySelector('.fiona');
-    if (!task.givenTo) task.givenTo = '';
+    // if (!task.givenTo) task.givenTo = '';
     const taskHtml = `
         <div class='task-${task.id} task-info' style="margin-left: 300px">
             <div class='task-info-buttons'>
@@ -84,7 +84,6 @@ export const fetchTask = async (taskId) => {
                 <p>${task.description}</p>
                 <p>Task Completed? ${task.isCompleted}</p>
                 <p>Due: ${due}</p>
-                <p>${task.givenTo}</p>
             </div>
 
             <div class='comment-container-${task.id}'>
@@ -135,17 +134,17 @@ export const fetchComments = async (taskId) => {
     const { comments } = await res.json();
 
     const commentsDiv = document.querySelector(`#comments-${taskId}`);
-    const commentsHtml = comments.map(({ id, userId, message }) => `
-        <div class="comment-container-${id} comment-container">
-            <span id='comment-${id}'>
-                <span id='comment-${id}-userId' class='comment-user'>
-                    ${userId}:
+    const commentsHtml = comments.map((comment) => `
+        <div class="comment-container-${comment.id} comment-container">
+            <span id='comment-${comment.id}'>
+                <span id='comment-${comment.id}-userId' class='comment-user'>
+                    ${comment.User.username}:
                 </span>
-                <span id='comment-${id}-message' class='comment-message'>${message}</span>
+                <span id='comment-${comment.id}-message' class='comment-message'>${comment.message}</span>
             </span>
-            <span class='comment-buttons-${id} comment-buttons'>
-                <button class='edit-comment-butt' id='${id}'>Edit
-                <button class='delete-comment-butt' id='${id}'>Delete</button>
+            <span class='comment-buttons-${comment.id} comment-buttons'>
+                <button class='edit-comment-butt' id='${comment.id}'>Edit
+                <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
             </span>
         </div>
     `
