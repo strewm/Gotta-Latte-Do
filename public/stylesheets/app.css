@@ -5,9 +5,21 @@
     /* font-weight: 3; */
 }
 
+.page {
+    display: grid;
+    grid-template-columns: 1.5fr 4fr 2fr;
+    grid-template-rows: 75px 1fr 9fr;
+    grid-template-areas:
+    "header header header"
+    "sidebar tabs summary"
+    "sidebar main summary";
+}
+
 
 /* %%%%%%%%%%%%%%%%%%%%% Navigation bar %%%%%%%%%%%%%%%%%%%%% */
 .navbar {
+    grid-area: header;
+
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
@@ -45,6 +57,8 @@
 
 /* %%%%%%%%%%%%%%%%%%%%% MAIN: Tabbed containers %%%%%%%%%%%%%%%%%%%%% */
 .tabbedContainer {
+    grid-area: tabs;
+
     background-color: #E0A979;
 }
 
@@ -53,6 +67,7 @@
     justify-content: flex-end;
     padding: 10px 10px 0px 10px;
     border-bottom: 1px solid #C7A383;
+    margin-left: 200px;
 }
 
 .tabbedLink {
@@ -68,13 +83,20 @@
 
 
 /* %%%%%%%%%%%%%%%%%%%%% MAIN: Task area %%%%%%%%%%%%%%%%%%%%% */
+.mainContainer {
+    grid-area: main;
+    background-color: #FAECDA;
+
+    /* display: flex;
+    justify-content: flex-start; */
+}
+
 .taskContainer {
-    margin-left: 200px;
     padding: 15px;
 
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+
     align-items: flex-start;
 }
 
@@ -105,7 +127,7 @@
 } */
 
 
-/* %%%%%%%%%%%%%%%%%%%%% SIDEBAR: Lists / organization %%%%%%%%%%%%%%%%%%%%% */
+/* %%%%%%%%%%%%%%%%%%%%% Sidebar (left): Lists / organization %%%%%%%%%%%%%%%%%%%%% */
 /* .sidebar {
     background-color: #C7A383;
     color: #FFFFFF;
@@ -117,24 +139,52 @@
     padding: 1px;
 } */
 
+.logo {
+    height: 175px;
+    width: auto;
+    transform: rotate(-90deg);
+    background-color: #C7A383;
+    margin-left: 25px;
+    padding: 0;
+}
 
 .sidebar {
+    grid-area: sidebar;
+
     background-color: #C7A383;
     color: #FFFFFF;
     font-size: 12px;
     padding: 20px;
-    height: 100%;
+    /* height: 100%;
     width: 200px;
-    position: fixed;
+    position: fixed; */
 }
 
 .sidebar ul:hover {
     color: #E0A979;
 }
 
+
+
+/* %%%%%%%%%%%%%%%%%%%%% Second sidebar (right): Summary %%%%%%%%%%%%%%%%%%%%% */
+.summaryContainer {
+    grid-area: summary;
+    background-color: #C7A383;
+    padding: 5px;
+    /* border-radius: 10px;
+    margin: 5px 5px 5px 0; */
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+
+
+
 /* %%%%%%%%%%%%%%%%%%%%% Tasks Section %%%%%%%%%%%%%%%%%%%%% */
 .task-list {
-    margin-left: 200px;
     padding: 15px;
     display: flex;
     flex-direction: column;
@@ -178,8 +228,13 @@
     margin-bottom: 5px;
 }
 
-#user {
+/* #settings:hover {
+    background-color:blue;
+} */
+
+#userName {
     padding-left: 5px;
+    font-weight: bold;
 }
 
 .settingHeader, .settingListGroup, #signOut {
@@ -189,6 +244,10 @@
 
 .settingHeader {
     font-size: 15px;
+}
+
+.settingListGroup {
+    padding: 5px;
 }
 
 .settingList a {

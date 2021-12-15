@@ -94,12 +94,12 @@ window.addEventListener('DOMContentLoaded', async () => {
   settings.addEventListener('click', event => {
     console.log("settings clicked!!!")
     event.stopPropagation();
-    document.querySelector('.settingGroup').classList.remove('.settingHide');
+    document.querySelector('.settingGroup').classList.remove('settingHide');
   });
 
   window.addEventListener('click', () => {
     console.log("outside of settings clicked!!!")
-    document.querySelector('.settingGroup').classList.add('.settingHide');
+    document.querySelector('.settingGroup').classList.add('settingHide');
   });
 
 })
@@ -109,17 +109,15 @@ window.addEventListener('DOMContentLoaded', async () => {
 const signOutButton = document.querySelector("#signOut");
 
 signOutButton.addEventListener("click", async (e) => {
-    console.log('hello')
-    e.preventDefault();
-    try {
-      await fetch("http://localhost:8080/users/logout", {
-        method: "POST"
-      })
+  console.log('hello')
+  e.preventDefault();
+  try {
+    await fetch("http://localhost:8080/users/logout", {
+      method: "POST"
+    })
 
-      window.location.href = "/";
-
-
-    }catch (err) {
-      handleErrors(err)
+    window.location.href = "/";
+  } catch (err) {
+    handleErrors(err)
   }
 })

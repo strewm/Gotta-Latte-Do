@@ -19,13 +19,13 @@ block content
                         div.settingHeader#userName= locals.currUser.username
                         //- div.settingHead#userEmail= locals.currUser.email
                     ul.settingListGroup
-                        li.settingList: a(href='/#') Notifications
-                        li.settingList: a(href='/#') Help
-                        li.settingList: a(href='/#') Keyboard shortcuts
-                        li.settingList: a(href='/#') Account Settings
+                        li.settingList: a(href='/') Notifications
+                        li.settingList: a(href='/') Help
+                        li.settingList: a(href='/') Keyboard shortcuts
+                        li.settingList: a(href='/') Account Settings
                         li.settingList: button#signOut(type='submit') Sign Out
-            //- button.navbar#logout(type='submit') Logout
         div.sidebar
+            img.logo(src="../images/maybe_logo.png")
             ul Inbox
                 //- li All Tasks
                 //- li Today
@@ -38,9 +38,11 @@ block content
             div.tabbedGroup
                 a.tabbedLink#incomplete Incomplete
                 a.tabbedLink#complete Complete
-        include includes/add-task
-        .task-list
-        .fiona
-        .tanner
-        .tanner
+        div.summaryContainer
+            h2 Search
+            div.summary#tasksDue Tasks
+            div.summary#tasksOverDue Overdue
+        div.mainContainer
+            include includes/add-task
+            .task-list
     script(type="module" src="javascripts/app.js")
