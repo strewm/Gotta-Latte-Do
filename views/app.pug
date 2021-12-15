@@ -48,7 +48,11 @@ block content
               div.contact-list-sidebar
                 li.contact-list(id=`${me}`)=myName.username + " (me)"
                 each contact in contactsAll
-                  li.contact-list(id=`${contact.id}`)=contact.username
+                  div.list-grid
+                    div
+                      li.contact-list(id=`${contact.id}`)=contact.username
+                    div
+                      a.delete-contact(id=`${contact.id}`) -
         div.tabbedContainer
             div.tabbedGroup
                 a.tabbedLink#incomplete Incomplete

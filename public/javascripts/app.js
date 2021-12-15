@@ -139,13 +139,31 @@ form.addEventListener("submit", async (e) => {
     }
 })
 
-
+// switch between your tasks and your contact's tasks
 const contacts = document.querySelector('.contact-list-sidebar')
 
 contacts.addEventListener("click", async (e) => {
   const target = e.target;
   console.log(target)
   fetchContactTasks(target)
+})
+
+
+const deleteContact = document.querySelector('.list-grid')
+
+deleteContact.addEventListener("click", async (e) => {
+  e.stopPropagation();
+  const deleteContactId = e.target.id;
+
+  try {
+    console.log(typeof deleteContactId)
+    console.log('delete thiiiiiiiis')
+    await fetch(`http://localhost:8080/contacts/${deleteContactId}`, {
+      method: "DELETE",
+    })
+  } catch (err) {
+    handleErrors(err)
+  }
 })
 
 const logoutButton = document.querySelector("#logout");

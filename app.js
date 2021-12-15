@@ -50,6 +50,7 @@ app.use('/users', usersRouter);
 app.use('/tasks', taskRouter);
 app.use(commentsRouter);
 app.use('/add-contacts', contactsRouter);
+app.use('/contacts', contactsRouter)
 app.use('/lists', listRouter);
 
 
