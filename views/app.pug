@@ -33,16 +33,39 @@ block content
                 //- li This Week
                 //- li Given to Others
             ul Lists
-            ul Contacts
+            ul
+              div.contact-sidebar
+                div Contacts
+                div
+                  a.add-contacts(href='/add-contacts') +
+              div.contact-list-sidebar
+                li.contact-list(id=`${me}`)=myName.username + " (me)"
+                each contact in contactsAll
+                  li.contact-list(id=`${contact.id}`)=contact.username
         div.tabbedContainer
             div.tabbedGroup
                 a.tabbedLink#incomplete Incomplete
                 a.tabbedLink#complete Complete
+
         div.summaryContainer
             h2 Search
             div.summary#tasksDue Tasks
             div.summary#tasksOverDue Overdue
         div.mainContainer
             include includes/add-task
+            div.my-tasks
+              h1 My tasks
             .task-list
+            .fiona
+            .tanner
+
+
+        //- include includes/add-task
+        //- div.my-tasks
+        //-  h1 My tasks
+        //- .task-list
+        //- .fiona
+        //- .tanner
+        //- .tanner
+
     script(type="module" src="javascripts/app.js")

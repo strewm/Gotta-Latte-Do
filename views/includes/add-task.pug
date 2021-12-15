@@ -8,9 +8,9 @@ form(class='create-task')
         input.dueDate(type="date", id="dueDate", name="dueDate" required=true)
         label.isCompletedLabel(for="isCompleted") Completed?
         input.isCompleted(type="checkbox", id="checkbox", name="isCompleted")
-        //- label.contactsLabel(for="givenTo") Contacts
-        //- select(id="givenTo", name="givenTo")
-        //-     option(value="" selected)
-        //-     each contact in contactsAll
-        //-         option(value=contact.username)= contact.username
+        label.contactsLabel(for="givenTo") Contacts
+        select(id="givenTo", name="givenTo")
+             option(value="" selected)
+             each contact in contactsAll
+                 option(value=contact.username)= contact.username
         button.createTaskButton(type='submit') Create Task

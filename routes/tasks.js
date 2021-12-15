@@ -44,30 +44,73 @@ router.post('/users/:id(\\d+)/tasks', validateTask, handleValidationErrors, csrf
 
 router.get('/', asyncHandler(async(req, res) => {
   const userId = res.locals.userId
-  console.log(userId)
+
   const tasks = await Task.findAll({
     where: {
-      userId
+      userId,
+      givenTo: null,
     }
   })
   res.status(201).json({tasks});
 
 }));
 
+router.get('/task/:id(\\d+)', asyncHandler(async(req, res) => {
+  const givenTo = parseInt(req.params.id, 10);
+  const userId = res.locals.userId;
+
+  if(givenTo === userId) {
+    const tasks = await Task.findAll({
+      where: {
+        userId,
+        givenTo: null
+      }
+    })
+    res.status(201).json({tasks});
+  } else {
+    const tasks = await Task.findAll({
+      where: {
+        userId,
+        givenTo,
+      }
+    })
+    res.status(201).json({tasks});
+
+  }
+
+}));
+
 router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, res) => {
   const { description, dueDate, isCompleted, givenTo } = req.body;
   const userId = res.locals.userId
-  const task = await Task.create({
-    userId,
-    description,
-    dueDate,
-    isCompleted,
-    givenTo
-  })
-  res.status(201).json({task});
+  if(givenTo.length) {
+    const contactId = await User.findAll({
+      where: {
+        username: givenTo
+      }
+    })
+
+    const task = await Task.create({
+      userId,
+      description,
+      dueDate,
+      isCompleted,
+      givenTo: contactId[0].id
+    })
+    res.status(201).json({task});
+  } else {
+    const task = await Task.create({
+      userId,
+      description,
+      dueDate,
+      isCompleted
+    })
+    res.status(201).json({task});
+  }
+
 }));
 
-router.get('/tasks/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
+router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
   const task = await Task.findByPk(req.params.id);
   if (task) {
     res.json({task});
@@ -76,7 +119,7 @@ router.get('/tasks/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next
   }
 }))
 
-router.put ('/tasks/:id(\\d+)', csrfProtection, validateTask, handleValidationErrors, asyncHandler(async(req, res, next) => {
+router.put ('/:id(\\d+)', csrfProtection, validateTask, handleValidationErrors, asyncHandler(async(req, res, next) => {
   const { description, dueDate, givenTo } = req.body;
   const task = await Task.findByPk(req.params.id);
   if (task) {
@@ -92,7 +135,7 @@ router.put ('/tasks/:id(\\d+)', csrfProtection, validateTask, handleValidationEr
 }))
 
 
-router.delete('/tasks/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
+router.delete('/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
   const task = await Task.findByPk(req.params.id);
   if (task) {
     await task.destroy()
