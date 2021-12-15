@@ -26,10 +26,13 @@ export const fetchTask = async (taskId) => {
         month === '10' ||
         month === '12')) {
             day = '01';
-            if (month !== '12') {
+            if (month !== '12' && Number(month) >= 9) {
                 month = (Number(month) + 1).toString()
-            } else {
+            } else if (month === '12') {
                 month = '01';
+            }
+            else {
+                month = '0' + (Number(month) + 1).toString();
             }
     } else if (
         day === '30' && (
@@ -40,9 +43,17 @@ export const fetchTask = async (taskId) => {
         month === '11' ))
         {
         day = '01';
-        month = (Number(month) + 1).toString()
+        if (Number(month) <= 9) {
+            month = (Number(month) + 1).toString()
+        } else {
+            month = '0' + (Number(month) + 1).toString();
+        }
     } else {
-        day = (Number(day) + 1).toString();
+        if (Number(day) >= 9) {
+            day = (Number(day) + 1).toString();
+        } else {
+            day = '0' + (Number(day) + 1).toString();
+        }
     }
 
     tomorrow[tomorrow.length - 1] = day;
@@ -52,16 +63,19 @@ export const fetchTask = async (taskId) => {
 
     const { task } = await res.json();
 
-    let due = task.dueDate;
+    let due = task.dueDate.slice(0,10);
 
-    if (task.dueDate.slice(0,10) === today) {
+    if (due === today) {
         due = 'Today';
     }
 
-    if (task.dueDate.slice(0,10) === tomorrow) {
+    if (due === tomorrow) {
         due = 'Tomorrow';
     }
 
+    if (Number(due.slice(9)) < Number(today.slice(9))) {
+        due = 'OVERDUE!'
+    }
 
 
     const taskInfo = document.querySelector('.fiona');
