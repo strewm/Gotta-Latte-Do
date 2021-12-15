@@ -103,8 +103,10 @@ form.addEventListener("submit", async (e) => {
     const dueDate = formData.get("dueDate")
     const checkStatus = formData.get("isCompleted")
     const givenTo = formData.get("givenTo")
+    const title = formData.get("title");
     let isCompleted;
 
+    console.log(title)
 
     //convert checkbox to boolean value
     if (checkStatus === 'on') {
@@ -115,7 +117,7 @@ form.addEventListener("submit", async (e) => {
 
 
 
-    const body = { description, dueDate, isCompleted, givenTo }
+    const body = { description, dueDate, isCompleted, givenTo, title }
 
     try {
         const res = await fetch("/tasks", {
@@ -142,7 +144,7 @@ form.addEventListener("submit", async (e) => {
     }
 })
 
-
+// switch between your tasks and your contact's tasks
 const contacts = document.querySelector('.contact-list-sidebar')
 
 contacts.addEventListener("click", async (e) => {
@@ -150,6 +152,82 @@ contacts.addEventListener("click", async (e) => {
   console.log(target)
   fetchContactTasks(target)
 })
+
+
+const deleteContact = document.querySelector('.contact-list-sidebar')
+
+deleteContact.addEventListener("click", async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+  const targetRemoval = e.target.parentNode.parentNode
+  const deleteContactId = e.target.id;
+
+  targetRemoval.remove();
+  try {
+
+    await fetch(`http://localhost:8080/contacts/${deleteContactId}`, {
+      method: "DELETE",
+    })
+
+  } catch (err) {
+    handleErrors(err)
+  }
+})
+
+const deleteList = document.querySelector('.list-list-sidebar')
+
+deleteList.addEventListener("click", async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+  const deleteListId = e.target.id;
+  if (e.target.innerText === '-') {
+    const targetRemoval = e.target.parentNode.parentNode
+    targetRemoval.remove();
+    try {
+
+      await fetch(`http://localhost:8080/lists/${deleteListId}`, {
+        method: "DELETE",
+      })
+
+    } catch (err) {
+      handleErrors(err)
+    }
+  } else if (e.target.className === 'list-lists') {
+    const listId = e.target.id;
+    const listForm = document.querySelector('.updateList');
+    const listTitle = await fetch(`http://localhost:8080/lists/${listId}`, {
+      method: "GET",
+    })
+    const { listName } = await listTitle.json();
+    console.log(listName);
+    listForm.innerHTML = `
+    <h2>Edit List Name</h2>
+    <div id='list-edit'>
+      <form class='list-edit-form'>
+      <input type='text' class='list-edit' id='title' name='title' placeholder=${listName.title}>
+      <label for='title' class='list-label'${listName.title} </label>
+      <button class='submitButton'>Submit</button>
+      </form>
+    </div>
+      `
+      const listUpdate = document.querySelector('.list-edit-form')
+      listUpdate.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const formData = new FormData(listUpdate);
+        const title = formData.get('title')
+        const body = { title }
+        await fetch(`http://localhost:8080/lists/${listId}`, {
+          method: 'PATCH',
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+      })
+  }
+})
+
 
 const logoutButton = document.querySelector("#logout");
 

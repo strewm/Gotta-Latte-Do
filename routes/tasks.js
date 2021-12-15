@@ -3,7 +3,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 const db = require('../db/models');
 const { asyncHandler, csrfProtection, handleValidationErrors } = require('../utils');
-const { Task, User } = db;
+const { Task, User, TaskList, List } = db;
 
 
 const validateTask = [
@@ -84,7 +84,8 @@ router.get('/task/:id(\\d+)', asyncHandler(async(req, res) => {
 }));
 
 router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, res) => {
-  const { description, dueDate, isCompleted, givenTo } = req.body;
+  const { description, dueDate, isCompleted, givenTo, title } = req.body;
+  console.log('This is the title', title);
   const userId = res.locals.userId
   if(givenTo.length) {
     const contactId = await User.findAll({
@@ -111,7 +112,23 @@ router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, r
       dueDate,
       isCompleted
     })
-    res.status(201).json({task});
+
+    const listInfo = await List.findAll({
+      where: {
+        title
+      }
+    })
+    
+
+    const taskId = task.id
+    const listId = listInfo[0].id
+
+    const taskList = await TaskList.create({
+      taskId,
+      listId
+    })
+
+    res.status(201).json({task, taskList});
   }
 
 }));

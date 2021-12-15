@@ -43,5 +43,16 @@ router.post('/', asyncHandler(async (req, res, next) => {
 
 }))
 
+router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
+  const contactId = req.params.id;
+  if (contactId) {
+    await Contact.destroy({
+      where: {
+        contactId
+      }
+    })
+  }
+}))
+
 
 module.exports = router;

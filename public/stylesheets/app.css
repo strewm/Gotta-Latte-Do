@@ -359,11 +359,81 @@ align-items: center; */
     border: 1px solid #8A715B;
 }
 
+.add-lists {
+    color: #ffffff !important;
+    text-decoration: none;
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 1px 4px;
+}
+
+.add-lists:hover {
+    background-color: white;
+    color: #8A715B !important;
+    border: 1px solid #8A715B;
+}
+
+.list-list {
+    color: #ffffff !important;
+    list-style: disc;
+    margin-left: 15px;
+    cursor: pointer;
+}
+.list-lists {
+    color: #ffffff !important;
+    list-style: disc;
+    margin-left: 15px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.list-grid {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    color: #ffffff;
+}
+
+.lists-grid {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    color: #ffffff;
+}
+
+.delete-list {
+    color: #ffffff !important;
+    text-decoration: none;
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 1px 6px 3px 6px;
+
+}
+.delete-list:hover {
+    background-color: white;
+    color: #8A715B !important;
+    border: 1px solid #8A715B;
+}
+
+.delete-contact {
+    color: #ffffff !important;
+    text-decoration: none;
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 1px 6px 3px 6px;
+
+}
+
+.delete-contact:hover {
+    background-color: white;
+    color: #8A715B !important;
+    border: 1px solid #8A715B;
+}
+
 .contact-list {
     color: #ffffff !important;
     list-style: disc;
     margin-left: 15px;
     cursor: pointer;
+    margin-bottom: 5px;
 
 }
 
@@ -373,7 +443,32 @@ align-items: center; */
     color: #ffffff;
 }
 
+.list-sidebar {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    color: #ffffff;
+}
 
+
+
+/* %%%%%%%%%%%%%%%%%%%%% Tasks Section %%%%%%%%%%%%%%%%%%%%% */
+.task-list {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.task-check-box {
+    background-color: #fff;
+}
+
+.taskList {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    width: 250px;
+}
 
 /* %%%%%%%%%%%%%%%%%%%%% Settings Dropdown %%%%%%%%%%%%%%%%%%%%% */
 #settingsGear {
