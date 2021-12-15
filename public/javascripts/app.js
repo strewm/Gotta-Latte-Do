@@ -3,7 +3,7 @@ import { fetchTask, fetchComments, postComment } from "./task-comments.js";
 
 
 const fetchTasks = async () => {
-    const res = await fetch("http://localhost:8080/tasks")
+    const res = await fetch("/tasks")
 
     if (res.status === 401) {
         window.location.href = "/log-in";
@@ -25,7 +25,7 @@ const fetchTasks = async () => {
 
 const fetchContactTasks = async (id) => {
   console.log(id.id)
-  const res = await fetch(`http://localhost:8080/tasks/task/${id.id}`)
+  const res = await fetch(`/tasks/task/${id.id}`)
   console.log(id.id)
   if (res.status === 401) {
       window.location.href = "/log-in";
@@ -118,7 +118,7 @@ form.addEventListener("submit", async (e) => {
     const body = { description, dueDate, isCompleted, givenTo }
 
     try {
-        const res = await fetch("http://localhost:8080/tasks", {
+        const res = await fetch("/tasks", {
             method: "POST",
             body: JSON.stringify(body),
             headers: {
@@ -178,7 +178,7 @@ signOutButton.addEventListener("click", async (e) => {
   console.log('hello')
   e.preventDefault();
   try {
-    await fetch("http://localhost:8080/users/logout", {
+    await fetch("/users/logout", {
       method: "POST"
     })
 
