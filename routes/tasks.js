@@ -51,7 +51,10 @@ router.get('/', asyncHandler(async(req, res) => {
       givenTo: null,
     }
   })
-  res.status(201).json({tasks});
+
+  const user = await User.findByPk(userId);
+
+  res.status(201).json({tasks, user});
 
 }));
 
@@ -97,6 +100,9 @@ router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, r
       isCompleted,
       givenTo: contactId[0].id
     })
+
+
+
     res.status(201).json({task});
   } else {
     const task = await Task.create({
