@@ -12,11 +12,10 @@ const fetchLists = async () => {
   const { lists } = await res.json();
   console.log(lists);
   document.addEventListener('click', (e) => {
-    const listContainer = document.querySelector('.')
+    const listContainer = document.querySelector('.list-sidebar')
     const listHTML = lists.map(({ id, title, taskList }) => {
-      `<div class=${id}>
-      <p class='list-p'${title}</p>
-      </div>`
+      // Map LI's to sidebar
+      
       listContainer.innerHTML = listHTML.join('');
       return listContainer;
     })
@@ -42,7 +41,13 @@ form.addEventListener('submit', async(e) => {
   const body = { title };
 
   try {
-    const res = await fetch('/lists')
+    const res = await fetch('/lists', {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
   } catch (e) {
   }
   console.log(title);
