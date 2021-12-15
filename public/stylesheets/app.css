@@ -8,7 +8,7 @@
 .page {
     display: grid;
     grid-template-columns: 1.5fr 4fr 2fr;
-    grid-template-rows: 75px 1fr 9fr;
+    grid-template-rows: 75px 1fr 100fr;
     grid-template-areas:
     "header header header"
     "sidebar tabs summary"
@@ -177,6 +177,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+
+    color: white;
 }
 
 
