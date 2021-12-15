@@ -18,6 +18,7 @@
 }
 
 
+
 /* %%%%%%%%%%%%%%%%%%%%% Navigation bar %%%%%%%%%%%%%%%%%%%%% */
 .navbar {
     grid-area: header;
@@ -57,6 +58,8 @@
     font-style: italic;
 }
 
+
+
 /* %%%%%%%%%%%%%%%%%%%%% MAIN: Tabbed containers %%%%%%%%%%%%%%%%%%%%% */
 .tabbedContainer {
     grid-area: tabs;
@@ -69,7 +72,7 @@
     justify-content: flex-end;
     padding: 10px 10px 0px 10px;
     border-bottom: 1px solid #C7A383;
-    margin-left: 200px;
+
 }
 
 .tabbedLink {
@@ -84,6 +87,7 @@
 }
 
 
+
 /* %%%%%%%%%%%%%%%%%%%%% MAIN: Task area %%%%%%%%%%%%%%%%%%%%% */
 .mainContainer {
     grid-area: main;
@@ -94,15 +98,17 @@
 }
 
 .my-tasks {
-    margin-left: 215px;
+    /* margin-left: 215px; */
     background-color: white;
     color: #8A715B;
 }
 
 .my-tasks h1 {
-    background-color: white;
+    padding: 15px;
+
+    background-color: #FAECDA;
     color: #8A715B;
-    margin: 15px 0px 0px 0px;
+    /* margin: 15px 0px 0px 0px; */
 }
 
 .taskContainer {
@@ -110,7 +116,6 @@
 
     display: flex;
     flex-direction: column;
-
     align-items: flex-start;
 }
 
@@ -139,6 +144,31 @@
 .createTaskButton {
     padding: 15px;
 } */
+
+
+
+/* %%%%%%%%%%%%%%%%%%%%% Main section list: Tasks %%%%%%%%%%%%%%%%%%%%% */
+/* Part of mainContainer div */
+.task-list {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.task-check-box {
+    background-color: #fff;
+}
+
+/* .my-tasks > h1 {
+    color: blue;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+} */
+
 
 
 /* %%%%%%%%%%%%%%%%%%%%% Sidebar (left): Lists / organization %%%%%%%%%%%%%%%%%%%%% */
@@ -179,6 +209,7 @@
 }
 
 
+
 /* %%%%%%%%%%%%%%%%%%%%% Second sidebar (right): Summary %%%%%%%%%%%%%%%%%%%%% */
 .summaryContainer {
     grid-area: summary;
@@ -196,8 +227,7 @@
 
 
 
-
-
+/* %%%%%%%%%%%%%%%%%%%%% Contacts dropdown! %%%%%%%%%%%%%%%%%%%%% */
 .add-contacts {
     color: #ffffff !important;
     text-decoration: none;
@@ -226,19 +256,6 @@
     color: #ffffff;
 }
 
-
-/* %%%%%%%%%%%%%%%%%%%%% Tasks Section %%%%%%%%%%%%%%%%%%%%% */
-.task-list {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
-}
-
-.task-check-box {
-    background-color: #fff;
-}
 
 
 /* %%%%%%%%%%%%%%%%%%%%% Settings Dropdown %%%%%%%%%%%%%%%%%%%%% */
