@@ -1,4 +1,26 @@
 import { handleErrors } from "./utils.js";
+import { fetchTasks } from './app.js';
+
+
+const deleteTask = async (taskId) => {
+    try {
+        const res = await fetch(`/tasks/${taskId}`, {
+            method: "DELETE",
+        })
+
+        if (res.status === 401) {
+            window.location.href = "/log-in";
+            return;
+          }
+        if (!res.ok) {
+            throw res;
+          }
+          await fetchTasks(taskId);
+        } catch (err) {
+            handleErrors(err)
+        }
+}
+
 
 export const fetchTask = async (taskId) => {
     const res = await fetch(`/tasks/${taskId}`);
@@ -81,20 +103,30 @@ export const fetchTask = async (taskId) => {
     const taskInfo = document.querySelector('.fiona');
     if (!task.givenTo) task.givenTo = '';
     const taskHtml = `
-        <div id='task-${task.id}' style="margin-left: 300px">
-            <button id="task-info">X</button>
-            <p>${task.description}</p>
-            <p>Task Completed? ${task.isCompleted}</p>
-            <p>Due: ${due}</p>
-            <p>${task.givenTo}</p>
+        <div class='task-${task.id} task-info' style="margin-left: 300px">
+            <div class='task-info-buttons'>
+                <button id="task-info">X</button>
+                <button id='edit-task-button-${task.id}'>Edit Task</button>
+                <button id='delete-task-button-${task.id}'>Delete Task</button>
+            </div>
 
-            <p>Comments</p>
-            <form class='create-comment'>
-                <label for='message'></label>
-                <input name='message' type='text' placeholder='Add a comment...'></input>
-                <input type='hidden' name='taskId' id='${task.id}' value=${task.id}></input>
-                <button type='submit' role='button'>Add Comment</button>
-            </form>
+            <div class='task-information-${task.id}'>
+                <p>${task.description}</p>
+                <p>Task Completed? ${task.isCompleted}</p>
+                <p>Due: ${due}</p>
+                <p>${task.givenTo}</p>
+            </div>
+
+            <div class='comment-container-${task.id}'>
+                <p>Comments</p>
+                <form class='create-comment'>
+                    <label for='message'></label>
+                    <input name='message' type='text' placeholder='Add a comment...'></input>
+                    <input type='hidden' name='taskId' id='${task.id}' value=${task.id}></input>
+                    <button type='submit' role='button'>Add Comment</button>
+                </form>
+            </div>
+
             <div id='comments-${task.id}'></div>
         </div>
     `
@@ -111,6 +143,18 @@ export const fetchTask = async (taskId) => {
         window.history.replaceState(stateObj, "Task", `/app`)
     })
 
+    const deleteTaskButt = document.querySelector(`#delete-task-button-${task.id}`);
+
+    deleteTaskButt.addEventListener('click', async(e) => {
+        e.preventDefault();
+
+        deleteTask(task.id);
+        const taskInfo = document.querySelector(`.task-${task.id}`);
+        taskInfo.hidden = true;
+
+        // const taskOnList = document.querySelector(`.task-info-${task.id}`);
+        // taskOnList.remove();
+    })
 
 }
 
