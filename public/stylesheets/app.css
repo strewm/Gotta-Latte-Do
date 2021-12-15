@@ -246,8 +246,12 @@ align-items: center; */
     border-radius: 5px;
     width: 100%;
 
-    color: #8A715B;
+    color: #C7A383;
 }
+
+/* ::placeholder {
+    color: #C7A383
+} */
 
 .add-comment-butt {
     border: 1px solid #8A715B;
