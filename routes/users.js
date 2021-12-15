@@ -73,15 +73,47 @@ router.post(
   asyncHandler(async (req, res) => {
     const { username, email, password } = req.body;
 
-    const user = db.User.build({
+    const user = await db.User.build({
         username,
         email
     });
-
     const hashedPassword = await bcrypt.hash(password, 10);
     user.hashedPassword = hashedPassword;
 
     await user.save();
+    // const defaultLists = QueryInterface.bulkInsert('Lists', [{
+
+    // }])
+
+    const defaultList = await db.List.bulkCreate([{
+      userId: user.id,
+      title: 'All tasks',
+    }, {
+      userId: user.id,
+      title: 'Today'
+    }, {
+      userId: user.id,
+      title: 'Tomorrow'
+    }, {
+      userId: user.id,
+      title: 'Personal'
+    }, {
+      userId: user.id,
+      title: 'Work'
+    }, {
+      userId: user.id,
+      title: 'Given to Others / Given to Me'
+    }, {
+      userId: user.id,
+      title: 'Overdue'
+    }, {
+      userId: user.id,
+      title: 'Incomplete'
+    }, {
+      userId: user.id,
+      title: 'Complete'
+    }
+  ])
 
     loginUser(req, res, user);
 
