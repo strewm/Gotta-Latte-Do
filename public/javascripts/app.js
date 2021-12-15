@@ -10,7 +10,8 @@ const fetchTasks = async () => {
         return;
       }
 
-    const { tasks } = await res.json();
+    const { tasks, user } = await res.json();
+
     const tasksListContainer = document.querySelector(".task-list");
     const tasksHtml = tasks.map(({ id, description }) => `
     <div class="task-info">
