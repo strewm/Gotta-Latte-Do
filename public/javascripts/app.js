@@ -100,8 +100,10 @@ form.addEventListener("submit", async (e) => {
     const dueDate = formData.get("dueDate")
     const checkStatus = formData.get("isCompleted")
     const givenTo = formData.get("givenTo")
+    const title = formData.get("title");
     let isCompleted;
 
+    console.log(title)
 
     //convert checkbox to boolean value
     if (checkStatus === 'on') {
@@ -112,7 +114,7 @@ form.addEventListener("submit", async (e) => {
 
 
 
-    const body = { description, dueDate, isCompleted, givenTo }
+    const body = { description, dueDate, isCompleted, givenTo, title }
 
     try {
         const res = await fetch("http://localhost:8080/tasks", {
@@ -149,18 +151,22 @@ contacts.addEventListener("click", async (e) => {
 })
 
 
-const deleteContact = document.querySelector('.list-grid')
+const deleteContact = document.querySelector('.contact-list-sidebar')
 
 deleteContact.addEventListener("click", async (e) => {
   e.stopPropagation();
+  e.preventDefault();
+  const targetRemoval = e.target.parentNode.parentNode
   const deleteContactId = e.target.id;
 
+  targetRemoval.remove();
   try {
     console.log(typeof deleteContactId)
     console.log('delete thiiiiiiiis')
     await fetch(`http://localhost:8080/contacts/${deleteContactId}`, {
       method: "DELETE",
     })
+
   } catch (err) {
     handleErrors(err)
   }

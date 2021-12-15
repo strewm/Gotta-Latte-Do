@@ -102,7 +102,10 @@ router.post(
       title: 'Work'
     }, {
       userId: user.id,
-      title: 'Given to Others / Given to Me'
+      title: 'Given to Others'
+    }, {
+      userId: user.id,
+      title: 'Given to Me'
     }, {
       userId: user.id,
       title: 'Overdue'

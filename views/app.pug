@@ -47,12 +47,13 @@ block content
                   a.add-contacts(href='/add-contacts') +
               div.contact-list-sidebar
                 li.contact-list(id=`${me}`)=myName.username + " (me)"
-                each contact in contactsAll
-                  div.list-grid
-                    div
-                      li.contact-list(id=`${contact.id}`)=contact.username
-                    div
-                      a.delete-contact(id=`${contact.id}`) -
+                if contactsAll
+                  each contact in contactsAll
+                    div.list-grid
+                      div
+                        li.contact-list(id=`${contact.id}`)=contact.username
+                      div
+                        a.delete-contact(id=`${contact.id}`) -
         div.tabbedContainer
             div.tabbedGroup
                 a.tabbedLink#incomplete Incomplete
@@ -65,7 +66,6 @@ block content
         div.mainContainer
             include includes/add-task
             div.my-tasks
-              h1 My tasks
             .task-list
             .fiona
             .tanner

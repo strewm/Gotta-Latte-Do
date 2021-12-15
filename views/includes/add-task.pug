@@ -13,11 +13,14 @@ form(class='create-task')
              option(value="" selected)
              each contact in contactsAll
                  option(value=contact.username)= contact.username
-        h2 Add to List
-        div.taskList
-            each list in myLists
-                div
-                    label(for='title')=list.title
-                div
-                    input.listSelect(type='checkbox', id=list.title name='title')
+        label.listLabel(for="title") Lists
+        select(id="title", name="title")
+             each list in myLists
+                 option(value=list.title)= list.title
+        //- div.taskList
+        //-     each list in myLists
+        //-         div
+        //-             label(for='title')=list.title
+        //-         div
+        //-             input.listSelect(type='checkbox', id=list.title name='title')
         button.createTaskButton(type='submit') Create Task
