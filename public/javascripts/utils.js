@@ -94,5 +94,6 @@ export const dateFormatter = (task) => {
   if (Number(due.slice(9)) < Number(today.slice(9))) {
       return due = 'OVERDUE!'
   }
-
+  
+  return due;
 }

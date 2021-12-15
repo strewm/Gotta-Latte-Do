@@ -90,32 +90,42 @@ export const fetchTask = async (taskId) => {
 
     const { task } = await res.json();
 
-
     const due = dateFormatter(task);
+
+    let checked;
+
+    if (task.isCompleted) {
+        checked = "on";
+    } else {
+        checked = "off";
+    }
 
     const taskInfo = document.querySelector('.fiona');
     // if (!task.givenTo) task.givenTo = '';
     const taskHtml = `
-        <div class='task-${task.id} task-container' style="margin-left: 300px">
+        <div class='task-${task.id} task-container'>
             <div class='task-info-buttons'>
-                <button id="task-info">X</button>
-                <button id='edit-task-button-${task.id}' class='edit-task-butt'>Edit Task</button>
-                <button id='delete-task-button-${task.id}'>Delete Task</button>
+                <button id="task-info-x" class="task-butts">x</button>
+                <div class='task-edit-delete-butts'>
+                    <button id='edit-task-button-${task.id}' class="task-butts">Edit Task</button>
+                    <button id='delete-task-button-${task.id}' class="task-butts">Delete Task</button>
+                </div>
             </div>
 
             <div class='task-information-${task.id}'>
-                <p>${task.description}</p>
-                <p>Task Completed? ${task.isCompleted}</p>
+                <p class='task-info-header'>${task.description}</p>
+                <label for="completedTask">Task Completed? </label>
+                <input type="checkbox" class="completedTask" name="completedTask">
                 <p>Due: ${due}</p>
             </div>
 
             <div class='comment-container-${task.id}'>
-                <p>Comments</p>
+                <p class='comment-header'>Comments:</p>
                 <form class='create-comment'>
                     <label for='message'></label>
-                    <input name='message' type='text' placeholder='Add a comment...'></input>
+                    <input name='message' type='text' placeholder='Add a comment...' class='add-comment-field'></input>
                     <input type='hidden' name='taskId' id='${task.id}' value=${task.id}></input>
-                    <button type='submit' role='button'>Add Comment</button>
+                    <button type='submit' role='button' class='add-comment-butt'>Add Comment</button>
                 </form>
             </div>
 
@@ -126,13 +136,21 @@ export const fetchTask = async (taskId) => {
     taskInfo.innerHTML = taskHtml;
     taskInfo.hidden = false;
 
-    const hideTaskInfoButt = document.querySelector('#task-info');
+    const check = document.querySelector('.completedTask');
+
+    if (task.isCompleted) {
+        check.checked = true;
+    } else {
+        check.checked = false;
+    }
+
+    const hideTaskInfoButt = document.querySelector('#task-info-x');
 
     hideTaskInfoButt.addEventListener('click', async (e) => {
         taskInfo.hidden = true;
 
-        let stateObj = { id: "100" }
-        window.history.replaceState(stateObj, "Task", `/app`)
+        // let stateObj = { id: "100" }
+        // window.history.replaceState(stateObj, "Task", `/app`)
     })
 
     const deleteTaskButt = document.querySelector(`#delete-task-button-${task.id}`);
@@ -224,10 +242,11 @@ export const fetchComments = async (taskId) => {
                 <span id='comment-${comment.id}-message' class='comment-message'>${comment.message}</span>
             </span>
             <span class='comment-buttons-${comment.id} comment-buttons'>
-                <button class='edit-comment-butt' id='${comment.id}'>Edit
-                <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
+                <button class='edit-comment-butt comment-butts' id='${comment.id}'>Edit</button>
+                <button class='delete-comment-butt comment-butts' id='${comment.id}'>Delete</button>
             </span>
         </div>
+        <div class='createdAt'>${comment.createdAt}</div>
     `
     )
 
