@@ -289,6 +289,11 @@
     background-color: #fff;
 }
 
+.taskList {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    width: 250px;
+}
 
 /* %%%%%%%%%%%%%%%%%%%%% Settings Dropdown %%%%%%%%%%%%%%%%%%%%% */
 #settingsGear {
