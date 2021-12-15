@@ -1,4 +1,6 @@
 import { handleErrors } from "./utils.js";
+import { fetchTask, fetchComments, postComment } from "./task-comments.js";
+
 
 const fetchTasks = async () => {
     const res = await fetch("http://localhost:8080/tasks")
@@ -11,9 +13,9 @@ const fetchTasks = async () => {
     const { tasks } = await res.json();
     const tasksListContainer = document.querySelector(".task-list");
     const tasksHtml = tasks.map(({ id, description }) => `
-    <div>
+    <div class="task-info">
         <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-        <label for=${id} class="task-check-box">${description}</label>
+        <label for=${id} id=${id} class="task-check-box">${description}</label>
     </div>
     `)
 
@@ -47,7 +49,44 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (e) {
       console.error(e);
     }
-  });
+
+    const tasksListContainer = document.querySelector(".task-list");
+    tasksListContainer.addEventListener("click", async(e) => {
+      const taskId = e.target.id;
+
+      try {
+        await fetchTask(taskId);
+
+        const createComment = document.querySelector('.create-comment');
+
+        createComment.addEventListener('submit', async (event) => {
+          event.stopPropagation();
+          event.preventDefault();
+          const commentData = new FormData(createComment);
+          const message = commentData.get("message");
+          const taskId = commentData.get("taskId");
+
+          const body = { message };
+
+          postComment(taskId, body);
+
+        })
+
+      } catch (e) {
+        console.error(e);
+      }
+
+      try {
+        await fetchComments(taskId);
+      } catch (e) {
+        console.error(e);
+      }
+
+    })
+
+  }
+  );
+
 
 const form = document.querySelector(".create-task");
 
@@ -122,4 +161,5 @@ logoutButton.addEventListener("click", async (e) => {
     }catch (err) {
       handleErrors(err)
   }
+
 })
