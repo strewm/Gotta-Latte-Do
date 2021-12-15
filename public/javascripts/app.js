@@ -161,8 +161,7 @@ deleteContact.addEventListener("click", async (e) => {
 
   targetRemoval.remove();
   try {
-    console.log(typeof deleteContactId)
-    console.log('delete thiiiiiiiis')
+
     await fetch(`http://localhost:8080/contacts/${deleteContactId}`, {
       method: "DELETE",
     })
@@ -182,8 +181,7 @@ deleteList.addEventListener("click", async (e) => {
 
   targetRemoval.remove();
   try {
-    console.log(typeof deleteContactId)
-    console.log('delete thiiiiiiiis')
+
     await fetch(`http://localhost:8080/lists/${deleteListId}`, {
       method: "DELETE",
     })
