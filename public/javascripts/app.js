@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   );
 
 
+
 const form = document.querySelector(".create-task");
 
 form.addEventListener("submit", async (e) => {
@@ -103,7 +104,7 @@ form.addEventListener("submit", async (e) => {
 
     //convert checkbox to boolean value
     if (checkStatus === 'on') {
-       isCompleted = true;
+        isCompleted = true;
     } else {
         isCompleted = false;
     }
@@ -137,6 +138,7 @@ form.addEventListener("submit", async (e) => {
     }
 })
 
+
 const contacts = document.querySelector('.contact-list-sidebar')
 
 contacts.addEventListener("click", async (e) => {
@@ -147,19 +149,38 @@ contacts.addEventListener("click", async (e) => {
 
 const logoutButton = document.querySelector("#logout");
 
-logoutButton.addEventListener("click", async (e) => {
-    console.log('hello')
-    e.preventDefault();
-    try {
-      await fetch("http://localhost:8080/users/logout", {
-        method: "POST"
-      })
+window.addEventListener('DOMContentLoaded', async () => {
+  console.log("event listener loaded!!!")
+  const settings = document.querySelector('#settings');
 
-      window.location.href = "/";
+  settings.addEventListener('click', event => {
+    console.log("settings clicked!!!")
+    event.stopPropagation();
+    document.querySelector('.settingGroup').classList.remove('settingHide');
+  });
+
+  window.addEventListener('click', () => {
+    console.log("outside of settings clicked!!!")
+    document.querySelector('.settingGroup').classList.add('settingHide');
+  });
+
+})
 
 
-    }catch (err) {
-      handleErrors(err)
+
+const signOutButton = document.querySelector("#signOut");
+
+signOutButton.addEventListener("click", async (e) => {
+  console.log('hello')
+  e.preventDefault();
+  try {
+    await fetch("http://localhost:8080/users/logout", {
+      method: "POST"
+    })
+
+    window.location.href = "/";
+  } catch (err) {
+    handleErrors(err)
   }
 
 })

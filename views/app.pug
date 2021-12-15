@@ -2,16 +2,30 @@ extends layout
 
 append head
     link(rel="stylesheet" href="/stylesheets/app.css")
-    //- script(src="/javascripts/index.js" type="module" defer)
+    script(src="../javascripts/app.js" type="module" defer)
+
+    //- img.navbar#settingsGear(src="../images/gear.png")
+
 
 block content
     .page
         nav.navbar
-            input.navbar#searchBar(type="text", placeholder="Search here")
-            div.navbar#notifications Notifications
-            div.navbar#settings Settings
-            button.navbar#logout(type='submit') Logout
+            input.navbar#searchBar(type="text", placeholder="Search here...")
+            div.navbar#settings
+                img.navbar#settingsGear(src="../images/gear.png")
+                div.settingGroup.settingHide
+                    div.settingHeaderGroup
+                        img.settingHeader#userProfile(src="../images/favicon.png")
+                        div.settingHeader#userName= locals.currUser.username
+                        //- div.settingHead#userEmail= locals.currUser.email
+                    ul.settingListGroup
+                        li.settingList: a(href='/') Notifications
+                        li.settingList: a(href='/') Help
+                        li.settingList: a(href='/') Keyboard shortcuts
+                        li.settingList: a(href='/') Account Settings
+                        li.settingList: button#signOut(type='submit') Sign Out
         div.sidebar
+            img.logo(src="../images/maybe_logo.png")
             ul Inbox
                 //- li All Tasks
                 //- li Today
@@ -32,11 +46,26 @@ block content
             div.tabbedGroup
                 a.tabbedLink#incomplete Incomplete
                 a.tabbedLink#complete Complete
-        include includes/add-task
-        div.my-tasks
-          h1 My tasks
-        .task-list
-        .fiona
-        .tanner
-        .tanner
+
+        div.summaryContainer
+            h2 Search
+            div.summary#tasksDue Tasks
+            div.summary#tasksOverDue Overdue
+        div.mainContainer
+            include includes/add-task
+            div.my-tasks
+              h1 My tasks
+            .task-list
+            .fiona
+            .tanner
+
+
+        //- include includes/add-task
+        //- div.my-tasks
+        //-  h1 My tasks
+        //- .task-list
+        //- .fiona
+        //- .tanner
+        //- .tanner
+
     script(type="module" src="javascripts/app.js")

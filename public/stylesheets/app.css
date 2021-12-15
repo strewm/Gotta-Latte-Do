@@ -5,9 +5,23 @@
     /* font-weight: 3; */
 }
 
+.page {
+    display: grid;
+    grid-template-columns: 1.5fr 4fr 2fr;
+    grid-template-rows: 75px 1fr 9fr;
+    grid-template-areas:
+    "header header header"
+    "sidebar tabs summary"
+    "sidebar main summary";
+
+    height: 100vh;
+}
+
 
 /* %%%%%%%%%%%%%%%%%%%%% Navigation bar %%%%%%%%%%%%%%%%%%%%% */
 .navbar {
+    grid-area: header;
+
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
@@ -15,29 +29,38 @@
 
     background-color: #8A715B;
     color: #FFFFFF;
-    padding: 9px;
-    line-height: 20px;
+    padding: 5px;
+    line-height: 25px;
     font-size: 15px;
 }
 
 #settings {
-    justify-content: flex-end;
+    padding: 0;
+    width: auto;
 }
 
-#searchBar, #notifications, #settings, #logout {
+#searchBar, #settings {
     background-color: #C7A383;
     padding-top: 3px;
     padding-bottom: 3px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
     margin-left: 5px;
     border-radius: 10px;
     border: none;
     align-items: center;
 }
 
+::placeholder {
+    color: #8A715B;
+    font-size: 12px;
+    font-style: italic;
+}
+
 /* %%%%%%%%%%%%%%%%%%%%% MAIN: Tabbed containers %%%%%%%%%%%%%%%%%%%%% */
 .tabbedContainer {
+    grid-area: tabs;
+
     background-color: #E0A979;
 }
 
@@ -46,6 +69,7 @@
     justify-content: flex-end;
     padding: 10px 10px 0px 10px;
     border-bottom: 1px solid #C7A383;
+    margin-left: 200px;
 }
 
 .tabbedLink {
@@ -61,6 +85,14 @@
 
 
 /* %%%%%%%%%%%%%%%%%%%%% MAIN: Task area %%%%%%%%%%%%%%%%%%%%% */
+.mainContainer {
+    grid-area: main;
+    background-color: #FAECDA;
+
+    /* display: flex;
+    justify-content: flex-start; */
+}
+
 .my-tasks {
     margin-left: 215px;
     background-color: white;
@@ -74,12 +106,11 @@
 }
 
 .taskContainer {
-    margin-left: 200px;
     padding: 15px;
 
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+
     align-items: flex-start;
 }
 
@@ -110,7 +141,7 @@
 } */
 
 
-/* %%%%%%%%%%%%%%%%%%%%% SIDEBAR: Lists / organization %%%%%%%%%%%%%%%%%%%%% */
+/* %%%%%%%%%%%%%%%%%%%%% Sidebar (left): Lists / organization %%%%%%%%%%%%%%%%%%%%% */
 /* .sidebar {
     background-color: #C7A383;
     color: #FFFFFF;
@@ -122,20 +153,50 @@
     padding: 1px;
 } */
 
+.logo {
+    height: 175px;
+    width: auto;
+    transform: rotate(-90deg);
+    background-color: #C7A383;
+    margin-left: 25px;
+    padding: 0;
+}
 
 .sidebar {
+    grid-area: sidebar;
+
     background-color: #C7A383;
     color: #FFFFFF;
     font-size: 12px;
     padding: 20px;
-    height: 100%;
+    /* height: 100%;
     width: 200px;
-    position: fixed;
+    position: fixed; */
 }
 
 .sidebar ul:hover {
     color: #E0A979;
 }
+
+
+/* %%%%%%%%%%%%%%%%%%%%% Second sidebar (right): Summary %%%%%%%%%%%%%%%%%%%%% */
+.summaryContainer {
+    grid-area: summary;
+    background-color: #C7A383;
+    padding: 5px;
+    /* border-radius: 10px;
+    margin: 5px 5px 5px 0; */
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    color: white;
+}
+
+
+
+
 
 .add-contacts {
     color: #ffffff !important;
@@ -165,9 +226,9 @@
     color: #ffffff;
 }
 
+
 /* %%%%%%%%%%%%%%%%%%%%% Tasks Section %%%%%%%%%%%%%%%%%%%%% */
 .task-list {
-    margin-left: 200px;
     padding: 15px;
     display: flex;
     flex-direction: column;
@@ -177,4 +238,77 @@
 
 .task-check-box {
     background-color: #fff;
+}
+
+
+/* %%%%%%%%%%%%%%%%%%%%% Settings Dropdown %%%%%%%%%%%%%%%%%%%%% */
+#settingsGear {
+    background-color: #C7A383;
+    height: 25px;
+    width: auto;
+    padding: 1px;
+}
+
+.settingGroup {
+    background-color: #FAECDA;
+    border: 1px solid #C7A383;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #C7A383;
+    padding: 0.5em;
+    position: absolute;
+    right: 5px;
+    top: 2.5em;
+    width: 200px;
+}
+
+.settingHide {
+    display: none;
+}
+
+.settingHeaderGroup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+/* #settings:hover {
+    background-color:blue;
+} */
+
+#userName {
+    padding-left: 5px;
+    font-weight: bold;
+}
+
+.settingHeader, .settingListGroup, #signOut {
+    list-style-type: none;
+    color: #8A715B;
+}
+
+.settingHeader {
+    font-size: 15px;
+}
+
+.settingListGroup {
+    padding: 5px;
+}
+
+.settingList a {
+    text-decoration: none;
+    font-size: 12px;
+}
+
+#signOut {
+    border: none;
+    font-size: 12px;
+    padding: 0;
+}
+
+.settingList:hover {
+    color: yellowgreen;
+}
+
+#signOut:hover {
+    color: yellowgreen;
 }
