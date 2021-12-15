@@ -55,8 +55,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     tasksListContainer.addEventListener("click", async(e) => {
       const taskId = e.target.id;
 
-      let stateObj = { id: "100" }
-      window.history.replaceState(stateObj, "Task", `/tasks/#${taskId}`)
+      // let stateObj = { id: "100" }
+      // window.history.replaceState(stateObj, "Task", `/tasks/#${taskId}`)
 
       try {
         await fetchTask(taskId);
@@ -154,17 +154,17 @@ contacts.addEventListener("click", async (e) => {
 const logoutButton = document.querySelector("#logout");
 
 window.addEventListener('DOMContentLoaded', async () => {
-  console.log("event listener loaded!!!")
+  // console.log("event listener loaded!!!")
   const settings = document.querySelector('#settings');
 
   settings.addEventListener('click', event => {
-    console.log("settings clicked!!!")
+    // console.log("settings clicked!!!")
     event.stopPropagation();
     document.querySelector('.settingGroup').classList.remove('settingHide');
   });
 
   window.addEventListener('click', () => {
-    console.log("outside of settings clicked!!!")
+    // console.log("outside of settings clicked!!!")
     document.querySelector('.settingGroup').classList.add('settingHide');
 
     const editForm = document.querySelector('.edit-form');

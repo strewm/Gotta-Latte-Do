@@ -41,8 +41,3 @@ h2, h3, h4, h5, h6, a, ol, li, ul, div, span, header, nav {
 h1 {
   font-size: 2rem;
 }
-
-
-.task-container {
-  border: 2px solid red;
-}
