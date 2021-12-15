@@ -1,4 +1,61 @@
-import { handleErrors } from "./utils.js";
+import { handleErrors, dateFormatter } from "./utils.js";
+import { fetchTasks } from './app.js';
+
+const deleteAllComments = async (taskId) => {
+    const commentsDiv = document.querySelector(`#comments-${taskId}`);
+    const commentsDivChildren = commentsDiv.children;
+
+    for (let i = 0; i < commentsDivChildren.length; i++) {
+        let commentId = commentsDivChildren[i].children[0].id;
+        let arr = commentId.split('-');
+        let id = arr[arr.length - 1];
+
+        try {
+            const res = await fetch(`/comments/${id}`, {
+                method: "DELETE",
+            })
+
+            if (res.status === 401) {
+                window.location.href = "/log-in";
+                return;
+              }
+            if (!res.ok) {
+                throw res;
+              }
+            } catch (err) {
+                handleErrors(err)
+            }
+    }
+
+    return;
+
+}
+
+const deleteTask = async (taskId) => {
+
+    await deleteAllComments(taskId);
+
+    try {
+        const res = await fetch(`/tasks/${taskId}`, {
+            method: "DELETE",
+        })
+
+        if (res.status === 401) {
+            window.location.href = "/log-in";
+            return;
+          }
+        if (!res.ok) {
+            throw res;
+          }
+          await fetchTasks(taskId);
+          return;
+        } catch (err) {
+            handleErrors(err)
+        }
+}
+
+
+
 
 export const fetchTask = async (taskId) => {
     const res = await fetch(`/tasks/${taskId}`);
@@ -8,93 +65,37 @@ export const fetchTask = async (taskId) => {
         return;
     }
 
-
-    const today = new Date().toJSON().slice(0,10)
-
-    let tomorrow = today.split('-');
-    let month = tomorrow[tomorrow.length - 2]
-    let day = tomorrow[tomorrow.length - 1]
-
-    // TODO - make sure new month and new day are in the correct format
-
-    if (day === '31' &&
-        (month === '01' ||
-        month === '03' ||
-        month === '05' ||
-        month === '07' ||
-        month === '08' ||
-        month === '10' ||
-        month === '12')) {
-            day = '01';
-            if (month !== '12' && Number(month) >= 9) {
-                month = (Number(month) + 1).toString()
-            } else if (month === '12') {
-                month = '01';
-            }
-            else {
-                month = '0' + (Number(month) + 1).toString();
-            }
-    } else if (
-        day === '30' && (
-        month === '02' ||
-        month === '04' ||
-        month === '06' ||
-        month === '09' ||
-        month === '11' ))
-        {
-        day = '01';
-        if (Number(month) <= 9) {
-            month = (Number(month) + 1).toString()
-        } else {
-            month = '0' + (Number(month) + 1).toString();
-        }
-    } else {
-        if (Number(day) >= 9) {
-            day = (Number(day) + 1).toString();
-        } else {
-            day = '0' + (Number(day) + 1).toString();
-        }
-    }
-
-    tomorrow[tomorrow.length - 1] = day;
-    tomorrow[tomorrow.length - 2] = month;
-
-    tomorrow = tomorrow.join('-');
-
     const { task } = await res.json();
 
-    let due = task.dueDate.slice(0,10);
 
-    if (due === today) {
-        due = 'Today';
-    }
-
-    if (due === tomorrow) {
-        due = 'Tomorrow';
-    }
-
-    if (Number(due.slice(9)) < Number(today.slice(9))) {
-        due = 'OVERDUE!'
-    }
-
+    const due = dateFormatter(task);
 
     const taskInfo = document.querySelector('.fiona');
-    if (!task.givenTo) task.givenTo = '';
+    // if (!task.givenTo) task.givenTo = '';
     const taskHtml = `
-        <div id='task-${task.id}' style="margin-left: 300px">
-            <button id="task-info">X</button>
-            <p>${task.description}</p>
-            <p>Task Completed? ${task.isCompleted}</p>
-            <p>Due: ${due}</p>
-            <p>${task.givenTo}</p>
+        <div class='task-${task.id} task-info' style="margin-left: 300px">
+            <div class='task-info-buttons'>
+                <button id="task-info">X</button>
+                <button id='edit-task-button-${task.id}'>Edit Task</button>
+                <button id='delete-task-button-${task.id}'>Delete Task</button>
+            </div>
 
-            <p>Comments</p>
-            <form class='create-comment'>
-                <label for='message'></label>
-                <input name='message' type='text' placeholder='Add a comment...'></input>
-                <input type='hidden' name='taskId' id='${task.id}' value=${task.id}></input>
-                <button type='submit' role='button'>Add Comment</button>
-            </form>
+            <div class='task-information-${task.id}'>
+                <p>${task.description}</p>
+                <p>Task Completed? ${task.isCompleted}</p>
+                <p>Due: ${due}</p>
+            </div>
+
+            <div class='comment-container-${task.id}'>
+                <p>Comments</p>
+                <form class='create-comment'>
+                    <label for='message'></label>
+                    <input name='message' type='text' placeholder='Add a comment...'></input>
+                    <input type='hidden' name='taskId' id='${task.id}' value=${task.id}></input>
+                    <button type='submit' role='button'>Add Comment</button>
+                </form>
+            </div>
+
             <div id='comments-${task.id}'></div>
         </div>
     `
@@ -111,6 +112,15 @@ export const fetchTask = async (taskId) => {
         window.history.replaceState(stateObj, "Task", `/app`)
     })
 
+    const deleteTaskButt = document.querySelector(`#delete-task-button-${task.id}`);
+
+    deleteTaskButt.addEventListener('click', async(e) => {
+        e.preventDefault();
+
+        deleteTask(task.id);
+        const taskInfo = document.querySelector(`.task-${task.id}`);
+        taskInfo.hidden = true;
+    })
 
 }
 
@@ -124,17 +134,17 @@ export const fetchComments = async (taskId) => {
     const { comments } = await res.json();
 
     const commentsDiv = document.querySelector(`#comments-${taskId}`);
-    const commentsHtml = comments.map(({ id, userId, message }) => `
-        <div class="comment-container-${id} comment-container">
-            <span id='comment-${id}'>
-                <span id='comment-${id}-userId' class='comment-user'>
-                    ${userId}:
+    const commentsHtml = comments.map((comment) => `
+        <div class="comment-container-${comment.id} comment-container">
+            <span id='comment-${comment.id}'>
+                <span id='comment-${comment.id}-userId' class='comment-user'>
+                    ${comment.User.username}:
                 </span>
-                <span id='comment-${id}-message' class='comment-message'>${message}</span>
+                <span id='comment-${comment.id}-message' class='comment-message'>${comment.message}</span>
             </span>
-            <span class='comment-buttons-${id} comment-buttons'>
-                <button class='edit-comment-butt' id='${id}'>Edit
-                <button class='delete-comment-butt' id='${id}'>Delete</button>
+            <span class='comment-buttons-${comment.id} comment-buttons'>
+                <button class='edit-comment-butt' id='${comment.id}'>Edit
+                <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
             </span>
         </div>
     `

@@ -116,16 +116,17 @@ router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, r
 
 }));
 
-router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
+router.get('/:id(\\d+)', asyncHandler(async(req, res, next) => {
   const task = await Task.findByPk(req.params.id);
+
   if (task) {
-    res.json({task});
+    res.json({ task });
   } else {
     next(taskNotFoundError(req.params.id));
   }
 }))
 
-router.put ('/:id(\\d+)', csrfProtection, validateTask, handleValidationErrors, asyncHandler(async(req, res, next) => {
+router.put ('/:id(\\d+)', validateTask, handleValidationErrors, asyncHandler(async(req, res, next) => {
   const { description, dueDate, givenTo } = req.body;
   const task = await Task.findByPk(req.params.id);
   if (task) {
@@ -141,7 +142,7 @@ router.put ('/:id(\\d+)', csrfProtection, validateTask, handleValidationErrors, 
 }))
 
 
-router.delete('/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
+router.delete('/:id(\\d+)', asyncHandler(async(req, res, next) => {
   const task = await Task.findByPk(req.params.id);
   if (task) {
     await task.destroy()

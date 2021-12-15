@@ -2,7 +2,7 @@ import { handleErrors } from "./utils.js";
 import { fetchTask, fetchComments, postComment } from "./task-comments.js";
 
 
-const fetchTasks = async () => {
+export const fetchTasks = async () => {
     const res = await fetch("/tasks")
 
     if (res.status === 401) {
@@ -37,7 +37,7 @@ const fetchContactTasks = async (id) => {
   const tasksHtml = tasks.map(({ id, description }) => `
   <div>
       <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-      <label for=${id} class="task-check-box">${description}</label>
+      <label for=${id} class="task-check-box" id=${id}>${description}</label>
   </div>
   `)
 

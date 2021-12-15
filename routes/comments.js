@@ -15,7 +15,10 @@ router.get('/tasks/:id(\\d+)/comments', asyncHandler(async (req, res) => {
     const comments = await Comment.findAll({
         where: {
             taskId: req.params.id
-        }
+        },
+        include: [ {
+            model: User
+        } ]
     })
 
     res.json({ comments })
