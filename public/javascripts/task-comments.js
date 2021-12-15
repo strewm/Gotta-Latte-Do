@@ -99,7 +99,7 @@ export const fetchTask = async (taskId) => {
         <div class='task-${task.id} task-container' style="margin-left: 300px">
             <div class='task-info-buttons'>
                 <button id="task-info">X</button>
-                <button id='edit-task-button-${task.id}'>Edit Task</button>
+                <button id='edit-task-button-${task.id}' class='edit-task-butt'>Edit Task</button>
                 <button id='delete-task-button-${task.id}'>Delete Task</button>
             </div>
 
@@ -146,10 +146,10 @@ export const fetchTask = async (taskId) => {
     })
 
     const editTaskButt = document.querySelector(`#edit-task-button-${task.id}`);
-    console.log(editTaskButt);
 
     editTaskButt.addEventListener('click', async(e) => {
         e.preventDefault();
+        e.stopPropagation();
         console.log('EDIT CLICK')
         editTaskButt.disabled = true;
 
