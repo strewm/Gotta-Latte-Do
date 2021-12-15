@@ -96,11 +96,11 @@ export const fetchTask = async (taskId) => {
     const taskInfo = document.querySelector('.fiona');
     // if (!task.givenTo) task.givenTo = '';
     const taskHtml = `
-        <div class='task-${task.id} task-info' style="margin-left: 300px">
+        <div class='task-${task.id} task-container'>
             <div class='task-info-buttons'>
                 <button id="task-info">X</button>
-                <button id='edit-task-button-${task.id}'>Edit Task</button>
-                <button id='delete-task-button-${task.id}'>Delete Task</button>
+                <button id='edit-task-button-${task.id}' class="edit-task-button">Edit Task</button>
+                <button id='delete-task-button-${task.id}' class="delete-task-button">Delete Task</button>
             </div>
 
             <div class='task-information-${task.id}'>
@@ -131,8 +131,8 @@ export const fetchTask = async (taskId) => {
     hideTaskInfoButt.addEventListener('click', async (e) => {
         taskInfo.hidden = true;
 
-        let stateObj = { id: "100" }
-        window.history.replaceState(stateObj, "Task", `/app`)
+        // let stateObj = { id: "100" }
+        // window.history.replaceState(stateObj, "Task", `/app`)
     })
 
     const deleteTaskButt = document.querySelector(`#delete-task-button-${task.id}`);
