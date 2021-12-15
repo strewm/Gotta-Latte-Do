@@ -90,22 +90,30 @@ export const fetchTask = async (taskId) => {
 
     const { task } = await res.json();
 
-
     const due = dateFormatter(task);
+
+    let checked;
+
+    if (task.isCompleted) {
+        checked = "on";
+    } else {
+        checked = "off";
+    }
 
     const taskInfo = document.querySelector('.fiona');
     // if (!task.givenTo) task.givenTo = '';
     const taskHtml = `
         <div class='task-${task.id} task-container'>
             <div class='task-info-buttons'>
-                <button id="task-info">X</button>
-                <button id='edit-task-button-${task.id}' class="edit-task-butt">Edit Task</button>
-                <button id='delete-task-button-${task.id}' class="delete-task-butt">Delete Task</button>
+                <button id="task-info-x" class="task-butts">x</button>
+                <button id='edit-task-button-${task.id}' class="task-butts">Edit Task</button>
+                <button id='delete-task-button-${task.id}' class="task-butts">Delete Task</button>
             </div>
 
             <div class='task-information-${task.id}'>
-                <p>${task.description}</p>
-                <p>Task Completed? ${task.isCompleted}</p>
+                <p>Task: ${task.description}</p>
+                <label for="completedTask">Task Completed? </label>
+                <input type="checkbox" class="completedTask" name="completedTask">
                 <p>Due: ${due}</p>
             </div>
 
@@ -126,7 +134,15 @@ export const fetchTask = async (taskId) => {
     taskInfo.innerHTML = taskHtml;
     taskInfo.hidden = false;
 
-    const hideTaskInfoButt = document.querySelector('#task-info');
+    const check = document.querySelector('.completedTask');
+
+    if (task.isCompleted) {
+        check.checked = true;
+    } else {
+        check.checked = false;
+    }
+    
+    const hideTaskInfoButt = document.querySelector('#task-info-x');
 
     hideTaskInfoButt.addEventListener('click', async (e) => {
         taskInfo.hidden = true;

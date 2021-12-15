@@ -7,7 +7,7 @@
 
 .page {
     display: grid;
-    grid-template-columns: 1.5fr 4fr 2fr;
+    grid-template-columns: 1.5fr 4fr 3fr;
     grid-template-rows: 75px 0.75fr 9fr;
     grid-template-areas:
     "header header header"
@@ -157,6 +157,10 @@
 
 
 /* %%%%%%%%%%%%%%%%%%%%% MAIN: Individual task container/edit pop-up (right sidebar) %%%%%%%%%%%%%%%%%%%%% */
+.fiona {
+    width: 100%;
+}
+
 .task-container {
     margin: 20px 10px 20px 10px;
     padding: 15px;
@@ -175,30 +179,48 @@ border-radius: 10px;
 border: none;
 align-items: center; */
 
-.task-info-buttons {
+
+/* Exit button */
+.task-container {
+    border: solid;
+    font-size: 15px;
+    padding: 10px;
+
     color: #8A715B;
 }
 
-/* Exit button */
-.task-info {
-    border: none;
-    font-size: 15px;
-    padding: 0;
+.task-info-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+
 }
 
-/* Edit task button  */
-.edit-task-butt {
-    border: none;
+/* Task buttons  */
+.task-butts {
+    border: 1px solid #8A715B;
     font-size: 15px;
-    padding: 0;
+    padding: 5px;
+    border-radius: 5px;
+    /* margin: 5px; */
+
+    color: #8A715B;
 }
 
-/* Delete task button  */
-.delete-task-butt {
-    border: none;
-    font-size: 15px;
-    padding: 0;
+
+
+#task-info-x {
+    font-weight: bold;
+    width: 17px;
+    height: 17px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
+
 
 /* %%%%%%%%%%%%%%%%%%%%% Main section list: Tasks %%%%%%%%%%%%%%%%%%%%% */
 /* Part of mainContainer div */
