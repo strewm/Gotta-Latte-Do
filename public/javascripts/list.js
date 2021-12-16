@@ -18,7 +18,7 @@ form.addEventListener("submit", async (e) => {
     const body = { title }
 
     try {
-        const res = await fetch("http://localhost:8080/lists", {
+        const res = await fetch("/lists", {
             method: "POST",
             body: JSON.stringify(body),
             headers: {

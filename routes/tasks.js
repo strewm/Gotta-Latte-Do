@@ -100,18 +100,23 @@ router.get('/complete', asyncHandler(async(req, res) => {
 
 // route to fetch user's tasks that are assigned to user
 
-router.get('/assigned', asyncHandler(async(req, res) => {
+router.get('/assigned', asyncHandler(async(req, res, next) => {
   const userId = res.locals.userId
-
+  console.log(userId, '----------------------------')
+try {
   const tasks = await Task.findAll({
     where: {
       givenTo: userId,
     }
   })
-
-  const assigner = await User.findByPk(tasks[0].userId);
+  if (tasks) {
+  const assigner = await User.findByPk(tasks.userId);
   const user = await User.findByPk(userId);
   res.status(201).json({tasks, assigner, user});
+  }
+} catch (e) {
+  next(e)
+}
 
 }));
 
@@ -174,15 +179,13 @@ router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, r
       isCompleted
     })
 
-    const listInfo = await List.findAll({
-      where: {
-        title
-      }
+    const listInfo = await List.findOne({
+      where: [{ title, userId }]
     })
 
 
     const taskId = task.id
-    const listId = listInfo[0].id
+    const listId = listInfo.id
 
     const taskList = await TaskList.create({
       taskId,

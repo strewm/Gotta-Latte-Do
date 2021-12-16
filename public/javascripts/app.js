@@ -113,6 +113,39 @@ const fetchCompletedTasks = async () => {
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 }
 
+// fetch user's search query
+
+const search = async (searchValue) => {
+
+    const res = await fetch(`/search/${searchValue}`, {
+      method: "GET"
+    })
+
+    const { results } = await res.json();
+    if (res.status === 401) {
+      window.location.href = "/log-in";
+      return;
+    }
+
+
+  const tasksListContainer = document.querySelector(".task-list");
+  const listName = `
+  <h2 class="task-list-header">Search Results</h2>
+  `
+  const tasksHtml = results.map(({ id, description, Lists }) => `
+  <div class="task-info">
+      <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+      <label for=${id} id=${id} class="task-check-box"><strong>${description}</strong> found in your <strong><i>${Lists[0].title}</i></strong> list.</label>
+  </div>
+  `)
+
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
+
+
+
+
+}
+
 // toggle between incomplete and completed tasks
 // incomplete button
 const incompleteTaskList = document.querySelector('#incomplete')
@@ -195,13 +228,16 @@ const addNewContact = async (id) => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     try {
+      await fetchLists();
       await fetchTasks();
       await fetchAssignTasks();
-      await fetchLists();
-
     } catch (e) {
       console.error(e);
     }
+
+
+
+
 
     const tasksListContainer = document.querySelector(".task-list");
     tasksListContainer.addEventListener("click", async(e) => {
@@ -401,7 +437,7 @@ deleteContact.addEventListener("click", async (e) => {
 
     try {
 
-      await fetch(`http://localhost:8080/contacts/${deleteContactId}`, {
+      await fetch(`/contacts/${deleteContactId}`, {
         method: "DELETE",
       })
 
@@ -415,7 +451,7 @@ deleteContact.addEventListener("click", async (e) => {
 })
 
 const fetchLists = async () => {
-  const res = await fetch('http://localhost:8080/lists/')
+  const res = await fetch('/lists/')
 
   if (res.status === 401) {
       window.location.href = "/log-in";
@@ -435,6 +471,35 @@ const fetchLists = async () => {
   `)
 
   listContainer.innerHTML = listHtml.join("");
+
+  const listLists = document.querySelectorAll('.list-lists');
+
+    listLists.forEach((list) => {
+      list.addEventListener('click', async(e) => {
+        e.stopPropagation();
+        const listId = e.target.id;
+        console.log(listId)
+
+        const res = await fetch(`/lists/${listId}/tasks`);
+
+        const { tasks } = await res.json();
+
+        const tasksContainer = document.querySelector('.task-list');
+
+        const listTitle = `
+          <h2 class="task-list-header">${tasks[0].List.title}</h2>
+        `
+
+        const tasksHtml = tasks.map((task) => `
+          <div class="task-info">
+            <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id}>
+            <label for=${task.Task.id} id=${task.Task.id} class="task-check-box">${task.Task.description}</label>
+          </div>
+        `)
+
+        tasksContainer.innerHTML = listTitle + tasksHtml.join('');
+      })
+    })
 }
 
 
@@ -452,7 +517,7 @@ deleteList.addEventListener("click", async (e) => {
     targetRemoval.remove();
     try {
 
-      await fetch(`http://localhost:8080/lists/${deleteListId}`, {
+      await fetch(`/lists/${deleteListId}`, {
         method: "DELETE",
       })
 
@@ -462,7 +527,7 @@ deleteList.addEventListener("click", async (e) => {
   } else if (e.target.className === 'list-lists') {
     const listId = e.target.id;
     const listForm = document.querySelector('.updateList');
-    const listTitle = await fetch(`http://localhost:8080/lists/${listId}`, {
+    const listTitle = await fetch(`/lists/${listId}`, {
       method: "GET",
     })
     const { listName } = await listTitle.json();
@@ -488,13 +553,14 @@ deleteList.addEventListener("click", async (e) => {
         const formData = new FormData(listUpdate);
         const title = formData.get('title')
         const body = { title }
-        await fetch(`http://localhost:8080/lists/${listId}`, {
+        await fetch(`/lists/${listId}`, {
           method: 'PATCH',
           body: JSON.stringify(body),
           headers: {
             'Content-Type': 'application/json'
           }
         })
+        listForm.innerHTML = '';
         await fetchLists();
       })
     const cancelButton = document.querySelector('.editCancelButton');
@@ -531,16 +597,24 @@ addList.addEventListener('click', (e) => {
       e.stopPropagation();
       e.preventDefault();
       const formData = new FormData(addList);
-      const testList = formData.get('title');
-      const body = { testList };
-      await fetch(`http://localhost:8080/lists`, {
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        await fetchLists();
+
+      const title = formData.get('title');
+      const body = { title };
+
+      try {
+        await fetch(`/lists`, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          addListForm.innerHTML = '';
+          await fetchLists();
+      } catch(e) {
+        console.error(e);
+      }
+
       });
     const addCancelButton = document.querySelector('.listCancelButton');
 
@@ -590,4 +664,25 @@ signOutButton.addEventListener("click", async (e) => {
     handleErrors(err)
   }
 
+})
+
+
+// search function
+const searchContainer = document.querySelector('#searchBar');
+
+searchContainer.addEventListener("keypress", async (e) => {
+  const searchValue = document.querySelector('#searchBar').value;
+
+  if (e.key === "Enter") {
+    await search(searchValue);
+    const clearAssignedList = document.querySelector('.assigned-list');
+    clearAssignedList.innerHTML = ``;
+    searchContainer.value = '';
+  }
+})
+
+
+const allTasksList = document.querySelector('.all-tasks');
+allTasksList.addEventListener('click', async(e) => {
+  await fetchTasks();
 })

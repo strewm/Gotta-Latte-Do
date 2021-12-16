@@ -4,9 +4,9 @@ const router = express.Router();
 const { check } = require('express-validator');
 const db = require('../db/models');
 const { asyncHandler, csrfProtection, handleValidationErrors } = require('../utils');
-const { Task, TaskList } = db;
+const { Task, TaskList, List } = db;
 
-router.get('/:id', asyncHandler(async (req, res) => {
+router.get('/:id', asyncHandler(async (req, res, next) => {
     const searchQuery = req.params.id;
     const firstThree = searchQuery.slice(0, 3);
     const firstThreeUp = firstThree.charAt(0).toUpperCase() + firstThree.slice(1);
@@ -26,13 +26,16 @@ router.get('/:id', asyncHandler(async (req, res) => {
                     {description: { [Op.iLike]: `${lastThree}`}},
                 ]
 
+            },
+            include: {
+                model: List,
             }
         })
 
-        res.send(results)
+        res.status(201).json({results})
 
     } catch (e) {
-        console.log('oops')
+        next(e)
     }
 
 
