@@ -94,9 +94,6 @@ router.post(
 
     const defaultList = await db.List.bulkCreate([{
       userId: user.id,
-      title: 'All tasks',
-    }, {
-      userId: user.id,
       title: 'Today'
     }, {
       userId: user.id,
