@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const app = require('../app');
 const db = require('../db/models');
 const { asyncHandler, csrfProtection, handleValidationErrors } = require('../utils');
-const { Contact, User, List } = db;
+const { Contact, User, List, Task, TaskList } = db;
 
 const validateLists = [
     check('title')
@@ -41,6 +41,13 @@ const validateLists = [
     res.status(200).json({allLists});
   }))
 
+  router.get('/:id(\\d+)/tasks', asyncHandler(async(req, res) => {
+    const tasks = await TaskList.findAll({
+      include: [{model: Task}, {model: List}],
+      where: {listId: req.params.id}
+    })
+    res.json({tasks});
+  }))
 
   router.post('/', validateLists, asyncHandler(async (req, res, next) => {
     const { createList } = req.body;

@@ -112,7 +112,7 @@ router.get('/assigned', asyncHandler(async(req, res) => {
   const assigner = await User.findByPk(tasks[0].userId);
   const user = await User.findByPk(userId);
   res.status(201).json({tasks, assigner, user});
-  } 
+  }
 }));
 
 router.get('/task/:id(\\d+)', asyncHandler(async(req, res) => {
@@ -174,15 +174,13 @@ router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, r
       isCompleted
     })
 
-    const listInfo = await List.findAll({
-      where: {
-        title
-      }
+    const listInfo = await List.findOne({
+      where: [{ title, userId }]
     })
 
 
     const taskId = task.id
-    const listId = listInfo[0].id
+    const listId = listInfo.id
 
     const taskList = await TaskList.create({
       taskId,
