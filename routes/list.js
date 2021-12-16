@@ -38,7 +38,7 @@ const validateLists = [
     const allLists = await List.findAll({
       where: { userId }
     });
-    res.status(200).json({allLists});
+    res.status(200).json({ allLists });
   }))
 
   router.get('/:id(\\d+)/tasks', asyncHandler(async(req, res) => {
@@ -50,19 +50,19 @@ const validateLists = [
   }))
 
   router.post('/', validateLists, asyncHandler(async (req, res, next) => {
-    const { createList } = req.body;
+    const { title } = req.body;
     const userId = res.locals.userId;
 
     try {
-      if (createList.length >= 1) {
+      if (title.length >= 1) {
         const newList = await List.create({
         userId,
-        title: createList
+        title
     })
+    res.status(201).json({ newList })
   }
-    res.status(201).json({newList})
     } catch (e) {
-        next()
+        next(e)
     }
 }))
   router.patch('/:id(\\d+)', asyncHandler(async (req, res) => {

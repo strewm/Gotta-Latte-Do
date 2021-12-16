@@ -14,7 +14,7 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
 
     const userId = res.locals.userId;
     try{
-        const resultsUncat = await Task.findAll({
+        const results = await Task.findAll({
             where: {
                 userId,
                 [Op.or]: [
@@ -32,27 +32,7 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
             }
         })
 
-        const results = await TaskList.findAll({
-            include: [{
-                model: Task,
-                //through: {
-                    where: {
-                        userId,
-                        [Op.or]: [
-                            {description: { [Op.substring]: `${searchQuery}`}},
-                            {description: { [Op.substring]: `${firstThree}`}},
-                            {description: { [Op.substring]: `${lastThree}`}},
-                            {description: { [Op.substring]: `${firstThreeUp}`}},
-                            {description: { [Op.iLike]: `${firstThree}`}},
-                            {description: { [Op.iLike]: `${lastThree}`}},
-                        ]
-
-                    }
-                //}
-            }, List]
-        })
-
-        res.status(201).json({results, resultsUncat})
+        res.status(201).json({results})
 
     } catch (e) {
         next(e)

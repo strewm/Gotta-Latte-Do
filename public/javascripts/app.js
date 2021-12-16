@@ -116,13 +116,12 @@ const fetchCompletedTasks = async () => {
 // fetch user's search query
 
 const search = async (searchValue) => {
-  try {
+
     const res = await fetch(`/search/${searchValue}`, {
       method: "GET"
     })
 
-    const { results, resultsUncat } = await res.json();
-    console.log(results, resultsUncat)
+    const { results } = await res.json();
     if (res.status === 401) {
       window.location.href = "/log-in";
       return;
@@ -136,15 +135,13 @@ const search = async (searchValue) => {
   const tasksHtml = results.map(({ id, description, Lists }) => `
   <div class="task-info">
       <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-      <label for=${id} id=${id} class="task-check-box">${description}, ${Lists.title}</label>
+      <label for=${id} id=${id} class="task-check-box"><strong>${description}</strong> found in your <strong><i>${Lists[0].title}</i></strong> list.</label>
   </div>
   `)
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 
-  } catch (err) {
-    handleErrors(err)
-  }
+
 
 
 }
@@ -239,35 +236,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-
-    const listLists = document.querySelectorAll('.list-lists');
-
-    listLists.forEach((list) => {
-      list.addEventListener('click', async(e) => {
-        e.stopPropagation();
-        const listId = e.target.id;
-        console.log(listId)
-
-        const res = await fetch(`/lists/${listId}/tasks`);
-
-        const { tasks } = await res.json();
-
-        const tasksContainer = document.querySelector('.task-list');
-
-        const listTitle = `
-          <h2 class="task-list-header">${tasks[0].List.title}</h2>
-        `
-
-        const tasksHtml = tasks.map((task) => `
-          <div class="task-info">
-            <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id}>
-            <label for=${task.Task.id} id=${task.Task.id} class="task-check-box">${task.Task.description}</label>
-          </div>
-        `)
-
-        tasksContainer.innerHTML = listTitle + tasksHtml.join('');
-      })
-    })
 
 
 
@@ -469,7 +437,7 @@ deleteContact.addEventListener("click", async (e) => {
 
     try {
 
-      await fetch(`http://localhost:8080/contacts/${deleteContactId}`, {
+      await fetch(`/contacts/${deleteContactId}`, {
         method: "DELETE",
       })
 
@@ -483,7 +451,7 @@ deleteContact.addEventListener("click", async (e) => {
 })
 
 const fetchLists = async () => {
-  const res = await fetch('http://localhost:8080/lists/')
+  const res = await fetch('/lists/')
 
   if (res.status === 401) {
       window.location.href = "/log-in";
@@ -503,6 +471,35 @@ const fetchLists = async () => {
   `)
 
   listContainer.innerHTML = listHtml.join("");
+
+  const listLists = document.querySelectorAll('.list-lists');
+
+    listLists.forEach((list) => {
+      list.addEventListener('click', async(e) => {
+        e.stopPropagation();
+        const listId = e.target.id;
+        console.log(listId)
+
+        const res = await fetch(`/lists/${listId}/tasks`);
+
+        const { tasks } = await res.json();
+
+        const tasksContainer = document.querySelector('.task-list');
+
+        const listTitle = `
+          <h2 class="task-list-header">${tasks[0].List.title}</h2>
+        `
+
+        const tasksHtml = tasks.map((task) => `
+          <div class="task-info">
+            <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id}>
+            <label for=${task.Task.id} id=${task.Task.id} class="task-check-box">${task.Task.description}</label>
+          </div>
+        `)
+
+        tasksContainer.innerHTML = listTitle + tasksHtml.join('');
+      })
+    })
 }
 
 
@@ -520,7 +517,7 @@ deleteList.addEventListener("click", async (e) => {
     targetRemoval.remove();
     try {
 
-      await fetch(`http://localhost:8080/lists/${deleteListId}`, {
+      await fetch(`/lists/${deleteListId}`, {
         method: "DELETE",
       })
 
@@ -530,7 +527,7 @@ deleteList.addEventListener("click", async (e) => {
   } else if (e.target.className === 'list-lists') {
     const listId = e.target.id;
     const listForm = document.querySelector('.updateList');
-    const listTitle = await fetch(`http://localhost:8080/lists/${listId}`, {
+    const listTitle = await fetch(`/lists/${listId}`, {
       method: "GET",
     })
     const { listName } = await listTitle.json();
@@ -556,7 +553,7 @@ deleteList.addEventListener("click", async (e) => {
         const formData = new FormData(listUpdate);
         const title = formData.get('title')
         const body = { title }
-        await fetch(`http://localhost:8080/lists/${listId}`, {
+        await fetch(`/lists/${listId}`, {
           method: 'PATCH',
           body: JSON.stringify(body),
           headers: {
@@ -600,17 +597,24 @@ addList.addEventListener('click', (e) => {
       e.stopPropagation();
       e.preventDefault();
       const formData = new FormData(addList);
-      const createList = formData.get('title');
-      const body = { createList };
-      await fetch(`http://localhost:8080/lists`, {
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        addListForm.innerHTML = '';
-        await fetchLists();
+
+      const title = formData.get('title');
+      const body = { title };
+
+      try {
+        await fetch(`/lists`, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          addListForm.innerHTML = '';
+          await fetchLists();
+      } catch(e) {
+        console.error(e);
+      }
+
       });
     const addCancelButton = document.querySelector('.listCancelButton');
 
@@ -671,6 +675,9 @@ searchContainer.addEventListener("keypress", async (e) => {
 
   if (e.key === "Enter") {
     await search(searchValue);
+    const clearAssignedList = document.querySelector('.assigned-list');
+    clearAssignedList.innerHTML = ``;
+    searchContainer.value = '';
   }
 })
 
