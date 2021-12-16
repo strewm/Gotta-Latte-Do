@@ -116,13 +116,12 @@ const fetchCompletedTasks = async () => {
 // fetch user's search query
 
 const search = async (searchValue) => {
-  try {
+
     const res = await fetch(`/search/${searchValue}`, {
       method: "GET"
     })
 
-    const { results, resultsUncat } = await res.json();
-    console.log(results, resultsUncat)
+    const { results } = await res.json();
     if (res.status === 401) {
       window.location.href = "/log-in";
       return;
@@ -136,15 +135,13 @@ const search = async (searchValue) => {
   const tasksHtml = results.map(({ id, description, Lists }) => `
   <div class="task-info">
       <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-      <label for=${id} id=${id} class="task-check-box">${description}, ${Lists.title}</label>
+      <label for=${id} id=${id} class="task-check-box"><strong>${description}</strong> found in your <strong><i>${Lists[0].title}</i></strong> list.</label>
   </div>
   `)
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 
-  } catch (err) {
-    handleErrors(err)
-  }
+
 
 
 }
@@ -440,7 +437,7 @@ deleteContact.addEventListener("click", async (e) => {
 
     try {
 
-      await fetch(`http://localhost:8080/contacts/${deleteContactId}`, {
+      await fetch(`/contacts/${deleteContactId}`, {
         method: "DELETE",
       })
 
@@ -454,7 +451,7 @@ deleteContact.addEventListener("click", async (e) => {
 })
 
 const fetchLists = async () => {
-  const res = await fetch('http://localhost:8080/lists/')
+  const res = await fetch('/lists/')
 
   if (res.status === 401) {
       window.location.href = "/log-in";
@@ -520,7 +517,7 @@ deleteList.addEventListener("click", async (e) => {
     targetRemoval.remove();
     try {
 
-      await fetch(`http://localhost:8080/lists/${deleteListId}`, {
+      await fetch(`/lists/${deleteListId}`, {
         method: "DELETE",
       })
 
@@ -530,7 +527,7 @@ deleteList.addEventListener("click", async (e) => {
   } else if (e.target.className === 'list-lists') {
     const listId = e.target.id;
     const listForm = document.querySelector('.updateList');
-    const listTitle = await fetch(`http://localhost:8080/lists/${listId}`, {
+    const listTitle = await fetch(`/lists/${listId}`, {
       method: "GET",
     })
     const { listName } = await listTitle.json();
@@ -556,7 +553,7 @@ deleteList.addEventListener("click", async (e) => {
         const formData = new FormData(listUpdate);
         const title = formData.get('title')
         const body = { title }
-        await fetch(`http://localhost:8080/lists/${listId}`, {
+        await fetch(`/lists/${listId}`, {
           method: 'PATCH',
           body: JSON.stringify(body),
           headers: {
@@ -600,6 +597,7 @@ addList.addEventListener('click', (e) => {
       e.stopPropagation();
       e.preventDefault();
       const formData = new FormData(addList);
+
       const title = formData.get('title');
       const body = { title };
 
@@ -616,6 +614,7 @@ addList.addEventListener('click', (e) => {
       } catch(e) {
         console.error(e);
       }
+
       });
     const addCancelButton = document.querySelector('.listCancelButton');
 
@@ -676,6 +675,9 @@ searchContainer.addEventListener("keypress", async (e) => {
 
   if (e.key === "Enter") {
     await search(searchValue);
+    const clearAssignedList = document.querySelector('.assigned-list');
+    clearAssignedList.innerHTML = ``;
+    searchContainer.value = '';
   }
 })
 
