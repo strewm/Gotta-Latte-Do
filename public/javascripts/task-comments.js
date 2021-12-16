@@ -1,4 +1,4 @@
-import { handleErrors, dateFormatter } from "./utils.js";
+import { handleErrors, dateFormatter, commentDateFormatter } from "./utils.js";
 import { fetchTasks } from './app.js';
 
 
@@ -231,12 +231,12 @@ export const fetchComments = async (taskId) => {
                 </span>
                 <span id='comment-${comment.id}-message' class='comment-message'>${comment.message}</span>
             </span>
-            <span class='comment-buttons-${comment.id} comment-buttons'>
+            <span class='comment-buttons-${comment.id} comment-buttons userId-${comment.userId}'>
                 <button class='edit-comment-butt comment-butts' id='${comment.id}'>Edit</button>
                 <button class='delete-comment-butt comment-butts' id='${comment.id}'>Delete</button>
             </span>
         </div>
-        <div class='createdAt-${comment.id}'>${comment.createdAt}</div>
+        <div class='updatedAt-${comment.id}'>${commentDateFormatter(comment.updatedAt)}</div>
     `
     )
 
@@ -244,7 +244,22 @@ export const fetchComments = async (taskId) => {
 
     // TODO: only show edit/delete if userId of comment matches logged in user
 
+    const taskRes = await fetch(`/tasks/${taskId}`);
+    if (res.status === 401) {
+        window.location.href = '/log-in';
+        return;
+    }
 
+    const { task } = await taskRes.json();
+
+    comments.forEach((comment) => {
+        const editDeleteButtons = document.querySelector(`.userId-${comment.userId}`);
+        if (task.userId !== comment.userId) {
+            editDeleteButtons.hidden = true;
+        } else {
+            editDeleteButtons.hidden = false;
+        }
+    })
 
     const deleteComments = document.querySelectorAll('.delete-comment-butt');
 
@@ -258,7 +273,7 @@ export const fetchComments = async (taskId) => {
             })
 
             const comment = document.querySelector(`.comment-container-${commentId}`);
-            const commentDate = document.querySelector(`.createdAt-${commentId}`);
+            const commentDate = document.querySelector(`.updatedAt-${commentId}`);
             comment.remove();
             commentDate.remove();
         })
@@ -324,6 +339,7 @@ export const fetchComments = async (taskId) => {
                     <button class='edit-comment-butt' id='${comment.id}'>Edit
                     <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
                 </span>
+                <div class='updatedAt-${comment.id}'>${commentDateFormatter(comment.updatedAt)}</div>
                 `
                 await fetchComments(taskId);
             })

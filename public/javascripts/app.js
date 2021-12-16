@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const tasksListContainer = document.querySelector(".task-list");
     tasksListContainer.addEventListener("click", async(e) => {
+      e.stopPropagation();
       const taskId = e.target.id;
 
       // let stateObj = { id: "100" }
