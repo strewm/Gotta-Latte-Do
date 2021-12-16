@@ -1,4 +1,4 @@
-import { handleErrors, dateFormatter } from "./utils.js";
+import { handleErrors, dateFormatter, commentDateFormatter } from "./utils.js";
 import { fetchTasks } from './app.js';
 
 const deleteAllComments = async (taskId) => {
@@ -251,7 +251,7 @@ export const fetchComments = async (taskId) => {
                 <button class='delete-comment-butt comment-butts' id='${comment.id}'>Delete</button>
             </span>
         </div>
-        <div class='createdAt'>${comment.createdAt}</div>
+        <div class='createdAt'>${commentDateFormatter(comment.createdAt)}</div>
     `
     )
 

@@ -72,3 +72,18 @@ export const dateFormatter = (task) => {
 
   return due;
 }
+
+
+
+// Formats the createdAt date and time of a comment to a nice format, e.g. 'Dec 14 01:28'
+export const commentDateFormatter = (createdAt) => {
+  let createdAtDate = createdAt.slice(0,10).replace(/-/g, '/');
+  createdAtDate = new Date(createdAt);
+  createdAtDate = createdAtDate.toDateString();
+  createdAtDate = createdAtDate.slice(4, 10);
+
+  let createdAtTime = createdAt.slice(11, 16);
+
+  return `${createdAtDate} ${createdAtTime}`
+
+}
