@@ -36,7 +36,7 @@ const validateLists = [
   router.get('/', asyncHandler(async (req, res) => {
     const userId = res.locals.userId;
     const allLists = await List.findAll({
-      where: userId
+      where: { userId }
     });
     res.status(200).json({allLists});
   }))

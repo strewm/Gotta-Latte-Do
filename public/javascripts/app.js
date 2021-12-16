@@ -195,10 +195,9 @@ const addNewContact = async (id) => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     try {
+      await fetchLists();
       await fetchTasks();
       await fetchAssignTasks();
-      await fetchLists();
-
     } catch (e) {
       console.error(e);
     }
