@@ -113,6 +113,42 @@ const fetchCompletedTasks = async () => {
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 }
 
+// fetch user's search query
+
+const search = async (searchValue) => {
+  try {
+    const res = await fetch(`/search/${searchValue}`, {
+      method: "GET"
+    })
+
+    const { results, resultsUncat } = await res.json();
+    console.log(results, resultsUncat)
+    if (res.status === 401) {
+      window.location.href = "/log-in";
+      return;
+    }
+
+
+  const tasksListContainer = document.querySelector(".task-list");
+  const listName = `
+  <h2 class="task-list-header">Search Results</h2>
+  `
+  const tasksHtml = results.map(({ id, description, Lists }) => `
+  <div class="task-info">
+      <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+      <label for=${id} id=${id} class="task-check-box">${description}, ${Lists.title}</label>
+  </div>
+  `)
+
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
+
+  } catch (err) {
+    handleErrors(err)
+  }
+
+
+}
+
 // toggle between incomplete and completed tasks
 // incomplete button
 const incompleteTaskList = document.querySelector('#incomplete')
@@ -624,4 +660,16 @@ signOutButton.addEventListener("click", async (e) => {
     handleErrors(err)
   }
 
+})
+
+
+// search function
+const searchContainer = document.querySelector('#searchBar');
+
+searchContainer.addEventListener("keypress", async (e) => {
+  const searchValue = document.querySelector('#searchBar').value;
+
+  if (e.key === "Enter") {
+    await search(searchValue);
+  }
 })
