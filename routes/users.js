@@ -94,25 +94,10 @@ router.post(
 
     const defaultList = await db.List.bulkCreate([{
       userId: user.id,
-      title: 'Today'
-    }, {
-      userId: user.id,
-      title: 'Tomorrow'
-    }, {
-      userId: user.id,
       title: 'Personal'
     }, {
       userId: user.id,
       title: 'Work'
-    }, {
-      userId: user.id,
-      title: 'Given to Others'
-    }, {
-      userId: user.id,
-      title: 'Given to Me'
-    }, {
-      userId: user.id,
-      title: 'Overdue'
     },
   ])
 
