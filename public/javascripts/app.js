@@ -4,7 +4,7 @@ import { fetchTask, fetchComments, postComment } from "./task-comments.js";
 // fetch user's incomplete tasks
 
 export const fetchTasks = async () => {
-    const res = await fetch("/tasks/incomplete")
+    const res = await fetch("/tasks")
 
     if (res.status === 401) {
         window.location.href = "/log-in";
