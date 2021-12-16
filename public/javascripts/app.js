@@ -4,7 +4,7 @@ import { fetchTask, fetchComments, postComment } from "./task-comments.js";
 // fetch user's incomplete tasks
 
 export const fetchTasks = async () => {
-    const res = await fetch("/tasks")
+    const res = await fetch("/tasks/incomplete")
 
     if (res.status === 401) {
         window.location.href = "/log-in";
@@ -405,6 +405,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 const signOutButton = document.querySelector("#signOut");
 
 signOutButton.addEventListener("click", async (e) => {
+
   e.preventDefault();
   try {
     await fetch("/users/logout", {

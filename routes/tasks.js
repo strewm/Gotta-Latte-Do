@@ -51,7 +51,6 @@ router.get('/incomplete', asyncHandler(async(req, res) => {
     where: {
       userId,
       givenTo: null,
-      isCompleted: 'false'
     }
   })
 
