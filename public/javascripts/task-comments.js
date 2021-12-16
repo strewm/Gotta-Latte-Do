@@ -236,7 +236,7 @@ export const fetchComments = async (taskId) => {
                 <button class='delete-comment-butt comment-butts' id='${comment.id}'>Delete</button>
             </span>
         </div>
-        <div class='createdAt'>${commentDateFormatter(comment.updatedAt)}</div>
+        <div class='updatedAt-${comment.id}'>${commentDateFormatter(comment.updatedAt)}</div>
     `
     )
 
@@ -261,8 +261,6 @@ export const fetchComments = async (taskId) => {
         }
     })
 
-
-
     const deleteComments = document.querySelectorAll('.delete-comment-butt');
 
     for (let i = 0; i < deleteComments.length; i++) {
@@ -275,7 +273,7 @@ export const fetchComments = async (taskId) => {
             })
 
             const comment = document.querySelector(`.comment-container-${commentId}`);
-            const commentDate = document.querySelector(`.createdAt-${commentId}`);
+            const commentDate = document.querySelector(`.updatedAt-${commentId}`);
             comment.remove();
             commentDate.remove();
         })
