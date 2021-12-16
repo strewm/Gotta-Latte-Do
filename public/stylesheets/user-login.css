@@ -1,43 +1,190 @@
+/* %%%%%%%%%%%%%%%%% Main page layout %%%%%%%%%%%%%%%%% */
 .mainPage {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 9fr 1.75fr;
     grid-template-areas:
-    "header header"
-    "main main"
+    "left-column right-column"
     "footer footer";
 
     height: 100vh;
+    background-color: #8A715B;
 }
 
-.header {
-    grid-area: header;
+.left-column {
+    grid-area: left-column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 50px 15px 50px;
 }
 
-.sign-up {
-    grid-area: main;
+.right-column {
+    grid-area: right-column;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* margin: 15px 50px 15px 50px; */
+    padding: 15px 50px 15px 50px;
+
+    background-color: #E0A979;
 }
 
 .footer {
     grid-area: footer;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px 50px 15px 50px;
+    background-color: cornsilk;
 }
 
 
-/* %%%%%%%%%%%%%%%%% Header  %%%%%%%%%%%%%%%%% */
-.header-logo-img {
-    width: 100px;
+/* %%%%%%%%%%%%%%%%% Left  %%%%%%%%%%%%%%%%% */
+.left-logo {
+    background-color: #8A715B;
+    display: flex;
+    justify-content: center;
+}
+.left-logo-img {
+    width: 65%;
     height: auto;
+    min-width: 150px;
+    min-height: auto;
+    max-width: 300px;
+    max-height: auto;
     margin: 15px;
-    margin-left: 50px;
 }
 
 
 
+/* %%%%%%%%%%%%%%%%% Right  %%%%%%%%%%%%%%%%% */
+.welcome-text {
+    color: cornsilk;
+    font-size: 18px;
+}
 
-/* %%%%%%%%%%%%%%%%% Main  %%%%%%%%%%%%%%%%% */
+.log-in-field {
+    border: 2px solid cornsilk;
+    font-size: 12px;
+    padding: 5px 10px 10px 10px;
+    border-radius: 5px;
+    width: 80%;
+    min-width: 250px;
+    min-height: auto;
 
+    color: #8A715B;
+}
 
+#email, #password {
+    border: 1px solid cornsilk;
+    font-size: 15px;
+    padding: 5px;
+    height: 30px;
+    border-radius: 5px;
+    width: 100%;
+    margin: 5px 0 5px 0;
+    background-color: cornsilk;
+    color: #8A715B;
+}
 
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 5px; */
+}
+
+#button-login, #button-cancel {
+    margin: 5px;
+    font-size: 15px;
+    /* height: 25px; */
+    padding: 7px;
+    border-radius: 5px;
+
+    color: cornsilk;
+}
+
+#button-login {
+    margin: 5px;
+    border: 1px solid #9fcf88;
+    background-color: #9fcf88;
+}
+
+#button-login:hover {
+    border: 1px solid #8ab675;
+    background-color: #8ab675;
+}
+
+#button-login:active {
+    border: 1px solid #78a365;
+    box-shadow: inset 0 0 15px #78a365;
+}
+
+#button-cancel {
+    text-decoration: none;
+    border: 1px solid #da6464;
+    background-color: #da6464;
+}
+
+#button-cancel:hover {
+    border: 1px solid #ca5c5c;
+    background-color: #ca5c5c;
+}
+
+#button-cancel:active {
+    border: 1px solid #b15050;
+    box-shadow: inset 0 0 15px #b15050;
+}
+
+::placeholder {
+    color: #8A715B;
+    font-size: 13px;
+    font-style: italic;
+}
 
 
 /* %%%%%%%%%%%%%%%%% Footer  %%%%%%%%%%%%%%%%% */
+.demo-user {
+    margin: 5px;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 5px;
+
+    border: 1px solid #87b9d6;
+    background-color: #87b9d6;
+    color: cornsilk;
+}
+
+.demo-user:hover {
+    border: 1px solid #77a8c4;
+    background-color: #77a8c4;
+}
+
+.demo-user:active {
+    border: 1px solid #6a97b1;
+    box-shadow: inset 0 0 15px #6a97b1;
+}
+
+#button-sign-up {
+    text-decoration: none;
+    margin: 5px;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 5px;
+
+    border: 1px solid #87b9d6;
+    background-color: #87b9d6;
+    color: cornsilk;
+}
+
+#button-sign-up:hover {
+    border: 1px solid #77a8c4;
+    background-color: #77a8c4;
+}
+
+#button-sign-up:active {
+    border: 1px solid #6a97b1;
+    box-shadow: inset 0 0 15px #6a97b1;
+}

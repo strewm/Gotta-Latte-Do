@@ -8,19 +8,21 @@ include utils
 
 block content
   div.mainPage
-    div.header
-      a.header-logo(href="/")
-        img.header-logo-img(src='../images/logo-text.png')
-      a.sign-up-btn(href="/users/signup") Sign up for free
-    +validationErrorSummary(errors)
-    form(action='/users/login' method='post')
-      div.sign-up
-        input(type='hidden' name='_csrf' value=csrfToken)
-        +field('Email Address', 'email', email)
-        +field('Password', 'password', null, 'password')
-        div
-          button(type='submit') Login
-          a(href='/') Cancel
+    div.left-column
+      a.left-logo(href="/")
+        img.left-logo-img(src='../images/logo-text.png')
+    div.right-column
+      //- a.sign-up-btn(href="/users/signup") Sign up for free
+      div.welcome-text Been here before? Welcome back!
+      div.log-in-field
+        +validationErrorSummary(errors)
+        form(action='/users/login' method='post')
+            input(type='hidden' name='_csrf' value=csrfToken)
+            +field('', 'email', email)
+            +field('', 'password', null, 'password')
+            div.buttons
+              button(type='submit' id='button-login') Login
+              div: a#button-cancel(href='/') Cancel
     div.footer
       button(type='submit' class='demo-user') Demo User
-      p: a(href='/users/signup') Don't have an account?
+      div: a#button-sign-up(href='/users/signup') Don't have an account?
