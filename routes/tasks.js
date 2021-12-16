@@ -174,11 +174,8 @@ router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, r
       isCompleted
     })
 
-    const listInfo = await List.findAll({
-      where: {
-        title,
-        userId
-      }
+    const listInfo = await List.findOne({
+      where: [{ title, userId }]
     })
 
 
