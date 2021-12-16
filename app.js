@@ -8,7 +8,8 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const listRouter = require('./routes/list')
+const listRouter = require('./routes/list');
+const searchRouter = require('./routes/search');
 
 const taskRouter = require('./routes/tasks')
 const commentsRouter = require('./routes/comments')
@@ -50,8 +51,9 @@ app.use('/users', usersRouter);
 app.use('/tasks', taskRouter);
 app.use(commentsRouter);
 app.use('/add-contacts', contactsRouter);
-app.use('/contacts', contactsRouter)
+app.use('/contacts', contactsRouter);
 app.use('/lists', listRouter);
+app.use('/search', searchRouter);
 
 
 // catch 404 and forward to error handler
