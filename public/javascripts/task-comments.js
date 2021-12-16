@@ -33,7 +33,7 @@ const deleteAllComments = async (taskId) => {
 
 const deleteTask = async (taskId) => {
 
-    await deleteAllComments(taskId);
+    // await deleteAllComments(taskId);
 
     try {
         const res = await fetch(`/tasks/${taskId}`, {
@@ -72,6 +72,7 @@ const editTask = async (taskId, body) => {
             throw res;
           }
           await fetchTasks();
+          await fetchTask(taskId);
         } catch (err) {
             handleErrors(err)
         }
@@ -145,9 +146,13 @@ export const fetchTask = async (taskId) => {
     }
 
     const hideTaskInfoButt = document.querySelector('#task-info-x');
+    const editTaskButt = document.querySelector(`#edit-task-button-${task.id}`);
+    editTaskButt.disabled = false;
+    const editForm = document.querySelector('.edit-form');
 
     hideTaskInfoButt.addEventListener('click', async (e) => {
         taskInfo.hidden = true;
+        editForm.hidden = true;
 
         // let stateObj = { id: "100" }
         // window.history.replaceState(stateObj, "Task", `/app`)
@@ -163,36 +168,51 @@ export const fetchTask = async (taskId) => {
         taskInfo.hidden = true;
     })
 
-    const editTaskButt = document.querySelector(`#edit-task-button-${task.id}`);
+
+    const form = document.createElement('form');
+    form.setAttribute('class', 'edit-task');
+    form.innerHTML = `
+        <label for='description'></label>
+        <input type='text' placeholder='${task.message}' id='description' name='description' required></input>
+        <label for='dueDate'>Due Date</label>
+        <input type='date' id='dueDate' name='dueDate' required></input>
+        <label for='isCompleted'>Completed?</label>
+        <input type='checkbox' id='checkbox' name='isComplicated'>
+        <button class='editTaskButton' type='submit'>Edit Task
+    `
+
+    const editFormHide = document.createElement('button');
+    editFormHide.setAttribute('class', 'task-butts');
+    editFormHide.innerText = 'x'
+
+    if (!editForm.children.length) {
+        editForm.appendChild(editFormHide);
+        editForm.appendChild(form);
+        editForm.hidden = true;
+    }
+
+    const editTaskSubmit = document.querySelector('.editTaskButton');
+
+    editFormHide.addEventListener('click', async(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        editForm.hidden = true;
+    })
 
     editTaskButt.addEventListener('click', async(e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log('EDIT CLICK')
-        editTaskButt.disabled = true;
+        editForm.hidden = false;
 
-        try {
 
-            const editForm = document.querySelector('.edit-form');
-
-            const form = document.createElement('form');
-            form.setAttribute('class', 'edit-task');
-            form.innerHTML = `
-                <label for='description'></label>
-                <input type='text' placeholder='${task.message}' id='description' name='description' required></input>
-                <label for='dueDate'>Due Date</label>
-                <input type='date' id='dueDate' name='dueDate' required></input>
-                <label for='isCompleted'>Completed?</label>
-                <input type='checkbox' id='checkbox' name='isComplicated'>
-                <button class='editTaskButton' type='submit'>Edit Task</button>
-            `
-            editForm.appendChild(form);
-
-            form.addEventListener('submit', async (e) => {
+            editTaskSubmit.addEventListener('click', async (e) => {
                 e.preventDefault();
+                e.stopPropagation();
+                console.log(form)
 
-                const formData = new FormData(form);
+                const formData = new FormData(document.querySelector('.edit-task'));
                 const description = formData.get('description');
+                console.log(description)
                 const dueDate = formData.get('dueDate');
                 const checkStatus = formData.get('isCompleted');
                 let isCompleted;
@@ -204,21 +224,16 @@ export const fetchTask = async (taskId) => {
                 }
 
                 const body = { description, dueDate, isCompleted };
+                console.log(body);
 
                 try {
-                    editTask(taskId, body);
-                    editForm.removeChild(form);
-                    editTaskButt.disabled = false;
+                    await editTask(taskId, body);
+                    editForm.hidden = true;
 
                 } catch (e) {
                     console.error(e);
                 }
             })
-
-
-        } catch (e) {
-            console.error(e);
-        }
     })
 
 }
@@ -246,7 +261,7 @@ export const fetchComments = async (taskId) => {
                 <button class='delete-comment-butt comment-butts' id='${comment.id}'>Delete</button>
             </span>
         </div>
-        <div class='createdAt'>${comment.createdAt}</div>
+        <div class='createdAt-${comment.id}'>${comment.createdAt}</div>
     `
     )
 
@@ -268,7 +283,9 @@ export const fetchComments = async (taskId) => {
             })
 
             const comment = document.querySelector(`.comment-container-${commentId}`);
+            const commentDate = document.querySelector(`.createdAt-${commentId}`);
             comment.remove();
+            commentDate.remove();
         })
     }
 
