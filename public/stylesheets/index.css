@@ -186,7 +186,7 @@ When page reaches 815px in width:
 
 @media (max-width: 700px) {
     .inner-image {
-        margin: 50px 35px 35px 35px;
+        margin: 50px 78px 35px 78px;
         width: 400px;
         height: auto;
     }
@@ -206,8 +206,4 @@ When page reaches 815px in width:
         color: cornsilk;
         font-size: 30px;
     }
-}
-
-@media (max-width: 570px) {
-    
 }
