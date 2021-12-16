@@ -509,7 +509,10 @@
     color: #ffffff;
 }
 
-
+.add-contact-input {
+    display: grid;
+    grid-template-columns: 40% 50%;
+}
 
 /* %%%%%%%%%%%%%%%%%%%%% Tasks Section %%%%%%%%%%%%%%%%%%%%% */
 .task-list {

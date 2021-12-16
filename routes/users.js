@@ -54,6 +54,13 @@ const userValidators = [
     }),
 ];
 
+router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
+  const userId = parseInt(req.params.id, 10);
+  console.log(userId, '------------------------------')
+  const userInfo = await db.User.findByPk(userId);
+  console.log(userInfo, '!!!!!!!!!!!!!!!!!!!!!!!!')
+  res.status(201).json({userInfo})
+}))
 
 router.get("/signup", csrfProtection, asyncHandler(async (req, res) => {
   const user = db.User.build();

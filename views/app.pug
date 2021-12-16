@@ -25,12 +25,6 @@ block content
                         li.settingList: button#signOut(type='submit') Sign Out
         div.sidebar
             img.logo(src="../images/maybe-logo.png")
-            ul Inbox
-                //- li All Tasks
-                //- li Today
-                //- li Tomorrow
-                //- li This Week
-                //- li Given to Others
             ul
               .list-sidebar
                 div Lists
@@ -48,7 +42,7 @@ block content
               div.contact-sidebar
                 div Contacts
                 div
-                  a.add-contacts(href='/add-contacts') +
+                  a.add-contacts +
               div.contact-list-sidebar
                 li.contact-list(id=`${me}`)=myName.username + " (me)"
                 if contactsAll
@@ -58,6 +52,7 @@ block content
                         li.contact-list(id=`${contact.id}`)=contact.username
                       div
                         a.delete-contact(id=`${contact.id}`) -
+              div.add-contact-sidebar
         div.tabbedContainer
             div.tabbedGroup
                 a.tabbedLink#incomplete Incomplete

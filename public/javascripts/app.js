@@ -1,9 +1,10 @@
 import { handleErrors } from "./utils.js";
 import { fetchTask, fetchComments, postComment } from "./task-comments.js";
 
+// fetch user's incomplete tasks
 
 export const fetchTasks = async () => {
-    const res = await fetch("/tasks")
+    const res = await fetch("/tasks/incomplete")
 
     if (res.status === 401) {
         window.location.href = "/log-in";
@@ -23,10 +24,46 @@ export const fetchTasks = async () => {
     tasksListContainer.innerHTML = tasksHtml.join("");
 }
 
+// fetch user's completed tasks
+
+const fetchCompletedTasks = async () => {
+  const res = await fetch("/tasks/complete")
+
+  if (res.status === 401) {
+      window.location.href = "/log-in";
+      return;
+    }
+
+  const { tasks, user } = await res.json();
+
+  const tasksListContainer = document.querySelector(".task-list");
+  const tasksHtml = tasks.map(({ id, description }) => `
+  <div class="task-info">
+      <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+      <label for=${id} id=${id} class="task-check-box">${description}</label>
+  </div>
+  `)
+
+  tasksListContainer.innerHTML = tasksHtml.join("");
+}
+
+// toggle between incomplete and completed tasks
+// incomplete button
+const incompleteTaskList = document.querySelector('#incomplete')
+incompleteTaskList.addEventListener("click", async (e) => {
+  await fetchTasks()
+})
+
+// completed button
+const completeTaskList = document.querySelector('#complete')
+completeTaskList.addEventListener("click", async (e) => {
+  await fetchCompletedTasks()
+})
+
+// shows tasks that user assigns to their contacts
+
 const fetchContactTasks = async (id) => {
-  console.log(id.id)
   const res = await fetch(`/tasks/task/${id.id}`)
-  console.log(id.id)
   if (res.status === 401) {
       window.location.href = "/log-in";
       return;
@@ -42,6 +79,34 @@ const fetchContactTasks = async (id) => {
   `)
 
   tasksListContainer.innerHTML = tasksHtml.join("");
+}
+
+//dynamically add new contact to the sidebar
+const addNewContact = async (id) => {
+  const res = await fetch(`/users/${id}`, {
+    method: "GET"
+  })
+
+  if (res.status === 401) {
+    window.location.href = "/log-in";
+    return;
+  }
+
+  const { userInfo } = await res.json();
+  const addNewContact = `
+  <div class="list-grid">
+    <div>
+        <li class="contact-list" id=${userInfo.id}>${userInfo.username}</li>
+    </div>
+    <div>
+        <a class="delete-contact" id=${userInfo.id}>-</a>
+    </div>
+  </div>
+  `
+  const contactContainer = document.querySelector('.contact-list-sidebar');
+  const node = document.createElement("div")
+  node.innerHTML = addNewContact;
+  contactContainer.appendChild(node);
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -92,7 +157,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   );
 
 
-
+// create a new task
 const form = document.querySelector(".create-task");
 
 form.addEventListener("submit", async (e) => {
@@ -106,16 +171,12 @@ form.addEventListener("submit", async (e) => {
     const title = formData.get("title");
     let isCompleted;
 
-    console.log(title)
-
     //convert checkbox to boolean value
     if (checkStatus === 'on') {
         isCompleted = true;
     } else {
         isCompleted = false;
     }
-
-
 
     const body = { description, dueDate, isCompleted, givenTo, title }
 
@@ -144,12 +205,90 @@ form.addEventListener("submit", async (e) => {
     }
 })
 
+// add contacts
+const addContacts = document.querySelector('.add-contacts')
+
+addContacts.addEventListener("click", async (e) => {
+  const addContactsContainer = document.querySelector('.add-contact-sidebar')
+  // add contact form. checks against invalid email and existing contacts
+  addContactsContainer.innerHTML = `
+
+  <div class="form_error"></div>
+  <form class="contacts-form">
+  <h2>Add New Contact</h2>
+      <input type="hidden" name="_csrf">
+      <div class="add-contact-input">
+        <div>
+          <label for="email">Email Address</label>
+        </div>
+        <div class="add-contact-email">
+          <input type="text" id="email" name="email" value="ctap105@gmail.com"/>
+        </div>
+      </div>
+      <div>
+          <button type="submit">Add Contact</button>
+      </div>
+      <div>
+          <button class="add-contact-cancel">Cancel</button>
+      </div>
+  </form>
+  `
+  const form = document.querySelector(".contacts-form");
+
+  const throwError = () => {
+      const formError = document.querySelector(".form_error")
+      formError.innerHTML = `
+              <p>You entered an invalid email address, or this email is currently in your contacts.</p>
+            `
+}
+  // create new contact
+  form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const email = formData.get("email")
+
+      const body = { email }
+
+      try {
+          const res = await fetch("/contacts", {
+              method: "POST",
+              body: JSON.stringify(body),
+              headers: {
+                  "Content-Type": "application/json",
+
+              }
+          })
+
+          if (res.status === 401) {
+              window.location.href = "/log-in";
+              return;
+            }
+          if (!res.ok) {
+
+              throw throwError();
+            }
+          const { contact } = await res.json();
+          await addNewContact(contact.contactId)
+          form.reset();
+          addContactsContainer.innerHTML = ``;
+
+      } catch (err) {
+          handleErrors(err)
+      }
+  })
+  // close add contact container
+  const closeAddContact = document.querySelector('.add-contact-cancel')
+  closeAddContact.addEventListener('click', (e) => {
+    addContactsContainer.innerHTML = ``;
+  })
+})
+
 // switch between your tasks and your contact's tasks
 const contacts = document.querySelector('.contact-list-sidebar')
 
 contacts.addEventListener("click", async (e) => {
   const target = e.target;
-  console.log(target)
   fetchContactTasks(target)
 })
 
@@ -183,6 +322,8 @@ deleteContact.addEventListener("click", async (e) => {
 
 })
 
+// delete a list
+
 const deleteList = document.querySelector('.list-list-sidebar')
 
 deleteList.addEventListener("click", async (e) => {
@@ -208,7 +349,6 @@ deleteList.addEventListener("click", async (e) => {
       method: "GET",
     })
     const { listName } = await listTitle.json();
-    console.log(listName);
     listForm.innerHTML = `
     <h2>Edit List Name</h2>
     <div id='list-edit'>
@@ -241,17 +381,14 @@ deleteList.addEventListener("click", async (e) => {
 const logoutButton = document.querySelector("#logout");
 
 window.addEventListener('DOMContentLoaded', async () => {
-  // console.log("event listener loaded!!!")
   const settings = document.querySelector('#settings');
 
   settings.addEventListener('click', event => {
-    // console.log("settings clicked!!!")
     event.stopPropagation();
     document.querySelector('.settingGroup').classList.remove('settingHide');
   });
 
   window.addEventListener('click', () => {
-    // console.log("outside of settings clicked!!!")
     document.querySelector('.settingGroup').classList.add('settingHide');
 
     // const editForm = document.querySelector('.edit-form');
@@ -268,7 +405,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 const signOutButton = document.querySelector("#signOut");
 
 signOutButton.addEventListener("click", async (e) => {
-  console.log('hello')
   e.preventDefault();
   try {
     await fetch("/users/logout", {

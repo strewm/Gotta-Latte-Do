@@ -43,14 +43,17 @@ router.post('/', asyncHandler(async (req, res, next) => {
 
 }))
 
-router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
+router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
   const contactId = req.params.id;
   if (contactId) {
     await Contact.destroy({
       where: {
         contactId
       }
-    })
+    });
+    res.status(204).end();
+  } else {
+    next(listNotFoundError(req.params.id))
   }
 }))
 
