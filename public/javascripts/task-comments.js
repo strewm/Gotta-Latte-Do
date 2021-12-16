@@ -107,7 +107,7 @@ export const fetchTask = async (taskId) => {
             <div class='task-info-buttons'>
                 <button id="task-info-x" class="task-butts">x</button>
                 <div class='task-edit-delete-butts'>
-                    <button id='edit-task-button-${task.id}' class="task-butts">Edit Task</button>
+                    <button id='edit-task-button-${task.id}' class="task-butts edit-task-button">Edit Task</button>
                     <button id='delete-task-button-${task.id}' class="task-butts">Delete Task</button>
                 </div>
             </div>
