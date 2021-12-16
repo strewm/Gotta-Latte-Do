@@ -43,8 +43,8 @@ const validateLists = [
 
   router.get('/:id(\\d+)/tasks', asyncHandler(async(req, res) => {
     const tasks = await TaskList.findAll({
-      include: [{model: Task}],
-      where: {taskId: req.params.id}
+      include: [{model: Task}, {model: List}],
+      where: {listId: req.params.id}
     })
     res.json({tasks});
   }))
