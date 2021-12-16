@@ -7,29 +7,27 @@ append head
   script(src="/javascripts/index.js" type="module" defer)
 
 block content
-  nav.navbar
-    div.container
-      a.nav-logo
+  div.mainPage
+    nav.navbar
+      a.nav-logo(href="/")
+        img.nav-logo-img(src='../images/logo-text.png')
       ul.navlist
         li Tour
         li What's New
         li Upgrade
         li Help
         li
-          a(href='/users/login') Log in
+          a.btn-login(href='/users/login') Log in
         li
           a.btn(href='/users/signup') Sign up for free
     main.main
+      div.hero-image
+        img.inner-image(src='../images/maybe-logo.png')
+        div.text-under-inner-img
+          p.hero-header Get to-dos out of your head.
+          p.hero-p Stop thinking about your to-dos, and let us remember for you.
       header.main-header
-        .main-container
           h1 The smart to-do app for busy people.
           a.hero-btn(href='/users/signup') Sign Up Free
-    section.main-content
-      article.main-article
-        div.hero-image
-          div.inner-image
-          h2.hero-header Get to-dos out of your head.
-          p.hero-p Stop thinking about your to-dos, and let the app remember for you.
-    footer
-      div.footer
-        small.copyright © 2021 Gotta Latte Do
+    div.footer
+      small.copyright © 2021 Gotta Latte Do
