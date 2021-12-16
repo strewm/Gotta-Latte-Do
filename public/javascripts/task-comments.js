@@ -89,7 +89,7 @@ export const fetchTask = async (taskId) => {
                 <p class='task-info-header'>${task.description}</p>
                 <div class='task-completed-container'>
                     <label for="completedTask" class='task-completed-label'>Task Completed? </label>
-                    <input type="checkbox" class="completedTask" name="completedTask">
+                    <input type="checkbox" class="completedTask completed-task-${task.id}" name="completedTask">
                 </div>
                 <div class='due-container'>
                     <p class='due-container-label'>Due: </p>
@@ -121,6 +121,29 @@ export const fetchTask = async (taskId) => {
     } else {
         check.checked = false;
     }
+
+    check.addEventListener('change', async(e) => {
+        if (check.checked) {
+            const res = await fetch(`/tasks/${task.id}`, {
+                method: "PATCH",
+                body: JSON.stringify({ "isCompleted": "true" }),
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            })
+        } else {
+            const res = await fetch(`/tasks/${task.id}`, {
+                method: "PATCH",
+                body: JSON.stringify({ "isCompleted": "false" }),
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            })
+        }
+    })
+
+
+
 
     const hideTaskInfoButt = document.querySelector('#task-info-x');
     const editTaskButt = document.querySelector(`#edit-task-button-${task.id}`);
