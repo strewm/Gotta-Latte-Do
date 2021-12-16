@@ -205,13 +205,13 @@ router.get('/:id(\\d+)', asyncHandler(async(req, res, next) => {
 }))
 
 router.put ('/:id(\\d+)', validateTask, handleValidationErrors, asyncHandler(async(req, res, next) => {
-  const { description, dueDate, givenTo } = req.body;
+  const { description, dueDate, isCompleted } = req.body;
   const task = await Task.findByPk(req.params.id);
   if (task) {
     await task.update({
       description,
       dueDate,
-      givenTo
+      isCompleted
     })
     res.json({task});
   } else {
@@ -227,6 +227,20 @@ router.delete('/:id(\\d+)', asyncHandler(async(req, res, next) => {
     res.status(204).end()
   } else {
     next(taskNotFoundError(req.params.id))
+  }
+}))
+
+router.patch('/:id(\\d+)', asyncHandler(async (req, res, next) => {
+  const { isCompleted } = req.body;
+  const task = await Task.findByPk(req.params.id);
+  if (task) {
+    await task.update({
+      isCompleted
+    })
+    // task.isCompleted = isCompleted;
+    res.json({ task });
+  } else {
+    next(taskNotFoundError(req.params.id));
   }
 }))
 

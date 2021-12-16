@@ -1,4 +1,4 @@
-import { handleErrors, dateFormatter } from "./utils.js";
+import { handleErrors, dateFormatter, commentDateFormatter } from "./utils.js";
 import { fetchTasks } from './app.js';
 
 
@@ -74,7 +74,6 @@ export const fetchTask = async (taskId) => {
     }
 
     const taskInfo = document.querySelector('.fiona');
-    // if (!task.givenTo) task.givenTo = '';
     const taskHtml = `
         <div class='task-${task.id} task-container'>
             <div class='task-info-buttons'>
@@ -89,7 +88,7 @@ export const fetchTask = async (taskId) => {
                 <p class='task-info-header'>${task.description}</p>
                 <div class='task-completed-container'>
                     <label for="completedTask" class='task-completed-label'>Task Completed? </label>
-                    <input type="checkbox" class="completedTask" name="completedTask">
+                    <input type="checkbox" class="completedTask completed-task-${task.id}" name="completedTask">
                 </div>
                 <div class='due-container'>
                     <p class='due-container-label'>Due: </p>
@@ -122,9 +121,31 @@ export const fetchTask = async (taskId) => {
         check.checked = false;
     }
 
+    check.addEventListener('change', async(e) => {
+        if (check.checked) {
+            const res = await fetch(`/tasks/${task.id}`, {
+                method: "PATCH",
+                body: JSON.stringify({ "isCompleted": "true" }),
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            })
+        } else {
+            const res = await fetch(`/tasks/${task.id}`, {
+                method: "PATCH",
+                body: JSON.stringify({ "isCompleted": "false" }),
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            })
+        }
+    })
+
+
+
+
     const hideTaskInfoButt = document.querySelector('#task-info-x');
-    const editTaskButt = document.querySelector(`#edit-task-button-${task.id}`);
-    editTaskButt.disabled = false;
+    const editTaskButt = document.querySelector(`.edit-task-button`);
     const editForm = document.querySelector('.edit-form');
 
     hideTaskInfoButt.addEventListener('click', async (e) => {
@@ -143,6 +164,7 @@ export const fetchTask = async (taskId) => {
         deleteTask(task.id);
         const taskInfo = document.querySelector(`.task-${task.id}`);
         taskInfo.hidden = true;
+        editForm.hidden = true;
     })
 
 
@@ -150,11 +172,11 @@ export const fetchTask = async (taskId) => {
     form.setAttribute('class', 'edit-task');
     form.innerHTML = `
         <label for='description'></label>
-        <input type='text' placeholder='${task.description}' id='description' name='description' required></input>
+        <input type='text' placeholder='${task.description}' id='description-task-${task.id}' class='description-task' name='description' required></input>
         <label for='dueDate'>Due Date</label>
         <input type='date' id='dueDate' name='dueDate' required></input>
         <label for='isCompleted'>Completed?</label>
-        <input type='checkbox' id='checkbox' name='isComplicated'>
+        <input type='checkbox' id='checkbox' name='isCompleted'>
         <button class='editTaskButton' type='submit'>Edit Task
     `
 
@@ -179,6 +201,8 @@ export const fetchTask = async (taskId) => {
     editTaskButt.addEventListener('click', async(e) => {
         e.preventDefault();
         e.stopPropagation();
+        const editFormPlaceholder = document.querySelector(`.description-task`);
+        editFormPlaceholder.placeholder = task.description;
         editForm.hidden = false;
 
 
@@ -188,7 +212,6 @@ export const fetchTask = async (taskId) => {
 
                 const formData = new FormData(document.querySelector('.edit-task'));
                 const description = formData.get('description');
-                console.log(description)
                 const dueDate = formData.get('dueDate');
                 const checkStatus = formData.get('isCompleted');
                 let isCompleted;
@@ -200,6 +223,7 @@ export const fetchTask = async (taskId) => {
                 }
 
                 const body = { description, dueDate, isCompleted };
+                console.log(body);
 
                 try {
                     await editTask(taskId, body);
@@ -231,12 +255,12 @@ export const fetchComments = async (taskId) => {
                 </span>
                 <span id='comment-${comment.id}-message' class='comment-message'>${comment.message}</span>
             </span>
-            <span class='comment-buttons-${comment.id} comment-buttons'>
+            <span class='comment-buttons-${comment.id} comment-buttons userId-${comment.userId}'>
                 <button class='edit-comment-butt comment-butts' id='${comment.id}'>Edit</button>
                 <button class='delete-comment-butt comment-butts' id='${comment.id}'>Delete</button>
             </span>
         </div>
-        <div class='createdAt-${comment.id}'>${comment.createdAt}</div>
+        <div class='updatedAt-${comment.id}'>${commentDateFormatter(comment.updatedAt)}</div>
     `
     )
 
@@ -244,7 +268,22 @@ export const fetchComments = async (taskId) => {
 
     // TODO: only show edit/delete if userId of comment matches logged in user
 
+    const taskRes = await fetch(`/tasks/${taskId}`);
+    if (res.status === 401) {
+        window.location.href = '/log-in';
+        return;
+    }
 
+    const { task } = await taskRes.json();
+
+    comments.forEach((comment) => {
+        const editDeleteButtons = document.querySelector(`.userId-${comment.userId}`);
+        if (task.userId !== comment.userId) {
+            editDeleteButtons.hidden = true;
+        } else {
+            editDeleteButtons.hidden = false;
+        }
+    })
 
     const deleteComments = document.querySelectorAll('.delete-comment-butt');
 
@@ -258,7 +297,7 @@ export const fetchComments = async (taskId) => {
             })
 
             const comment = document.querySelector(`.comment-container-${commentId}`);
-            const commentDate = document.querySelector(`.createdAt-${commentId}`);
+            const commentDate = document.querySelector(`.updatedAt-${commentId}`);
             comment.remove();
             commentDate.remove();
         })
@@ -298,7 +337,6 @@ export const fetchComments = async (taskId) => {
                 const newMessageForm = new FormData(document.querySelector('.edit-comment'));
                 const message = newMessageForm.get("message");
                 const taskId = newMessageForm.get("taskId");
-                console.log(taskId)
 
                 const body = { message };
 
@@ -324,6 +362,7 @@ export const fetchComments = async (taskId) => {
                     <button class='edit-comment-butt' id='${comment.id}'>Edit
                     <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
                 </span>
+                <div class='updatedAt-${comment.id}'>${commentDateFormatter(comment.updatedAt)}</div>
                 `
                 await fetchComments(taskId);
             })

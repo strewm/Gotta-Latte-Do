@@ -197,13 +197,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       await fetchTasks();
       await fetchAssignTasks();
+      await fetchLists();
+
     } catch (e) {
       console.error(e);
     }
 
     const tasksListContainer = document.querySelector(".task-list");
     tasksListContainer.addEventListener("click", async(e) => {
+      e.stopPropagation();
       const taskId = e.target.id;
+
+      const editForm = document.querySelector('.edit-form')
+      editForm.hidden = true;
 
       // let stateObj = { id: "100" }
       // window.history.replaceState(stateObj, "Task", `/tasks/#${taskId}`)
@@ -408,6 +414,31 @@ deleteContact.addEventListener("click", async (e) => {
 
 })
 
+const fetchLists = async () => {
+  const res = await fetch('http://localhost:8080/lists/')
+
+  if (res.status === 401) {
+      window.location.href = "/log-in";
+      return;
+    }
+
+  const { allLists } = await res.json();
+
+  const listContainer = document.querySelector(".lists-grid-container");
+  const listHtml = allLists.map(({ id, title }) => `
+  <div class='list-grid'>
+  <div class="list-info">
+    <li class='list-lists' id=${id}>${title}</li>
+  </div>
+  <div> <a class='delete-list' id=${id}> - </a> </div>
+  </div>
+  `)
+
+  listContainer.innerHTML = listHtml.join("");
+}
+
+
+
 // delete a list
 
 const deleteList = document.querySelector('.list-list-sidebar')
@@ -441,7 +472,12 @@ deleteList.addEventListener("click", async (e) => {
       <form class='list-edit-form'>
       <input type='text' class='list-edit' id='title' name='title' placeholder=${listName.title}>
       <label for='title' class='list-label'${listName.title} </label>
+      <div>
       <button class='submitButton'>Submit</button>
+      </div>
+      <div>
+      <button class='editCancelButton'>Cancel</button>
+      </div>
       </form>
     </div>
       `
@@ -459,10 +495,61 @@ deleteList.addEventListener("click", async (e) => {
             'Content-Type': 'application/json'
           }
         })
+        await fetchLists();
       })
+    const cancelButton = document.querySelector('.editCancelButton');
+    cancelButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      listForm.innerHTML = '';
+    })
   }
 })
+const addList = document.querySelector('.add-lists');
 
+addList.addEventListener('click', (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  const addListForm = document.querySelector('.add-list-form');
+  addListForm.innerHTML = `
+  <h2>Add List</h2>
+  <div id='list-add'>
+    <form class='addNewList'>
+    <input type='text' class='list-add' id='title' name='title' placeholder='New List'>
+    <label for='title' class='list-label'</label>
+    <div>
+    <button class='addSubmitButton'>Submit</button>
+    </div>
+    <div>
+    <button class='listCancelButton'>Cancel</button>
+    </div>
+    </form>
+  </div>
+    `
+    const addList = document.querySelector('.addNewList');
+    addList.addEventListener('submit', async (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      const formData = new FormData(addList);
+      const testList = formData.get('title');
+      const body = { testList };
+      await fetch(`http://localhost:8080/lists`, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        await fetchLists();
+      });
+    const addCancelButton = document.querySelector('.listCancelButton');
+
+    addCancelButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      addListForm.innerHTML = '';
+    })
+})
 
 const logoutButton = document.querySelector("#logout");
 
