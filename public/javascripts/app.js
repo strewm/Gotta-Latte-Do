@@ -56,6 +56,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       e.stopPropagation();
       const taskId = e.target.id;
 
+      const editForm = document.querySelector('.edit-form')
+      editForm.hidden = true;
+
       // let stateObj = { id: "100" }
       // window.history.replaceState(stateObj, "Task", `/tasks/#${taskId}`)
 
