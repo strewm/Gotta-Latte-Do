@@ -42,6 +42,24 @@ router.post('/users/:id(\\d+)/tasks', validateTask, handleValidationErrors, csrf
   res.status(201).json({task});
 }));
 
+// route to fetch user's tasks (all)
+
+router.get('/', asyncHandler(async(req, res) => {
+  const userId = res.locals.userId
+
+  const tasks = await Task.findAll({
+    where: {
+      userId,
+      givenTo: null,
+    }
+  })
+
+  const user = await User.findByPk(userId);
+
+  res.status(201).json({tasks, user});
+
+}));
+
 // route to fetch user's tasks that are incomplete
 
 router.get('/incomplete', asyncHandler(async(req, res) => {
@@ -51,6 +69,7 @@ router.get('/incomplete', asyncHandler(async(req, res) => {
     where: {
       userId,
       givenTo: null,
+      isCompleted: 'false'
     }
   })
 

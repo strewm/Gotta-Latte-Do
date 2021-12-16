@@ -1,10 +1,10 @@
 import { handleErrors } from "./utils.js";
 import { fetchTask, fetchComments, postComment } from "./task-comments.js";
 
-// fetch user's incomplete tasks
+// fetch user's tasks (all)
 
 export const fetchTasks = async () => {
-    const res = await fetch("/tasks/incomplete")
+    const res = await fetch("/tasks")
 
     if (res.status === 401) {
         window.location.href = "/log-in";
@@ -22,6 +22,29 @@ export const fetchTasks = async () => {
     `)
 
     tasksListContainer.innerHTML = tasksHtml.join("");
+}
+
+// fetch user's tasks (all)
+
+export const fetchIncompleteTasks = async () => {
+  const res = await fetch("/tasks/incomplete")
+
+  if (res.status === 401) {
+      window.location.href = "/log-in";
+      return;
+    }
+
+  const { tasks, user } = await res.json();
+
+  const tasksListContainer = document.querySelector(".task-list");
+  const tasksHtml = tasks.map(({ id, description }) => `
+  <div class="task-info">
+      <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+      <label for=${id} id=${id} class="task-check-box">${description}</label>
+  </div>
+  `)
+
+  tasksListContainer.innerHTML = tasksHtml.join("");
 }
 
 // fetch user's completed tasks
@@ -51,7 +74,7 @@ const fetchCompletedTasks = async () => {
 // incomplete button
 const incompleteTaskList = document.querySelector('#incomplete')
 incompleteTaskList.addEventListener("click", async (e) => {
-  await fetchTasks()
+  await fetchIncompleteTasks()
 })
 
 // completed button
