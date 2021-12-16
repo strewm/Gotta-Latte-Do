@@ -65,9 +65,8 @@
     font-size: 18px;
 }
 
-.log-in-field {
+.sign-up-field {
     border: 2px solid cornsilk;
-    font-size: 12px;
     padding: 5px 10px 10px 10px;
     border-radius: 5px;
     width: 80%;
@@ -96,7 +95,7 @@
     /* margin-top: 5px; */
 }
 
-#button-login, #button-cancel {
+#button-sign-up, #button-cancel {
     margin: 5px;
     font-size: 15px;
     /* height: 25px; */
@@ -106,18 +105,18 @@
     color: cornsilk;
 }
 
-#button-login {
+#button-sign-up {
     margin: 5px;
     border: 1px solid #9fcf88;
     background-color: #9fcf88;
 }
 
-#button-login:hover {
+#button-sign-up:hover {
     border: 1px solid #8ab675;
     background-color: #8ab675;
 }
 
-#button-login:active {
+#button-sign-up:active {
     border: 1px solid #78a365;
     box-shadow: inset 0 0 15px #78a365;
 }
@@ -167,7 +166,7 @@
     box-shadow: inset 0 0 15px #6a97b1;
 }
 
-#button-sign-up {
+#button-sign-in {
     text-decoration: none;
     margin: 5px;
     font-size: 15px;
@@ -179,12 +178,12 @@
     color: cornsilk;
 }
 
-#button-sign-up:hover {
+#button-sign-in:hover {
     border: 1px solid #77a8c4;
     background-color: #77a8c4;
 }
 
-#button-sign-up:active {
+#button-sign-in:active {
     border: 1px solid #6a97b1;
     box-shadow: inset 0 0 15px #6a97b1;
 }

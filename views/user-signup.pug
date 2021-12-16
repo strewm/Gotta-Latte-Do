@@ -7,16 +7,35 @@ append head
     link(rel="stylesheet" href="/stylesheets/user-signup.css")
 
 block content
-    +validationErrorSummary(errors)
-    form(action='/users/signup' method='post')
-        input(type='hidden' name='_csrf' value=csrfToken)
-        +field('Username', 'username', user.username)
-        +field('Email Address', 'email', user.email)
-        +field('Password', 'password', user.password, 'password')
-        +field('Confirm Password', 'confirmPassword', '', 'password')
-        div
-            button(type='submit') Sign Up
-            a(href='/') Cancel
-        div
+    div.mainPage
+        div.left-column
+            a.left-logo(href="/")
+                img.left-logo-img(src='../images/logo-text.png')
+        div.right-column
+            div.welcome-text Sign up for free.
+            div.sign-up-field
+                +validationErrorSummary(errors)
+                form(action='/users/signup' method='post')
+                    input(type='hidden' name='_csrf' value=csrfToken)
+                    +field('', 'username', user.username)
+                    +field('', 'email', user.email)
+                    +field('', 'password', user.password, 'password')
+                    +field('', 'confirmPassword', '', 'password')
+                    div.buttons
+                        button(type='submit' id='button-sign-up') Sign Up
+                        div: a#button-cancel(href='/') Cancel
+        div.footer
             button(type='submit' class='demo-user') Demo User
-            p: a(href='/users/login') Already have an account?
+            div: a#button-sign-in(href='/users/login') Already have an account?
+
+
+                //- +validationErrorSummary(errors)
+                //- form(action='/users/signup' method='post')
+                //-     input(type='hidden' name='_csrf' value=csrfToken)
+                //-     +field('Username', 'username', user.username)
+                //-     +field('Email Address', 'email', user.email)
+                //-     +field('Password', 'password', user.password, 'password')
+                //-     +field('Confirm Password', 'confirmPassword', '', 'password')
+                //-     div.buttons
+                //-         button(type='submit' id='button-sign-up') Sign Up
+                //-         div: a#button-cancel(href='/') Cancel
