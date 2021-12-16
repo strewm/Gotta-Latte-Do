@@ -355,7 +355,12 @@ deleteList.addEventListener("click", async (e) => {
       <form class='list-edit-form'>
       <input type='text' class='list-edit' id='title' name='title' placeholder=${listName.title}>
       <label for='title' class='list-label'${listName.title} </label>
+      <div>
       <button class='submitButton'>Submit</button>
+      </div>
+      <div>
+      <button class='editCancelButton'>Cancel</button>
+      </div>
       </form>
     </div>
       `
@@ -373,6 +378,10 @@ deleteList.addEventListener("click", async (e) => {
             'Content-Type': 'application/json'
           }
         })
+      })
+      const cancelButton = document.querySelector('.editCancelButton');
+      cancelButton.addEventListener('click', (e) => {
+        listForm.innerHTML = '';
       })
   }
 })
