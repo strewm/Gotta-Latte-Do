@@ -341,7 +341,7 @@
 
 /* %%%%%%%%%%%%%%%%%%%%% Main section list: Tasks %%%%%%%%%%%%%%%%%%%%% */
 /* Part of mainContainer div */
-.task-list {
+.task-list, .assigned-list {
     padding: 15px;
     display: flex;
     flex-direction: column;
@@ -349,7 +349,11 @@
     align-items: flex-start;
 }
 
-
+.assigned-grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    width: 100%;
+}
 
 
 /* %%%%%%%%%%%%%%%%%%%%% Sidebar (left): Lists / organization %%%%%%%%%%%%%%%%%%%%% */
@@ -410,7 +414,9 @@
     text-decoration: none;
     border: 1px solid white;
     border-radius: 3px;
-    padding: 1px 4px;
+    padding: 2px 4px;
+    justify-content: center;
+    display: grid;
 }
 
 .add-contacts:hover {
@@ -424,7 +430,9 @@
     text-decoration: none;
     border: 1px solid white;
     border-radius: 3px;
-    padding: 1px 4px;
+    padding: 2px 4px;
+    justify-content: center;
+    display: grid;
 }
 
 .add-lists:hover {
@@ -451,12 +459,14 @@
     display: grid;
     grid-template-columns: 90% 10%;
     color: #ffffff;
+    margin: 6px 0px;
 }
 
 .lists-grid {
     display: grid;
     grid-template-columns: 90% 10%;
     color: #ffffff;
+    margin: 6px 0px;
 }
 
 .delete-list {
@@ -465,6 +475,8 @@
     border: 1px solid white;
     border-radius: 3px;
     padding: 1px 6px 3px 6px;
+    justify-content: center;
+    display: grid;
 
 }
 .delete-list:hover {
@@ -479,6 +491,8 @@
     border: 1px solid white;
     border-radius: 3px;
     padding: 1px 6px 3px 6px;
+    justify-content: center;
+    display: grid;
 
 }
 
@@ -501,12 +515,15 @@
     display: grid;
     grid-template-columns: 90% 10%;
     color: #ffffff;
+    margin-top: 5px;
+    font-weight: bold;
 }
 
 .list-sidebar {
     display: grid;
     grid-template-columns: 90% 10%;
     color: #ffffff;
+    margin-bottom: 5px;
 }
 
 .add-contact-input {

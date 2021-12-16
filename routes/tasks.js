@@ -42,6 +42,24 @@ router.post('/users/:id(\\d+)/tasks', validateTask, handleValidationErrors, csrf
   res.status(201).json({task});
 }));
 
+// route to fetch user's tasks (all)
+
+router.get('/', asyncHandler(async(req, res) => {
+  const userId = res.locals.userId
+
+  const tasks = await Task.findAll({
+    where: {
+      userId,
+      givenTo: null,
+    }
+  })
+
+  const user = await User.findByPk(userId);
+
+  res.status(201).json({tasks, user});
+
+}));
+
 // route to fetch user's tasks that are incomplete
 
 router.get('/incomplete', asyncHandler(async(req, res) => {
@@ -51,6 +69,7 @@ router.get('/incomplete', asyncHandler(async(req, res) => {
     where: {
       userId,
       givenTo: null,
+      isCompleted: 'false'
     }
   })
 
@@ -79,6 +98,23 @@ router.get('/complete', asyncHandler(async(req, res) => {
 
 }));
 
+// route to fetch user's tasks that are assigned to user
+
+router.get('/assigned', asyncHandler(async(req, res) => {
+  const userId = res.locals.userId
+
+  const tasks = await Task.findAll({
+    where: {
+      givenTo: userId,
+    }
+  })
+
+  const assigner = await User.findByPk(tasks[0].userId);
+  const user = await User.findByPk(userId);
+  res.status(201).json({tasks, assigner, user});
+
+}));
+
 router.get('/task/:id(\\d+)', asyncHandler(async(req, res) => {
   const givenTo = parseInt(req.params.id, 10);
   const userId = res.locals.userId;
@@ -90,7 +126,9 @@ router.get('/task/:id(\\d+)', asyncHandler(async(req, res) => {
         givenTo: null
       }
     })
-    res.status(201).json({tasks});
+    const isContact = false;
+    const user = await User.findByPk(userId)
+    res.status(201).json({tasks, user, isContact});
   } else {
     const tasks = await Task.findAll({
       where: {
@@ -98,7 +136,9 @@ router.get('/task/:id(\\d+)', asyncHandler(async(req, res) => {
         givenTo,
       }
     })
-    res.status(201).json({tasks});
+    const isContact = true;
+    const user = await User.findByPk(givenTo)
+    res.status(201).json({tasks, user, isContact});
 
   }
 
@@ -165,13 +205,13 @@ router.get('/:id(\\d+)', asyncHandler(async(req, res, next) => {
 }))
 
 router.put ('/:id(\\d+)', validateTask, handleValidationErrors, asyncHandler(async(req, res, next) => {
-  const { description, dueDate, givenTo } = req.body;
+  const { description, dueDate, isCompleted } = req.body;
   const task = await Task.findByPk(req.params.id);
   if (task) {
     await task.update({
       description,
       dueDate,
-      givenTo
+      isCompleted
     })
     res.json({task});
   } else {
@@ -187,6 +227,20 @@ router.delete('/:id(\\d+)', asyncHandler(async(req, res, next) => {
     res.status(204).end()
   } else {
     next(taskNotFoundError(req.params.id))
+  }
+}))
+
+router.patch('/:id(\\d+)', asyncHandler(async (req, res, next) => {
+  const { isCompleted } = req.body;
+  const task = await Task.findByPk(req.params.id);
+  if (task) {
+    await task.update({
+      isCompleted
+    })
+    // task.isCompleted = isCompleted;
+    res.json({ task });
+  } else {
+    next(taskNotFoundError(req.params.id));
   }
 }))
 
