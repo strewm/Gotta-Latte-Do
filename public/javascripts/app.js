@@ -201,6 +201,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (e) {
       console.error(e);
     }
+  // const listContainer = document.querySelector('.lists-grid-container');
+
+  // listContainer.addEventListener('click', async (e) => {
+  //   e.stopPropagation();
+  //   const listId = e.target.id;
+  //   console.log(listId);
+  // })
+
+
 
     const tasksListContainer = document.querySelector(".task-list");
     tasksListContainer.addEventListener("click", async(e) => {
