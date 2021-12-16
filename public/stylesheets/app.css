@@ -293,9 +293,6 @@ align-items: center; */
     align-items: flex-start;
 }
 
-.task-check-box {
-    background-color: #fff;
-}
 
 
 
@@ -460,9 +457,7 @@ align-items: center; */
     align-items: flex-start;
 }
 
-.task-check-box {
-    background-color: #fff;
-}
+
 
 .taskList {
     display: grid;

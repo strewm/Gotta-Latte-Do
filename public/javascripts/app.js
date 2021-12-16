@@ -154,24 +154,33 @@ contacts.addEventListener("click", async (e) => {
 })
 
 
+// delete a contact
+
 const deleteContact = document.querySelector('.contact-list-sidebar')
 
 deleteContact.addEventListener("click", async (e) => {
   e.stopPropagation();
   e.preventDefault();
-  const targetRemoval = e.target.parentNode.parentNode
-  const deleteContactId = e.target.id;
+  if(e.target.innerText === '-'){
+    const targetRemoval = e.target.parentNode.parentNode
+    const deleteContactId = e.target.id;
+    targetRemoval.remove();
 
-  targetRemoval.remove();
-  try {
+    await fetchTasks();
 
-    await fetch(`http://localhost:8080/contacts/${deleteContactId}`, {
-      method: "DELETE",
-    })
+    try {
 
-  } catch (err) {
-    handleErrors(err)
+      await fetch(`http://localhost:8080/contacts/${deleteContactId}`, {
+        method: "DELETE",
+      })
+
+
+
+    } catch (err) {
+      handleErrors(err)
+    }
   }
+
 })
 
 const deleteList = document.querySelector('.list-list-sidebar')
