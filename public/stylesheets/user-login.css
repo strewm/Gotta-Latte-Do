@@ -75,6 +75,8 @@
     width: 80%;
     min-width: 250px;
     min-height: auto;
+    max-width: 525px;
+    max-height: auto;
 
     color: #8A715B;
 }
