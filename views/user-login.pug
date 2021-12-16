@@ -1,15 +1,24 @@
 extends layout
 
+append head
+    link(rel="stylesheet" href="/stylesheets/user-login.css")
+
 include utils
 
 block content
-  +validationErrorSummary(errors)
-  form(action='/users/login' method='post')
-    input(type='hidden' name='_csrf' value=csrfToken)
-    +field('Email Address', 'email', email)
-    +field('Password', 'password', null, 'password')
-    div
-      button(type='submit') Login
-      a(href='/') Cancel
-  div
-    p: a(href='/users/signup') Don't have an account?
+  div.mainPage
+    div.header
+      a.header-logo(href="/")
+        img.header-logo-img(src='../images/logo-text.png')
+      a.sign-up-btn(href="/users/signup") Sign up for free
+    +validationErrorSummary(errors)
+    form(action='/users/login' method='post')
+      div.sign-up
+        input(type='hidden' name='_csrf' value=csrfToken)
+        +field('Email Address', 'email', email)
+        +field('Password', 'password', null, 'password')
+        div
+          button(type='submit') Login
+          a(href='/') Cancel
+    div.footer
+      p: a(href='/users/signup') Don't have an account?

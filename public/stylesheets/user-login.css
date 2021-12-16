@@ -1,0 +1,43 @@
+.mainPage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+    "header header"
+    "main main"
+    "footer footer";
+
+    height: 100vh;
+}
+
+.header {
+    grid-area: header;
+}
+
+.sign-up {
+    grid-area: main;
+}
+
+.footer {
+    grid-area: footer;
+}
+
+
+/* %%%%%%%%%%%%%%%%% Header  %%%%%%%%%%%%%%%%% */
+.header-logo-img {
+    width: 100px;
+    height: auto;
+    margin: 15px;
+    margin-left: 50px;
+}
+
+
+
+
+/* %%%%%%%%%%%%%%%%% Main  %%%%%%%%%%%%%%%%% */
+
+
+
+
+
+/* %%%%%%%%%%%%%%%%% Footer  %%%%%%%%%%%%%%%%% */
