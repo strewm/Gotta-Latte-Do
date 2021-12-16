@@ -4,7 +4,6 @@ append head
     link(rel="stylesheet" href="/stylesheets/app.css")
     script(src="../javascripts/app.js" type="module" defer)
 
-    //- img.navbar#settingsGear(src="../images/gear.png")
 
 
 block content
@@ -25,7 +24,7 @@ block content
                         li.settingList: a(href='/') Account Settings
                         li.settingList: button#signOut(type='submit') Sign Out
         div.sidebar
-            //- img.logo(src="../images/maybe_logo.png")
+            img.logo(src="../images/maybe-logo.png")
             ul Inbox
                 //- li All Tasks
                 //- li Today
@@ -65,12 +64,13 @@ block content
                 a.tabbedLink#complete Complete
 
         div.summaryContainer
-            h2 Search
+          div.summaryHeader
+            //- h2.summary#search Search
             div.summary#tasksDue Tasks
             div.summary#tasksOverDue Overdue
-            .updateList 
-            div.fiona
-            div.edit-form
+          .updateList
+          div.fiona
+          div.edit-form
 
         div.mainContainer
             include includes/add-task

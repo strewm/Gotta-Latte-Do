@@ -7,8 +7,8 @@
 
 .page {
     display: grid;
-    grid-template-columns: 1.5fr 4fr 3fr;
-    grid-template-rows: 75px 0.75fr 9fr;
+    grid-template-columns: 1.5fr 4fr 2.75fr;
+    grid-template-rows: 65px 0.75fr 9fr;
     grid-template-areas:
     "header header header"
     "sidebar tabs summary"
@@ -54,7 +54,7 @@
 
 ::placeholder {
     color: #8A715B;
-    font-size: 12px;
+    font-size: 15px;
     font-style: italic;
 }
 
@@ -126,61 +126,77 @@
     align-items: flex-start;
 }
 
-.descripLabel, .dueDateLabel, .isCompletedLabel, .contactsLabel {
-    font-size: 15px;
-    color: #8A715B;
-    padding: 5px;
+.taskSubContainer {
+    padding: 10px 0px 10px 0px;
+    display: flex;
+    align-items: center;
 }
 
-.descrip, .dueDate, .createTaskButton {
-    border-radius: 10px;
-    font-size: 15px;
+.descripLabel, .dueDateLabel, .isCompletedLabel, .contactsLabel, .listLabel {
     padding: 5px;
-    height: 40px;
-    border: 2px solid #8A715B;
+    font-size: 13px;
+    font-weight: bold;
+    width: fit-content;
+    color: #8A715B;
 }
 
 .descrip {
-    padding: 5px;
-    width: 550px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 7px;
+    height: 50px;
+    border: 2px solid #8A715B;
 }
+
+#givenTo, #title {
+    border-radius: 10px;
+    font-size: 13px;
+    padding: 5px;
+    height: 30px;
+    border: 1px solid #8A715B;
+    color: #8A715B;
+}
+
+.dueDate, .createTaskButton {
+    border-radius: 10px;
+    font-size: 13px;
+    padding: 5px;
+    height: 30px;
+    border: 1px solid #8A715B;
+    color: #8A715B;
+}
+
+.createTaskButton {
+    margin-left: 2px;
+    background-color: #E0A979;
+    border: none;
+    box-shadow: -2.5px 2.5px #8A715B;
+}
+
+
+/* #dueDate {
+    width: fit-content !important;
+} */
 
 /*
-.dueDate {
-    font-size: 15px;
-}
-
 .createTaskButton {
     padding: 15px;
 } */
 
 
 
-/* %%%%%%%%%%%%%%%%%%%%% MAIN: Individual task container/edit pop-up (right sidebar) %%%%%%%%%%%%%%%%%%%%% */
+/* %%%%%%%%%%%%%%%%%%%%% Right sidebar: Individual task container/edit pop-up %%%%%%%%%%%%%%%%%%%%% */
 .fiona {
     width: 100%;
 }
 
+/* Contains the (x, edit, delete buttons) + (task info) + (comments)  */
 .task-container {
     margin: 20px 10px 20px 10px;
     padding: 15px;
     border-radius: 25px;
     background-color: #FAECDA;
-}
-
-/* background-color: #C7A383;
-padding-top: 3px;
-padding-bottom: 3px;
-padding-left: 10px;
-padding-right: 10px;
-margin-left: 5px;
-border-radius: 10px;
-border: none;
-align-items: center; */
-
-
-/* Exit button */
-.task-container {
     border: 1px solid #8A715B;
     font-size: 15px;
     padding: 10px;
@@ -188,6 +204,7 @@ align-items: center; */
     color: #8A715B;
 }
 
+/* Contains the x, edit, delete buttons  */
 .task-info-buttons {
     display: flex;
     justify-content: space-between;
@@ -196,7 +213,7 @@ align-items: center; */
 
 }
 
-/* Task buttons  */
+/* Task (x + edit + delete task) buttons  */
 .task-butts {
     border: 1px solid #8A715B;
     font-size: 12px;
@@ -206,28 +223,67 @@ align-items: center; */
     color: #8A715B;
 }
 
-/* .task-butts-2 {
-    justify-self: flex-end;
-} */
-
+/* X button  */
 #task-info-x {
     font-weight: bold;
-    width: 17px;
-    height: 17px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+    width: 19px;
+    padding: 0 0 2px 0;
 }
 
+/* .task-information-container {
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+} */
+
+/* Task description (header of task pop-up)  */
 .task-info-header {
     font-weight: bold;
     font-size: 20px;
+    margin: 10px 0 10px 0;
+}
+
+.task-completed-container, .due-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Task completed + Due + Comments  */
+.task-completed-label, .due-container-label, .comment-header {
+    border: 1px solid #8A715B;
+    background-color: #8A715B;
+    color: #FAECDA;
+    font-size: 12px;
+    padding: 4px;
+    border-radius: 5px;
+    width: fit-content;
+    margin: 0;
+    display: inline-block;
+    /* align-items: center; */
+}
+
+.task-completed-label {
+    margin-bottom: 1px;
+}
+
+.completedTask {
+    margin: 5px;
+}
+
+.due-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.due-container-content {
+    height: fit-content;
+    font-size: 14px;
+    margin: 5px;
 }
 
 /* Comments section header  */
 .comment-header {
+    margin-top: 2px;
     margin-bottom: 0;
 }
 
@@ -298,12 +354,13 @@ align-items: center; */
 
 /* %%%%%%%%%%%%%%%%%%%%% Sidebar (left): Lists / organization %%%%%%%%%%%%%%%%%%%%% */
 
-/* .logo {
+.logo {
     height: auto;
-    width: 150px;
-    transform: rotate(-90deg); /* This is messing w image placement, make new rotated file*/
-    /* background-color: #C7A383;
-} */
+    width: 250px;
+    /* transform: rotate(-90deg); */
+    background-color: #C7A383;
+    margin-bottom: 15px;
+}
 
 .sidebar {
     grid-area: sidebar;
@@ -328,7 +385,7 @@ align-items: center; */
 .summaryContainer {
     grid-area: summary;
     background-color: #C7A383;
-    padding: 15px;
+    padding: 25px;
     /* border-radius: 10px;
     margin: 5px 5px 5px 0; */
 
@@ -338,6 +395,12 @@ align-items: center; */
 
     color: white;
 }
+
+/* .summaryHeader {
+    display: flex;
+    align-items: space-between;
+
+} */
 
 
 

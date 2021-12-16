@@ -3,24 +3,24 @@ form(class='create-task')
         input(type='hidden' name='_csrf' value=csrfToken)
         label.descripLabel(for="description")
         input.descrip(type="text", placeholder="Add a task...", id="description", name="description" required=true)
-        //- textarea(name="description", cols="30", rows="10")
-        label.dueDateLabel(for="dueDate") Due Date
-        input.dueDate(type="date", id="dueDate", name="dueDate" required=true)
-        label.isCompletedLabel(for="isCompleted") Completed?
-        input.isCompleted(type="checkbox", id="checkbox", name="isCompleted")
-        label.contactsLabel(for="givenTo") Contacts
-        select(id="givenTo", name="givenTo")
-             option(value="" selected)
-             each contact in contactsAll
-                 option(value=contact.username)= contact.username
-        label.listLabel(for="title") Lists
-        select(id="title", name="title")
-             each list in myLists
-                 option(value=list.title)= list.title
-        //- div.taskList
-        //-     each list in myLists
-        //-         div
-        //-             label(for='title')=list.title
-        //-         div
-        //-             input.listSelect(type='checkbox', id=list.title name='title')
+        div.taskSubContainer
+            label.dueDateLabel(for="dueDate") Due Date
+            input.dueDate(type="date", id="dueDate", name="dueDate" required=true)
+            label.isCompletedLabel(for="isCompleted") Completed?
+            input.isCompleted(type="checkbox", id="checkbox", name="isCompleted")
+            label.contactsLabel(for="givenTo") Contacts
+            select(id="givenTo", name="givenTo")
+                option(value="" selected)
+                each contact in contactsAll
+                    option(value=contact.username)= contact.username
+            label.listLabel(for="title") Lists
+            select(id="title", name="title")
+                each list in myLists
+                    option(value=list.title)= list.title
+            //- div.taskList
+            //-     each list in myLists
+            //-         div
+            //-             label(for='title')=list.title
+            //-         div
+            //-             input.listSelect(type='checkbox', id=list.title name='title')
         button.createTaskButton(type='submit') Create Task
