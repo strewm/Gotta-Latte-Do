@@ -339,7 +339,7 @@ export const fetchComments = async (taskId) => {
                     <button class='edit-comment-butt' id='${comment.id}'>Edit
                     <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
                 </span>
-                <div class='updatedAt'>${commentDateFormatter(comment.updatedAt)}</div>
+                <div class='updatedAt-${comment.id}'>${commentDateFormatter(comment.updatedAt)}</div>
                 `
                 await fetchComments(taskId);
             })
