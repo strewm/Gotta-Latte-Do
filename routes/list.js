@@ -32,23 +32,27 @@ const validateLists = [
     }
     res.render('add-list')
   }))
-  
+
   router.get('/', asyncHandler(async (req, res) => {
-    const allLists = await List.findAll();
+    const userId = res.locals.userId;
+    const allLists = await List.findAll({
+      where: userId
+    });
     res.status(200).json({allLists});
   }))
 
 
-  router.post('/', asyncHandler(async (req, res, next) => {
-    const { testList } = req.body;
+  router.post('/', validateLists, asyncHandler(async (req, res, next) => {
+    const { createList } = req.body;
     const userId = res.locals.userId;
 
     try {
+      if (createList.length >= 1) {
         const newList = await List.create({
         userId,
-        title: testList
+        title: createList
     })
-
+  }
     res.status(201).json({newList})
     } catch (e) {
         next()
