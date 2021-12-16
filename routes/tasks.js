@@ -108,11 +108,11 @@ router.get('/assigned', asyncHandler(async(req, res) => {
       givenTo: userId,
     }
   })
-
+  if (tasks) {
   const assigner = await User.findByPk(tasks[0].userId);
   const user = await User.findByPk(userId);
   res.status(201).json({tasks, assigner, user});
-
+  } 
 }));
 
 router.get('/task/:id(\\d+)', asyncHandler(async(req, res) => {

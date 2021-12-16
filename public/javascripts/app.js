@@ -195,10 +195,9 @@ const addNewContact = async (id) => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     try {
+      await fetchLists();
       await fetchTasks();
       await fetchAssignTasks();
-      await fetchLists();
-
     } catch (e) {
       console.error(e);
     }
@@ -495,6 +494,7 @@ deleteList.addEventListener("click", async (e) => {
             'Content-Type': 'application/json'
           }
         })
+        listForm.innerHTML = '';
         await fetchLists();
       })
     const cancelButton = document.querySelector('.editCancelButton');
@@ -531,8 +531,8 @@ addList.addEventListener('click', (e) => {
       e.stopPropagation();
       e.preventDefault();
       const formData = new FormData(addList);
-      const testList = formData.get('title');
-      const body = { testList };
+      const createList = formData.get('title');
+      const body = { createList };
       await fetch(`http://localhost:8080/lists`, {
           method: 'POST',
           body: JSON.stringify(body),
@@ -540,6 +540,7 @@ addList.addEventListener('click', (e) => {
             'Content-Type': 'application/json'
           }
         });
+        addListForm.innerHTML = '';
         await fetchLists();
       });
     const addCancelButton = document.querySelector('.listCancelButton');
