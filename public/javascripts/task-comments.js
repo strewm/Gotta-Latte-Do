@@ -176,7 +176,7 @@ export const fetchTask = async (taskId) => {
         <label for='dueDate'>Due Date</label>
         <input type='date' id='dueDate' name='dueDate' required></input>
         <label for='isCompleted'>Completed?</label>
-        <input type='checkbox' id='checkbox' name='isComplicated'>
+        <input type='checkbox' id='checkbox' name='isCompleted'>
         <button class='editTaskButton' type='submit'>Edit Task
     `
 
@@ -223,6 +223,7 @@ export const fetchTask = async (taskId) => {
                 }
 
                 const body = { description, dueDate, isCompleted };
+                console.log(body);
 
                 try {
                     await editTask(taskId, body);

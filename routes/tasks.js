@@ -144,13 +144,12 @@ router.get('/:id(\\d+)', asyncHandler(async(req, res, next) => {
 }))
 
 router.put ('/:id(\\d+)', validateTask, handleValidationErrors, asyncHandler(async(req, res, next) => {
-  const { description, dueDate, givenTo, isCompleted } = req.body;
+  const { description, dueDate, isCompleted } = req.body;
   const task = await Task.findByPk(req.params.id);
   if (task) {
     await task.update({
       description,
       dueDate,
-      givenTo,
       isCompleted
     })
     res.json({task});
