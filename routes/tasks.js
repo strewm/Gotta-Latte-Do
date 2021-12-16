@@ -118,7 +118,7 @@ router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, r
         title
       }
     })
-    
+
 
     const taskId = task.id
     const listId = listInfo[0].id
