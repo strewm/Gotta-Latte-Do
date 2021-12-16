@@ -29,7 +29,9 @@ block content
               .list-sidebar
                 div Lists
                 div
-                  a.add-lists(href='/lists/new') +
+                  a.add-lists +
+                div
+                .add-list-form
               div.list-list-sidebar
                 each list in myLists
                   div.lists-grid
@@ -64,6 +66,7 @@ block content
             div.summary#tasksDue Tasks
             div.summary#tasksOverDue Overdue
           .updateList
+          .newList
           div.fiona
           div.edit-form
 

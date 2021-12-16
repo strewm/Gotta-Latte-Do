@@ -379,13 +379,59 @@ deleteList.addEventListener("click", async (e) => {
           }
         })
       })
-      const cancelButton = document.querySelector('.editCancelButton');
-      cancelButton.addEventListener('click', (e) => {
-        listForm.innerHTML = '';
-      })
+    const cancelButton = document.querySelector('.editCancelButton');
+    cancelButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      listForm.innerHTML = '';
+    })
   }
 })
+const addList = document.querySelector('.add-lists');
 
+addList.addEventListener('click', (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  const addListForm = document.querySelector('.add-list-form');
+  addListForm.innerHTML = `
+  <h2>Add List</h2>
+  <div id='list-add'>
+    <form class='addNewList'>
+    <input type='text' class='list-add' id='title' name='title' placeholder='New List'>
+    <label for='title' class='list-label'</label>
+    <div>
+    <button class='addSubmitButton'>Submit</button>
+    </div>
+    <div>
+    <button class='listCancelButton'>Cancel</button>
+    </div>
+    </form>
+  </div>
+    `
+    const addList = document.querySelector('.addNewList');
+    addList.addEventListener('submit', async (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      const formData = new FormData(addList);
+      const testList = formData.get('title');
+      const body = { testList };
+      console.log('-------------', body, testList);
+      await fetch(`http://localhost:8080/lists`, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+      });
+    const addCancelButton = document.querySelector('.listCancelButton');
+
+    addCancelButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      addListForm.innerHTML = '';
+    })
+})
 
 const logoutButton = document.querySelector("#logout");
 
