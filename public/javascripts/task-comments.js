@@ -73,6 +73,7 @@ const editTask = async (taskId, body) => {
           }
           await fetchTasks();
           await fetchTask(taskId);
+          await fetchComments(taskId);
         } catch (err) {
             handleErrors(err)
         }
@@ -173,7 +174,7 @@ export const fetchTask = async (taskId) => {
     form.setAttribute('class', 'edit-task');
     form.innerHTML = `
         <label for='description'></label>
-        <input type='text' placeholder='${task.message}' id='description' name='description' required></input>
+        <input type='text' placeholder='${task.description}' id='description' name='description' required></input>
         <label for='dueDate'>Due Date</label>
         <input type='date' id='dueDate' name='dueDate' required></input>
         <label for='isCompleted'>Completed?</label>
@@ -208,7 +209,6 @@ export const fetchTask = async (taskId) => {
             editTaskSubmit.addEventListener('click', async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log(form)
 
                 const formData = new FormData(document.querySelector('.edit-task'));
                 const description = formData.get('description');
@@ -224,7 +224,6 @@ export const fetchTask = async (taskId) => {
                 }
 
                 const body = { description, dueDate, isCompleted };
-                console.log(body);
 
                 try {
                     await editTask(taskId, body);
