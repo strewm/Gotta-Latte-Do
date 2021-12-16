@@ -41,12 +41,14 @@
 }
 
 
+
 /* %%%%%%%%%%%%%%%%% Left  %%%%%%%%%%%%%%%%% */
 .left-logo {
     background-color: #8A715B;
     display: flex;
     justify-content: center;
 }
+
 .left-logo-img {
     width: 65%;
     height: auto;
@@ -62,7 +64,8 @@
 /* %%%%%%%%%%%%%%%%% Right  %%%%%%%%%%%%%%%%% */
 .welcome-text {
     color: cornsilk;
-    font-size: 18px;
+    font-size: 20px;
+    margin: 10px;
 }
 
 .log-in-field {
@@ -142,6 +145,7 @@
     font-size: 13px;
     font-style: italic;
 }
+
 
 
 /* %%%%%%%%%%%%%%%%% Footer  %%%%%%%%%%%%%%%%% */

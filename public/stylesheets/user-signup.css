@@ -62,7 +62,8 @@
 /* %%%%%%%%%%%%%%%%% Right  %%%%%%%%%%%%%%%%% */
 .welcome-text {
     color: cornsilk;
-    font-size: 18px;
+    font-size: 20px;
+    margin: 10px;
 }
 
 .sign-up-field {
@@ -72,6 +73,8 @@
     width: 80%;
     min-width: 250px;
     min-height: auto;
+    max-width: 525px;
+    max-height: auto;
 
     color: #8A715B;
 }
@@ -88,6 +91,17 @@
     color: #8A715B;
 }
 
+#username, #confirmPassword {
+    border: 1px solid cornsilk;
+    font-size: 15px;
+    padding: 5px;
+    height: 30px;
+    border-radius: 5px;
+    width: 100%;
+    margin: 5px 0 5px 0;
+    background-color: cornsilk;
+    color: #8A715B;
+}
 .buttons {
     display: flex;
     justify-content: center;
