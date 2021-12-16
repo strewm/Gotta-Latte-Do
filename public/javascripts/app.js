@@ -245,11 +245,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     // console.log("outside of settings clicked!!!")
     document.querySelector('.settingGroup').classList.add('settingHide');
 
-    const editForm = document.querySelector('.edit-form');
-    const form = document.querySelector('.edit-task');
-    editForm.removeChild(form);
-    const editTaskButt = document.querySelector('.edit-task-butt');
-    editTaskButt.disabled = false;
+    // const editForm = document.querySelector('.edit-form');
+    // const form = document.querySelector('.edit-task');
+    // editForm.removeChild(form);
+    // const editTaskButt = document.querySelector('.edit-task-butt');
+    // editTaskButt.disabled = false;
   });
 
 })

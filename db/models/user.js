@@ -20,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     User.belongsToMany(models.User, {foreignKey: 'userId', through: 'Contact', otherKey: 'contactId', as: 'contacts'})
     User.belongsToMany(models.User, {foreignKey: 'contactId', through: 'Contact', otherKey: 'userId', as: 'contactees'})
-    User.hasMany(models.Comment, {foreignKey: 'userId'});
-    User.hasMany(models.Task, {foreignKey: 'userId'});
-    User.hasMany(models.Task, {foreignKey: 'givenTo'});
-    User.hasMany(models.List, {foreignKey: 'userId'});
+    User.hasMany(models.Comment, {foreignKey: 'userId', onDelete: 'CASCADE', hooks: true});
+    User.hasMany(models.Task, {foreignKey: 'userId', onDelete: 'CASCADE', hooks: true});
+    User.hasMany(models.Task, {foreignKey: 'givenTo', onDelete: 'CASCADE', hooks: true});
+    User.hasMany(models.List, {foreignKey: 'userId', onDelete: 'CASCADE', hooks: true});
   };
   return User;
 };
