@@ -673,3 +673,9 @@ searchContainer.addEventListener("keypress", async (e) => {
     await search(searchValue);
   }
 })
+
+
+const allTasksList = document.querySelector('.all-tasks');
+allTasksList.addEventListener('click', async(e) => {
+  await fetchTasks();
+})
