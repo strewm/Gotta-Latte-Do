@@ -113,13 +113,7 @@ router.post(
     }, {
       userId: user.id,
       title: 'Overdue'
-    }, {
-      userId: user.id,
-      title: 'Incomplete'
-    }, {
-      userId: user.id,
-      title: 'Complete'
-    }
+    },
   ])
 
     loginUser(req, res, user);
