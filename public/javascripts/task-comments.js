@@ -119,8 +119,8 @@ export const fetchTask = async (taskId) => {
                     <input type="checkbox" class="completedTask" name="completedTask">
                 </div>
                 <div class='due-container'>
-                    <p>Due: </p>
-                    <p>${due}</p>
+                    <p class='due-container-label'>Due: </p>
+                    <p class='due-container-content'>${due}</p>
                 </div>
             </div>
 
