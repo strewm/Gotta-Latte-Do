@@ -171,7 +171,6 @@ router.delete('/:id(\\d+)', asyncHandler(async(req, res, next) => {
 }))
 
 router.patch('/:id(\\d+)', asyncHandler(async (req, res, next) => {
-  console.log('PATCH ROUTE')
   const { isCompleted } = req.body;
   const task = await Task.findByPk(req.params.id);
   if (task) {

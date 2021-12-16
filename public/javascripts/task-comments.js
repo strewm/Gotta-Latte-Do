@@ -211,7 +211,6 @@ export const fetchTask = async (taskId) => {
 
                 const formData = new FormData(document.querySelector('.edit-task'));
                 const description = formData.get('description');
-                console.log(description)
                 const dueDate = formData.get('dueDate');
                 const checkStatus = formData.get('isCompleted');
                 let isCompleted;
@@ -336,7 +335,6 @@ export const fetchComments = async (taskId) => {
                 const newMessageForm = new FormData(document.querySelector('.edit-comment'));
                 const message = newMessageForm.get("message");
                 const taskId = newMessageForm.get("taskId");
-                console.log(taskId)
 
                 const body = { message };
 
