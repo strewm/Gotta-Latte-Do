@@ -251,7 +251,7 @@ export const fetchComments = async (taskId) => {
                 <button class='delete-comment-butt comment-butts' id='${comment.id}'>Delete</button>
             </span>
         </div>
-        <div class='createdAt'>${commentDateFormatter(comment.createdAt)}</div>
+        <div class='createdAt'>${commentDateFormatter(comment.updatedAt)}</div>
     `
     )
 
@@ -337,6 +337,7 @@ export const fetchComments = async (taskId) => {
                     <button class='edit-comment-butt' id='${comment.id}'>Edit
                     <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
                 </span>
+                <div class='updatedAt'>${commentDateFormatter(comment.updatedAt)}</div>
                 `
                 await fetchComments(taskId);
             })
