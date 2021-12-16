@@ -112,6 +112,7 @@ const addNewContact = async (id) => {
 document.addEventListener("DOMContentLoaded", async () => {
     try {
       await fetchTasks();
+      await fetchLists();
     } catch (e) {
       console.error(e);
     }
@@ -322,6 +323,31 @@ deleteContact.addEventListener("click", async (e) => {
 
 })
 
+const fetchLists = async () => {
+  const res = await fetch('http://localhost:8080/lists/')
+
+  if (res.status === 401) {
+      window.location.href = "/log-in";
+      return;
+    }
+
+  const { allLists } = await res.json();
+
+  const listContainer = document.querySelector(".lists-grid-container");
+  const listHtml = allLists.map(({ id, title }) => `
+  <div class='list-grid'>
+  <div class="list-info">
+    <li class='list-lists' id=${id}>${title}</li>
+  </div>
+  <div> <a class='delete-list' id=${id}> - </a> </div>
+  </div>
+  `)
+
+  listContainer.innerHTML = listHtml.join("");
+}
+
+
+
 // delete a list
 
 const deleteList = document.querySelector('.list-list-sidebar')
@@ -378,6 +404,7 @@ deleteList.addEventListener("click", async (e) => {
             'Content-Type': 'application/json'
           }
         })
+        await fetchLists();
       })
     const cancelButton = document.querySelector('.editCancelButton');
     cancelButton.addEventListener('click', (e) => {
@@ -415,7 +442,6 @@ addList.addEventListener('click', (e) => {
       const formData = new FormData(addList);
       const testList = formData.get('title');
       const body = { testList };
-      console.log('-------------', body, testList);
       await fetch(`http://localhost:8080/lists`, {
           method: 'POST',
           body: JSON.stringify(body),
@@ -423,6 +449,7 @@ addList.addEventListener('click', (e) => {
             'Content-Type': 'application/json'
           }
         });
+        await fetchLists();
       });
     const addCancelButton = document.querySelector('.listCancelButton');
 

@@ -32,6 +32,12 @@ const validateLists = [
     }
     res.render('add-list')
   }))
+  
+  router.get('/', asyncHandler(async (req, res) => {
+    const allLists = await List.findAll();
+    res.status(200).json({allLists});
+  }))
+
 
   router.post('/', asyncHandler(async (req, res, next) => {
     const { testList } = req.body;

@@ -30,15 +30,15 @@ block content
                 div Lists
                 div
                   a.add-lists +
-                div
                 .add-list-form
+              div
               div.list-list-sidebar
                 each list in myLists
-                  div.lists-grid
-                    div
-                      li.list-lists(id=`${list.id}`)=list.title
-                    div
-                      a.delete-list(id=`${list.id}`) -
+                  div.lists-grid-container
+                    //- div
+                    //-   li.list-lists(id=`${list.id}`)=list.title
+                    //- div
+                    //-   a.delete-list(id=`${list.id}`) -
 
             ul
               div.contact-sidebar
