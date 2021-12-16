@@ -187,6 +187,12 @@ router.post("/logout", (req, res) => {
 });
 
 
+router.post('/demo', asyncHandler(async (req, res) => {
+  const user = await db.User.findByPk(4);
+  loginUser(req, res, user);
+  res.redirect('/app');
+}))
+
 
 
 /* GET users listing. */
