@@ -240,33 +240,33 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
-    const listContainer = document.querySelector('.lists-grid-container');
+    const listLists = document.querySelectorAll('.list-lists');
 
-    listContainer.addEventListener('click', async (e) => {
-      e.stopPropagation();
-      const listId = e.target.id;
-      console.log(listId);
+    listLists.forEach((list) => {
+      list.addEventListener('click', async(e) => {
+        e.stopPropagation();
+        const listId = e.target.id;
+        console.log(listId)
 
-      const res = await fetch(`/lists/${listId}/tasks`);
+        const res = await fetch(`/lists/${listId}/tasks`);
 
-      const { tasks } = await res.json();
-      console.log(tasks);
+        const { tasks } = await res.json();
 
-      const tasksContainer = document.querySelector('.task-list');
+        const tasksContainer = document.querySelector('.task-list');
 
-      const listTitle = `
-      <h2 class="task-list-header">List Name: ${tasks[0].List.title}</h2>
-      `
+        const listTitle = `
+          <h2 class="task-list-header">${tasks[0].List.title}</h2>
+        `
 
-      const tasksHtml = tasks.map((task) => `
-        <div class="task-info">
-          <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id}>
-          <label for=${task.Task.id} id=${task.Task.id} class="task-check-box">${task.Task.description}</label>
-        </div>
-      `)
+        const tasksHtml = tasks.map((task) => `
+          <div class="task-info">
+            <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id}>
+            <label for=${task.Task.id} id=${task.Task.id} class="task-check-box">${task.Task.description}</label>
+          </div>
+        `)
 
-      tasksContainer.innerHTML = listTitle + tasksHtml.join('');
-
+        tasksContainer.innerHTML = listTitle + tasksHtml.join('');
+      })
     })
 
 
