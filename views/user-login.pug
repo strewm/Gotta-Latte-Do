@@ -1,10 +1,11 @@
 extends layout
 
+include utils
+
 append head
   script(src="/javascripts/demo.js" type="module" defer)
   link(rel="stylesheet" href="/stylesheets/user-login.css")
 
-include utils
 
 block content
   div.mainPage

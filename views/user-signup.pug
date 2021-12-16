@@ -3,7 +3,8 @@ extends layout
 include utils
 
 append head
-  script(src="/javascripts/demo.js" type="module" defer)
+    script(src="/javascripts/demo.js" type="module" defer)
+    link(rel="stylesheet" href="/stylesheets/user-signup.css")
 
 block content
     +validationErrorSummary(errors)
