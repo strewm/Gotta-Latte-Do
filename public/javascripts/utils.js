@@ -28,60 +28,35 @@ export const handleErrors = async (err) => {
   };
 
 
+
+// This function checks the dueDate selected for the task
+// If the task is due today, it changes the task info "due" text to "Today", same for "Tomorrow"
+// If the task is due in the past, it changes it to "OVERDUE!"
+// Otherwise, it writes the due date as a date in yyyy-mm-dd format.
+
 export const dateFormatter = (task) => {
 
-  const today = new Date().toJSON().slice(0,10)
+  let today = new Date();
+  let tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1)
 
-  let tomorrow = today.split('-');
-  let month = tomorrow[tomorrow.length - 2]
-  let day = tomorrow[tomorrow.length - 1]
+  let ddToday = String(today.getDate()).padStart(2, '0');
+  let mmToday = String(today.getMonth() + 1).padStart(2, '0');
+  let yyyyToday = today.getFullYear();
 
-  if (day === '31' &&
-      (month === '01' ||
-      month === '03' ||
-      month === '05' ||
-      month === '07' ||
-      month === '08' ||
-      month === '10' ||
-      month === '12')) {
-          day = '01';
-          if (month !== '12' && Number(month) >= 9) {
-              month = (Number(month) + 1).toString()
-          } else if (month === '12') {
-              month = '01';
-          }
-          else {
-              month = '0' + (Number(month) + 1).toString();
-          }
-  } else if (
-      day === '30' && (
-      month === '02' ||
-      month === '04' ||
-      month === '06' ||
-      month === '09' ||
-      month === '11' ))
-      {
-      day = '01';
-      if (Number(month) <= 9) {
-          month = (Number(month) + 1).toString()
-      } else {
-          month = '0' + (Number(month) + 1).toString();
-      }
-  } else {
-      if (Number(day) >= 9) {
-          day = (Number(day) + 1).toString();
-      } else {
-          day = '0' + (Number(day) + 1).toString();
-      }
-  }
+  let ddTom = String(tomorrow.getDate()).padStart(2, '0');
+  let mmTom = String(tomorrow.getMonth() + 1).padStart(2, '0');
+  let yyyyTom = tomorrow.getFullYear();
 
-  tomorrow[tomorrow.length - 1] = day;
-  tomorrow[tomorrow.length - 2] = month;
+  today = yyyyToday + '-' + mmToday + '-' + ddToday;
+  tomorrow = yyyyTom + '-' + mmTom + '-' + ddTom;
 
-  tomorrow = tomorrow.join('-');
-
+  let selectedDate = task.dueDate.slice(0,10).replace(/-/g, '/');
+  selectedDate = new Date(selectedDate);
+  let diff = new Date().getTime() - selectedDate.getTime();
 
   let due = task.dueDate.slice(0,10);
+
 
   if (due === today) {
       return due = 'Today';
@@ -91,9 +66,9 @@ export const dateFormatter = (task) => {
       return due = 'Tomorrow';
   }
 
-  if (Number(due.slice(9)) < Number(today.slice(9))) {
+  if (diff > 0) {
       return due = 'OVERDUE!'
   }
-  
+
   return due;
 }
