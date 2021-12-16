@@ -112,11 +112,16 @@ export const fetchTask = async (taskId) => {
                 </div>
             </div>
 
-            <div class='task-information-${task.id}'>
+            <div class='task-information-${task.id} task-information-container'>
                 <p class='task-info-header'>${task.description}</p>
-                <label for="completedTask">Task Completed? </label>
-                <input type="checkbox" class="completedTask" name="completedTask">
-                <p>Due: ${due}</p>
+                <div class='task-completed-container'>
+                    <label for="completedTask" class='task-completed-label'>Task Completed? </label>
+                    <input type="checkbox" class="completedTask" name="completedTask">
+                </div>
+                <div class='due-container'>
+                    <p>Due: </p>
+                    <p>${due}</p>
+                </div>
             </div>
 
             <div class='comment-container-${task.id}'>

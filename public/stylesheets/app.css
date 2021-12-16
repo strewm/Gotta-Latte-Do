@@ -194,8 +194,7 @@ border-radius: 10px;
 border: none;
 align-items: center; */
 
-
-/* Exit button */
+/* Contains the (x, edit, delete buttons) + (task info) + (comments)  */
 .task-container {
     border: 1px solid #8A715B;
     font-size: 15px;
@@ -204,6 +203,7 @@ align-items: center; */
     color: #8A715B;
 }
 
+/* Contains the x, edit, delete buttons  */
 .task-info-buttons {
     display: flex;
     justify-content: space-between;
@@ -212,7 +212,7 @@ align-items: center; */
 
 }
 
-/* Task buttons  */
+/* Task (x + edit + delete task) buttons  */
 .task-butts {
     border: 1px solid #8A715B;
     font-size: 12px;
@@ -222,10 +222,7 @@ align-items: center; */
     color: #8A715B;
 }
 
-/* .task-butts-2 {
-    justify-self: flex-end;
-} */
-
+/* X button  */
 #task-info-x {
     font-weight: bold;
     width: 17px;
@@ -237,9 +234,28 @@ align-items: center; */
 
 }
 
+/* .task-information-container {
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+} */
+
+/* Task description (header of task pop-up)  */
 .task-info-header {
     font-weight: bold;
     font-size: 20px;
+}
+
+/* Task completed + Due + Comments  */
+.task-completed-label, .due-container, .comment-header {
+    border: 1px solid #8A715B;
+    background-color: #8A715B;
+    color: #FAECDA;
+    font-size: 12px;
+    padding: 5px;
+    border-radius: 5px;
+    width: fit-content;
+    margin: 5px 0 5px 0;
 }
 
 /* Comments section header  */
