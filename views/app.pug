@@ -25,30 +25,26 @@ block content
                         li.settingList: button#signOut(type='submit') Sign Out
         div.sidebar
             img.logo(src="../images/maybe-logo.png")
-            ul Inbox
-                //- li All Tasks
-                //- li Today
-                //- li Tomorrow
-                //- li This Week
-                //- li Given to Others
             ul
               .list-sidebar
                 div Lists
                 div
-                  a.add-lists(href='/lists/new') +
+                  a.add-lists +
+                .add-list-form
+              div
               div.list-list-sidebar
                 each list in myLists
-                  div.lists-grid
-                    div
-                      li.list-lists(id=`${list.id}`)=list.title
-                    div
-                      a.delete-list(id=`${list.id}`) -
+                  div.lists-grid-container
+                    //- div
+                    //-   li.list-lists(id=`${list.id}`)=list.title
+                    //- div
+                    //-   a.delete-list(id=`${list.id}`) -
 
             ul
               div.contact-sidebar
                 div Contacts
                 div
-                  a.add-contacts(href='/add-contacts') +
+                  a.add-contacts +
               div.contact-list-sidebar
                 li.contact-list(id=`${me}`)=myName.username + " (me)"
                 if contactsAll
@@ -58,10 +54,11 @@ block content
                         li.contact-list(id=`${contact.id}`)=contact.username
                       div
                         a.delete-contact(id=`${contact.id}`) -
+              div.add-contact-sidebar
         div.tabbedContainer
             div.tabbedGroup
                 a.tabbedLink#incomplete Incomplete
-                a.tabbedLink#complete Complete
+                a.tabbedLink#complete Completed
 
         div.summaryContainer
           div.summaryHeader
@@ -69,6 +66,7 @@ block content
             div.summary#tasksDue Tasks
             div.summary#tasksOverDue Overdue
           .updateList
+          .newList
           div.fiona
           div.edit-form
 
@@ -76,6 +74,7 @@ block content
             include includes/add-task
             div.my-tasks
             .task-list
+            .assigned-list
             .tanner
 
 

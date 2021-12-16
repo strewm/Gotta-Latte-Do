@@ -30,18 +30,23 @@ const validateLists = [
     if(!res.locals.userId) {
       res.redirect('/users/login')
     }
-
     res.render('add-list')
   }))
+  
+  router.get('/', asyncHandler(async (req, res) => {
+    const allLists = await List.findAll();
+    res.status(200).json({allLists});
+  }))
+
 
   router.post('/', asyncHandler(async (req, res, next) => {
-    const { title } = req.body;
+    const { testList } = req.body;
     const userId = res.locals.userId;
 
     try {
         const newList = await List.create({
         userId,
-        title
+        title: testList
     })
 
     res.status(201).json({newList})

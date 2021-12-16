@@ -2,6 +2,9 @@ extends layout
 
 include utils
 
+append head
+  script(src="/javascripts/demo.js" type="module" defer)
+
 block content
     +validationErrorSummary(errors)
     form(action='/users/signup' method='post')
@@ -14,4 +17,5 @@ block content
             button(type='submit') Sign Up
             a(href='/') Cancel
         div
+            button(type='submit' class='demo-user') Demo User
             p: a(href='/users/login') Already have an account?

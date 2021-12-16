@@ -1,7 +1,8 @@
 extends layout
 
 append head
-    link(rel="stylesheet" href="/stylesheets/user-login.css")
+  script(src="/javascripts/demo.js" type="module" defer)
+  link(rel="stylesheet" href="/stylesheets/user-login.css")
 
 include utils
 
@@ -21,4 +22,5 @@ block content
           button(type='submit') Login
           a(href='/') Cancel
     div.footer
+      button(type='submit' class='demo-user') Demo User
       p: a(href='/users/signup') Don't have an account?
