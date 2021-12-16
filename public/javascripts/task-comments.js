@@ -1,35 +1,6 @@
 import { handleErrors, dateFormatter } from "./utils.js";
 import { fetchTasks } from './app.js';
 
-const deleteAllComments = async (taskId) => {
-    const commentsDiv = document.querySelector(`#comments-${taskId}`);
-    const commentsDivChildren = commentsDiv.children;
-
-    for (let i = 0; i < commentsDivChildren.length; i++) {
-        let commentId = commentsDivChildren[i].children[0].id;
-        let arr = commentId.split('-');
-        let id = arr[arr.length - 1];
-
-        try {
-            const res = await fetch(`/comments/${id}`, {
-                method: "DELETE",
-            })
-
-            if (res.status === 401) {
-                window.location.href = "/log-in";
-                return;
-              }
-            if (!res.ok) {
-                throw res;
-              }
-            } catch (err) {
-                handleErrors(err)
-            }
-    }
-
-    return;
-
-}
 
 const deleteTask = async (taskId) => {
 
