@@ -166,6 +166,7 @@ export const fetchTask = async (taskId) => {
         deleteTask(task.id);
         const taskInfo = document.querySelector(`.task-${task.id}`);
         taskInfo.hidden = true;
+        editForm.hidden = true;
     })
 
 
