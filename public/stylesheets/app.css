@@ -368,8 +368,11 @@
 
 .logo {
     height: auto;
-    width: 250px;
-    /* transform: rotate(-90deg); */
+    width: 85%;
+    min-width: 170px;
+    min-height: auto;
+    max-width: 200px;
+    max-height: auto;
     background-color: #C7A383;
     margin-bottom: 15px;
 }
@@ -387,11 +390,14 @@
     justify-content: flex-start;
 }
 
-.sidebar ul:hover {
+/* .sidebar ul:hover {
     color: #E0A979;
+} */
+
+li.list-lists {
+    list-style-image: url("../images/bean-left-small.png");
+    /* list-style: none; */
 }
-
-
 
 /* %%%%%%%%%%%%%%%%%%%%% Second sidebar (right): Summary %%%%%%%%%%%%%%%%%%%%% */
 .summaryContainer {

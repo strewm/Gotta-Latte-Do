@@ -68,7 +68,7 @@
 
 .sign-up-field {
     border: 2px solid cornsilk;
-    padding: 5px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
     border-radius: 5px;
     width: 80%;
     min-width: 250px;
@@ -106,7 +106,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* margin-top: 5px; */
+    margin-top: 15px;
 }
 
 #button-sign-up, #button-cancel {
