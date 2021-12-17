@@ -369,6 +369,16 @@
     width: 100%;
 }
 
+.task-info:hover {
+    background-color: #8A715B;
+    cursor: pointer;
+}
+
+.task-check-box:hover {
+    background-color: #8A715B;
+    cursor: pointer;
+}
+
 
 /* %%%%%%%%%%%%%%%%%%%%% Sidebar (left): Lists / organization %%%%%%%%%%%%%%%%%%%%% */
 
@@ -404,6 +414,17 @@ li.list-lists {
     list-style-image: url("../images/bean-left-small.png");
     /* list-style: none; */
 }
+
+ul.default-tasks > li {
+    list-style-type: none;
+    padding-left: 10px;
+}
+
+ul.default-tasks > li:hover {
+    background-color: #8A715B;
+    cursor: pointer;
+}
+
 
 /* %%%%%%%%%%%%%%%%%%%%% Second sidebar (right): Summary %%%%%%%%%%%%%%%%%%%%% */
 .summaryContainer {
