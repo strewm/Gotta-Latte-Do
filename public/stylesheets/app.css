@@ -629,6 +629,7 @@ ul.default-tasks > li:hover {
     margin-left: 15px;
     cursor: pointer;
     margin-bottom: 5px;
+    list-style-image: url("../images/white_bean_icon.png");
 
 }
 
