@@ -685,9 +685,11 @@ ul.default-tasks > li:hover {
     height: 35px;
     padding: 0px 15px;
     border: 1px solid rgba(0,0,0,.1);
+    font-weight: bold;
 }
 
 .listCancelButton {
+    font-weight: bold;
     border-radius: 3px;
     height: 35px;
     padding: 0px 15px;
@@ -723,6 +725,7 @@ ul.default-tasks > li:hover {
     height: 35px;
     padding: 0px 15px;
     border: 1px solid rgba(0,0,0,.1);
+    font-weight: bold;
 }
 
 .contact-input {
