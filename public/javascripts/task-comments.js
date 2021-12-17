@@ -223,7 +223,6 @@ export const fetchTask = async (taskId) => {
                 }
 
                 const body = { description, dueDate, isCompleted };
-                console.log(body);
 
                 try {
                     await editTask(taskId, body);

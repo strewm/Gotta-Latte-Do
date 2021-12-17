@@ -472,7 +472,6 @@ const fetchLists = async () => {
       list.addEventListener('click', async(e) => {
         e.stopPropagation();
         const listId = list.id;
-        console.log(list.innerText);
 
         const res = await fetch(`/lists/${listId}/tasks`);
 

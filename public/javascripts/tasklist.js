@@ -4,7 +4,6 @@ listLists.forEach((list) => {
   list.addEventListener('click', async(e) => {
     e.stopPropagation();
     const listId = e.target.id;
-    console.log(listId)
 
     const res = await fetch(`/lists/${listId}/tasks`);
 
