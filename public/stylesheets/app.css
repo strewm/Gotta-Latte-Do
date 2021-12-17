@@ -492,8 +492,9 @@ ul.default-tasks > li:hover {
     width: 450px;
     height: 200px;
     border: 2px solid #C7A383;
-    border-radius: 5px;
-    box-shadow: 5px 5px 5px rgba(0,0,0,.5);
+    border-radius: 10px;
+    /* box-shadow: 5px 5px 5px rgba(0,0,0,.5); */
+    box-shadow: 0 0 5px #8A715B;
     box-sizing: border-box;
 }
 
@@ -510,16 +511,17 @@ ul.default-tasks > li:hover {
 
 .contacts-form {
     background-color: #E0A979 !important;
+    color: #8A715B;
 }
 
 .form_error {
     font-size: 8px;
     background-color: #E0A979;
-    color: #333333;
+    color: #8A715B;
 }
 
 .form-error-p {
-    font-size: 9px;
+    font-size: 10px;
     background-color: #E0A979;
     color: red;
     margin: -5px 0px 0px 0px;
@@ -528,7 +530,7 @@ ul.default-tasks > li:hover {
 .p-form {
     font-size: 14px;
     background-color: #E0A979;
-    color: #333333;
+    color: #8A715B;
     margin: 10px 0px;
 }
 
@@ -660,7 +662,7 @@ ul.default-tasks > li:hover {
 .h2-add-contact {
     font-size: 20px;
     font-weight: bold;
-    color: #333333;
+    color: #8A715B;
     background-color: #E0A979;
 }
 
@@ -675,6 +677,23 @@ ul.default-tasks > li:hover {
     padding: 0px 15px;
     border: 1px solid rgba(0,0,0,.1);
 }
+/*
+border: 1px solid #8A715B;
+font-size: 12px;
+padding: 5px;
+border-radius: 5px;
+
+color: #8A715B; */
+
+#email {
+    border: 1px solid #8A715B;
+    font-size: 12px;
+    padding: 3px;
+    border-radius: 5px;
+    width: 100%;
+
+    color: #C7A383;
+}
 
 
 
@@ -686,8 +705,6 @@ ul.default-tasks > li:hover {
     justify-content: space-around;
     align-items: flex-start;
 }
-
-
 
 .taskList {
     display: grid;
@@ -709,8 +726,8 @@ ul.default-tasks > li:hover {
     background-color: #FAECDA;
     border: 1px solid #C7A383;
     border-radius: 10px;
-    box-shadow: 0 0 5px #C7A383;
-    padding: 0.5em;
+    box-shadow: 0 0 5px #8A715B;
+    padding: 7px;
     position: absolute;
     right: 5px;
     top: 2.5em;
@@ -729,13 +746,12 @@ ul.default-tasks > li:hover {
     margin-bottom: 5px;
 }
 
-/* #settings:hover {
-    background-color:blue;
-} */
-
-#userName {
-    padding-left: 5px;
-    font-weight: bold;
+.settingUserInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 7px;
 }
 
 .settingHeader, .settingListGroup, #signOut {
@@ -743,8 +759,13 @@ ul.default-tasks > li:hover {
     color: #8A715B;
 }
 
-.settingHeader {
+#userName {
     font-size: 20px;
+    font-weight: bold;
+}
+
+#userEmail {
+    font-size: 15px;
 }
 
 .settingListGroup {

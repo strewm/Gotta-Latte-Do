@@ -15,8 +15,9 @@ block content
                 div.settingGroup.settingHide
                     div.settingHeaderGroup
                         img.settingHeader#userProfile(src="../images/favicon.png")
-                        div.settingHeader#userName=currUser.username
-                        //- div.settingHead#userEmail= locals.currUser.email
+                        div.settingUserInfo
+                          div.settingHeader#userName=currUser.username
+                          div.settingHeader#userEmail=currUser.email
                     ul.settingListGroup
                         li.settingList.sLGray: a(href='/') Notifications
                         li.settingList.sLGray: a(href='/') Help
