@@ -339,33 +339,32 @@ addContacts.addEventListener("click", async (e) => {
   const addContactsContainer = document.querySelector('.add-contact-sidebar')
   // add contact form. checks against invalid email and existing contacts
   addContactsContainer.innerHTML = `
-
-  <div class="form_error"></div>
+  <div class="contact-pop">
   <form class="contacts-form">
-  <h2>Add New Contact</h2>
+  <h2 class="h2-add-contact">Add New Contact</h2>
+  <p class="p-form">Add people to your contacts by their email address.</p>
       <input type="hidden" name="_csrf">
       <div class="add-contact-input">
-        <div>
-          <label for="email">Email Address</label>
-        </div>
-        <div class="add-contact-email">
-          <input type="text" id="email" name="email" value="ctap105@gmail.com"/>
-        </div>
+
+
+          <input type="text" id="email" name="email" placeholder="Enter email address"/>
+
       </div>
-      <div>
-          <button type="submit">Add Contact</button>
-      </div>
-      <div>
-          <button class="add-contact-cancel">Cancel</button>
+      <div class="add-contact-buttons-container">
+          <button type="submit" class="add-contact-buttons">Add Contact</button>
+
+          <button class="add-contact-cancel add-contact-buttons">Cancel</button>
       </div>
   </form>
+  <div class="form_error"></div>
+  </div>
   `
   const form = document.querySelector(".contacts-form");
 
   const throwError = () => {
       const formError = document.querySelector(".form_error")
       formError.innerHTML = `
-              <p>You entered an invalid email address, or this email is currently in your contacts.</p>
+              <p class="form-error-p">You entered an invalid email address, or this email is currently in your contacts.</p>
             `
 }
   // create new contact
