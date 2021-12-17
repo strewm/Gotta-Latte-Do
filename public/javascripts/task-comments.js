@@ -321,7 +321,7 @@ export const fetchComments = async (taskId) => {
                 <form class='edit-comment'>
                     <label for='message'></label>
                     <input type='hidden' name='taskId' id='${taskId}' value=${taskId}></input>
-                    <input name='message' type='text' placeholder='${currMessage}'></input>
+                    <input class='edit-comment-field' name='message' type='text' placeholder='${currMessage}'></input>
                     <button type='submit' class='submit-edit-comment-butt' id='${commentId}'>Edit Comment
                 </form>
             `

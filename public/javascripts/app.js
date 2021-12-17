@@ -192,7 +192,7 @@ const search = async (searchValue) => {
 }
 
 
-// Change the color of incomplete/complete tabs when fetching their respective lists
+// // Change the color of incomplete/complete tabs when fetching their respective lists
 // function changeColor() {
 //   this.style.backgroundColor = "#FAECDA";
 //   this.style.color = "#8A715B";

@@ -63,7 +63,7 @@
 
 ::placeholder {
     color: #8A715B;
-    font-size: 15px;
+    font-size: 14px;
     font-style: italic;
 }
 
@@ -218,7 +218,7 @@
     font-size: 15px;
     padding: 10px;
     min-height: 500px;
-    min-width: 250px;
+    min-width: 275px;
 
     color: #8A715B;
 }
@@ -352,7 +352,7 @@
     border: 1px solid #9fcf88;
     border-radius: 10px;
     padding: 3px;
-    margin: 3px 0;
+    margin: 5px 0;
 }
 
 .updated-At {
@@ -366,7 +366,7 @@
 .comment-date {
     display: flex;
     justify-content: center;
-    font-size: 13px;
+    font-size: 12.5px;
     padding-top: 1px;
     margin-right: 3px;
 }
@@ -375,14 +375,11 @@
 .comment-buttons {
     display: flex;
     justify-content: center;
-
 }
 
 /* Comments: class of each edit and delete buttons  */
 .comment-butts {
-    /* border: 1px solid #8A715B;
-    padding: 2px;
-    border-radius: 5px; */
+    display: none;
     border: none;
     padding: 0 3px;
     font-size: 12px;
@@ -390,30 +387,54 @@
     color: #8A715B;
 }
 
-.comment-buttons-dot {
-    padding-top: 2px;
+/* Display the edit/delete comment buttons when hovering over comment container  */
+.comment-container:hover .comment-butts {
+    display: block;
 }
 
-.createdAt {
-    font-size: 7px;
+/* Container of the edit comment pop up  */
+.edit-comment {
+    display: flex;
+    margin-top: 3px;
 }
 
-.task-butts:hover {
+.edit-comment-field, .submit-edit-comment-butt {
+    border: 1px solid #8A715B;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.edit-comment-field {
+    width: 100%;
+    margin-right: 3px;
+    padding: 5px;
+
+    color: #C7A383;
+}
+
+.submit-edit-comment-butt {
+    white-space: nowrap;
+    padding: 3px;
+
+    color: #8A715B;
+}
+
+.task-butts:hover, .submit-edit-comment-butt:hover {
     background-color: #C7A383;
     color: #FAECDA;
 }
 
-.task-butts:active {
+.task-butts:active, .submit-edit-comment-butt:active {
     box-shadow: inset 0 0 3px #8A715B;
 }
 
-.comment-butts:hover {
+.edit-comment-butt:hover, .delete-comment-butt:hover {
     color: #4d3f34;
     transform: scale(1.05);
     cursor: pointer;
 }
 
-.comment-butts:active {
+.edit-comment-butt:active, .delete-comment-butt:active {
     transform: scale(0.98);
 }
 
@@ -557,7 +578,7 @@ ul.default-tasks > li:hover {
     align-items: center;
     margin: 10px;
 
-    font-size: 20px;
+    font-size: 16x;
     background-color: #E0A979;
     opacity: 0.7;
     padding: 12px;
