@@ -107,4 +107,14 @@ router.get('/given-to-others', asyncHandler(async (req, res, next) => {
     res.json({ tasks })
 }))
 
+router.get('/given-to-me', asyncHandler(async(req, res) => {
+  const userId = res.locals.userId;
+  const tasks = await Task.findAll({
+    where: {
+      givenTo: userId
+    }
+  })
+  res.json({ tasks })
+}))
+
 module.exports = router;
