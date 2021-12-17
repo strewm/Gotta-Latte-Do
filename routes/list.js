@@ -5,6 +5,7 @@ const app = require('../app');
 const db = require('../db/models');
 const { asyncHandler, csrfProtection, handleValidationErrors } = require('../utils');
 const { Contact, User, List, Task, TaskList } = db;
+const { Op } = require('sequelize');
 
 const validateLists = [
     check('title')
@@ -84,5 +85,26 @@ const validateLists = [
       next(listNotFoundError(req.params.id))
     }
   }))
+
+
+  // router.get('/today', asyncHandler(async (req, res) => {
+
+  //   const todayTasks = await Task.findAll({
+
+  //   })
+  // }))
+
+router.get('/given-to-others', asyncHandler(async (req, res, next) => {
+  const userId = res.locals.userId;
+  const tasks = await Task.findAll({
+    where: {
+      userId,
+      givenTo: {
+        [Op.ne]: null
+      }
+    }
+  })
+    res.json({ tasks })
+}))
 
 module.exports = router;
