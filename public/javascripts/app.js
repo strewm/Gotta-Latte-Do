@@ -267,6 +267,8 @@ const fetchContactTasks = async (id) => {
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 
+  await addTaskInfoListeners();
+
 }
 
 //dynamically add new contact to the sidebar
