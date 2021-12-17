@@ -88,7 +88,7 @@ export const fetchIncompleteTasks = async () => {
 
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
-  <h2 class="task-list-header"><strong>${user.username}'s</strong> incomplete tasks.</h2>
+  <h2 class="task-list-header"><strong>${user.username}' s</strong> incomplete tasks.</h2>
   `
   const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
     if (isCompleted === true) {
@@ -126,7 +126,7 @@ const fetchCompletedTasks = async () => {
 
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
-  <h2 class="task-list-header"><strong>${user.username}'s</strong> completed tasks.</h2>
+  <h2 class="task-list-header"><strong>${user.username}' s</strong> completed tasks.</h2>
   `
   const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
     if (isCompleted === true) {
@@ -353,10 +353,7 @@ form.addEventListener("submit", async (e) => {
           }
 
         form.reset();
-
-        const tasksDue = document.querySelector('.tasksDueValue');
-        tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
-
+        await fetchTasks();
     } catch (err) {
         handleErrors(err)
     }
@@ -491,11 +488,11 @@ export const fetchLists = async () => {
 
   const listContainer = document.querySelector(".lists-grid-container");
   const listHtml = allLists.map(({ id, title }) => `
-  <div id="delete-hover-parent" class='list-grid'>
+  <div class='list-grid'>
   <div class="list-info">
     <li class='list-lists' id=${id}>${title}</li>
   </div>
-  <div > <a class='delete-list' id=${id}> - </a> </div>
+  <div id="delete-hover-parent"> <a class='delete-list' id=${id}> - </a> </div>
   </div>
   `)
 
@@ -517,7 +514,7 @@ export const fetchLists = async () => {
         const listTitle = `
         <div class="list-title" id="${listId}">
           <h2 class="task-list-header">${list.innerText}</h2>
-          <button class="edit-list-button" id="${listId}">Edit List</button>
+          <button class="edit-list-button button-modal" id="${listId}">Edit List</button>
         </div>
         `
 
@@ -780,70 +777,6 @@ todaysTasks.addEventListener('click', async(e) => {
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
       <h2 class="task-list-header">Tasks Due Today</h2>
-`
-const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
-  if (isCompleted === true) {
-    return `
-    <div class='task-info' id=${id}>
-        <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
-        <label for=${id} id=${id} class="task-check-box">${description}</label>
-    </div>
-    `
-  } else {
-  return `<div class='task-info' id=${id}>
-            <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-            <label for=${id} id=${id} class="task-check-box">${description}</label>
-        </div>
-    `
-    }
-    })
-  tasksListContainer.innerHTML = listName + tasksHtml.join("");
-  await addTaskInfoListeners();
-})
-
-
-const tomorrowTasks = document.querySelector('.due-tomorrow');
-tomorrowTasks.addEventListener('click', async(e) => {
-  e.stopPropagation();
-  const res = await fetch('/lists/tomorrow');
-
-  const { tasks } = await res.json();
-
-  const tasksListContainer = document.querySelector(".task-list");
-  const listName = `
-      <h2 class="task-list-header">Tasks Due Tomorrow</h2>
-`
-const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
-  if (isCompleted === true) {
-    return `
-    <div class='task-info' id=${id}>
-        <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
-        <label for=${id} id=${id} class="task-check-box">${description}</label>
-    </div>
-    `
-  } else {
-  return `<div class='task-info' id=${id}>
-            <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-            <label for=${id} id=${id} class="task-check-box">${description}</label>
-        </div>
-    `
-    }
-    })
-  tasksListContainer.innerHTML = listName + tasksHtml.join("");
-  await addTaskInfoListeners();
-})
-
-
-const overdueTasks = document.querySelector('.overdue');
-overdueTasks.addEventListener('click', async(e) => {
-  e.stopPropagation();
-  const res = await fetch('/lists/overdue');
-
-  const { tasks } = await res.json();
-
-  const tasksListContainer = document.querySelector(".task-list");
-  const listName = `
-      <h2 class="task-list-header">Overdue Tasks</h2>
 `
 const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
   if (isCompleted === true) {

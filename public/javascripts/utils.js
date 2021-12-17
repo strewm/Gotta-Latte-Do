@@ -41,18 +41,20 @@ export const editListEventListener = async () => {
 
           const listForm = document.querySelector('.updateList');
           listForm.innerHTML = `
-            <h2>Edit List Name</h2>
+          <div class="cloud"></div>
+          <div class="edit-list-pop">
+            <h2 class="modal-header">Edit List Name</h2>
             <div id='list-edit'>
-              <form class='list-edit-form'>
-              <input type='text' class='list-edit' id='title' name='title' placeholder=${listName.title}>
+              <form class='list-edit-form modal-form'>
+              <input type='text' class='list-edit modal-input' id='title' name='title' placeholder=${listName.title}>
               <label for='title' class='list-label'${listName.title} </label>
               <div>
-              <button class='submitButton' id='${listId}'>Submit</button>
-              </div>
-              <div>
-              <button class='editCancelButton' id='${listId}'>Cancel</button>
+              <button class='submitButton button-modal' id='${listId}'>Submit</button>
+
+              <button class='editCancelButton button-modal' id='${listId}'>Cancel</button>
               </div>
               </form>
+            </div>
             </div>
           `
 
