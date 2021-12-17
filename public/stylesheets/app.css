@@ -517,11 +517,11 @@
 
 ul.default-tasks > li {
     list-style-type: none;
-    padding-left: 10px;
 }
 
 ul.default-tasks > li:hover {
     background-color: #8A715B;
+    padding-left: 10px;
     cursor: pointer;
 }
 
@@ -664,6 +664,8 @@ ul.default-tasks > li:hover {
     border: 1px solid #8A715B;
 }
 
+
+
 .add-lists {
     color: #ffffff !important;
     text-decoration: none;
@@ -671,13 +673,14 @@ ul.default-tasks > li:hover {
     border-radius: 3px;
     padding: 2px 4px;
     justify-content: center;
-    display: grid;
+    display: flex;
 }
 
 .add-lists:hover {
     background-color: white;
     color: #8A715B !important;
     border: 1px solid #8A715B;
+    cursor: pointer;
 }
 
 .addNewList {
@@ -702,6 +705,11 @@ ul.default-tasks > li:hover {
     cursor: pointer;
     margin-bottom: 5px;
     list-style-image: url("../images/white_bean_icon.png");
+}
+
+.list-lists:hover {
+    background-color: #8A715B;
+    padding-left: 10px;
 }
 
 .list-grid {
@@ -729,10 +737,12 @@ ul.default-tasks > li:hover {
 
 .list-grid:hover .delete-list {
     display: grid;
+    cursor: pointer;
 }
 
 .list-grid:hover .delete-contact {
     display: grid;
+    cursor: pointer;
 }
 
 .delete-list {
@@ -778,6 +788,11 @@ ul.default-tasks > li:hover {
     margin-bottom: 5px;
     list-style-image: url("../images/white_bean_icon.png");
 
+}
+
+.contact-list:hover {
+    background-color: #8A715B;
+    padding-left: 10px;
 }
 
 .contact-sidebar {
