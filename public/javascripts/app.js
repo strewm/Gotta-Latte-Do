@@ -471,8 +471,8 @@ const fetchLists = async () => {
     listLists.forEach((list) => {
       list.addEventListener('click', async(e) => {
         e.stopPropagation();
-        const listId = e.target.id;
-        console.log(listId)
+        const listId = list.id;
+        console.log(list.innerText);
 
         const res = await fetch(`/lists/${listId}/tasks`);
 
@@ -481,7 +481,7 @@ const fetchLists = async () => {
         const tasksContainer = document.querySelector('.task-list');
 
         const listTitle = `
-          <h2 class="task-list-header">${tasks[0].List.title}</h2>
+          <h2 class="task-list-header">${list.innerText}</h2>
         `
 
         const tasksHtml = tasks.map((task) => `
