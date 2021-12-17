@@ -40,6 +40,10 @@
     width: auto;
 }
 
+#settings:hover {
+    cursor: pointer;
+}
+
 #settings:active {
     /* transform: scale(0.98); */
     box-shadow: inset 0 0 5px #8A715B;
@@ -711,6 +715,7 @@ ul.default-tasks > li:hover {
     right: 5px;
     top: 2.5em;
     width: 200px;
+    z-index: 2;
 }
 
 .settingHide {
@@ -739,7 +744,7 @@ ul.default-tasks > li:hover {
 }
 
 .settingHeader {
-    font-size: 15px;
+    font-size: 20px;
 }
 
 .settingListGroup {
@@ -748,12 +753,16 @@ ul.default-tasks > li:hover {
 
 .settingList a {
     text-decoration: none;
-    font-size: 12px;
+    font-size: 13px;
+}
+
+.sLGray {
+    color: #a3a2a2;
 }
 
 #signOut {
     border: none;
-    font-size: 12px;
+    font-size: 13px;
     padding: 0;
 }
 
@@ -763,4 +772,5 @@ ul.default-tasks > li:hover {
 
 #signOut:hover {
     color: yellowgreen;
+    cursor: pointer;
 }
