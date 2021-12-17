@@ -373,6 +373,10 @@
     width: 100%;
 }
 
+.task-check-box {
+    background: transparent;
+}
+
 .task-info:hover {
     background-color: #8A715B;
     cursor: pointer;
