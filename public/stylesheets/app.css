@@ -40,6 +40,10 @@
     width: auto;
 }
 
+#settings:hover {
+    cursor: pointer;
+}
+
 #settings:active {
     /* transform: scale(0.98); */
     box-shadow: inset 0 0 5px #8A715B;
@@ -209,6 +213,8 @@
     border: 1px solid #8A715B;
     font-size: 15px;
     padding: 10px;
+    min-height: 500px;
+    min-width: 250px;
 
     color: #8A715B;
 }
@@ -254,6 +260,7 @@
 .task-completed-container, .due-container {
     display: flex;
     align-items: center;
+    margin: 5px 5px 5px 0;
 }
 
 /* Task completed + Due + Comments  */
@@ -268,10 +275,6 @@
     margin: 0;
     display: inline-block;
     /* align-items: center; */
-}
-
-.task-completed-label {
-    margin-bottom: 1px;
 }
 
 .completedTask {
@@ -291,8 +294,7 @@
 
 /* Comments section header  */
 .comment-header {
-    margin-top: 2px;
-    margin-bottom: 0;
+    margin: 0 5px 5px 0;
 }
 
 /* Enter new comment field  */
@@ -309,6 +311,7 @@
     padding: 3px;
     border-radius: 5px;
     width: 100%;
+    padding: 5px;
 
     color: #C7A383;
 }
@@ -327,31 +330,112 @@
     color: #8A715B;
 }
 
+.add-comment-butt:hover {
+    background-color: #8A715B;
+    color: #FAECDA;
+}
+
+.add-comment-butt:hover {
+    box-shadow: inset 0 0 3px #6d5947;
+}
+
 /* Populated comments container  */
 .comment-container {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+
+    border: 1px solid #9fcf88;
+    border-radius: 10px;
+    padding: 3px;
+    margin: 3px 0;
 }
 
 .updated-At {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 4px 0 1px 6px;
+    /* text-align: center; */
 }
 
+.comment-date {
+    display: flex;
+    justify-content: center;
+    font-size: 13px;
+    padding-top: 1px;
+    margin-right: 3px;
+}
+
+/* Comments: edit + delete button container  */
+.comment-buttons {
+    display: flex;
+    justify-content: center;
+
+}
+
+/* Comments: class of each edit and delete buttons  */
 .comment-butts {
-    border: 1px solid #8A715B;
+    /* border: 1px solid #8A715B;
+    padding: 2px;
+    border-radius: 5px; */
+    border: none;
+    padding: 0 3px;
     font-size: 12px;
-    padding: 3px;
-    border-radius: 5px;
 
     color: #8A715B;
+}
+
+.comment-buttons-dot {
+    padding-top: 2px;
 }
 
 .createdAt {
     font-size: 7px;
 }
 
+.task-butts:hover {
+    background-color: #C7A383;
+    color: #FAECDA;
+}
+
+.task-butts:active {
+    box-shadow: inset 0 0 3px #8A715B;
+}
+
+.comment-butts:hover {
+    color: #4d3f34;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.comment-butts:active {
+    transform: scale(0.98);
+}
+
+/* Comment user + message container  */
+.comment-user-message {
+    margin: 3px 3px 3px 5px;
+}
+
+/* Comment user name */
+.comment-user {
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    background-color: #9fcf88;
+    font-size: 13px;
+    padding: 5px 1px 5px 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+
+    color: cornsilk;
+}
+
+.comment-message {
+    font-size: 14px;
+    color: #534335;
+}
 
 /* %%%%%%%%%%%%%%%%%%%%% Main section list: Tasks %%%%%%%%%%%%%%%%%%%%% */
 /* Part of mainContainer div */
@@ -369,13 +453,24 @@
     width: 100%;
 }
 
+.task-list-header {
+    padding: 10px 0;
+}
+
+.task-check-box {
+    background: transparent;
+}
+
 .task-info:hover {
-    background-color: #8A715B;
+    padding: 3px;
+    border-radius: 10px;
+    background-color: #E0A979;
     cursor: pointer;
 }
 
 .task-check-box:hover {
-    background-color: #8A715B;
+    padding: 3px;
+    background-color: #E0A979;
     cursor: pointer;
 }
 
@@ -425,6 +520,8 @@ ul.default-tasks > li:hover {
     background-color: #8A715B;
     cursor: pointer;
 }
+
+
 
 
 /* %%%%%%%%%%%%%%%%%%%%% Second sidebar (right): Summary %%%%%%%%%%%%%%%%%%%%% */
@@ -482,7 +579,25 @@ ul.default-tasks > li:hover {
     top: 50%;
     left: 50%;
     background-color: #E0A979;
-    padding: 22px 30px;
+    padding: 21px 30px;
+    margin-left: -225px;
+    margin-top: -100px;
+    width: 450px;
+    height: 200px;
+    border: 2px solid #C7A383;
+    border-radius: 10px;
+    /* box-shadow: 5px 5px 5px rgba(0,0,0,.5); */
+    box-shadow: 0 0 5px #8A715B;
+    box-sizing: border-box;
+}
+
+.list-pop {
+    position: absolute;
+    z-index: 9;
+    top: 50%;
+    left: 50%;
+    background-color: #E0A979;
+    padding: 31px 30px;
     margin-left: -225px;
     margin-top: -100px;
     width: 450px;
@@ -506,16 +621,17 @@ ul.default-tasks > li:hover {
 
 .contacts-form {
     background-color: #E0A979 !important;
+    color: #8A715B;
 }
 
 .form_error {
     font-size: 8px;
     background-color: #E0A979;
-    color: #333333;
+    color: #8A715B;
 }
 
 .form-error-p {
-    font-size: 9px;
+    font-size: 10px;
     background-color: #E0A979;
     color: red;
     margin: -5px 0px 0px 0px;
@@ -524,7 +640,7 @@ ul.default-tasks > li:hover {
 .p-form {
     font-size: 14px;
     background-color: #E0A979;
-    color: #333333;
+    color: #8A715B;
     margin: 10px 0px;
 }
 
@@ -560,6 +676,14 @@ ul.default-tasks > li:hover {
     border: 1px solid #8A715B;
 }
 
+.addNewList {
+    background-color: #E0A979;
+}
+
+.add-list-buttons-container {
+    margin: 10px 0px;
+}
+
 .list-list {
     color: #ffffff !important;
     list-style: disc;
@@ -583,6 +707,13 @@ ul.default-tasks > li:hover {
     margin: 6px 0px;
 }
 
+.list-add {
+    width: 100%;
+    border-radius: 3px !important;
+    margin: 15px 0px;
+
+}
+
 .lists-grid {
     display: grid;
     grid-template-columns: 90% 10%;
@@ -590,20 +721,34 @@ ul.default-tasks > li:hover {
     margin: 6px 0px;
 }
 
+#delete-list-parent {
+
+}
+
+.list-grid:hover .delete-list {
+    display: grid;
+}
+
+.list-grid:hover .delete-contact {
+    display: grid;
+}
+
 .delete-list {
     color: #ffffff !important;
     text-decoration: none;
     border: 1px solid white;
-    border-radius: 3px;
-    padding: 1px 6px 3px 6px;
+    border-radius: 5px;
+    padding: 1px 6px 1px 6px;
     justify-content: center;
-    display: grid;
+    display: none;
+
 
 }
 .delete-list:hover {
     background-color: white;
     color: #8A715B !important;
     border: 1px solid #8A715B;
+
 }
 
 .delete-contact {
@@ -611,9 +756,9 @@ ul.default-tasks > li:hover {
     text-decoration: none;
     border: 1px solid white;
     border-radius: 3px;
-    padding: 1px 6px 3px 6px;
+    padding: 1px 6px 1px 6px;
     justify-content: center;
-    display: grid;
+    display: none;
 
 }
 
@@ -637,24 +782,57 @@ ul.default-tasks > li:hover {
     display: grid;
     grid-template-columns: 90% 10%;
     color: #ffffff;
-    margin-top: 5px;
     font-weight: bold;
+    padding: 15px 0px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    border-top: 1px solid rgba(255, 255 , 255, .3);
+}
+
+.contact-list-sidebar {
+    border-bottom: 1px solid rgba(255, 255 , 255, .3);
+    padding-bottom: 12px;
 }
 
 .list-sidebar {
     display: grid;
     grid-template-columns: 90% 10%;
     color: #ffffff;
+    padding: 15px 0px;
+    margin-top: 20px;
     margin-bottom: 5px;
+    border-top: 1px solid rgba(255, 255 , 255, .3);
 }
 
+.addSubmitButton {
+    border-radius: 3px;
+    height: 35px;
+    padding: 0px 15px;
+    border: 1px solid rgba(0,0,0,.1);
+    font-weight: bold;
+}
+
+.listCancelButton {
+    font-weight: bold;
+    border-radius: 3px;
+    height: 35px;
+    padding: 0px 15px;
+    border: 1px solid rgba(0,0,0,.1);
+}
 .add-contact-input {
     display: grid;
-    margin: 5px 0px 20px 0px;
+    margin: 5px 0px 15px 0px;
 }
 
 
 .h2-add-contact {
+    font-size: 20px;
+    font-weight: bold;
+    color: #8A715B;
+    background-color: #E0A979;
+}
+
+.h2-add-list {
     font-size: 20px;
     font-weight: bold;
     color: #333333;
@@ -667,12 +845,40 @@ ul.default-tasks > li:hover {
 }
 
 .add-contact-buttons {
-    border-radius: 3px;
+    /* border-radius: 3px;
     height: 35px;
     padding: 0px 15px;
-    border: 1px solid rgba(0,0,0,.1);
+    border: 1px solid rgba(0,0,0,.1); */
+
+    border: 1px solid #8A715B;
+    font-size: 13px;
+    padding: 7px;
+    border-radius: 5px;
+
+    color: #8A715B;
 }
 
+#email {
+    border: 1px solid #8A715B;
+    font-size: 13px;
+    padding: 3px;
+    border-radius: 5px;
+    width: 100%;
+    padding: 7px;
+    margin-top: 3px;
+
+    color: #8A715B;
+}
+
+.contact-input {
+    font-style: italic;
+    border-radius:3px;
+    font-size: 13px;
+    padding: 5px;
+    height: 30px;
+    border: 1px solid #8A715B;
+    color: #8A715B;
+}
 
 
 /* %%%%%%%%%%%%%%%%%%%%% Tasks Section %%%%%%%%%%%%%%%%%%%%% */
@@ -683,8 +889,6 @@ ul.default-tasks > li:hover {
     justify-content: space-around;
     align-items: flex-start;
 }
-
-
 
 .taskList {
     display: grid;
@@ -706,12 +910,13 @@ ul.default-tasks > li:hover {
     background-color: #FAECDA;
     border: 1px solid #C7A383;
     border-radius: 10px;
-    box-shadow: 0 0 5px #C7A383;
-    padding: 0.5em;
+    box-shadow: 0 0 5px #8A715B;
+    padding: 7px;
     position: absolute;
     right: 5px;
     top: 2.5em;
     width: 200px;
+    z-index: 2;
 }
 
 .settingHide {
@@ -725,13 +930,12 @@ ul.default-tasks > li:hover {
     margin-bottom: 5px;
 }
 
-/* #settings:hover {
-    background-color:blue;
-} */
-
-#userName {
-    padding-left: 5px;
-    font-weight: bold;
+.settingUserInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 7px;
 }
 
 .settingHeader, .settingListGroup, #signOut {
@@ -739,7 +943,12 @@ ul.default-tasks > li:hover {
     color: #8A715B;
 }
 
-.settingHeader {
+#userName {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#userEmail {
     font-size: 15px;
 }
 
@@ -749,19 +958,24 @@ ul.default-tasks > li:hover {
 
 .settingList a {
     text-decoration: none;
-    font-size: 12px;
+    font-size: 13px;
+}
+
+.sLGray {
+    color: #a3a2a2;
 }
 
 #signOut {
     border: none;
-    font-size: 12px;
+    font-size: 13px;
     padding: 0;
 }
 
-.settingList:hover {
+.sLSO:hover {
     color: yellowgreen;
 }
 
 #signOut:hover {
     color: yellowgreen;
+    cursor: pointer;
 }

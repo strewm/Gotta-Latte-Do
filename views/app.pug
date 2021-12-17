@@ -15,14 +15,15 @@ block content
                 div.settingGroup.settingHide
                     div.settingHeaderGroup
                         img.settingHeader#userProfile(src="../images/favicon.png")
-                        div.settingHeader#userName=currUser.username
-                        //- div.settingHead#userEmail= locals.currUser.email
+                        div.settingUserInfo
+                          div.settingHeader#userName=currUser.username
+                          div.settingHeader#userEmail=currUser.email
                     ul.settingListGroup
-                        li.settingList: a(href='/') Notifications
-                        li.settingList: a(href='/') Help
-                        li.settingList: a(href='/') Keyboard shortcuts
-                        li.settingList: a(href='/') Account Settings
-                        li.settingList: button#signOut(type='submit') Sign Out
+                        li.settingList.sLGray: a(href='/') Notifications
+                        li.settingList.sLGray: a(href='/') Help
+                        li.settingList.sLGray: a(href='/') Keyboard shortcuts
+                        li.settingList.sLGray: a(href='/') Account Settings
+                        li.settingList.sLSO: button#signOut(type='submit') Sign Out
         div.sidebar
           div.logoContainer
               img.logo(src="../images/logo-text.png")
@@ -49,7 +50,7 @@ block content
 
             ul
               div.contact-sidebar
-                div Contacts
+                div.contacts-title Contacts
                 div
                   a.add-contacts +
               div.contact-list-sidebar
@@ -70,7 +71,8 @@ block content
         div.summaryContainer
           div.summaryHeader
             //- h2.summary#search Search
-            div#tasksDueValue=(tasks.length + tasksGivenToMe.length)
+            div#tasksDueValue
+              div.tasksDueValue=(tasks.length + tasksGivenToMe.length)
               div#tasksDue Tasks
             div#tasksOverdueValue n/a
               div#tasksOverdue Overdue

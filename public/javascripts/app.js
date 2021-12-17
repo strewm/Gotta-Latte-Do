@@ -1,4 +1,4 @@
-import { handleErrors, addTaskInfoListeners } from "./utils.js";
+import { handleErrors, addTaskInfoListeners, editListEventListener } from "./utils.js";
 import { fetchTask, fetchComments, postComment } from "./task-comments.js";
 
 // fetch user's tasks (all)
@@ -88,7 +88,7 @@ export const fetchIncompleteTasks = async () => {
 
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
-  <h2 class="task-list-header"><strong>${user.username}' s</strong> incomplete tasks.</h2>
+  <h2 class="task-list-header"><strong>${user.username}'s</strong> incomplete tasks.</h2>
   `
   const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
     if (isCompleted === true) {
@@ -126,7 +126,7 @@ const fetchCompletedTasks = async () => {
 
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
-  <h2 class="task-list-header"><strong>${user.username}' s</strong> completed tasks.</h2>
+  <h2 class="task-list-header"><strong>${user.username}'s</strong> completed tasks.</h2>
   `
   const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
     if (isCompleted === true) {
@@ -267,6 +267,8 @@ const fetchContactTasks = async (id) => {
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 
+  await addTaskInfoListeners();
+
 }
 
 //dynamically add new contact to the sidebar
@@ -351,7 +353,10 @@ form.addEventListener("submit", async (e) => {
           }
 
         form.reset();
-        await fetchTasks();
+
+        const tasksDue = document.querySelector('.tasksDueValue');
+        tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
+
     } catch (err) {
         handleErrors(err)
     }
@@ -372,7 +377,7 @@ addContacts.addEventListener("click", async (e) => {
       <input type="hidden" name="_csrf">
       <div class="add-contact-input">
 
-          <input type="text" id="email" name="email" placeholder="Enter email address"/>
+          <input class="contact-input" type="text" id="email" name="email" placeholder="Enter email address"/>
       </div>
 
       <div class="add-contact-buttons-container">
@@ -474,7 +479,7 @@ deleteContact.addEventListener("click", async (e) => {
 
 })
 
-const fetchLists = async () => {
+export const fetchLists = async () => {
   const res = await fetch('/lists/')
 
   if (res.status === 401) {
@@ -486,11 +491,11 @@ const fetchLists = async () => {
 
   const listContainer = document.querySelector(".lists-grid-container");
   const listHtml = allLists.map(({ id, title }) => `
-  <div class='list-grid'>
+  <div id="delete-hover-parent" class='list-grid'>
   <div class="list-info">
     <li class='list-lists' id=${id}>${title}</li>
   </div>
-  <div> <a class='delete-list' id=${id}> - </a> </div>
+  <div > <a class='delete-list' id=${id}> - </a> </div>
   </div>
   `)
 
@@ -510,7 +515,10 @@ const fetchLists = async () => {
         const tasksContainer = document.querySelector('.task-list');
 
         const listTitle = `
+        <div class="list-title" id="${listId}">
           <h2 class="task-list-header">${list.innerText}</h2>
+          <button class="edit-list-button" id="${listId}">Edit List</button>
+        </div>
         `
 
         const tasksHtml = tasks.map((task) => {
@@ -534,11 +542,13 @@ const fetchLists = async () => {
 
         tasksContainer.innerHTML = listTitle + tasksHtml.join('');
 
+
+
+        await editListEventListener();
         await addTaskInfoListeners();
       })
     })
 }
-
 
 
 // delete a list
@@ -561,53 +571,9 @@ deleteList.addEventListener("click", async (e) => {
     } catch (err) {
       handleErrors(err)
     }
-  } else if (e.target.className === 'list-lists') {
-    const listId = e.target.id;
-    const listForm = document.querySelector('.updateList');
-    const listTitle = await fetch(`/lists/${listId}`, {
-      method: "GET",
-    })
-    const { listName } = await listTitle.json();
-    listForm.innerHTML = `
-    <h2>Edit List Name</h2>
-    <div id='list-edit'>
-      <form class='list-edit-form'>
-      <input type='text' class='list-edit' id='title' name='title' placeholder=${listName.title}>
-      <label for='title' class='list-label'${listName.title} </label>
-      <div>
-      <button class='submitButton'>Submit</button>
-      </div>
-      <div>
-      <button class='editCancelButton'>Cancel</button>
-      </div>
-      </form>
-    </div>
-      `
-      const listUpdate = document.querySelector('.list-edit-form')
-      listUpdate.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const formData = new FormData(listUpdate);
-        const title = formData.get('title')
-        const body = { title }
-        await fetch(`/lists/${listId}`, {
-          method: 'PATCH',
-          body: JSON.stringify(body),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-        listForm.innerHTML = '';
-        await fetchLists();
-      })
-    const cancelButton = document.querySelector('.editCancelButton');
-    cancelButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      listForm.innerHTML = '';
-    })
   }
 })
+
 const addList = document.querySelector('.add-lists');
 
 addList.addEventListener('click', (e) => {
@@ -615,18 +581,19 @@ addList.addEventListener('click', (e) => {
   e.stopPropagation();
   const addListForm = document.querySelector('.add-list-form');
   addListForm.innerHTML = `
-  <h2>Add List</h2>
+  <div class="cloud"></div>
+  <div class ="list-pop">
+  <h2 class="h2-add-list">Add List</h2>
   <div id='list-add'>
     <form class='addNewList'>
     <input type='text' class='list-add' id='title' name='title' placeholder='New List'>
     <label for='title' class='list-label'</label>
-    <div>
+    <div class="add-list-buttons-container">
     <button class='addSubmitButton'>Submit</button>
-    </div>
-    <div>
     <button class='listCancelButton'>Cancel</button>
     </div>
     </form>
+  </div>
   </div>
     `
     const addList = document.querySelector('.addNewList');
@@ -798,5 +765,102 @@ givenToMeList.addEventListener('click', async(e) => {
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 
+  await addTaskInfoListeners();
+})
+
+
+
+const todaysTasks = document.querySelector('.due-today');
+todaysTasks.addEventListener('click', async(e) => {
+  e.stopPropagation();
+  const res = await fetch('/lists/today');
+
+  const { tasks } = await res.json();
+
+  const tasksListContainer = document.querySelector(".task-list");
+  const listName = `
+      <h2 class="task-list-header">Tasks Due Today</h2>
+`
+const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+  if (isCompleted === true) {
+    return `
+    <div class='task-info' id=${id}>
+        <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
+        <label for=${id} id=${id} class="task-check-box">${description}</label>
+    </div>
+    `
+  } else {
+  return `<div class='task-info' id=${id}>
+            <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+            <label for=${id} id=${id} class="task-check-box">${description}</label>
+        </div>
+    `
+    }
+    })
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
+  await addTaskInfoListeners();
+})
+
+
+const tomorrowTasks = document.querySelector('.due-tomorrow');
+tomorrowTasks.addEventListener('click', async(e) => {
+  e.stopPropagation();
+  const res = await fetch('/lists/tomorrow');
+
+  const { tasks } = await res.json();
+
+  const tasksListContainer = document.querySelector(".task-list");
+  const listName = `
+      <h2 class="task-list-header">Tasks Due Tomorrow</h2>
+`
+const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+  if (isCompleted === true) {
+    return `
+    <div class='task-info' id=${id}>
+        <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
+        <label for=${id} id=${id} class="task-check-box">${description}</label>
+    </div>
+    `
+  } else {
+  return `<div class='task-info' id=${id}>
+            <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+            <label for=${id} id=${id} class="task-check-box">${description}</label>
+        </div>
+    `
+    }
+    })
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
+  await addTaskInfoListeners();
+})
+
+
+const overdueTasks = document.querySelector('.overdue');
+overdueTasks.addEventListener('click', async(e) => {
+  e.stopPropagation();
+  const res = await fetch('/lists/overdue');
+
+  const { tasks } = await res.json();
+
+  const tasksListContainer = document.querySelector(".task-list");
+  const listName = `
+      <h2 class="task-list-header">Overdue Tasks</h2>
+`
+const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+  if (isCompleted === true) {
+    return `
+    <div class='task-info' id=${id}>
+        <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
+        <label for=${id} id=${id} class="task-check-box">${description}</label>
+    </div>
+    `
+  } else {
+  return `<div class='task-info' id=${id}>
+            <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+            <label for=${id} id=${id} class="task-check-box">${description}</label>
+        </div>
+    `
+    }
+    })
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
   await addTaskInfoListeners();
 })
