@@ -809,7 +809,8 @@ todaysTasks.addEventListener('click', async(e) => {
   const res = await fetch('/lists/today');
 
   const { tasks } = await res.json();
-
+  
+  console.log(tasks);
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
       <h2 class="task-list-header">Tasks Due Today</h2>
@@ -823,4 +824,6 @@ todaysTasks.addEventListener('click', async(e) => {
       `
   })
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
+
+  await addTaskInfoListeners();
 })
