@@ -18,7 +18,7 @@ const deleteTask = async (taskId) => {
         if (!res.ok) {
             throw res;
         }
-        await fetchTasks(taskId);
+        await fetchTasks();
         return;
         } catch (err) {
             handleErrors(err)
@@ -165,6 +165,10 @@ export const fetchTask = async (taskId) => {
         const taskInfo = document.querySelector(`.task-${task.id}`);
         taskInfo.hidden = true;
         editForm.hidden = true;
+
+        const tasksDue = document.querySelector('.tasksDueValue');
+        tasksDue.innerText = (Number(tasksDue.innerText) - 1).toString()
+
     })
 
 
@@ -256,7 +260,7 @@ export const fetchComments = async (taskId) => {
             </span>
             <div class='updatedAt-${comment.id} updated-At'>
                 <div class='comment-date'>${commentDateFormatter(comment.updatedAt)}</div>
-                <div class='comment-buttons-${comment.id} comment-buttons userId-${comment.userId}'>
+                <div class='comment-buttons-${comment.id} comment-buttons userId-${comment.userId}-${comment.id}'>
                     <div class="comment-buttons-dot comment-butts">•</div>
                     <button class='edit-comment-butt comment-butts' id='${comment.id}'>Edit</button>
                     <div class="comment-buttons-dot comment-butts">•</div>
@@ -275,11 +279,12 @@ export const fetchComments = async (taskId) => {
     const { user } = await userRes.json();
 
     comments.forEach((comment) => {
-        const editDeleteButtons = document.querySelector(`.userId-${comment.userId}`);
+        const editDeleteButtons = document.querySelector(`.userId-${comment.userId}-${comment.id}`);
+
         if (user.id === comment.userId) {
-            editDeleteButtons.hidden = false;
+            editDeleteButtons.style.display="flex";
         } else {
-            editDeleteButtons.hidden = true;
+            editDeleteButtons.style.display="none";
         }
     })
 
