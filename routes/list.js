@@ -133,8 +133,12 @@ router.get('/tomorrow', asyncHandler(async (req, res) => {
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1)
-
-  
+  const tasks = await Task.findAll({
+    where: {
+      dueDate: tomorrow
+    }
+  })
+  res.json({ tasks })
 }))
 
 

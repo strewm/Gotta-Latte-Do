@@ -5,7 +5,7 @@ form(class='create-task')
         input.descrip(type="text", placeholder="Add a task...", id="description", name="description" required=true)
         div.taskSubContainer
             label.dueDateLabel(for="dueDate") Due Date
-            input.dueDate(type="date", id="dueDate", name="dueDate" required=true)
+            input.dueDate(type="datetime-local", id="dueDate", name="dueDate" required=true)
             label.isCompletedLabel(for="isCompleted") Completed?
             input.isCompleted(type="checkbox", id="checkbox", name="isCompleted")
             label.contactsLabel(for="givenTo") Contacts
