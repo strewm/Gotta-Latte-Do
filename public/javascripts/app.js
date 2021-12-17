@@ -17,17 +17,26 @@ export const fetchTasks = async () => {
     const listName = `
   <h2 class="task-list-header">All of <strong>${user.username}'s</strong> self-assigned tasks.</h2>
   `
-    const tasksHtml = tasks.map(({ id, description }) => `
-    <div class="task-info" id=${id}>
-        <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-        <label for=${id} id=${id} class="task-check-box">${description}</label>
-    </div>
-    `)
+    const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+      if (isCompleted === true) {
+        return `
+        <div class='task-info' id=${id}>
+            <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
+            <label for=${id} id=${id} class="task-check-box">${description}</label>
+        </div>
+        `
+      } else {
+      return `<div class='task-info' id=${id}>
+                <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+                <label for=${id} id=${id} class="task-check-box">${description}</label>
+            </div>
+        `
+    }
+  })
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
+  await addTaskInfoListeners();
+  }
 
-    tasksListContainer.innerHTML = listName + tasksHtml.join("");
-
-    await addTaskInfoListeners();
-}
 
 // fetch assigned tasks
 
@@ -81,12 +90,22 @@ export const fetchIncompleteTasks = async () => {
   const listName = `
   <h2 class="task-list-header"><strong>${user.username}' s</strong> incomplete tasks.</h2>
   `
-  const tasksHtml = tasks.map(({ id, description }) => `
-  <div class="task-info" id=${id}>
-      <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-      <label for=${id} id=${id} class="task-check-box">${description}</label>
-  </div>
-  `)
+  const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+    if (isCompleted === true) {
+      return `
+      <div class='task-info' id=${id}>
+          <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
+          <label for=${id} id=${id} class="task-check-box">${description}</label>
+      </div>
+      `
+    } else {
+    return `<div class='task-info' id=${id}>
+              <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+              <label for=${id} id=${id} class="task-check-box">${description}</label>
+          </div>
+      `
+  }
+})
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 
@@ -109,12 +128,22 @@ const fetchCompletedTasks = async () => {
   const listName = `
   <h2 class="task-list-header"><strong>${user.username}' s</strong> completed tasks.</h2>
   `
-  const tasksHtml = tasks.map(({ id, description }) => `
-  <div class="task-info" id=${id}>
-      <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-      <label for=${id} id=${id} class="task-check-box">${description}</label>
-  </div>
-  `)
+  const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+    if (isCompleted === true) {
+      return `
+      <div class='task-info' id=${id}>
+          <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
+          <label for=${id} id=${id} class="task-check-box">${description}</label>
+      </div>
+      `
+    } else {
+    return `<div class='task-info' id=${id}>
+              <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+              <label for=${id} id=${id} class="task-check-box">${description}</label>
+          </div>
+      `
+  }
+})
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 
@@ -140,12 +169,22 @@ const search = async (searchValue) => {
   const listName = `
   <h2 class="task-list-header">Search Results</h2>
   `
-  const tasksHtml = results.map(({ id, description, Lists }) => `
-  <div class="task-info" id=${id}>
-      <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-      <label for=${id} id=${id} class="task-check-box"><strong>${description}</strong> found in your <strong><i>${Lists[0].title}</i></strong> list.</label>
-  </div>
-  `)
+  const tasksHtml = results.map(({ id, description, isCompleted, Lists }) => {
+    if (isCompleted === true) {
+      return `
+      <div class='task-info' id=${id}>
+          <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
+          <label for=${id} id=${id} class="task-check-box">${description}</label>
+      </div>
+      `
+    } else {
+    return `<div class='task-info' id=${id}>
+              <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+              <label for=${id} id=${id} class="task-check-box">${description}</label>
+          </div>
+      `
+  }
+})
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 
@@ -195,12 +234,22 @@ const fetchContactTasks = async (id) => {
   const clearAssignedList = document.querySelector('.assigned-list')
   clearAssignedList.innerHTML = ``;
   }
-  const tasksHtml = tasks.map(({ id, description }) => `
-  <div id=${id} class="task-info">
-      <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-      <label for=${id} class="task-check-box" id=${id}>${description}</label>
-  </div>
-  `)
+  const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+    if (isCompleted === true) {
+      return `
+      <div class='task-info' id=${id}>
+          <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
+          <label for=${id} id=${id} class="task-check-box">${description}</label>
+      </div>
+      `
+    } else {
+    return `<div class='task-info' id=${id}>
+              <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+              <label for=${id} id=${id} class="task-check-box">${description}</label>
+          </div>
+      `
+  }
+})
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 
@@ -451,12 +500,24 @@ const fetchLists = async () => {
           <h2 class="task-list-header">${list.innerText}</h2>
         `
 
-        const tasksHtml = tasks.map((task) => `
-          <div class="task-info" id=${task.Task.id}>
-            <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id}>
-            <label for=${task.Task.id} id=${task.Task.id} class="task-check-box">${task.Task.description}</label>
-          </div>
-        `)
+        const tasksHtml = tasks.map((task) => {
+          if (task.Task.isCompleted === true) {
+            return `
+              <div class="task-info" id=${task.Task.id}>
+                <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id} checked>
+                <label for=${task.Task.id} id=${task.Task.id} class="task-check-box">${task.Task.description}</label>
+              </div>
+            `
+          } else {
+
+            return `
+              <div class="task-info" id=${task.Task.id}>
+                <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id}>
+                <label for=${task.Task.id} id=${task.Task.id} class="task-check-box">${task.Task.description}</label>
+              </div>
+          `
+          }
+        })
 
         tasksContainer.innerHTML = listTitle + tasksHtml.join('');
 
@@ -665,12 +726,22 @@ givenToOthersList.addEventListener('click', async(e) => {
   const listName = `
       <h2 class="task-list-header">Tasks Given to Others</h2>
 `
-  const tasksHtml = tasks.map(({ id, description }) => `
-  <div class="task-info" id=${id}>
-      <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-      <label for=${id} id=${id} class="task-check-box">${description}</label>
-  </div>
-  `)
+  const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+      if (isCompleted === true) {
+        return `
+        <div class='task-info' id=${id}>
+            <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
+            <label for=${id} id=${id} class="task-check-box">${description}</label>
+        </div>
+        `
+      } else {
+      return `<div class='task-info' id=${id}>
+                <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+                <label for=${id} id=${id} class="task-check-box">${description}</label>
+            </div>
+        `
+    }
+  })
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 
@@ -695,12 +766,22 @@ givenToMeList.addEventListener('click', async(e) => {
   const listName = `
       <h2 class="task-list-header">Tasks Given to Me</h2>
 `
-  const tasksHtml = tasks.map(({ id, description }) => `
-  <div class="task-info" id=${id}>
-      <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-      <label for=${id} id=${id} class="task-check-box">${description}</label>
-  </div>
-  `)
+  const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+    if (isCompleted === true) {
+      return `
+      <div class='task-info' id=${id}>
+          <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
+          <label for=${id} id=${id} class="task-check-box">${description}</label>
+      </div>
+      `
+    } else {
+    return `<div class='task-info' id=${id}>
+              <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+              <label for=${id} id=${id} class="task-check-box">${description}</label>
+          </div>
+      `
+  }
+})
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 
