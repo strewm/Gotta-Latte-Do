@@ -339,6 +339,7 @@ addContacts.addEventListener("click", async (e) => {
   const addContactsContainer = document.querySelector('.add-contact-sidebar')
   // add contact form. checks against invalid email and existing contacts
   addContactsContainer.innerHTML = `
+  <div class="cloud"></div>
   <div class="contact-pop">
   <form class="contacts-form">
   <h2 class="h2-add-contact">Add New Contact</h2>
