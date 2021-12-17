@@ -130,7 +130,7 @@ export const dateFormatter = (task) => {
   }
 
   if (diff > 0) {
-      return due = 'OVERDUE!'
+      return due = 'A Little Latte'
   }
 
   return due;

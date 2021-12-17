@@ -119,6 +119,7 @@
 #button-login:hover {
     border: 1px solid #8ab675;
     background-color: #8ab675;
+    cursor: pointer;
 }
 
 #button-login:active {
@@ -165,6 +166,7 @@
 .demo-user:hover {
     border: 1px solid #77a8c4;
     background-color: #77a8c4;
+    cursor: pointer;
 }
 
 .demo-user:active {
