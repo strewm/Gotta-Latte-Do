@@ -1,4 +1,5 @@
 import { fetchTask, fetchComments, postComment } from "./task-comments.js";
+import { fetchLists } from "./app.js"
 
 export const handleErrors = async (err) => {
     if (err.status >= 400 && err.status < 600) {
@@ -28,6 +29,73 @@ export const handleErrors = async (err) => {
       );
     }
   };
+
+export const editListEventListener = async () => {
+  const editListTitle = document.querySelector(".edit-list-button");
+        editListTitle.addEventListener('click', async(e) => {
+          let listId = e.target.id;
+
+          const listToUpdate = await fetch(`/lists/${listId}`);
+
+          const { listName } = await listToUpdate.json();
+
+          const listTitle = document.querySelector('.list-title');
+          listTitle.innerHTML = `
+            <h2>Edit List Name</h2>
+            <div id='list-edit'>
+              <form class='list-edit-form'>
+              <input type='text' class='list-edit' id='title' name='title' placeholder=${listName.title}>
+              <label for='title' class='list-label'${listName.title} </label>
+              <div>
+              <button class='submitButton' id='${listId}'>Submit</button>
+              </div>
+              <div>
+              <button class='editCancelButton' id='${listId}'>Cancel</button>
+              </div>
+              </form>
+            </div>
+          `
+
+          const listUpdate = document.querySelector('.list-edit-form')
+          listUpdate.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const formData = new FormData(listUpdate);
+            const title = formData.get('title')
+            const body = { title }
+            const updatedList = await fetch(`/lists/${listId}`, {
+              method: 'PATCH',
+              body: JSON.stringify(body),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
+
+            const { list } = await updatedList.json();
+
+            listTitle.innerHTML = `
+              <div class="list-title" id="${listId}">
+                <h2 class="task-list-header">${list.title}</h2>
+                <button class="edit-list-button" id="${listId}">Edit List</button>
+              </div>
+            `;
+            await fetchLists();
+          })
+
+
+        const cancelButton = document.querySelector('.editCancelButton');
+        cancelButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          listTitle.innerHTML = `
+            <div class="list-title" id="${listId}">
+              <h2 class="task-list-header">${listName.title}</h2>
+              <button class="edit-list-button" id="${listId}">Edit List</button>
+            </div>
+          `;
+        })
+      })
+}
 
 
 
