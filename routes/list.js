@@ -144,5 +144,16 @@ router.get('/tomorrow', asyncHandler(async (req, res) => {
   res.json({ tasks })
 }))
 
+router.get('/overdue', asyncHandler(async (req, res) => {
+  const today = new Date().setHours(0, 0, 0, 0);
+  const tasks = await Task.findAll({
+    where: {
+      dueDate: {
+        [Op.lt]: today
+      }
+    }
+  })
+  res.json({ tasks })
+}))
 
 module.exports = router;
