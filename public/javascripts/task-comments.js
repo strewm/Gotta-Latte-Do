@@ -14,12 +14,12 @@ const deleteTask = async (taskId) => {
         if (res.status === 401) {
             window.location.href = "/log-in";
             return;
-          }
+        }
         if (!res.ok) {
             throw res;
-          }
-          await fetchTasks(taskId);
-          return;
+        }
+        await fetchTasks(taskId);
+        return;
         } catch (err) {
             handleErrors(err)
         }
@@ -38,13 +38,13 @@ const editTask = async (taskId, body) => {
         if (res.status === 401) {
             window.location.href = "/log-in";
             return;
-          }
+        }
         if (!res.ok) {
             throw res;
-          }
-          await fetchTasks();
-          await fetchTask(taskId);
-          await fetchComments(taskId);
+        }
+        await fetchTasks();
+        await fetchTask(taskId);
+        await fetchComments(taskId);
         } catch (err) {
             handleErrors(err)
         }
@@ -223,7 +223,6 @@ export const fetchTask = async (taskId) => {
                 }
 
                 const body = { description, dueDate, isCompleted };
-                console.log(body);
 
                 try {
                     await editTask(taskId, body);
@@ -255,12 +254,14 @@ export const fetchComments = async (taskId) => {
                 </span>
                 <span id='comment-${comment.id}-message' class='comment-message'>${comment.message}</span>
             </span>
-            <span class='comment-buttons-${comment.id} comment-buttons userId-${comment.userId}'>
-                <button class='edit-comment-butt comment-butts' id='${comment.id}'>Edit</button>
-                <button class='delete-comment-butt comment-butts' id='${comment.id}'>Delete</button>
-            </span>
+            <div class='updatedAt-${comment.id} updated-At'>
+                <span>${commentDateFormatter(comment.updatedAt)}</span>
+                <span class='comment-buttons-${comment.id} comment-buttons userId-${comment.userId}'>
+                    <button class='edit-comment-butt comment-butts' id='${comment.id}'>Edit</button>
+                    <button class='delete-comment-butt comment-butts' id='${comment.id}'>Delete</button>
+                </span>
+            </div>
         </div>
-        <div class='updatedAt-${comment.id}'>${commentDateFormatter(comment.updatedAt)}</div>
     `
     )
 
@@ -268,20 +269,15 @@ export const fetchComments = async (taskId) => {
 
     // TODO: only show edit/delete if userId of comment matches logged in user
 
-    const taskRes = await fetch(`/tasks/${taskId}`);
-    if (res.status === 401) {
-        window.location.href = '/log-in';
-        return;
-    }
-
-    const { task } = await taskRes.json();
+    const userRes = await fetch('/users/current')
+    const { user } = await userRes.json();
 
     comments.forEach((comment) => {
         const editDeleteButtons = document.querySelector(`.userId-${comment.userId}`);
-        if (task.userId !== comment.userId) {
-            editDeleteButtons.hidden = true;
-        } else {
+        if (user.id === comment.userId) {
             editDeleteButtons.hidden = false;
+        } else {
+            editDeleteButtons.hidden = true;
         }
     })
 
@@ -358,11 +354,13 @@ export const fetchComments = async (taskId) => {
                     ${comment.User.id}
                     <span id='comment-${comment.id}-message'>${comment.message}</span>
                 </span>
-                <span class='comment-buttons-${comment.id}'>
-                    <button class='edit-comment-butt' id='${comment.id}'>Edit
-                    <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
-                </span>
-                <div class='updatedAt-${comment.id}'>${commentDateFormatter(comment.updatedAt)}</div>
+                <div class='updatedAt-${comment.id}'>
+                    <span>${commentDateFormatter(comment.updatedAt)}</span>
+                    <span class='comment-buttons-${comment.id}'>
+                        <button class='edit-comment-butt' id='${comment.id}'>Edit
+                        <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
+                    </span>
+                </div>
                 `
                 await fetchComments(taskId);
             })
@@ -387,12 +385,12 @@ export const postComment = async (taskId, body) => {
         if (res.status === 401) {
             window.location.href = "/log-in";
             return;
-          }
+        }
         if (!res.ok) {
             throw res;
-          }
-          createComment.reset();
-          await fetchComments(taskId);
+        }
+        createComment.reset();
+        await fetchComments(taskId);
         } catch (err) {
             handleErrors(err)
         }
@@ -408,11 +406,11 @@ export const deleteComment = async (commentId) => {
         if (res.status === 401) {
             window.location.href = "/log-in";
             return;
-          }
+        }
         if (!res.ok) {
             throw res;
-          }
-          await fetchComments(taskId);
+        }
+        await fetchComments(taskId);
         } catch (err) {
             handleErrors(err)
         }
@@ -431,11 +429,11 @@ export const editComment = async (commentId, body) => {
         if (res.status === 401) {
             window.location.href = "/log-in";
             return;
-          }
+        }
         if (!res.ok) {
             throw res;
-          }
-          await fetchComments(taskId);
+        }
+        await fetchComments(taskId);
         } catch (err) {
             handleErrors(err)
         }

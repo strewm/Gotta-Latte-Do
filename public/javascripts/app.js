@@ -1,4 +1,4 @@
-import { handleErrors } from "./utils.js";
+import { handleErrors, addTaskInfoListeners } from "./utils.js";
 import { fetchTask, fetchComments, postComment } from "./task-comments.js";
 
 // fetch user's tasks (all)
@@ -18,13 +18,15 @@ export const fetchTasks = async () => {
   <h2 class="task-list-header">All of <strong>${user.username}'s</strong> self-assigned tasks.</h2>
   `
     const tasksHtml = tasks.map(({ id, description }) => `
-    <div class="task-info">
+    <div class="task-info" id=${id}>
         <input type="checkbox" class="task-check-box" id=${id} name=${id}>
         <label for=${id} id=${id} class="task-check-box">${description}</label>
     </div>
     `)
 
     tasksListContainer.innerHTML = listName + tasksHtml.join("");
+
+    await addTaskInfoListeners();
 }
 
 // fetch assigned tasks
@@ -46,7 +48,7 @@ const fetchAssignTasks = async () => {
     `
     const tasksHtml = tasks.map(({ id, description, User }) => `
     <div class="assigned-grid">
-    <div class="task-info">
+    <div class="task-info" id=${id}>
         <input type="checkbox" class="task-check-box" id=${id} name=${id}>
         <label for=${id} id=${id} class="task-check-box">${description}</label>
     </div>
@@ -57,6 +59,8 @@ const fetchAssignTasks = async () => {
     `)
 
     assignedTaskContainer.innerHTML = listName + tasksHtml.join("")
+
+    await addTaskInfoListeners();
   }
 
 }
@@ -78,13 +82,15 @@ export const fetchIncompleteTasks = async () => {
   <h2 class="task-list-header"><strong>${user.username}' s</strong> incomplete tasks.</h2>
   `
   const tasksHtml = tasks.map(({ id, description }) => `
-  <div class="task-info">
+  <div class="task-info" id=${id}>
       <input type="checkbox" class="task-check-box" id=${id} name=${id}>
       <label for=${id} id=${id} class="task-check-box">${description}</label>
   </div>
   `)
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
+
+  await addTaskInfoListeners();
 }
 
 // fetch user's completed tasks
@@ -104,13 +110,15 @@ const fetchCompletedTasks = async () => {
   <h2 class="task-list-header"><strong>${user.username}' s</strong> completed tasks.</h2>
   `
   const tasksHtml = tasks.map(({ id, description }) => `
-  <div class="task-info">
+  <div class="task-info" id=${id}>
       <input type="checkbox" class="task-check-box" id=${id} name=${id}>
       <label for=${id} id=${id} class="task-check-box">${description}</label>
   </div>
   `)
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
+
+  await addTaskInfoListeners();
 }
 
 // fetch user's search query
@@ -133,7 +141,7 @@ const search = async (searchValue) => {
   <h2 class="task-list-header">Search Results</h2>
   `
   const tasksHtml = results.map(({ id, description, Lists }) => `
-  <div class="task-info">
+  <div class="task-info" id=${id}>
       <input type="checkbox" class="task-check-box" id=${id} name=${id}>
       <label for=${id} id=${id} class="task-check-box"><strong>${description}</strong> found in your <strong><i>${Lists[0].title}</i></strong> list.</label>
   </div>
@@ -141,10 +149,16 @@ const search = async (searchValue) => {
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 
-
-
-
+  await addTaskInfoListeners();
 }
+
+
+// Change the color of incomplete/complete tabs when fetching their respective lists
+// function changeColor() {
+//   this.style.backgroundColor = "#FAECDA";
+//   this.style.color = "#8A715B";
+//   return;
+// }
 
 // toggle between incomplete and completed tasks
 // incomplete button
@@ -153,6 +167,14 @@ incompleteTaskList.addEventListener("click", async (e) => {
   await fetchIncompleteTasks();
   const clearAssignedList = document.querySelector('.assigned-list');
   clearAssignedList.innerHTML = ``;
+
+  // const currColor = this.style.backgroundColor;
+
+  // if (currColor === "#E0A979") {
+  //   this.style.backgroundColor = "#FAECDA";
+  // } else {
+  //   this.style.backgroundColor = "#E0A979";
+  // }
 })
 
 // completed button
@@ -188,7 +210,7 @@ const fetchContactTasks = async (id) => {
   clearAssignedList.innerHTML = ``;
   }
   const tasksHtml = tasks.map(({ id, description }) => `
-  <div>
+  <div id=${id} class="task-info">
       <input type="checkbox" class="task-check-box" id=${id} name=${id}>
       <label for=${id} class="task-check-box" id=${id}>${description}</label>
   </div>
@@ -234,54 +256,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (e) {
       console.error(e);
     }
-
-
-
-
-
-    const tasksListContainer = document.querySelector(".task-list");
-    tasksListContainer.addEventListener("click", async(e) => {
-      e.stopPropagation();
-      const taskId = e.target.id;
-
-      const editForm = document.querySelector('.edit-form')
-      editForm.hidden = true;
-
-      // let stateObj = { id: "100" }
-      // window.history.replaceState(stateObj, "Task", `/tasks/#${taskId}`)
-
-      try {
-        await fetchTask(taskId);
-
-        const createComment = document.querySelector('.create-comment');
-
-        createComment.addEventListener('submit', async (event) => {
-          event.stopPropagation();
-          event.preventDefault();
-          const commentData = new FormData(createComment);
-          const message = commentData.get("message");
-          const taskId = commentData.get("taskId");
-
-          const body = { message };
-
-          postComment(taskId, body);
-
-        })
-
-      } catch (e) {
-        console.error(e);
-      }
-
-      try {
-        await fetchComments(taskId);
-      } catch (e) {
-        console.error(e);
-      }
-
-    })
-
   }
-  );
+);
 
 
 // create a new task
@@ -346,8 +322,18 @@ addContacts.addEventListener("click", async (e) => {
       <input type="hidden" name="_csrf">
       <div class="add-contact-input">
 
-
           <input type="text" id="email" name="email" placeholder="Enter email address"/>
+
+
+        <div>
+          <label for="email">Email Address</label>
+        </div>
+        <div class="add-contact-email">
+          <input type="text" id="email" name="email" value=""/>
+        </div>
+      </div>
+      <div>
+          <button type="submit">Add Contact</button>
 
       </div>
       <div class="add-contact-buttons-container">
@@ -476,8 +462,7 @@ const fetchLists = async () => {
     listLists.forEach((list) => {
       list.addEventListener('click', async(e) => {
         e.stopPropagation();
-        const listId = e.target.id;
-        console.log(listId)
+        const listId = list.id;
 
         const res = await fetch(`/lists/${listId}/tasks`);
 
@@ -486,17 +471,19 @@ const fetchLists = async () => {
         const tasksContainer = document.querySelector('.task-list');
 
         const listTitle = `
-          <h2 class="task-list-header">${tasks[0].List.title}</h2>
+          <h2 class="task-list-header">${list.innerText}</h2>
         `
 
         const tasksHtml = tasks.map((task) => `
-          <div class="task-info">
+          <div class="task-info" id=${task.Task.id}>
             <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id}>
             <label for=${task.Task.id} id=${task.Task.id} class="task-check-box">${task.Task.description}</label>
           </div>
         `)
 
         tasksContainer.innerHTML = listTitle + tasksHtml.join('');
+
+        await addTaskInfoListeners();
       })
     })
 }
@@ -624,7 +611,7 @@ addList.addEventListener('click', (e) => {
     })
 })
 
-const logoutButton = document.querySelector("#logout");
+
 
 window.addEventListener('DOMContentLoaded', async () => {
   const settings = document.querySelector('#settings');
@@ -637,14 +624,11 @@ window.addEventListener('DOMContentLoaded', async () => {
   window.addEventListener('click', () => {
     document.querySelector('.settingGroup').classList.add('settingHide');
 
-    // const editForm = document.querySelector('.edit-form');
-    // const form = document.querySelector('.edit-task');
-    // editForm.removeChild(form);
-    // const editTaskButt = document.querySelector('.edit-task-butt');
-    // editTaskButt.disabled = false;
   });
 
 })
+
+
 
 
 
@@ -705,13 +689,15 @@ givenToOthersList.addEventListener('click', async(e) => {
       <h2 class="task-list-header">Tasks Given to Others</h2>
 `
   const tasksHtml = tasks.map(({ id, description }) => `
-  <div class="task-info">
+  <div class="task-info" id=${id}>
       <input type="checkbox" class="task-check-box" id=${id} name=${id}>
       <label for=${id} id=${id} class="task-check-box">${description}</label>
   </div>
   `)
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
+
+  await addTaskInfoListeners();
 })
 
 
@@ -733,11 +719,13 @@ givenToMeList.addEventListener('click', async(e) => {
       <h2 class="task-list-header">Tasks Given to Me</h2>
 `
   const tasksHtml = tasks.map(({ id, description }) => `
-  <div class="task-info">
+  <div class="task-info" id=${id}>
       <input type="checkbox" class="task-check-box" id=${id} name=${id}>
       <label for=${id} id=${id} class="task-check-box">${description}</label>
   </div>
   `)
 
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
+
+  await addTaskInfoListeners();
 })
