@@ -83,24 +83,25 @@
     display: flex;
     justify-content: flex-end;
     padding: 10px 10px 0px 10px;
-    border-bottom: 1px solid #C7A383;
+    border-bottom: 1px dotted #C7A383;
 }
 
 .tabbedLink {
-    border: 1px solid #C7A383;
+    border: 1px solid #fae5ca;
     border-bottom: 0;
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0;
     padding: 10px;
     margin: 0 5px;
-    color: rgb(255, 253, 245);
+    color: #8A715B;
     /* line-height: 20px; */
-    background-color: #E0A979;
+    background-color: #fae5ca;
     font-size: 15px;
 }
 
 .tabbedLink:hover {
     cursor: pointer;
     background-color: #8A715B;
+    color: cornsilk;
 }
 
 
@@ -580,11 +581,15 @@ ul.default-tasks > li:hover {
     opacity: 0.7;
     padding: 12px;
     border-radius: 5px;
+}
 
-    color: rgb(255, 253, 245);
+.tasksDueValue {
+    font-weight: bold;
+    color: cornsilk;
 }
 
 #tasksOverdueValue {
+    font-weight: bold;
     color: #eb4d4d;
 }
 
