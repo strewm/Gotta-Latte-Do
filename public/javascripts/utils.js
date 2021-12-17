@@ -1,3 +1,5 @@
+import { fetchTask, fetchComments, postComment } from "./task-comments.js";
+
 export const handleErrors = async (err) => {
     if (err.status >= 400 && err.status < 600) {
       const errorJSON = await err.json();
@@ -85,5 +87,53 @@ export const commentDateFormatter = (createdAt) => {
   let createdAtTime = createdAt.slice(11, 16);
 
   return `${createdAtDate} ${createdAtTime}`
+
+}
+
+
+
+export const addTaskInfoListeners = async () => {
+
+  const taskInfoContainer = document.querySelectorAll('.task-info');
+
+  taskInfoContainer.forEach( (task) => {
+    task.addEventListener('click', async(e) => {
+      e.stopPropagation();
+      const taskId = task.id;
+
+      const editForm = document.querySelector('.edit-form');
+      editForm.hidden = true;
+
+      try {
+        await fetchTask(taskId);
+
+        const createComment = document.querySelector('.create-comment');
+
+        createComment.addEventListener('submit', async (event) => {
+          event.stopPropagation();
+          event.preventDefault();
+          const commentData = new FormData(createComment);
+          const message = commentData.get("message");
+          const taskId = commentData.get("taskId");
+
+          const body = { message };
+
+          postComment(taskId, body);
+
+        })
+
+      } catch (e) {
+        console.error(e);
+      }
+
+      try {
+        await fetchComments(taskId);
+      } catch (e) {
+        console.error(e);
+      }
+
+    })
+  })
+
 
 }
