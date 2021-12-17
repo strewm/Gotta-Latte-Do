@@ -15,7 +15,7 @@ block content
                 div.settingGroup.settingHide
                     div.settingHeaderGroup
                         img.settingHeader#userProfile(src="../images/favicon.png")
-                        div.settingHeader#userName= locals.currUser.username
+                        div.settingHeader#userName=currUser.username
                         //- div.settingHead#userEmail= locals.currUser.email
                     ul.settingListGroup
                         li.settingList: a(href='/') Notifications
@@ -24,27 +24,28 @@ block content
                         li.settingList: a(href='/') Account Settings
                         li.settingList: button#signOut(type='submit') Sign Out
         div.sidebar
-            img.logo(src="../images/logo-text.png")
-            ul
-              div.all-tasks All Tasks
-              div.due-today Today
-              div.due-tomorrow Tomorrow
-              div.overdue OVERDUE
-              div.given-to-others Given to Others
-              div.given-to-me Given To Me
-              .list-sidebar
-                div Lists
-                div
-                  a.add-lists +
-                .add-list-form
+          div.logoContainer
+              img.logo(src="../images/logo-text.png")
+          ul
+            div.all-tasks All Tasks
+            div.due-today Today
+            div.due-tomorrow Tomorrow
+            div.overdue OVERDUE
+            div.given-to-others Given to Others
+            div.given-to-me Given To Me
+            .list-sidebar
+              div Lists
               div
-              div.list-list-sidebar
-                div.lists-grid-container
-                    //- each list in myLists
-                      //- div
-                      //-   li.list-lists(id=`${list.id}`)=list.title
-                      //- div
-                      //-   a.delete-list(id=`${list.id}`) -
+                a.add-lists +
+              .add-list-form
+            div
+            div.list-list-sidebar
+              div.lists-grid-container
+                  //- each list in myLists
+                    //- div
+                    //-   li.list-lists(id=`${list.id}`)=list.title
+                    //- div
+                    //-   a.delete-list(id=`${list.id}`) -
 
             ul
               div.contact-sidebar
@@ -69,8 +70,10 @@ block content
         div.summaryContainer
           div.summaryHeader
             //- h2.summary#search Search
-            div.summary#tasksDue Tasks
-            div.summary#tasksOverDue Overdue
+            div#tasksDueValue=(tasks.length + tasksGivenToMe.length)
+              div#tasksDue Tasks
+            div#tasksOverdueValue n/a
+              div#tasksOverdue Overdue
           .updateList
           .newList
           div.fiona
