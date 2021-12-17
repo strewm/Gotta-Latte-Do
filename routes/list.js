@@ -129,7 +129,13 @@ router.get('/today', asyncHandler(async (req, res) => {
   res.json({ tasks });
 }))
 
+router.get('/tomorrow', asyncHandler(async (req, res) => {
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1)
 
+  
+}))
 
 
 module.exports = router;
