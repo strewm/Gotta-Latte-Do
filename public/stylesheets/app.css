@@ -445,12 +445,9 @@
 
 /* Comment user name */
 .comment-user {
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-items: center; */
     background-color: #9fcf88;
     font-size: 13px;
-    padding: 5px 1px 5px 5px;
+    padding: 5px 2px 5px 5px;
     margin-right: 5px;
     border-radius: 5px;
 

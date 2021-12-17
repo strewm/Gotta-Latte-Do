@@ -254,7 +254,7 @@ export const fetchComments = async (taskId) => {
         <div class="comment-container-${comment.id} comment-container">
             <span id='comment-${comment.id}' class='comment-user-message'>
                 <span id='comment-${comment.id}-userId' class='comment-user'>
-                    ${comment.User.username}:
+                    ${comment.User.username}
                 </span>
                 <span id='comment-${comment.id}-message' class='comment-message'>${comment.message}</span>
             </span>
