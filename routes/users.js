@@ -145,13 +145,13 @@ router.post(
           return res.redirect("/app");
         }
 
-        errors.push("Login failed for the provided email address and password");
-        res.render("user-login", {
-          title: "Login",
-          email,
-          errors,
-          csrfToken: req.csrfToken(),
-        });
+          errors.push("Login failed for the provided email address and password");
+          res.render("user-login", {
+            title: "Login",
+            email,
+            errors,
+            csrfToken: req.csrfToken(),
+          });
       }
   }));
 
@@ -170,6 +170,11 @@ router.post('/demo', asyncHandler(async (req, res) => {
 }))
 
 
+router.get('/current', asyncHandler(async (req, res) => {
+  const userId = res.locals.userId;
+  const user = await db.User.findByPk(userId);
+  res.json({ user });
+}))
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

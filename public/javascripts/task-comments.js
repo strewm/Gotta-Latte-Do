@@ -268,20 +268,15 @@ export const fetchComments = async (taskId) => {
 
     // TODO: only show edit/delete if userId of comment matches logged in user
 
-    const taskRes = await fetch(`/tasks/${taskId}`);
-    if (res.status === 401) {
-        window.location.href = '/log-in';
-        return;
-    }
-
-    const { task } = await taskRes.json();
+    const userRes = await fetch('/users/current')
+    const { user } = await userRes.json();
 
     comments.forEach((comment) => {
         const editDeleteButtons = document.querySelector(`.userId-${comment.userId}`);
-        if (task.userId !== comment.userId) {
-            editDeleteButtons.hidden = true;
-        } else {
+        if (user.id === comment.userId) {
             editDeleteButtons.hidden = false;
+        } else {
+            editDeleteButtons.hidden = true;
         }
     })
 
