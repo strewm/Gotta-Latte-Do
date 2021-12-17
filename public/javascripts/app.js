@@ -37,21 +37,21 @@ const fetchAssignTasks = async () => {
     return;
   }
 
-  const { tasks, assigner, user } = await res.json();
+  const { tasks } = await res.json();
 
   const assignedTaskContainer = document.querySelector(".assigned-list");
   if(tasks) {
     const listName = `
-    <h2 class="task-list-header">All tasks assigned to <strong>${user.username}</strong> by others.</h2>
+    <h2 class="task-list-header">All tasks assigned to <strong></strong> by others.</h2>
     `
-    const tasksHtml = tasks.map(({ id, description }) => `
+    const tasksHtml = tasks.map(({ id, description, User }) => `
     <div class="assigned-grid">
     <div class="task-info">
         <input type="checkbox" class="task-check-box" id=${id} name=${id}>
         <label for=${id} id=${id} class="task-check-box">${description}</label>
     </div>
     <div>
-      <strong>Assigned by: ${assigner.username}</strong>
+      <strong>Assigned by: ${User.username}</strong>
     </div>
     </div>
     `)

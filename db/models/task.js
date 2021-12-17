@@ -26,8 +26,8 @@ module.exports = (sequelize, DataTypes) => {
   Task.associate = function(models) {
     // associations can be defined here
     Task.belongsToMany(models.List, {foreignKey: 'taskId', through: "TaskList", otherKey: 'listId'})
-    Task.belongsTo(models.User, {foreignKey: 'userId'});
     Task.belongsTo(models.User, {foreignKey: 'givenTo'});
+    Task.belongsTo(models.User, {foreignKey: 'userId'});
     Task.hasMany(models.Comment, {foreignKey: 'taskId', onDelete: 'CASCADE', hooks: true});
 
     Task.hasMany(models.TaskList, { foreignKey: 'taskId', onDelete: 'CASCADE', hooks: true });
