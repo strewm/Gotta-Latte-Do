@@ -353,7 +353,10 @@ form.addEventListener("submit", async (e) => {
           }
 
         form.reset();
-        await fetchTasks();
+
+        const tasksDue = document.querySelector('.tasksDueValue');
+        tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
+
     } catch (err) {
         handleErrors(err)
     }
