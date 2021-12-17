@@ -117,4 +117,19 @@ router.get('/given-to-me', asyncHandler(async(req, res) => {
   res.json({ tasks })
 }))
 
+router.get('/today', asyncHandler(async (req, res) => {
+  const start = new Date().setHours(0, 0, 0, 0)
+  const end = new Date().setHours(23, 59, 59, 999);
+  const tasks = await Task.findAll({
+    where: {
+      dueDate: {
+        [Op.between]: [start, end]
+    }}
+  })
+  res.json({ tasks });
+}))
+
+
+
+
 module.exports = router;
