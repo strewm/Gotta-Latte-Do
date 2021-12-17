@@ -324,19 +324,8 @@ addContacts.addEventListener("click", async (e) => {
       <div class="add-contact-input">
 
           <input type="text" id="email" name="email" placeholder="Enter email address"/>
-
-
-        <div>
-          <label for="email">Email Address</label>
-        </div>
-        <div class="add-contact-email">
-          <input type="text" id="email" name="email" value=""/>
-        </div>
       </div>
-      <div>
-          <button type="submit">Add Contact</button>
 
-      </div>
       <div class="add-contact-buttons-container">
           <button type="submit" class="add-contact-buttons">Add Contact</button>
 
