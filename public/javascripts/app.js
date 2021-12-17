@@ -372,7 +372,7 @@ addContacts.addEventListener("click", async (e) => {
       <input type="hidden" name="_csrf">
       <div class="add-contact-input">
 
-          <input type="text" id="email" name="email" placeholder="Enter email address"/>
+          <input class="contact-input" type="text" id="email" name="email" placeholder="Enter email address"/>
       </div>
 
       <div class="add-contact-buttons-container">
@@ -615,18 +615,19 @@ addList.addEventListener('click', (e) => {
   e.stopPropagation();
   const addListForm = document.querySelector('.add-list-form');
   addListForm.innerHTML = `
-  <h2>Add List</h2>
+  <div class="cloud"></div>
+  <div class ="list-pop">
+  <h2 class="h2-add-list">Add List</h2>
   <div id='list-add'>
     <form class='addNewList'>
     <input type='text' class='list-add' id='title' name='title' placeholder='New List'>
     <label for='title' class='list-label'</label>
-    <div>
+    <div class="add-list-buttons-container">
     <button class='addSubmitButton'>Submit</button>
-    </div>
-    <div>
     <button class='listCancelButton'>Cancel</button>
     </div>
     </form>
+  </div>
   </div>
     `
     const addList = document.querySelector('.addNewList');
