@@ -144,20 +144,33 @@ const search = async (searchValue) => {
 
 
 
+}// Change the color of incomplete/complete tabs when fetching their respective lists
+function changeColor() {
+  this.style.backgroundColor = "#FAECDA";
+  this.style.color = "#8A715B";
+  return;
 }
 
 // toggle between incomplete and completed tasks
 // incomplete button
 const incompleteTaskList = document.querySelector('#incomplete')
-incompleteTaskList.addEventListener("click", async (e) => {
+incompleteTaskList.addEventListener("click", changeColor, async (e) => {
   await fetchIncompleteTasks();
   const clearAssignedList = document.querySelector('.assigned-list');
   clearAssignedList.innerHTML = ``;
+
+  // const currColor = this.style.backgroundColor;
+
+  // if (currColor === "#E0A979") {
+  //   this.style.backgroundColor = "#FAECDA";
+  // } else {
+  //   this.style.backgroundColor = "#E0A979";
+  // }
 })
 
 // completed button
 const completeTaskList = document.querySelector('#complete')
-completeTaskList.addEventListener("click", async (e) => {
+completeTaskList.addEventListener("click", changeColor, async (e) => {
   await fetchCompletedTasks();
   const clearAssignedList = document.querySelector('.assigned-list');
   clearAssignedList.innerHTML = ``;

@@ -30,11 +30,11 @@ form.addEventListener("submit", async (e) => {
         if (res.status === 401) {
             window.location.href = "/log-in";
             return;
-          }
+        }
         if (!res.ok) {
 
             throw throwError();
-          }
+        }
 
         form.reset();
         window.location.href = "/app";
