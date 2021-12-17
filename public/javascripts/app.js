@@ -625,7 +625,7 @@ addList.addEventListener('click', (e) => {
     })
 })
 
-const logoutButton = document.querySelector("#logout");
+
 
 window.addEventListener('DOMContentLoaded', async () => {
   const settings = document.querySelector('#settings');
@@ -638,14 +638,11 @@ window.addEventListener('DOMContentLoaded', async () => {
   window.addEventListener('click', () => {
     document.querySelector('.settingGroup').classList.add('settingHide');
 
-    // const editForm = document.querySelector('.edit-form');
-    // const form = document.querySelector('.edit-task');
-    // editForm.removeChild(form);
-    // const editTaskButt = document.querySelector('.edit-task-butt');
-    // editTaskButt.disabled = false;
   });
 
 })
+
+
 
 
 

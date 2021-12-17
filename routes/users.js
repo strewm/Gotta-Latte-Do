@@ -142,16 +142,18 @@ router.post(
 
         if (passwordMatch) {
           loginUser(req, res, user);
-          return res.redirect("/app");
+          res.redirect("/app");
+        } else {
+          errors.push("Login failed for the provided email address and password");
+          res.render("user-login", {
+            title: "Login",
+            email,
+            errors,
+            csrfToken: req.csrfToken(),
+          });
+
         }
 
-        errors.push("Login failed for the provided email address and password");
-        res.render("user-login", {
-          title: "Login",
-          email,
-          errors,
-          csrfToken: req.csrfToken(),
-        });
       }
   }));
 
