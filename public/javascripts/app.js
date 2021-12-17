@@ -240,7 +240,7 @@ const fetchContactTasks = async (id) => {
     listName = `
     <h2 class="task-list-header">All of <strong>${user.username}'s</strong> self-assigned tasks.</h2>
     `
-    await fetchAssignTasks();
+    //await fetchAssignTasks();
   } else {
     listName = `
   <h2 class="task-list-header">Tasks that you've assigned to <strong>${user.username}</strong>.</h2>
@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       await fetchLists();
       await fetchTasks();
-      await fetchAssignTasks();
+      //await fetchAssignTasks();
     } catch (e) {
       console.error(e);
     }
