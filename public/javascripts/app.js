@@ -349,7 +349,7 @@ addContacts.addEventListener("click", async (e) => {
           <label for="email">Email Address</label>
         </div>
         <div class="add-contact-email">
-          <input type="text" id="email" name="email" value="ctap105@gmail.com"/>
+          <input type="text" id="email" name="email" value=""/>
         </div>
       </div>
       <div>

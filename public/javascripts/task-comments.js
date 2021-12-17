@@ -278,10 +278,10 @@ export const fetchComments = async (taskId) => {
 
     comments.forEach((comment) => {
         const editDeleteButtons = document.querySelector(`.userId-${comment.userId}`);
-        if (task.userId !== comment.userId) {
-            editDeleteButtons.hidden = true;
-        } else {
+        if (task.userId === comment.userId || task.givenTo === comment.userId) {
             editDeleteButtons.hidden = false;
+        } else {
+            editDeleteButtons.hidden = true;
         }
     })
 
