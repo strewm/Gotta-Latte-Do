@@ -684,5 +684,61 @@ searchContainer.addEventListener("keypress", async (e) => {
 
 const allTasksList = document.querySelector('.all-tasks');
 allTasksList.addEventListener('click', async(e) => {
+  e.stopPropagation();
   await fetchTasks();
+})
+
+const givenToOthersList = document.querySelector('.given-to-others');
+
+givenToOthersList.addEventListener('click', async(e) => {
+  e.stopPropagation();
+  const res = await fetch('/lists/given-to-others');
+
+  if (res.status === 401) {
+    window.location.href = "/log-in";
+    return;
+  }
+
+  const { tasks } = await res.json();
+
+  const tasksListContainer = document.querySelector(".task-list");
+  const listName = `
+      <h2 class="task-list-header">Tasks Given to Others</h2>
+`
+  const tasksHtml = tasks.map(({ id, description }) => `
+  <div class="task-info">
+      <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+      <label for=${id} id=${id} class="task-check-box">${description}</label>
+  </div>
+  `)
+
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
+})
+
+
+const givenToMeList = document.querySelector('.given-to-me');
+
+givenToMeList.addEventListener('click', async(e) => {
+  e.stopPropagation();
+  const res = await fetch('/lists/given-to-me');
+
+  if (res.status === 401) {
+    window.location.href = "/log-in";
+    return;
+  }
+
+  const { tasks } = await res.json();
+
+  const tasksListContainer = document.querySelector(".task-list");
+  const listName = `
+      <h2 class="task-list-header">Tasks Given to Me</h2>
+`
+  const tasksHtml = tasks.map(({ id, description }) => `
+  <div class="task-info">
+      <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+      <label for=${id} id=${id} class="task-check-box">${description}</label>
+  </div>
+  `)
+
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
 })
