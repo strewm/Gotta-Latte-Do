@@ -1018,3 +1018,86 @@ ul.default-tasks > li:hover {
     color: yellowgreen;
     cursor: pointer;
 }
+
+/* %%%%%%%%%%%%%%%%%%%%% Thien needs to clean up %%%%%%%%%%%%%%%%%%%%% */
+
+.edit-list-pop{
+    position: absolute;
+    z-index: 9;
+    top: 50%;
+    left: 50%;
+    background-color: #E0A979;
+    padding: 34px 30px;
+    margin-left: -225px;
+    margin-top: -100px;
+    width: 450px;
+    height: 200px;
+    border: 2px solid #C7A383;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,.5);
+    box-sizing: border-box;
+}
+
+.edit-form{
+
+    background-color: #FAECDA;
+    border-radius: 10px;
+    border: 1px solid #8A715B;
+    box-sizing: border-box;
+
+}
+
+.edit-task {
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.modal-header {
+    font-size: 20px;
+    font-weight: bold;
+    color: #8A715B;
+    background-color: #E0A979;
+    margin-bottom: 10px;
+}
+
+.modal-input {
+    border: 1px solid #8A715B;
+    font-size: 13px;
+    padding: 3px;
+    border-radius: 5px !important;
+    width: 100%;
+    padding: 7px;
+    margin-top: 3px;
+    color: #8A715B;
+}
+
+.modal-form {
+    background-color: #E0A979 !important;
+    color: #8A715B;
+}
+
+.button-modal {
+    border: 1px solid #8A715B;
+    font-size: 13px;
+    padding: 7px;
+    border-radius: 5px;
+    color: #8A715B;
+    margin-top: 20px;
+}
+
+.task-bottom {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    font-weight: bold;
+    width: 19px;
+    padding: 0 0 2px 0;
+    margin-bottom: 5px;
+    position: relative;
+    top: 5%;
+    left: 3%;
+}
+
+.task-label-headers {
+    color: #8A715B;
+}
