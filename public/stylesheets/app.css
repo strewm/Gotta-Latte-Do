@@ -721,9 +721,7 @@ ul.default-tasks > li:hover {
     margin: 6px 0px;
 }
 
-#delete-list-parent {
 
-}
 
 .list-grid:hover .delete-list {
     display: grid;
@@ -917,6 +915,10 @@ ul.default-tasks > li:hover {
     top: 2.5em;
     width: 200px;
     z-index: 2;
+}
+
+.settingGroup:hover {
+    cursor: default;
 }
 
 .settingHide {
