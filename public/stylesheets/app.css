@@ -427,6 +427,8 @@ ul.default-tasks > li:hover {
 }
 
 
+
+
 /* %%%%%%%%%%%%%%%%%%%%% Second sidebar (right): Summary %%%%%%%%%%%%%%%%%%%%% */
 .summaryContainer {
     grid-area: summary;
@@ -622,20 +624,34 @@ ul.default-tasks > li:hover {
     margin: 6px 0px;
 }
 
+#delete-list-parent {
+
+}
+
+.list-grid:hover .delete-list {
+    display: grid;
+}
+
+.list-grid:hover .delete-contact {
+    display: grid;
+}
+
 .delete-list {
     color: #ffffff !important;
     text-decoration: none;
     border: 1px solid white;
     border-radius: 5px;
-    padding: 1px 6px 3px 6px;
+    padding: 1px 6px 1px 6px;
     justify-content: center;
-    display: grid;
+    display: none;
+
 
 }
 .delete-list:hover {
     background-color: white;
     color: #8A715B !important;
     border: 1px solid #8A715B;
+
 }
 
 .delete-contact {
@@ -643,9 +659,9 @@ ul.default-tasks > li:hover {
     text-decoration: none;
     border: 1px solid white;
     border-radius: 3px;
-    padding: 1px 6px 3px 6px;
+    padding: 1px 6px 1px 6px;
     justify-content: center;
-    display: grid;
+    display: none;
 
 }
 
@@ -669,15 +685,26 @@ ul.default-tasks > li:hover {
     display: grid;
     grid-template-columns: 90% 10%;
     color: #ffffff;
-    margin-top: 5px;
     font-weight: bold;
+    padding: 15px 0px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    border-top: 1px solid rgba(255, 255 , 255, .3);
+}
+
+.contact-list-sidebar {
+    border-bottom: 1px solid rgba(255, 255 , 255, .3);
+    padding-bottom: 12px;
 }
 
 .list-sidebar {
     display: grid;
     grid-template-columns: 90% 10%;
     color: #ffffff;
+    padding: 15px 0px;
+    margin-top: 20px;
     margin-bottom: 5px;
+    border-top: 1px solid rgba(255, 255 , 255, .3);
 }
 
 .addSubmitButton {

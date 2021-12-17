@@ -488,11 +488,11 @@ export const fetchLists = async () => {
 
   const listContainer = document.querySelector(".lists-grid-container");
   const listHtml = allLists.map(({ id, title }) => `
-  <div class='list-grid'>
+  <div id="delete-hover-parent" class='list-grid'>
   <div class="list-info">
     <li class='list-lists' id=${id}>${title}</li>
   </div>
-  <div> <a class='delete-list' id=${id}> - </a> </div>
+  <div > <a class='delete-list' id=${id}> - </a> </div>
   </div>
   `)
 
