@@ -1,4 +1,4 @@
-import { handleErrors, addTaskInfoListeners } from "./utils.js";
+import { handleErrors, addTaskInfoListeners, editListEventListener } from "./utils.js";
 import { fetchTask, fetchComments, postComment } from "./task-comments.js";
 
 // fetch user's tasks (all)
@@ -474,7 +474,7 @@ deleteContact.addEventListener("click", async (e) => {
 
 })
 
-const fetchLists = async () => {
+export const fetchLists = async () => {
   const res = await fetch('/lists/')
 
   if (res.status === 401) {
@@ -537,71 +537,9 @@ const fetchLists = async () => {
 
         tasksContainer.innerHTML = listTitle + tasksHtml.join('');
 
-        const editListTitle = document.querySelector(".edit-list-button");
-        editListTitle.addEventListener('click', async(e) => {
-          let listId = e.target.id;
-
-          const listToUpdate = await fetch(`/lists/${listId}`);
-
-          const { listName } = await listToUpdate.json();
-
-          const listTitle = document.querySelector('.list-title');
-          listTitle.innerHTML = `
-            <h2>Edit List Name</h2>
-            <div id='list-edit'>
-              <form class='list-edit-form'>
-              <input type='text' class='list-edit' id='title' name='title' placeholder=${listName.title}>
-              <label for='title' class='list-label'${listName.title} </label>
-              <div>
-              <button class='submitButton' id='${listId}'>Submit</button>
-              </div>
-              <div>
-              <button class='editCancelButton' id='${listId}'>Cancel</button>
-              </div>
-              </form>
-            </div>
-          `
-
-          const listUpdate = document.querySelector('.list-edit-form')
-          listUpdate.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const formData = new FormData(listUpdate);
-            const title = formData.get('title')
-            const body = { title }
-            const updatedList = await fetch(`/lists/${listId}`, {
-              method: 'PATCH',
-              body: JSON.stringify(body),
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            })
-
-            const { list } = await updatedList.json();
-
-            listTitle.innerHTML = `
-              <div class="list-title" id="${listId}">
-                <h2 class="task-list-header">${list.title}</h2>
-                <button class="edit-list-button" id="${listId}">Edit List</button>
-              </div>
-            `;
-            await fetchLists();
-          })
 
 
-        const cancelButton = document.querySelector('.editCancelButton');
-        cancelButton.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          listTitle.innerHTML = `
-            <div class="list-title" id="${listId}">
-              <h2 class="task-list-header">${listName.title}</h2>
-              <button class="edit-list-button" id="${listId}">Edit List</button>
-            </div>
-          `;
-        })
-      })
-
+        await editListEventListener();
         await addTaskInfoListeners();
       })
     })
@@ -628,53 +566,9 @@ deleteList.addEventListener("click", async (e) => {
     } catch (err) {
       handleErrors(err)
     }
-  } else if (e.target.className === 'list-lists') {
-    const listId = e.target.id;
-    const listForm = document.querySelector('.updateList');
-    const listTitle = await fetch(`/lists/${listId}`, {
-      method: "GET",
-    })
-    const { listName } = await listTitle.json();
-    listForm.innerHTML = `
-    <h2>Edit List Name</h2>
-    <div id='list-edit'>
-      <form class='list-edit-form'>
-      <input type='text' class='list-edit' id='title' name='title' placeholder=${listName.title}>
-      <label for='title' class='list-label'${listName.title} </label>
-      <div>
-      <button class='submitButton'>Submit</button>
-      </div>
-      <div>
-      <button class='editCancelButton'>Cancel</button>
-      </div>
-      </form>
-    </div>
-      `
-      const listUpdate = document.querySelector('.list-edit-form')
-      listUpdate.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const formData = new FormData(listUpdate);
-        const title = formData.get('title')
-        const body = { title }
-        await fetch(`/lists/${listId}`, {
-          method: 'PATCH',
-          body: JSON.stringify(body),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-        listForm.innerHTML = '';
-        await fetchLists();
-      })
-    const cancelButton = document.querySelector('.editCancelButton');
-    cancelButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      listForm.innerHTML = '';
-    })
   }
 })
+
 const addList = document.querySelector('.add-lists');
 
 addList.addEventListener('click', (e) => {
