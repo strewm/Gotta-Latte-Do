@@ -18,7 +18,7 @@ const deleteTask = async (taskId) => {
         if (!res.ok) {
             throw res;
         }
-        await fetchTasks(taskId);
+        await fetchTasks();
         return;
         } catch (err) {
             handleErrors(err)
@@ -165,6 +165,10 @@ export const fetchTask = async (taskId) => {
         const taskInfo = document.querySelector(`.task-${task.id}`);
         taskInfo.hidden = true;
         editForm.hidden = true;
+
+        const tasksDue = document.querySelector('.tasksDueValue');
+        tasksDue.innerText = (Number(tasksDue.innerText) - 1).toString()
+
     })
 
 
