@@ -189,9 +189,15 @@ const search = async (searchValue) => {
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 
   await addTaskInfoListeners();
-
-
 }
+
+
+// Change the color of incomplete/complete tabs when fetching their respective lists
+// function changeColor() {
+//   this.style.backgroundColor = "#FAECDA";
+//   this.style.color = "#8A715B";
+//   return;
+// }
 
 // toggle between incomplete and completed tasks
 // incomplete button
@@ -200,6 +206,14 @@ incompleteTaskList.addEventListener("click", async (e) => {
   await fetchIncompleteTasks();
   const clearAssignedList = document.querySelector('.assigned-list');
   clearAssignedList.innerHTML = ``;
+
+  // const currColor = this.style.backgroundColor;
+
+  // if (currColor === "#E0A979") {
+  //   this.style.backgroundColor = "#FAECDA";
+  // } else {
+  //   this.style.backgroundColor = "#E0A979";
+  // }
 })
 
 // completed button
