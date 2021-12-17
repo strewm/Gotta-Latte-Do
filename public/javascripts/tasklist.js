@@ -16,7 +16,7 @@ listLists.forEach((list) => {
     `
 
     const tasksHtml = tasks.map((task) => `
-      <div class="task-info">
+      <div class="task-info id=${task.Task.id}">
         <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id}>
         <label for=${task.Task.id} id=${task.Task.id} class="task-check-box">${task.Task.description}</label>
       </div>
