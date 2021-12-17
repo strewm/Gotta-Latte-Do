@@ -255,12 +255,14 @@ export const fetchComments = async (taskId) => {
                 </span>
                 <span id='comment-${comment.id}-message' class='comment-message'>${comment.message}</span>
             </span>
-            <span class='comment-buttons-${comment.id} comment-buttons userId-${comment.userId}'>
-                <button class='edit-comment-butt comment-butts' id='${comment.id}'>Edit</button>
-                <button class='delete-comment-butt comment-butts' id='${comment.id}'>Delete</button>
-            </span>
+            <div class='updatedAt-${comment.id} updated-At'>
+                <span>${commentDateFormatter(comment.updatedAt)}</span>
+                <span class='comment-buttons-${comment.id} comment-buttons userId-${comment.userId}'>
+                    <button class='edit-comment-butt comment-butts' id='${comment.id}'>Edit</button>
+                    <button class='delete-comment-butt comment-butts' id='${comment.id}'>Delete</button>
+                </span>
+            </div>
         </div>
-        <div class='updatedAt-${comment.id}'>${commentDateFormatter(comment.updatedAt)}</div>
     `
     )
 
@@ -353,11 +355,13 @@ export const fetchComments = async (taskId) => {
                     ${comment.User.id}
                     <span id='comment-${comment.id}-message'>${comment.message}</span>
                 </span>
-                <span class='comment-buttons-${comment.id}'>
-                    <button class='edit-comment-butt' id='${comment.id}'>Edit
-                    <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
-                </span>
-                <div class='updatedAt-${comment.id}'>${commentDateFormatter(comment.updatedAt)}</div>
+                <div class='updatedAt-${comment.id}'>
+                    <span>${commentDateFormatter(comment.updatedAt)}</span>
+                    <span class='comment-buttons-${comment.id}'>
+                        <button class='edit-comment-butt' id='${comment.id}'>Edit
+                        <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
+                    </span>
+                </div>
                 `
                 await fetchComments(taskId);
             })
