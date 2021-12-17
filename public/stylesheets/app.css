@@ -277,10 +277,6 @@
     /* align-items: center; */
 }
 
-.task-completed-label {
-    margin-bottom: 1px;
-}
-
 .completedTask {
     margin: 5px;
 }
@@ -334,38 +330,111 @@
     color: #8A715B;
 }
 
+.add-comment-butt:hover {
+    background-color: #8A715B;
+    color: #FAECDA;
+}
+
+.add-comment-butt:hover {
+    box-shadow: inset 0 0 3px #6d5947;
+}
+
 /* Populated comments container  */
 .comment-container {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+
+    border: 1px solid #9fcf88;
+    border-radius: 10px;
+    padding: 3px;
+    margin: 3px 0;
 }
 
 .updated-At {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 4px 0 1px 6px;
+    /* text-align: center; */
 }
 
+.comment-date {
+    display: flex;
+    justify-content: center;
+    font-size: 13px;
+    padding-top: 1px;
+    margin-right: 3px;
+}
+
+/* Comments: edit + delete button container  */
+.comment-buttons {
+    display: flex;
+    justify-content: center;
+
+}
+
+/* Comments: class of each edit and delete buttons  */
 .comment-butts {
-    border: 1px solid #8A715B;
+    /* border: 1px solid #8A715B;
+    padding: 2px;
+    border-radius: 5px; */
+    border: none;
+    padding: 0 3px;
     font-size: 12px;
-    padding: 3px;
-    border-radius: 5px;
 
     color: #8A715B;
+}
+
+.comment-buttons-dot {
+    padding-top: 2px;
 }
 
 .createdAt {
     font-size: 7px;
 }
 
-.task-butts:hover, .comment-butts:hover {
+.task-butts:hover {
     background-color: #C7A383;
     color: #FAECDA;
 }
 
-.task-butts:active, .comment-butts:active {
+.task-butts:active {
     box-shadow: inset 0 0 3px #8A715B;
+}
+
+.comment-butts:hover {
+    color: #4d3f34;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.comment-butts:active {
+    transform: scale(0.98);
+}
+
+/* Comment user + message container  */
+.comment-user-message {
+    margin: 3px 3px 3px 5px;
+}
+
+/* Comment user name */
+.comment-user {
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    background-color: #9fcf88;
+    font-size: 13px;
+    padding: 5px 1px 5px 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+
+    color: cornsilk;
+}
+
+.comment-message {
+    font-size: 14px;
+    color: #534335;
 }
 
 /* %%%%%%%%%%%%%%%%%%%%% Main section list: Tasks %%%%%%%%%%%%%%%%%%%%% */
