@@ -17,7 +17,7 @@ block content
       div.welcome-text Been here before? Welcome back!
       div.log-in-field
         +validationErrorSummary(errors)
-        form(action='/users/login' method='post')
+        form(action='/users/login' method='post' id="login-form")
             input(type='hidden' name='_csrf' value=csrfToken)
             +field('', 'email', email)
             +field('', 'password', null, 'password')

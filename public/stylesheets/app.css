@@ -88,7 +88,7 @@
     border-radius: 5px;
     padding: 10px;
     margin: 0 5px;
-    color: #FFFFFF;
+    color: rgb(255, 253, 245);
     /* line-height: 20px; */
     background-color: #E0A979;
     font-size: 15px;
@@ -331,6 +331,12 @@
 .comment-container {
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
+}
+
+.updated-At {
+    display: flex;
+    justify-content: space-between;
 }
 
 .comment-butts {
@@ -365,6 +371,10 @@
 
 
 /* %%%%%%%%%%%%%%%%%%%%% Sidebar (left): Lists / organization %%%%%%%%%%%%%%%%%%%%% */
+.logoContainer {
+    display: flex;
+    justify-content: center;
+}
 
 .logo {
     height: auto;
@@ -394,10 +404,7 @@
     color: #E0A979;
 } */
 
-li.list-lists {
-    list-style-image: url("../images/bean-left-small.png");
-    /* list-style: none; */
-}
+
 
 /* %%%%%%%%%%%%%%%%%%%%% Second sidebar (right): Summary %%%%%%%%%%%%%%%%%%%%% */
 .summaryContainer {
@@ -409,16 +416,41 @@ li.list-lists {
 
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
 
     color: white;
 }
 
-/* .summaryHeader {
+.summaryHeader {
     display: flex;
-    align-items: space-between;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+}
 
-} */
+#tasksDueValue, #tasksOverdueValue {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+
+    font-size: 20px;
+    background-color: #E0A979;
+    opacity: 0.7;
+    padding: 12px;
+    border-radius: 5px;
+
+    color: rgb(255, 253, 245);
+}
+
+#tasksOverdueValue {
+    color: #eb4d4d;
+}
+
+#tasksDue, #tasksOverdue {
+    color: #75604d;
+}
 
 
 
@@ -513,12 +545,14 @@ li.list-lists {
     margin-left: 15px;
     cursor: pointer;
 }
+
 .list-lists {
     color: #ffffff !important;
     list-style: disc;
     margin-left: 15px;
     cursor: pointer;
     margin-bottom: 5px;
+    list-style-image: url("../images/white_bean_icon.png");
 }
 
 .list-grid {
@@ -617,6 +651,8 @@ li.list-lists {
     border: 1px solid rgba(0,0,0,.1);
 }
 
+
+
 /* %%%%%%%%%%%%%%%%%%%%% Tasks Section %%%%%%%%%%%%%%%%%%%%% */
 .task-list {
     padding: 15px;
@@ -633,6 +669,8 @@ li.list-lists {
     grid-template-columns: 90% 10%;
     width: 250px;
 }
+
+
 
 /* %%%%%%%%%%%%%%%%%%%%% Settings Dropdown %%%%%%%%%%%%%%%%%%%%% */
 #settingsGear {
