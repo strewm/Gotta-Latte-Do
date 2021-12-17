@@ -1,6 +1,6 @@
 /* %%%%%%%%%%%%%%%%%%%%% Whole page %%%%%%%%%%%%%%%%%%%%% */
 * {
-    background-color: #FAECDA;
+    background-color: #C7A383;
     font-family: MuseoSansRounded, "Helvetica Neue", Helvetica, Arial, sans-serif;
     /* font-weight: 3; */
 }
@@ -8,7 +8,7 @@
 .page {
     display: grid;
     grid-template-columns: 1.5fr 4fr 2.75fr;
-    grid-template-rows: 65px 0.75fr 9fr;
+    grid-template-rows: 65px 0.5fr 9fr;
     grid-template-areas:
     "header header header"
     "sidebar tabs summary"
@@ -73,7 +73,7 @@
 .tabbedContainer {
     grid-area: tabs;
 
-    background-color: #E0A979;
+    background-color: #C7A383;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
@@ -83,32 +83,38 @@
     display: flex;
     justify-content: flex-end;
     padding: 10px 10px 0px 10px;
-    border-bottom: 1px solid #C7A383;
 }
 
 .tabbedLink {
-    border: 1px solid #C7A383;
     border-bottom: 0;
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0;
     padding: 10px;
     margin: 0 5px;
-    color: rgb(255, 253, 245);
-    /* line-height: 20px; */
-    background-color: #E0A979;
+    color: #8A715B;
+
+    background-color: #fae5ca;
     font-size: 15px;
 }
 
 .tabbedLink:hover {
     cursor: pointer;
+}
+
+#incomplete:hover + #complete {
     background-color: #8A715B;
+    color: cornsilk;
+}
+
+#complete:hover ~ #incomplete {
+    background-color: #8A715B;
+    color: cornsilk;
 }
 
 
 /* %%%%%%%%%%%%%%%%%%%%% MAIN: Task area %%%%%%%%%%%%%%%%%%%%% */
 .mainContainer {
     grid-area: main;
-    background-color: #FAECDA;
-
+    background-color: #fae5ca;
     /* display: flex;
     justify-content: flex-start; */
 }
@@ -124,8 +130,6 @@
     margin: 0px;
     border-top: 1px solid #C7A383;
     border-bottom: 1px dotted #C7A383;
-
-    background-color: #FAECDA;
     color: #8A715B;
     font-size: 25px;
     /* margin: 15px 0px 0px 0px; */
@@ -133,16 +137,18 @@
 
 .taskContainer {
     padding: 15px;
-
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    background-color: #fae5ca;
+    border-radius: 10px 10px 0 0;
 }
 
 .taskSubContainer {
     padding: 10px 0px 10px 0px;
     display: flex;
     align-items: center;
+    background-color: #fae5ca;
 }
 
 .descripLabel, .dueDateLabel, .isCompletedLabel, .contactsLabel, .listLabel {
@@ -151,6 +157,11 @@
     font-weight: bold;
     width: fit-content;
     color: #8A715B;
+    background-color: #fae5ca;
+}
+
+#description, #dueDate, #givenTo, #title {
+    background-color: #faedd9;
 }
 
 .descrip {
@@ -213,7 +224,7 @@
     margin: 20px 10px 20px 10px;
     padding: 15px;
     border-radius: 25px;
-    background-color: #FAECDA;
+    background-color: #fae5ca;
     border: 1px solid #8A715B;
     font-size: 15px;
     padding: 10px;
@@ -445,12 +456,9 @@
 
 /* Comment user name */
 .comment-user {
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-items: center; */
     background-color: #9fcf88;
     font-size: 13px;
-    padding: 5px 1px 5px 5px;
+    padding: 5px 2px 5px 5px;
     margin-right: 5px;
     border-radius: 5px;
 
@@ -523,7 +531,7 @@
     background-color: #C7A383;
     color: #FFFFFF;
     font-size: 12px;
-    padding: 20px;
+    padding: 25px;
 
     display: flex;
     flex-direction: column;
@@ -583,11 +591,15 @@ ul.default-tasks > li:hover {
     opacity: 0.7;
     padding: 12px;
     border-radius: 5px;
+}
 
-    color: rgb(255, 253, 245);
+.tasksDueValue {
+    font-weight: bold;
+    color: cornsilk;
 }
 
 #tasksOverdueValue {
+    font-weight: bold;
     color: #eb4d4d;
 }
 
@@ -955,6 +967,9 @@ ul.default-tasks > li:hover {
     top: 2.5em;
     width: 200px;
     z-index: 2;
+    width: fit-content;
+    min-width: 215px;
+    min-height: 230px;
 }
 
 .settingGroup:hover {
