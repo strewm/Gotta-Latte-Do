@@ -30,6 +30,4 @@ Gotta Latte Do is a website for keeping track of tasks.  You can make personaliz
 
 ## Database
 
-![Database Diagram](https://imgur.com/a/JogLtyV)
-
-
+![Database Diagram](./images/db-diagram.png)
