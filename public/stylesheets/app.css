@@ -952,6 +952,9 @@ ul.default-tasks > li:hover {
     top: 2.5em;
     width: 200px;
     z-index: 2;
+    width: fit-content;
+    min-width: 215px;
+    min-height: 230px;
 }
 
 .settingGroup:hover {
