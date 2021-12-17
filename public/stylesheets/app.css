@@ -331,6 +331,12 @@
 .comment-container {
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
+}
+
+.updated-At {
+    display: flex;
+    justify-content: space-between;
 }
 
 .comment-butts {
