@@ -148,10 +148,11 @@ router.get('/overdue', asyncHandler(async (req, res) => {
   const today = new Date().setHours(0, 0, 0, 0);
   const tasks = await Task.findAll({
     where: {
-      dueDate: {
-        [Op.lt]: today
-      }
-    }
+      [Op.and]: [{
+      dueDate: { [Op.lt]: today }
+      },
+      { isCompleted: false }
+      ]}
   })
   res.json({ tasks })
 }))
