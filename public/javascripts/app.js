@@ -797,3 +797,35 @@ const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
   await addTaskInfoListeners();
 })
+
+
+const tomorrowTasks = document.querySelector('.due-tomorrow');
+tomorrowTasks.addEventListener('click', async(e) => {
+  e.stopPropagation();
+  const res = await fetch('/lists/tomorrow');
+
+  const { tasks } = await res.json();
+
+  const tasksListContainer = document.querySelector(".task-list");
+  const listName = `
+      <h2 class="task-list-header">Tasks Due Today</h2>
+`
+const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+  if (isCompleted === true) {
+    return `
+    <div class='task-info' id=${id}>
+        <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
+        <label for=${id} id=${id} class="task-check-box">${description}</label>
+    </div>
+    `
+  } else {
+  return `<div class='task-info' id=${id}>
+            <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+            <label for=${id} id=${id} class="task-check-box">${description}</label>
+        </div>
+    `
+    }
+    })
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
+  await addTaskInfoListeners();
+})
