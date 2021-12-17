@@ -39,8 +39,8 @@ export const editListEventListener = async () => {
 
           const { listName } = await listToUpdate.json();
 
-          const listTitle = document.querySelector('.list-title');
-          listTitle.innerHTML = `
+          const listForm = document.querySelector('.updateList');
+          listForm.innerHTML = `
             <h2>Edit List Name</h2>
             <div id='list-edit'>
               <form class='list-edit-form'>
@@ -73,12 +73,10 @@ export const editListEventListener = async () => {
 
             const { list } = await updatedList.json();
 
-            listTitle.innerHTML = `
-              <div class="list-title" id="${listId}">
-                <h2 class="task-list-header">${list.title}</h2>
-                <button class="edit-list-button" id="${listId}">Edit List</button>
-              </div>
-            `;
+            const listHeader = document.querySelector('.task-list-header');
+            listHeader.innerText = list.title;
+
+            listForm.innerHTML = '';
             await fetchLists();
           })
 
@@ -87,12 +85,7 @@ export const editListEventListener = async () => {
         cancelButton.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
-          listTitle.innerHTML = `
-            <div class="list-title" id="${listId}">
-              <h2 class="task-list-header">${listName.title}</h2>
-              <button class="edit-list-button" id="${listId}">Edit List</button>
-            </div>
-          `;
+          listForm.innerHTML = '';
         })
       })
 }
