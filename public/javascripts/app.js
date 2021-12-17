@@ -88,7 +88,7 @@ export const fetchIncompleteTasks = async () => {
 
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
-  <h2 class="task-list-header"><strong>${user.username}' s</strong> incomplete tasks.</h2>
+  <h2 class="task-list-header"><strong>${user.username}'s</strong> incomplete tasks.</h2>
   `
   const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
     if (isCompleted === true) {
@@ -126,7 +126,7 @@ const fetchCompletedTasks = async () => {
 
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
-  <h2 class="task-list-header"><strong>${user.username}' s</strong> completed tasks.</h2>
+  <h2 class="task-list-header"><strong>${user.username}'s</strong> completed tasks.</h2>
   `
   const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
     if (isCompleted === true) {

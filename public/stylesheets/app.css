@@ -213,6 +213,8 @@
     border: 1px solid #8A715B;
     font-size: 15px;
     padding: 10px;
+    min-height: 500px;
+    min-width: 250px;
 
     color: #8A715B;
 }
@@ -258,6 +260,7 @@
 .task-completed-container, .due-container {
     display: flex;
     align-items: center;
+    margin: 5px 5px 5px 0;
 }
 
 /* Task completed + Due + Comments  */
@@ -295,8 +298,7 @@
 
 /* Comments section header  */
 .comment-header {
-    margin-top: 2px;
-    margin-bottom: 0;
+    margin: 0 5px 5px 0;
 }
 
 /* Enter new comment field  */
@@ -357,6 +359,14 @@
     font-size: 7px;
 }
 
+.task-butts:hover, .comment-butts:hover {
+    background-color: #C7A383;
+    color: #FAECDA;
+}
+
+.task-butts:active, .comment-butts:active {
+    box-shadow: inset 0 0 3px #8A715B;
+}
 
 /* %%%%%%%%%%%%%%%%%%%%% Main section list: Tasks %%%%%%%%%%%%%%%%%%%%% */
 /* Part of mainContainer div */
@@ -374,17 +384,24 @@
     width: 100%;
 }
 
+.task-list-header {
+    padding: 10px 0;
+}
+
 .task-check-box {
     background: transparent;
 }
 
 .task-info:hover {
-    background-color: #8A715B;
+    padding: 3px;
+    border-radius: 10px;
+    background-color: #E0A979;
     cursor: pointer;
 }
 
 .task-check-box:hover {
-    background-color: #8A715B;
+    padding: 3px;
+    background-color: #E0A979;
     cursor: pointer;
 }
 
@@ -683,8 +700,8 @@ ul.default-tasks > li:hover {
     border: 1px solid rgba(0,0,0,.1); */
 
     border: 1px solid #8A715B;
-    font-size: 12px;
-    padding: 5px;
+    font-size: 13px;
+    padding: 7px;
     border-radius: 5px;
 
     color: #8A715B;
@@ -794,7 +811,7 @@ ul.default-tasks > li:hover {
     padding: 0;
 }
 
-.settingList:hover {
+.sLSO:hover {
     color: yellowgreen;
 }
 
