@@ -145,16 +145,16 @@ const search = async (searchValue) => {
 
 
 // Change the color of incomplete/complete tabs when fetching their respective lists
-function changeColor() {
-  this.style.backgroundColor = "#FAECDA";
-  this.style.color = "#8A715B";
-  return;
-}
+// function changeColor() {
+//   this.style.backgroundColor = "#FAECDA";
+//   this.style.color = "#8A715B";
+//   return;
+// }
 
 // toggle between incomplete and completed tasks
 // incomplete button
 const incompleteTaskList = document.querySelector('#incomplete')
-incompleteTaskList.addEventListener("click", changeColor, async (e) => {
+incompleteTaskList.addEventListener("click", async (e) => {
   await fetchIncompleteTasks();
   const clearAssignedList = document.querySelector('.assigned-list');
   clearAssignedList.innerHTML = ``;
@@ -170,7 +170,7 @@ incompleteTaskList.addEventListener("click", changeColor, async (e) => {
 
 // completed button
 const completeTaskList = document.querySelector('#complete')
-completeTaskList.addEventListener("click", changeColor, async (e) => {
+completeTaskList.addEventListener("click", async (e) => {
   await fetchCompletedTasks();
   const clearAssignedList = document.querySelector('.assigned-list');
   clearAssignedList.innerHTML = ``;
