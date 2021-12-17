@@ -18,7 +18,7 @@ export const fetchTasks = async () => {
   <h2 class="task-list-header">All of <strong>${user.username}'s</strong> self-assigned tasks.</h2>
   `
     const tasksHtml = tasks.map(({ id, description }) => `
-    <div class="task-info">
+    <div class="task-info" id=${id}>
         <input type="checkbox" class="task-check-box" id=${id} name=${id}>
         <label for=${id} id=${id} class="task-check-box">${description}</label>
     </div>
@@ -235,53 +235,47 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error(e);
     }
 
+    const taskInfoContainer = document.querySelectorAll('.task-info');
+    taskInfoContainer.forEach( (task) => {
+      task.addEventListener('click', async(e) => {
+        e.stopPropagation();
+        const taskId = task.id;
 
+        const editForm = document.querySelector('.edit-form');
+        editForm.hidden = true;
 
+        try {
+          await fetchTask(taskId);
 
+          const createComment = document.querySelector('.create-comment');
 
-    const tasksListContainer = document.querySelector(".task-list");
-    tasksListContainer.addEventListener("click", async(e) => {
-      e.stopPropagation();
-      const taskId = e.target.id;
+          createComment.addEventListener('submit', async (event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            const commentData = new FormData(createComment);
+            const message = commentData.get("message");
+            const taskId = commentData.get("taskId");
 
-      const editForm = document.querySelector('.edit-form')
-      editForm.hidden = true;
+            const body = { message };
 
-      // let stateObj = { id: "100" }
-      // window.history.replaceState(stateObj, "Task", `/tasks/#${taskId}`)
+            postComment(taskId, body);
 
-      try {
-        await fetchTask(taskId);
+          })
 
-        const createComment = document.querySelector('.create-comment');
+        } catch (e) {
+          console.error(e);
+        }
 
-        createComment.addEventListener('submit', async (event) => {
-          event.stopPropagation();
-          event.preventDefault();
-          const commentData = new FormData(createComment);
-          const message = commentData.get("message");
-          const taskId = commentData.get("taskId");
+        try {
+          await fetchComments(taskId);
+        } catch (e) {
+          console.error(e);
+        }
 
-          const body = { message };
-
-          postComment(taskId, body);
-
-        })
-
-      } catch (e) {
-        console.error(e);
-      }
-
-      try {
-        await fetchComments(taskId);
-      } catch (e) {
-        console.error(e);
-      }
-
+      })
     })
-
   }
-  );
+);
 
 
 // create a new task
