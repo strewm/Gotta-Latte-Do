@@ -20,6 +20,7 @@ router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
 
   const me = res.locals.userId
   const myName = await User.findByPk(me)
+
   const contacts = await Contact.findAll({
     where: {
       userId: res.locals.userId
@@ -43,14 +44,18 @@ router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
     where: {
       userId: res.locals.userId
     }
+  });
+
+  const tasksGivenToMe = await Task.findAll({
+    where: {
+      givenTo: res.locals.userId
+    }
   })
 
-  const currUser = await User.findByPk(res.locals.userId)
+  const currUser = await User.findByPk(me)
 
-    res.render('app', { csrfToken: req.csrfToken(), contactsAll, tasks, currUser, me, myName, myLists })
-
-
-}))
+  res.render('app', { csrfToken: req.csrfToken(), contactsAll, tasks, tasksGivenToMe, currUser, me, myName, myLists })
+}));
 
 
 

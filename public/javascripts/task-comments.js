@@ -14,12 +14,12 @@ const deleteTask = async (taskId) => {
         if (res.status === 401) {
             window.location.href = "/log-in";
             return;
-          }
+        }
         if (!res.ok) {
             throw res;
-          }
-          await fetchTasks(taskId);
-          return;
+        }
+        await fetchTasks(taskId);
+        return;
         } catch (err) {
             handleErrors(err)
         }
@@ -38,13 +38,13 @@ const editTask = async (taskId, body) => {
         if (res.status === 401) {
             window.location.href = "/log-in";
             return;
-          }
+        }
         if (!res.ok) {
             throw res;
-          }
-          await fetchTasks();
-          await fetchTask(taskId);
-          await fetchComments(taskId);
+        }
+        await fetchTasks();
+        await fetchTask(taskId);
+        await fetchComments(taskId);
         } catch (err) {
             handleErrors(err)
         }
@@ -385,12 +385,12 @@ export const postComment = async (taskId, body) => {
         if (res.status === 401) {
             window.location.href = "/log-in";
             return;
-          }
+        }
         if (!res.ok) {
             throw res;
-          }
-          createComment.reset();
-          await fetchComments(taskId);
+        }
+        createComment.reset();
+        await fetchComments(taskId);
         } catch (err) {
             handleErrors(err)
         }
@@ -406,11 +406,11 @@ export const deleteComment = async (commentId) => {
         if (res.status === 401) {
             window.location.href = "/log-in";
             return;
-          }
+        }
         if (!res.ok) {
             throw res;
-          }
-          await fetchComments(taskId);
+        }
+        await fetchComments(taskId);
         } catch (err) {
             handleErrors(err)
         }
@@ -429,11 +429,11 @@ export const editComment = async (commentId, body) => {
         if (res.status === 401) {
             window.location.href = "/log-in";
             return;
-          }
+        }
         if (!res.ok) {
             throw res;
-          }
-          await fetchComments(taskId);
+        }
+        await fetchComments(taskId);
         } catch (err) {
             handleErrors(err)
         }
