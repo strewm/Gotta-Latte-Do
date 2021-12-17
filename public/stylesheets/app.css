@@ -493,6 +493,23 @@ ul.default-tasks > li:hover {
     box-sizing: border-box;
 }
 
+.list-pop {
+    position: absolute;
+    z-index: 9;
+    top: 50%;
+    left: 50%;
+    background-color: #E0A979;
+    padding: 31px 30px;
+    margin-left: -225px;
+    margin-top: -100px;
+    width: 450px;
+    height: 200px;
+    border: 2px solid #C7A383;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,.5);
+    box-sizing: border-box;
+}
+
 .cloud {
     z-index: 5;
     background-color: rgba(255,255,255,.6);
@@ -560,6 +577,14 @@ ul.default-tasks > li:hover {
     border: 1px solid #8A715B;
 }
 
+.addNewList {
+    background-color: #E0A979;
+}
+
+.add-list-buttons-container {
+    margin: 10px 0px;
+}
+
 .list-list {
     color: #ffffff !important;
     list-style: disc;
@@ -583,6 +608,13 @@ ul.default-tasks > li:hover {
     margin: 6px 0px;
 }
 
+.list-add {
+    width: 100%;
+    border-radius: 3px !important;
+    margin: 15px 0px;
+
+}
+
 .lists-grid {
     display: grid;
     grid-template-columns: 90% 10%;
@@ -594,7 +626,7 @@ ul.default-tasks > li:hover {
     color: #ffffff !important;
     text-decoration: none;
     border: 1px solid white;
-    border-radius: 3px;
+    border-radius: 5px;
     padding: 1px 6px 3px 6px;
     justify-content: center;
     display: grid;
@@ -629,6 +661,7 @@ ul.default-tasks > li:hover {
     margin-left: 15px;
     cursor: pointer;
     margin-bottom: 5px;
+    list-style-image: url("../images/white_bean_icon.png");
 
 }
 
@@ -647,6 +680,19 @@ ul.default-tasks > li:hover {
     margin-bottom: 5px;
 }
 
+.addSubmitButton {
+    border-radius: 3px;
+    height: 35px;
+    padding: 0px 15px;
+    border: 1px solid rgba(0,0,0,.1);
+}
+
+.listCancelButton {
+    border-radius: 3px;
+    height: 35px;
+    padding: 0px 15px;
+    border: 1px solid rgba(0,0,0,.1);
+}
 .add-contact-input {
     display: grid;
     margin: 5px 0px 20px 0px;
@@ -654,6 +700,13 @@ ul.default-tasks > li:hover {
 
 
 .h2-add-contact {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333333;
+    background-color: #E0A979;
+}
+
+.h2-add-list {
     font-size: 20px;
     font-weight: bold;
     color: #333333;
@@ -672,6 +725,15 @@ ul.default-tasks > li:hover {
     border: 1px solid rgba(0,0,0,.1);
 }
 
+.contact-input {
+    font-style: italic;
+    border-radius:3px;
+    font-size: 13px;
+    padding: 5px;
+    height: 30px;
+    border: 1px solid #8A715B;
+    color: #8A715B;
+}
 
 
 /* %%%%%%%%%%%%%%%%%%%%% Tasks Section %%%%%%%%%%%%%%%%%%%%% */
