@@ -98,6 +98,10 @@
     font-size: 15px;
 }
 
+.tabbedLink:hover {
+    cursor: pointer;
+    background-color: #8A715B;
+}
 
 
 /* %%%%%%%%%%%%%%%%%%%%% MAIN: Task area %%%%%%%%%%%%%%%%%%%%% */
