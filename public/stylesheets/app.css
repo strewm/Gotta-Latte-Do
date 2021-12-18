@@ -1,6 +1,6 @@
 /* %%%%%%%%%%%%%%%%%%%%% Whole page %%%%%%%%%%%%%%%%%%%%% */
 * {
-    background-color: #FAECDA;
+    background-color: #C7A383;
     font-family: MuseoSansRounded, "Helvetica Neue", Helvetica, Arial, sans-serif;
     /* font-weight: 3; */
 }
@@ -8,7 +8,7 @@
 .page {
     display: grid;
     grid-template-columns: 1.5fr 4fr 2.75fr;
-    grid-template-rows: 65px 0.75fr 9fr;
+    grid-template-rows: 65px 0.5fr 9fr;
     grid-template-areas:
     "header header header"
     "sidebar tabs summary"
@@ -40,6 +40,10 @@
     width: auto;
 }
 
+#settings:hover {
+    cursor: pointer;
+}
+
 #settings:active {
     /* transform: scale(0.98); */
     box-shadow: inset 0 0 5px #8A715B;
@@ -59,7 +63,7 @@
 
 ::placeholder {
     color: #8A715B;
-    font-size: 15px;
+    font-size: 14px;
     font-style: italic;
 }
 
@@ -69,7 +73,7 @@
 .tabbedContainer {
     grid-area: tabs;
 
-    background-color: #E0A979;
+    background-color: #C7A383;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
@@ -79,28 +83,38 @@
     display: flex;
     justify-content: flex-end;
     padding: 10px 10px 0px 10px;
-    border-bottom: 1px solid #C7A383;
 }
 
 .tabbedLink {
-    border: 1px solid #C7A383;
     border-bottom: 0;
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0;
     padding: 10px;
     margin: 0 5px;
-    color: rgb(255, 253, 245);
-    /* line-height: 20px; */
-    background-color: #E0A979;
+    color: #8A715B;
+
+    background-color: #fae5ca;
     font-size: 15px;
 }
 
+.tabbedLink:hover {
+    cursor: pointer;
+}
+
+#incomplete:hover + #complete {
+    background-color: #8A715B;
+    color: cornsilk;
+}
+
+#complete:hover ~ #incomplete {
+    background-color: #8A715B;
+    color: cornsilk;
+}
 
 
 /* %%%%%%%%%%%%%%%%%%%%% MAIN: Task area %%%%%%%%%%%%%%%%%%%%% */
 .mainContainer {
     grid-area: main;
-    background-color: #FAECDA;
-
+    background-color: #fae5ca;
     /* display: flex;
     justify-content: flex-start; */
 }
@@ -116,8 +130,6 @@
     margin: 0px;
     border-top: 1px solid #C7A383;
     border-bottom: 1px dotted #C7A383;
-
-    background-color: #FAECDA;
     color: #8A715B;
     font-size: 25px;
     /* margin: 15px 0px 0px 0px; */
@@ -125,16 +137,18 @@
 
 .taskContainer {
     padding: 15px;
-
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    background-color: #fae5ca;
+    border-radius: 10px 10px 0 0;
 }
 
 .taskSubContainer {
     padding: 10px 0px 10px 0px;
     display: flex;
     align-items: center;
+    background-color: #fae5ca;
 }
 
 .descripLabel, .dueDateLabel, .isCompletedLabel, .contactsLabel, .listLabel {
@@ -143,6 +157,11 @@
     font-weight: bold;
     width: fit-content;
     color: #8A715B;
+    background-color: #fae5ca;
+}
+
+#description, #dueDate, #givenTo, #title {
+    background-color: #faedd9;
 }
 
 .descrip {
@@ -205,10 +224,12 @@
     margin: 20px 10px 20px 10px;
     padding: 15px;
     border-radius: 25px;
-    background-color: #FAECDA;
+    background-color: #fae5ca;
     border: 1px solid #8A715B;
     font-size: 15px;
     padding: 10px;
+    min-height: 500px;
+    min-width: 275px;
 
     color: #8A715B;
 }
@@ -254,6 +275,7 @@
 .task-completed-container, .due-container {
     display: flex;
     align-items: center;
+    margin: 5px 5px 5px 0;
 }
 
 /* Task completed + Due + Comments  */
@@ -268,10 +290,6 @@
     margin: 0;
     display: inline-block;
     /* align-items: center; */
-}
-
-.task-completed-label {
-    margin-bottom: 1px;
 }
 
 .completedTask {
@@ -291,8 +309,7 @@
 
 /* Comments section header  */
 .comment-header {
-    margin-top: 2px;
-    margin-bottom: 0;
+    margin: 0 5px 5px 0;
 }
 
 /* Enter new comment field  */
@@ -309,6 +326,7 @@
     padding: 3px;
     border-radius: 5px;
     width: 100%;
+    padding: 5px;
 
     color: #C7A383;
 }
@@ -327,31 +345,130 @@
     color: #8A715B;
 }
 
+.add-comment-butt:hover {
+    background-color: #8A715B;
+    color: #FAECDA;
+}
+
+.add-comment-butt:hover {
+    box-shadow: inset 0 0 3px #6d5947;
+}
+
 /* Populated comments container  */
 .comment-container {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+
+    border: 1px solid #9fcf88;
+    border-radius: 10px;
+    padding: 3px;
+    margin: 5px 0;
 }
 
 .updated-At {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 4px 0 1px 6px;
+    /* text-align: center; */
 }
 
+.comment-date {
+    display: flex;
+    justify-content: center;
+    font-size: 12.5px;
+    padding-top: 1px;
+    margin-right: 3px;
+}
+
+/* Comments: edit + delete button container  */
+.comment-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+/* Comments: class of each edit and delete buttons  */
 .comment-butts {
-    border: 1px solid #8A715B;
+    display: none;
+    border: none;
+    padding: 0 3px;
     font-size: 12px;
-    padding: 3px;
-    border-radius: 5px;
 
     color: #8A715B;
 }
 
-.createdAt {
-    font-size: 7px;
+/* Display the edit/delete comment buttons when hovering over comment container  */
+.comment-container:hover .comment-butts {
+    display: block;
 }
 
+/* Container of the edit comment pop up  */
+.edit-comment {
+    display: flex;
+    margin-top: 3px;
+}
+
+.edit-comment-field, .submit-edit-comment-butt {
+    border: 1px solid #8A715B;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.edit-comment-field {
+    width: 100%;
+    margin-right: 3px;
+    padding: 5px;
+
+    color: #C7A383;
+}
+
+.submit-edit-comment-butt {
+    white-space: nowrap;
+    padding: 3px;
+
+    color: #8A715B;
+}
+
+.task-butts:hover, .submit-edit-comment-butt:hover {
+    background-color: #C7A383;
+    color: #FAECDA;
+}
+
+.task-butts:active, .submit-edit-comment-butt:active {
+    box-shadow: inset 0 0 3px #8A715B;
+}
+
+.edit-comment-butt:hover, .delete-comment-butt:hover {
+    color: #4d3f34;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.edit-comment-butt:active, .delete-comment-butt:active {
+    transform: scale(0.98);
+}
+
+/* Comment user + message container  */
+.comment-user-message {
+    margin: 3px 3px 3px 5px;
+}
+
+/* Comment user name */
+.comment-user {
+    background-color: #9fcf88;
+    font-size: 13px;
+    padding: 5px 2px 5px 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+
+    color: cornsilk;
+}
+
+.comment-message {
+    font-size: 14px;
+    color: #534335;
+}
 
 /* %%%%%%%%%%%%%%%%%%%%% Main section list: Tasks %%%%%%%%%%%%%%%%%%%%% */
 /* Part of mainContainer div */
@@ -369,13 +486,24 @@
     width: 100%;
 }
 
+.task-list-header {
+    padding: 10px 0;
+}
+
+.task-check-box {
+    background: transparent;
+}
+
 .task-info:hover {
-    background-color: #8A715B;
+    padding: 3px;
+    border-radius: 10px;
+    background-color: #E0A979;
     cursor: pointer;
 }
 
 .task-check-box:hover {
-    background-color: #8A715B;
+    padding: 3px;
+    background-color: #E0A979;
     cursor: pointer;
 }
 
@@ -403,7 +531,7 @@
     background-color: #C7A383;
     color: #FFFFFF;
     font-size: 12px;
-    padding: 20px;
+    padding: 25px;
 
     display: flex;
     flex-direction: column;
@@ -418,13 +546,15 @@
 
 ul.default-tasks > li {
     list-style-type: none;
-    padding-left: 10px;
 }
 
 ul.default-tasks > li:hover {
     background-color: #8A715B;
+    padding-left: 10px;
     cursor: pointer;
 }
+
+
 
 
 /* %%%%%%%%%%%%%%%%%%%%% Second sidebar (right): Summary %%%%%%%%%%%%%%%%%%%%% */
@@ -456,16 +586,20 @@ ul.default-tasks > li:hover {
     align-items: center;
     margin: 10px;
 
-    font-size: 20px;
+    font-size: 16x;
     background-color: #E0A979;
     opacity: 0.7;
     padding: 12px;
     border-radius: 5px;
+}
 
-    color: rgb(255, 253, 245);
+.tasksDueValue {
+    font-weight: bold;
+    color: cornsilk;
 }
 
 #tasksOverdueValue {
+    font-weight: bold;
     color: #eb4d4d;
 }
 
@@ -482,14 +616,15 @@ ul.default-tasks > li:hover {
     top: 50%;
     left: 50%;
     background-color: #E0A979;
-    padding: 22px 30px;
+    padding: 21px 30px;
     margin-left: -225px;
     margin-top: -100px;
     width: 450px;
     height: 200px;
     border: 2px solid #C7A383;
-    border-radius: 5px;
-    box-shadow: 5px 5px 5px rgba(0,0,0,.5);
+    border-radius: 10px;
+    /* box-shadow: 5px 5px 5px rgba(0,0,0,.5); */
+    box-shadow: 0 0 5px #8A715B;
     box-sizing: border-box;
 }
 
@@ -523,16 +658,17 @@ ul.default-tasks > li:hover {
 
 .contacts-form {
     background-color: #E0A979 !important;
+    color: #8A715B;
 }
 
 .form_error {
     font-size: 8px;
     background-color: #E0A979;
-    color: #333333;
+    color: #8A715B;
 }
 
 .form-error-p {
-    font-size: 9px;
+    font-size: 10px;
     background-color: #E0A979;
     color: red;
     margin: -5px 0px 0px 0px;
@@ -541,7 +677,7 @@ ul.default-tasks > li:hover {
 .p-form {
     font-size: 14px;
     background-color: #E0A979;
-    color: #333333;
+    color: #8A715B;
     margin: 10px 0px;
 }
 
@@ -561,6 +697,8 @@ ul.default-tasks > li:hover {
     border: 1px solid #8A715B;
 }
 
+
+
 .add-lists {
     color: #ffffff !important;
     text-decoration: none;
@@ -568,13 +706,14 @@ ul.default-tasks > li:hover {
     border-radius: 3px;
     padding: 2px 4px;
     justify-content: center;
-    display: grid;
+    display: flex;
 }
 
 .add-lists:hover {
     background-color: white;
     color: #8A715B !important;
     border: 1px solid #8A715B;
+    cursor: pointer;
 }
 
 .addNewList {
@@ -601,6 +740,11 @@ ul.default-tasks > li:hover {
     list-style-image: url("../images/white_bean_icon.png");
 }
 
+.list-lists:hover {
+    background-color: #8A715B;
+    padding-left: 10px;
+}
+
 .list-grid {
     display: grid;
     grid-template-columns: 90% 10%;
@@ -622,20 +766,34 @@ ul.default-tasks > li:hover {
     margin: 6px 0px;
 }
 
+
+
+.list-grid:hover .delete-list {
+    display: grid;
+    cursor: pointer;
+}
+
+.list-grid:hover .delete-contact {
+    display: grid;
+    cursor: pointer;
+}
+
 .delete-list {
     color: #ffffff !important;
     text-decoration: none;
     border: 1px solid white;
     border-radius: 5px;
-    padding: 1px 6px 3px 6px;
+    padding: 1px 6px 1px 6px;
     justify-content: center;
-    display: grid;
+    display: none;
+
 
 }
 .delete-list:hover {
     background-color: white;
     color: #8A715B !important;
     border: 1px solid #8A715B;
+
 }
 
 .delete-contact {
@@ -643,9 +801,9 @@ ul.default-tasks > li:hover {
     text-decoration: none;
     border: 1px solid white;
     border-radius: 3px;
-    padding: 1px 6px 3px 6px;
+    padding: 1px 6px 1px 6px;
     justify-content: center;
-    display: grid;
+    display: none;
 
 }
 
@@ -665,19 +823,35 @@ ul.default-tasks > li:hover {
 
 }
 
+.contact-list:hover {
+    background-color: #8A715B;
+    padding-left: 10px;
+}
+
 .contact-sidebar {
     display: grid;
     grid-template-columns: 90% 10%;
     color: #ffffff;
-    margin-top: 5px;
     font-weight: bold;
+    padding: 15px 0px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    border-top: 1px solid rgba(255, 255 , 255, .3);
+}
+
+.contact-list-sidebar {
+    border-bottom: 1px solid rgba(255, 255 , 255, .3);
+    padding-bottom: 12px;
 }
 
 .list-sidebar {
     display: grid;
     grid-template-columns: 90% 10%;
     color: #ffffff;
+    padding: 15px 0px;
+    margin-top: 20px;
     margin-bottom: 5px;
+    border-top: 1px solid rgba(255, 255 , 255, .3);
 }
 
 .addSubmitButton {
@@ -697,14 +871,14 @@ ul.default-tasks > li:hover {
 }
 .add-contact-input {
     display: grid;
-    margin: 5px 0px 20px 0px;
+    margin: 5px 0px 15px 0px;
 }
 
 
 .h2-add-contact {
     font-size: 20px;
     font-weight: bold;
-    color: #333333;
+    color: #8A715B;
     background-color: #E0A979;
 }
 
@@ -721,11 +895,29 @@ ul.default-tasks > li:hover {
 }
 
 .add-contact-buttons {
-    border-radius: 3px;
+    /* border-radius: 3px;
     height: 35px;
     padding: 0px 15px;
-    border: 1px solid rgba(0,0,0,.1);
-    font-weight: bold;
+    border: 1px solid rgba(0,0,0,.1); */
+
+    border: 1px solid #8A715B;
+    font-size: 13px;
+    padding: 7px;
+    border-radius: 5px;
+
+    color: #8A715B;
+}
+
+#email {
+    border: 1px solid #8A715B;
+    font-size: 13px;
+    padding: 3px;
+    border-radius: 5px;
+    width: 100%;
+    padding: 7px;
+    margin-top: 3px;
+
+    color: #8A715B;
 }
 
 .contact-input {
@@ -748,8 +940,6 @@ ul.default-tasks > li:hover {
     align-items: flex-start;
 }
 
-
-
 .taskList {
     display: grid;
     grid-template-columns: 90% 10%;
@@ -770,12 +960,20 @@ ul.default-tasks > li:hover {
     background-color: #FAECDA;
     border: 1px solid #C7A383;
     border-radius: 10px;
-    box-shadow: 0 0 5px #C7A383;
-    padding: 0.5em;
+    box-shadow: 0 0 5px #8A715B;
+    padding: 7px;
     position: absolute;
     right: 5px;
     top: 2.5em;
     width: 200px;
+    z-index: 2;
+    width: fit-content;
+    min-width: 215px;
+    min-height: 230px;
+}
+
+.settingGroup:hover {
+    cursor: default;
 }
 
 .settingHide {
@@ -789,13 +987,12 @@ ul.default-tasks > li:hover {
     margin-bottom: 5px;
 }
 
-/* #settings:hover {
-    background-color:blue;
-} */
-
-#userName {
-    padding-left: 5px;
-    font-weight: bold;
+.settingUserInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 7px;
 }
 
 .settingHeader, .settingListGroup, #signOut {
@@ -803,7 +1000,12 @@ ul.default-tasks > li:hover {
     color: #8A715B;
 }
 
-.settingHeader {
+#userName {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#userEmail {
     font-size: 15px;
 }
 
@@ -813,19 +1015,107 @@ ul.default-tasks > li:hover {
 
 .settingList a {
     text-decoration: none;
-    font-size: 12px;
+    font-size: 13px;
+}
+
+.sLGray {
+    color: #a3a2a2;
 }
 
 #signOut {
     border: none;
-    font-size: 12px;
+    font-size: 13px;
     padding: 0;
 }
 
-.settingList:hover {
+.sLSO:hover {
     color: yellowgreen;
 }
 
 #signOut:hover {
     color: yellowgreen;
+    cursor: pointer;
+}
+
+/* %%%%%%%%%%%%%%%%%%%%% Thien needs to clean up %%%%%%%%%%%%%%%%%%%%% */
+
+.edit-list-pop{
+    position: absolute;
+    z-index: 9;
+    top: 50%;
+    left: 50%;
+    background-color: #E0A979;
+    padding: 34px 30px;
+    margin-left: -225px;
+    margin-top: -100px;
+    width: 450px;
+    height: 200px;
+    border: 2px solid #C7A383;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,.5);
+    box-sizing: border-box;
+}
+
+.edit-form{
+
+    background-color: #FAECDA;
+    border-radius: 10px;
+    border: 1px solid #8A715B;
+    box-sizing: border-box;
+
+}
+
+.edit-task {
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.modal-header {
+    font-size: 20px;
+    font-weight: bold;
+    color: #8A715B;
+    background-color: #E0A979;
+    margin-bottom: 10px;
+}
+
+.modal-input {
+    border: 1px solid #8A715B;
+    font-size: 13px;
+    padding: 3px;
+    border-radius: 5px !important;
+    width: 100%;
+    padding: 7px;
+    margin-top: 3px;
+    color: #8A715B;
+}
+
+.modal-form {
+    background-color: #E0A979 !important;
+    color: #8A715B;
+}
+
+.button-modal {
+    border: 1px solid #8A715B;
+    font-size: 13px;
+    padding: 7px;
+    border-radius: 5px;
+    color: #8A715B;
+    margin-top: 20px;
+}
+
+.task-bottom {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    font-weight: bold;
+    width: 19px;
+    padding: 0 0 2px 0;
+    margin-bottom: 5px;
+    position: relative;
+    top: 5%;
+    left: 3%;
+}
+
+.task-label-headers {
+    color: #8A715B;
 }

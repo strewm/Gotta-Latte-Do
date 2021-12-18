@@ -39,20 +39,22 @@ export const editListEventListener = async () => {
 
           const { listName } = await listToUpdate.json();
 
-          const listTitle = document.querySelector('.list-title');
-          listTitle.innerHTML = `
-            <h2>Edit List Name</h2>
+          const listForm = document.querySelector('.updateList');
+          listForm.innerHTML = `
+          <div class="cloud"></div>
+          <div class="edit-list-pop">
+            <h2 class="modal-header">Edit List Name</h2>
             <div id='list-edit'>
-              <form class='list-edit-form'>
-              <input type='text' class='list-edit' id='title' name='title' placeholder=${listName.title}>
+              <form class='list-edit-form modal-form'>
+              <input type='text' class='list-edit modal-input' id='title' name='title' placeholder=${listName.title}>
               <label for='title' class='list-label'${listName.title} </label>
               <div>
-              <button class='submitButton' id='${listId}'>Submit</button>
-              </div>
-              <div>
-              <button class='editCancelButton' id='${listId}'>Cancel</button>
+              <button class='submitButton button-modal' id='${listId}'>Submit</button>
+
+              <button class='editCancelButton button-modal' id='${listId}'>Cancel</button>
               </div>
               </form>
+            </div>
             </div>
           `
 
@@ -73,12 +75,10 @@ export const editListEventListener = async () => {
 
             const { list } = await updatedList.json();
 
-            listTitle.innerHTML = `
-              <div class="list-title" id="${listId}">
-                <h2 class="task-list-header">${list.title}</h2>
-                <button class="edit-list-button" id="${listId}">Edit List</button>
-              </div>
-            `;
+            const listHeader = document.querySelector('.task-list-header');
+            listHeader.innerText = list.title;
+
+            listForm.innerHTML = '';
             await fetchLists();
           })
 
@@ -87,12 +87,7 @@ export const editListEventListener = async () => {
         cancelButton.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
-          listTitle.innerHTML = `
-            <div class="list-title" id="${listId}">
-              <h2 class="task-list-header">${listName.title}</h2>
-              <button class="edit-list-button" id="${listId}">Edit List</button>
-            </div>
-          `;
+          listForm.innerHTML = '';
         })
       })
 }
@@ -137,7 +132,7 @@ export const dateFormatter = (task) => {
   }
 
   if (diff > 0) {
-      return due = 'OVERDUE!'
+      return due = 'A Little Latte'
   }
 
   return due;

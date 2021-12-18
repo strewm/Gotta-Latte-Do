@@ -5,7 +5,7 @@ a {
 
 .mainPage {
     display: grid;
-    grid-template-rows: 1fr 9fr 2fr;
+    grid-template-rows: 0.5fr 8fr 2fr;
     grid-template-areas:
     "header"
     "main"
@@ -31,8 +31,15 @@ a {
     font-size: 15px;
 }
 
+/* .nav-logo-first {
+    width: 50x;
+    height: auto;
+    margin: 15px;
+    margin-left: 50px;
+} */
+
 .nav-logo-img {
-    width: 100px;
+    width: 50px;
     height: auto;
     margin: 15px;
     margin-left: 50px;
@@ -49,6 +56,10 @@ li {
     list-style: none;
     padding: 5px;
     margin: 10px;
+}
+
+.sublist:hover {
+    cursor: default;
 }
 
 /* Login navbar button  */
@@ -101,7 +112,7 @@ li {
 }
 
 .inner-image {
-    margin: 75px 50px 50px 50px;
+    margin: 65px 50px 50px 50px;
     width: 500px;
     height: auto;
 }
@@ -128,6 +139,7 @@ li {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 30px;
 }
 
 h1 {
@@ -168,6 +180,12 @@ h1 {
 
     color: #87b9d6;
 }
+
+.creators {
+    display: flex;
+}
+
+
 
 
 

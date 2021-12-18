@@ -88,7 +88,7 @@ export const fetchIncompleteTasks = async () => {
 
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
-  <h2 class="task-list-header"><strong>${user.username}' s</strong> incomplete tasks.</h2>
+  <h2 class="task-list-header"><strong>${user.username}'s</strong> incomplete tasks.</h2>
   `
   const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
     if (isCompleted === true) {
@@ -126,7 +126,7 @@ const fetchCompletedTasks = async () => {
 
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
-  <h2 class="task-list-header"><strong>${user.username}' s</strong> completed tasks.</h2>
+  <h2 class="task-list-header"><strong>${user.username}'s</strong> completed tasks.</h2>
   `
   const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
     if (isCompleted === true) {
@@ -192,7 +192,7 @@ const search = async (searchValue) => {
 }
 
 
-// Change the color of incomplete/complete tabs when fetching their respective lists
+// // Change the color of incomplete/complete tabs when fetching their respective lists
 // function changeColor() {
 //   this.style.backgroundColor = "#FAECDA";
 //   this.style.color = "#8A715B";
@@ -353,7 +353,10 @@ form.addEventListener("submit", async (e) => {
           }
 
         form.reset();
-        await fetchTasks();
+
+        const tasksDue = document.querySelector('.tasksDueValue');
+        tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
+
     } catch (err) {
         handleErrors(err)
     }
@@ -488,11 +491,11 @@ export const fetchLists = async () => {
 
   const listContainer = document.querySelector(".lists-grid-container");
   const listHtml = allLists.map(({ id, title }) => `
-  <div class='list-grid'>
+  <div id="delete-hover-parent" class='list-grid'>
   <div class="list-info">
     <li class='list-lists' id=${id}>${title}</li>
   </div>
-  <div> <a class='delete-list' id=${id}> - </a> </div>
+  <div > <a class='delete-list' id=${id}> - </a> </div>
   </div>
   `)
 
@@ -514,7 +517,7 @@ export const fetchLists = async () => {
         const listTitle = `
         <div class="list-title" id="${listId}">
           <h2 class="task-list-header">${list.innerText}</h2>
-          <button class="edit-list-button" id="${listId}">Edit List</button>
+          <button class="edit-list-button button-modal" id="${listId}">Edit List</button>
         </div>
         `
 

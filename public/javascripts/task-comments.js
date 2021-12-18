@@ -18,7 +18,7 @@ const deleteTask = async (taskId) => {
         if (!res.ok) {
             throw res;
         }
-        await fetchTasks(taskId);
+        await fetchTasks();
         return;
         } catch (err) {
             handleErrors(err)
@@ -165,23 +165,31 @@ export const fetchTask = async (taskId) => {
         const taskInfo = document.querySelector(`.task-${task.id}`);
         taskInfo.hidden = true;
         editForm.hidden = true;
+
+        const tasksDue = document.querySelector('.tasksDueValue');
+        tasksDue.innerText = (Number(tasksDue.innerText) - 1).toString()
+
     })
 
 
     const form = document.createElement('form');
     form.setAttribute('class', 'edit-task');
     form.innerHTML = `
-        <label for='description'></label>
-        <input type='text' placeholder='${task.description}' id='description-task-${task.id}' class='description-task' name='description' required></input>
-        <label for='dueDate'>Due Date</label>
-        <input type='date' id='dueDate' name='dueDate' required></input>
-        <label for='isCompleted'>Completed?</label>
+        <label for='description' class="task-label-headers">Edit Task</label>
+        <input type='text' placeholder='${task.description}' id='description-task-${task.id}' class='description-task modal-input' name='description' required></input>
+        <label for='dueDate' class="task-label-headers">Due Date</label>
+        <input type='datetime-local' id='dueDate' class="modal-input" name='dueDate' required></input>
+        <div>
+        <label for='isCompleted' class="task-label-headers">Completed?</label>
         <input type='checkbox' id='checkbox' name='isCompleted'>
-        <button class='editTaskButton' type='submit'>Edit Task
+        </div>
+        <div>
+        <button class='editTaskButton button-modal' type='submit'>Edit Task
+        </div>
     `
 
     const editFormHide = document.createElement('button');
-    editFormHide.setAttribute('class', 'task-butts');
+    editFormHide.setAttribute('class', 'task-butts task-bottom');
     editFormHide.innerText = 'x'
 
     if (!editForm.children.length) {
@@ -248,18 +256,20 @@ export const fetchComments = async (taskId) => {
     const commentsDiv = document.querySelector(`#comments-${taskId}`);
     const commentsHtml = comments.map((comment) => `
         <div class="comment-container-${comment.id} comment-container">
-            <span id='comment-${comment.id}'>
+            <span id='comment-${comment.id}' class='comment-user-message'>
                 <span id='comment-${comment.id}-userId' class='comment-user'>
-                    ${comment.User.username}:
+                    ${comment.User.username}
                 </span>
                 <span id='comment-${comment.id}-message' class='comment-message'>${comment.message}</span>
             </span>
             <div class='updatedAt-${comment.id} updated-At'>
-                <span>${commentDateFormatter(comment.updatedAt)}</span>
-                <span class='comment-buttons-${comment.id} comment-buttons userId-${comment.userId}'>
+                <div class='comment-date'>${commentDateFormatter(comment.updatedAt)}</div>
+                <div class='comment-buttons-${comment.id} comment-buttons userId-${comment.userId}-${comment.id}'>
+                    <div class="comment-buttons-dot comment-butts">•</div>
                     <button class='edit-comment-butt comment-butts' id='${comment.id}'>Edit</button>
+                    <div class="comment-buttons-dot comment-butts">•</div>
                     <button class='delete-comment-butt comment-butts' id='${comment.id}'>Delete</button>
-                </span>
+                </div>
             </div>
         </div>
     `
@@ -273,11 +283,12 @@ export const fetchComments = async (taskId) => {
     const { user } = await userRes.json();
 
     comments.forEach((comment) => {
-        const editDeleteButtons = document.querySelector(`.userId-${comment.userId}`);
+        const editDeleteButtons = document.querySelector(`.userId-${comment.userId}-${comment.id}`);
+
         if (user.id === comment.userId) {
-            editDeleteButtons.hidden = false;
+            editDeleteButtons.style.display="flex";
         } else {
-            editDeleteButtons.hidden = true;
+            editDeleteButtons.style.display="none";
         }
     })
 
@@ -314,7 +325,7 @@ export const fetchComments = async (taskId) => {
                 <form class='edit-comment'>
                     <label for='message'></label>
                     <input type='hidden' name='taskId' id='${taskId}' value=${taskId}></input>
-                    <input name='message' type='text' placeholder='${currMessage}'></input>
+                    <input class='edit-comment-field' name='message' type='text' placeholder='${currMessage}'></input>
                     <button type='submit' class='submit-edit-comment-butt' id='${commentId}'>Edit Comment
                 </form>
             `

@@ -27,8 +27,9 @@ Try making your own to-do lists at our live site: [Gotta Latte Do](https://gotta
 
 	```npm start```
 
+
 7. You can use the Demo user or create an account
 
-# Database
+## Database
 
 ![Database Diagram](./images/db-diagram.png)
