@@ -232,10 +232,8 @@ a {
 /* Contains the (x, edit, delete buttons) + (task info) + (comments)  */
 
 .task-information-animation {
-    transition: all 0.5s;
-    z-index: auto;
+    transition: all 0.50s;
     transform: translateX(-100%);
-    width: 100%;
 
     position: relative;
 }
