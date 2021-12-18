@@ -61,9 +61,10 @@ router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
       [Op.and]: [{
       dueDate: { [Op.lt]: today }
       },
-      { isCompleted: false }
-      ]}
-  })
+      { isCompleted: false },
+      { userId: me }
+      ],
+  }})
 
   res.render('app', { csrfToken: req.csrfToken(), contactsAll, tasks, tasksGivenToMe, currUser, me, myName, myLists, overdue })
 }));
