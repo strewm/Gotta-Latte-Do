@@ -210,7 +210,7 @@ export const fetchTask = async (taskId) => {
         editForm.hidden = true;
         editForm.style.display = "none";
         const cloud = document.querySelector('.cloud');
-        cloud.style.display = "none";
+        cloud.hidden = true;
     })
 
     editTaskButt.addEventListener('click', async(e) => {
