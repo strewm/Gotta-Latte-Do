@@ -1,4 +1,4 @@
-import { handleErrors, dateFormatter, commentDateFormatter } from "./utils.js";
+import { handleErrors, dateFormatter, commentDateFormatter, addTaskInfoListeners } from "./utils.js";
 import { fetchTasks } from './app.js';
 
 
@@ -113,8 +113,6 @@ export const fetchTask = async (taskId) => {
     taskInfo.innerHTML = taskHtml;
     taskInfo.hidden = false;
 
-    taskInfo.classList.add('task-information-animation')
-
     const check = document.querySelector('.completedTask');
 
     if (task.isCompleted) {
@@ -151,9 +149,14 @@ export const fetchTask = async (taskId) => {
     const editForm = document.querySelector('.edit-form');
 
     hideTaskInfoButt.addEventListener('click', async (e) => {
-        taskInfo.hidden = true;
+
         editForm.hidden = true;
         editForm.style.display = 'none';
+
+        taskInfo.classList.remove('task-information-animation')
+
+        await fetchTasks();
+
 
         // let stateObj = { id: "100" }
         // window.history.replaceState(stateObj, "Task", `/app`)

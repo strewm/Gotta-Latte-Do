@@ -167,6 +167,13 @@ export const addTaskInfoListeners = async () => {
       const editForm = document.querySelector('.edit-form');
       editForm.hidden = true;
       editForm.style.display = 'none';
+      const taskInfo = document.querySelector('.fiona');
+
+      if (taskInfo.classList.contains('task-information-animation')) {
+        taskInfo.classList.remove('task-information-animation');
+      } else {
+        taskInfo.classList.add('task-information-animation');
+      }
 
       try {
         await fetchTask(taskId);
