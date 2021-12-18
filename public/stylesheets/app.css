@@ -1073,15 +1073,18 @@ list-add-edited {
     z-index: 9;
     top: 50%;
     left: 50%;
-    background-color: #E0A979;
+    /* background-color: #E0A979; */
+    background-color: #ecb98d;
     padding: 34px 30px;
     margin-left: -225px;
     margin-top: -100px;
     width: 450px;
     height: 200px;
     border: 2px solid #C7A383;
-    border-radius: 5px;
-    box-shadow: 5px 5px 5px rgba(0,0,0,.5);
+    /* border-radius: 5px; */
+    border-radius: 10px;
+    /* box-shadow: 5px 5px 5px rgba(0,0,0,.5); */
+    box-shadow: -5px 5px 5px rgba(0,0,0,.5);
     box-sizing: border-box;
 }
 
@@ -1105,7 +1108,8 @@ list-add-edited {
     font-size: 20px;
     font-weight: bold;
     color: #8A715B;
-    background-color: #E0A979;
+    /* background-color: #E0A979; */
+    background-color: #ecb98d;
     margin-bottom: 10px;
 }
 
@@ -1122,7 +1126,8 @@ list-add-edited {
 }
 
 .modal-form {
-    background-color: #E0A979 !important;
+    /* background-color: #E0A979 !important; */
+    background-color: #ecb98d !important;
     color: #8A715B;
 }
 
