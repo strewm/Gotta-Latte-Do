@@ -190,13 +190,15 @@ export const fetchTask = async (taskId) => {
     `
 
     const editFormHide = document.createElement('button');
-    editFormHide.setAttribute('class', 'task-butts task-bottom');
-    editFormHide.innerText = 'x'
+    editFormHide.classList.add('button-modal');
+    editFormHide.setAttribute('id', 'edit-task-hide')
+    const cancelText = document.createTextNode('Cancel');
+    editFormHide.appendChild(cancelText);
 
 
-    if (!editForm.children.length) {
+    if (!editForm.children[0].length) {
         editForm.appendChild(editFormHide);
-        editForm.appendChild(form);
+
         editForm.hidden = true;
     }
 
@@ -206,6 +208,9 @@ export const fetchTask = async (taskId) => {
         e.preventDefault();
         e.stopPropagation();
         editForm.hidden = true;
+        editForm.style.display = "none";
+        const cloud = document.querySelector('.cloud');
+        cloud.style.display = "none";
     })
 
     editTaskButt.addEventListener('click', async(e) => {
