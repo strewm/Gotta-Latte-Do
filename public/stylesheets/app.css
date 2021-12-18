@@ -917,6 +917,7 @@ ul.default-tasks > li:hover {
     border-radius: 5px;
 
     color: #8A715B;
+    background-color: #fae5ca;
 }
 
 #email {
@@ -939,6 +940,7 @@ ul.default-tasks > li:hover {
     height: 30px;
     border: 1px solid #8A715B;
     color: #8A715B;
+    background-color: #fae5ca;
 }
 
 
