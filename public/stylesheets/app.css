@@ -621,12 +621,12 @@ ul.default-tasks > li:hover {
 
 
 /* %%%%%%%%%%%%%%%%%%%%% Contacts dropdown! %%%%%%%%%%%%%%%%%%%%% */
-.contact-pop {
+.contact-pop, .list-pop {
     position: absolute;
     z-index: 9;
     top: 50%;
     left: 50%;
-    background-color: #E0A979;
+    background-color: #ecb98d;
     padding: 21px 30px;
     margin-left: -225px;
     margin-top: -100px;
@@ -635,11 +635,14 @@ ul.default-tasks > li:hover {
     border: 2px solid #C7A383;
     border-radius: 10px;
     /* box-shadow: 5px 5px 5px rgba(0,0,0,.5); */
-    box-shadow: 0 0 5px #8A715B;
+    box-shadow: -5px 5px 5px rgba(0,0,0,.5);
     box-sizing: border-box;
+
+    /* display: flex;
+    justify-content: center; */
 }
 
-.list-pop {
+/* .list-pop {
     position: absolute;
     z-index: 9;
     top: 50%;
@@ -654,7 +657,7 @@ ul.default-tasks > li:hover {
     border-radius: 5px;
     box-shadow: 5px 5px 5px rgba(0,0,0,.5);
     box-sizing: border-box;
-}
+} */
 
 .cloud {
     z-index: 5;
@@ -668,7 +671,7 @@ ul.default-tasks > li:hover {
 
 
 .contacts-form {
-    background-color: #E0A979 !important;
+    background-color: #ecb98d !important;
     color: #8A715B;
 }
 
@@ -687,7 +690,7 @@ ul.default-tasks > li:hover {
 
 .p-form {
     font-size: 14px;
-    background-color: #E0A979;
+    background-color: #ecb98d;
     color: #8A715B;
     margin: 10px 0px;
 }
@@ -733,6 +736,7 @@ ul.default-tasks > li:hover {
 
 .add-list-buttons-container {
     margin: 10px 0px;
+    background-color: #ecb98d;
 }
 
 .list-list {
@@ -764,10 +768,17 @@ ul.default-tasks > li:hover {
 }
 
 .list-add {
-    width: 100%;
+    /* width: 100%;
     border-radius: 3px !important;
-    margin: 15px 0px;
-
+    margin: 15px 0px; */
+    font-style: italic;
+    border-radius:3px;
+    font-size: 13px;
+    padding: 5px;
+    height: 30px;
+    border: 1px solid #8A715B;
+    color: #8A715B;
+    background-color: #fae5ca;
 }
 
 .lists-grid {
@@ -865,21 +876,16 @@ ul.default-tasks > li:hover {
     border-top: 1px solid rgba(255, 255 , 255, .3);
 }
 
-.addSubmitButton {
-    border-radius: 3px;
-    height: 35px;
-    padding: 0px 15px;
-    border: 1px solid rgba(0,0,0,.1);
-    font-weight: bold;
+.addSubmitButton, .listCancelButton {
+    border: 1px solid #8A715B;
+    font-size: 13px;
+    padding: 7px;
+    border-radius: 5px;
+
+    color: #8A715B;
+    background-color: #fae5ca;
 }
 
-.listCancelButton {
-    font-weight: bold;
-    border-radius: 3px;
-    height: 35px;
-    padding: 0px 15px;
-    border: 1px solid rgba(0,0,0,.1);
-}
 .add-contact-input {
     display: grid;
     margin: 5px 0px 15px 0px;
@@ -889,20 +895,20 @@ ul.default-tasks > li:hover {
 .h2-add-contact {
     font-size: 20px;
     font-weight: bold;
-    color: #8A715B;
-    background-color: #E0A979;
+    color: #7c614a;
+    background-color: #ecb98d;
 }
 
 .h2-add-list {
     font-size: 20px;
     font-weight: bold;
-    color: #333333;
-    background-color: #E0A979;
+    color: #7c614a;
+    background-color: #ecb98d;
 }
 
 .add-contact-buttons-container {
     margin: 10px 0px;
-    background-color: #E0A979;
+    background-color: #ecb98d;
 }
 
 .add-contact-buttons {
@@ -1077,6 +1083,7 @@ ul.default-tasks > li:hover {
     /* box-sizing: border-box; */
     margin: 20px 10px;
     padding: 10px;
+    display: none;
 }
 
 .edit-task {

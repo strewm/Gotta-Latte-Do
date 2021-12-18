@@ -166,6 +166,7 @@ export const addTaskInfoListeners = async () => {
 
       const editForm = document.querySelector('.edit-form');
       editForm.hidden = true;
+      editForm.style.display = 'none';
 
       try {
         await fetchTask(taskId);

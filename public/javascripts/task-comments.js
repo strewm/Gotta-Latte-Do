@@ -151,6 +151,7 @@ export const fetchTask = async (taskId) => {
     hideTaskInfoButt.addEventListener('click', async (e) => {
         taskInfo.hidden = true;
         editForm.hidden = true;
+        editForm.style.display = 'none';
 
         // let stateObj = { id: "100" }
         // window.history.replaceState(stateObj, "Task", `/app`)
@@ -165,6 +166,7 @@ export const fetchTask = async (taskId) => {
         const taskInfo = document.querySelector(`.task-${task.id}`);
         taskInfo.hidden = true;
         editForm.hidden = true;
+        editForm.style.display = 'none';
 
         const tasksDue = document.querySelector('.tasksDueValue');
         tasksDue.innerText = (Number(tasksDue.innerText) - 1).toString()
@@ -212,7 +214,7 @@ export const fetchTask = async (taskId) => {
         const editFormPlaceholder = document.querySelector(`.description-task`);
         editFormPlaceholder.value = task.description;
         editForm.hidden = false;
-
+        editForm.style.display = 'block';
 
             editTaskSubmit.addEventListener('click', async (e) => {
                 e.preventDefault();
