@@ -591,8 +591,8 @@ addList.addEventListener('click', (e) => {
       <input type='text' class='list-add list-add-edited' id='title' name='title' placeholder='New List'>
       <label for='title' class='list-label'</label>
       <div class="add-list-buttons-container">
-        <button class='addSubmitButton'>Submit</button>
-        <button class='listCancelButton'>Cancel</button>
+        <button class='addSubmitButton button-modal'>Submit</button>
+        <button class='listCancelButton button-modal'>Cancel</button>
       </div>
     </form>
   </div>
