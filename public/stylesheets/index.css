@@ -5,7 +5,7 @@ a {
 
 .mainPage {
     display: grid;
-    grid-template-rows: 0.5fr 8fr 2fr;
+    grid-template-rows: 0.5fr 8fr 1fr;
     grid-template-areas:
     "header"
     "main"
@@ -109,6 +109,7 @@ li {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .inner-image {
@@ -224,4 +225,42 @@ When page reaches 815px in width:
         color: cornsilk;
         font-size: 30px;
     }
+}
+
+@media (max-width: 400px), screen and (orientation: portrait) {
+    .mainPage {
+        display: grid;
+        grid-template-rows: 1fr 10fr 0.5fr;
+        grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    }
+
+    .sublist {
+        display: none;
+    }
+
+    .inner-image {
+        margin: 50px 78px 35px 78px;
+        width: 400px;
+        height: auto;
+    }
+
+    .hero-header {
+        margin: 5px;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .hero-p {
+        margin: 5px;
+        font-size: 13px;
+    }
+
+    h1 {
+        color: cornsilk;
+        font-size: 30px;
+    }
+
 }
