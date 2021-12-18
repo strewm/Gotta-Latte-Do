@@ -237,5 +237,30 @@ When page reaches 815px in width:
         "footer";
     }
 
+    .sublist {
+        display: none;
+    }
+
+    .inner-image {
+        margin: 50px 78px 35px 78px;
+        width: 400px;
+        height: auto;
+    }
+
+    .hero-header {
+        margin: 5px;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .hero-p {
+        margin: 5px;
+        font-size: 13px;
+    }
+
+    h1 {
+        color: cornsilk;
+        font-size: 30px;
+    }
 
 }
