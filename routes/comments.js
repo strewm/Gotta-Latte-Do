@@ -16,6 +16,7 @@ router.get('/tasks/:id(\\d+)/comments', asyncHandler(async (req, res) => {
         where: {
             taskId: req.params.id
         },
+        order: [['updatedAt', 'DESC']],
         include: [ {
             model: User
         } ]
