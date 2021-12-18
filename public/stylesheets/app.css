@@ -366,6 +366,12 @@ a {
     background-color: #faedd9;
 }
 
+.add-comment-field:focus {
+    background-color: #e2d0b4;
+    color: #8d8270
+
+}
+
 /* ::placeholder {
     color: #C7A383
 } */
@@ -375,7 +381,7 @@ a {
     font-size: 12px;
     padding: 3px;
     border-radius: 5px;
-    margin: 3px 0 3px 3px;
+    margin: 10px 0 10px 3px;
 
     color: #8A715B;
     background-color: #faedd9;
@@ -386,8 +392,8 @@ a {
     color: #fae5ca;
 }
 
-.add-comment-butt:hover {
-    box-shadow: inset 0 0 3px #6d5947;
+.add-comment-butt:active {
+    box-shadow: inset 0 0 3px #ceaf96;
 }
 
 /* Populated comments container  */
