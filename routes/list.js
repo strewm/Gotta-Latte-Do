@@ -118,10 +118,12 @@ router.get('/given-to-me', asyncHandler(async(req, res) => {
 }))
 
 router.get('/today', asyncHandler(async (req, res) => {
+  const userId = res.locals.userId;
   const start = new Date().setHours(0, 0, 0, 0)
   const end = new Date().setHours(23, 59, 59, 999);
   const tasks = await Task.findAll({
     where: {
+      userId,
       dueDate: {
         [Op.between]: [start, end]
     }}
@@ -130,6 +132,7 @@ router.get('/today', asyncHandler(async (req, res) => {
 }))
 
 router.get('/tomorrow', asyncHandler(async (req, res) => {
+  const userId = res.locals.userId;
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1)
@@ -137,6 +140,7 @@ router.get('/tomorrow', asyncHandler(async (req, res) => {
   const end = tomorrow.setHours(23, 59, 59, 999);
   const tasks = await Task.findAll({
     where: {
+      userId,
       dueDate: {
         [Op.between]: [start, end]
     }}
@@ -145,15 +149,17 @@ router.get('/tomorrow', asyncHandler(async (req, res) => {
 }))
 
 router.get('/overdue', asyncHandler(async (req, res) => {
+  const userId = res.locals.userId;
   const today = new Date().setHours(0, 0, 0, 0);
   const tasks = await Task.findAll({
     where: {
       [Op.and]: [{
       dueDate: { [Op.lt]: today }
       },
-      { isCompleted: false }
-      ]}
-  })
+      { isCompleted: false },
+      { userId }
+      ],
+  }})
   res.json({ tasks })
 }))
 

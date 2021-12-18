@@ -88,9 +88,6 @@ router.post(
     user.hashedPassword = hashedPassword;
 
     await user.save();
-    // const defaultLists = QueryInterface.bulkInsert('Lists', [{
-
-    // }])
 
     const defaultList = await db.List.bulkCreate([{
       userId: user.id,
@@ -145,14 +142,14 @@ router.post(
           return res.redirect("/app");
         }
 
-          errors.push("Login failed for the provided email address and password");
-          res.render("user-login", {
-            title: "Login",
-            email,
-            errors,
-            csrfToken: req.csrfToken(),
-          });
       }
+      errors.push("Login failed for the provided email address and password");
+      res.render("user-login", {
+        title: "Login",
+        email,
+        errors,
+        csrfToken: req.csrfToken(),
+      });
   }));
 
 

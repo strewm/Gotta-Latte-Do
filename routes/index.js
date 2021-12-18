@@ -2,6 +2,7 @@ const express = require('express');
 const { csrfProtection, asyncHandler, handleValidationErrors } = require("../utils");
 const db = require('../db/models');
 const { Contact, Task, User, List } = db;
+const { Op } = require('sequelize');
 
 var router = express.Router();
 
@@ -54,7 +55,18 @@ router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
 
   const currUser = await User.findByPk(me)
 
-  res.render('app', { csrfToken: req.csrfToken(), contactsAll, tasks, tasksGivenToMe, currUser, me, myName, myLists })
+  const today = new Date().setHours(0, 0, 0, 0);
+  const overdue = await Task.findAll({
+    where: {
+      [Op.and]: [{
+      dueDate: { [Op.lt]: today }
+      },
+      { isCompleted: false },
+      { userId: me }
+      ],
+  }})
+
+  res.render('app', { csrfToken: req.csrfToken(), contactsAll, tasks, tasksGivenToMe, currUser, me, myName, myLists, overdue })
 }));
 
 

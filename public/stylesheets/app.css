@@ -100,12 +100,12 @@
     cursor: pointer;
 }
 
-#incomplete:hover + #complete {
+/* #incomplete:hover + #complete {
     background-color: #8A715B;
     color: cornsilk;
-}
+} */
 
-#complete:hover ~ #incomplete {
+#complete:hover + #incomplete {
     background-color: #8A715B;
     color: cornsilk;
 }
