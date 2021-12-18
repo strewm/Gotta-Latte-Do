@@ -98,17 +98,18 @@
 
 .tabbedLink:hover {
     cursor: pointer;
+    background-color: #eccea5;
 }
 
 /* #incomplete:hover + #complete {
-    background-color: #8A715B;
-    color: cornsilk;
-} */
+    background-color: #eccea5;
+    color: 8A715B;
+}
 
 #complete:hover + #incomplete {
-    background-color: #8A715B;
-    color: cornsilk;
-}
+    background-color: #eccea5;
+    color: 8A715B;
+} */
 
 
 /* %%%%%%%%%%%%%%%%%%%%% MAIN: Task area %%%%%%%%%%%%%%%%%%%%% */
@@ -501,6 +502,10 @@
     padding: 10px 0;
 }
 
+.task-list-header strong {
+    background-color: #fae5ca;
+}
+
 .task-check-box {
     background: transparent;
 }
@@ -731,7 +736,8 @@ ul.default-tasks > li:hover {
 }
 
 .addNewList {
-    background-color: #E0A979;
+    background-color: #ecb98d;
+    margin: 20px 0 10px 0;
 }
 
 .add-list-buttons-container {
@@ -767,12 +773,12 @@ ul.default-tasks > li:hover {
     margin: 6px 0px;
 }
 
-.list-add {
+list-add-edited {
     /* width: 100%;
     border-radius: 3px !important;
     margin: 15px 0px; */
     font-style: italic;
-    border-radius:3px;
+    border-radius: 5px;
     font-size: 13px;
     padding: 5px;
     height: 30px;
@@ -878,12 +884,13 @@ ul.default-tasks > li:hover {
 
 .addSubmitButton, .listCancelButton {
     border: 1px solid #8A715B;
+    border-radius: 5px;
     font-size: 13px;
     padding: 7px;
-    border-radius: 5px;
+    height: 30px;
 
     color: #8A715B;
-    background-color: #fae5ca;
+    background-color: #faedd9;
 }
 
 .add-contact-input {
@@ -923,7 +930,7 @@ ul.default-tasks > li:hover {
     border-radius: 5px;
 
     color: #8A715B;
-    background-color: #fae5ca;
+    background-color: #faedd9;
 }
 
 #email {
@@ -940,13 +947,13 @@ ul.default-tasks > li:hover {
 
 .contact-input {
     font-style: italic;
-    border-radius:3px;
+    border-radius: 5px;
     font-size: 13px;
     padding: 5px;
     height: 30px;
     border: 1px solid #8A715B;
     color: #8A715B;
-    background-color: #fae5ca;
+    background-color: #faedd9;
 }
 
 
