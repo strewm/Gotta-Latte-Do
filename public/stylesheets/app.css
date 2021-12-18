@@ -528,6 +528,8 @@
 .logoContainer {
     display: flex;
     justify-content: center;
+    border-bottom: 1px solid rgba(255,255,255,.3);
+    margin-bottom: 15px;
 }
 
 .logo {
@@ -1132,6 +1134,16 @@ list-add-edited {
     color: #8A715B;
     background-color: #FAECDA;
     margin-top: 20px;
+}
+
+.edit-button-modal {
+    border: 1px solid #8A715B;
+    font-size: 13px;
+    padding: 7px;
+    border-radius: 5px;
+    color: #8A715B;
+    background-color: #FAECDA;
+    margin-bottom: 15px;
 }
 
 .task-bottom {
