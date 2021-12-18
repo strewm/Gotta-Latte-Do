@@ -225,15 +225,17 @@ a {
     width: 100%;
 
     position: absolute;
-    right: -100%;
+    left: -100%;
+    opacity: 0;
 
 }
 
 /* Contains the (x, edit, delete buttons) + (task info) + (comments)  */
 
 .task-information-animation {
-    transition: all 0.50s;
-    transform: translateX(-100%);
+    transition: all 0.75s;
+    transform: translateX(100%);
+    opacity: 100;
 
     position: relative;
 }
