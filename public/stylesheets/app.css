@@ -15,8 +15,12 @@
     "sidebar main summary";
 
     height: 100vh;
+    cursor: default;
 }
 
+a {
+    cursor: pointer;
+}
 
 
 /* %%%%%%%%%%%%%%%%%%%%% Navigation bar %%%%%%%%%%%%%%%%%%%%% */
@@ -47,6 +51,7 @@
 #settings:active {
     /* transform: scale(0.98); */
     box-shadow: inset 0 0 5px #8A715B;
+
 }
 
 #searchBar, #settings {
@@ -745,6 +750,7 @@ ul.default-tasks > li:hover {
 .add-list-buttons-container {
     margin: 10px 0px;
     background-color: #ecb98d;
+    margin-top: 30px;
 }
 
 .list-list {
@@ -895,6 +901,10 @@ list-add-edited {
     background-color: #faedd9;
 }
 
+.addSubmitButton:active, .listCancelButton:active {
+    box-shadow: inset 0 0 5px rgb(168, 132, 86);
+}
+
 .add-contact-input {
     display: grid;
     margin: 5px 0px 15px 0px;
@@ -933,6 +943,10 @@ list-add-edited {
 
     color: #8A715B;
     background-color: #faedd9;
+}
+
+.add-contact-buttons:active {
+    box-shadow: inset 0 0 5px rgb(168, 132, 86);
 }
 
 #email {
@@ -1141,6 +1155,10 @@ list-add-edited {
     margin-top: 20px;
 }
 
+.button-modal:active {
+    box-shadow: inset 0 0 5px rgb(168, 132, 86);
+}
+
 .edit-button-modal {
     border: 1px solid #8A715B;
     font-size: 13px;
@@ -1148,7 +1166,12 @@ list-add-edited {
     border-radius: 5px;
     color: #8A715B;
     background-color: #FAECDA;
+    /* background-color: #C7A383; */
     margin-bottom: 15px;
+}
+
+.edit-button-modal:active {
+    box-shadow: inset 0 0 5px rgb(168, 132, 86);
 }
 
 .task-bottom {
