@@ -176,7 +176,7 @@ export const fetchTask = async (taskId) => {
     form.setAttribute('class', 'edit-task');
     form.innerHTML = `
         <label for='description' class="task-label-headers">Edit Task</label>
-        <input type='text' placeholder='${task.description}' id='description-task-${task.id}' class='description-task modal-input' name='description' required></input>
+        <input type='text' value='${task.description}' id='description-task-${task.id}' class='description-task modal-input' name='description' required></input>
         <label for='dueDate' class="task-label-headers">Due Date</label>
         <input type='date' id='dueDate' class="modal-input" name='dueDate' required></input>
         <div>
