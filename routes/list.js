@@ -123,6 +123,7 @@ router.get('/today', asyncHandler(async (req, res) => {
   const end = new Date().setHours(23, 59, 59, 999);
   const tasks = await Task.findAll({
     where: {
+      userId,
       dueDate: {
         [Op.between]: [start, end]
     }}
@@ -139,6 +140,7 @@ router.get('/tomorrow', asyncHandler(async (req, res) => {
   const end = tomorrow.setHours(23, 59, 59, 999);
   const tasks = await Task.findAll({
     where: {
+      userId,
       dueDate: {
         [Op.between]: [start, end]
     }}
