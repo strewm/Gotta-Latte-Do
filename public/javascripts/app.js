@@ -586,12 +586,12 @@ addList.addEventListener('click', (e) => {
   <h2 class="h2-add-list">Add List</h2>
   <div id='list-add'>
     <form class='addNewList'>
-    <input type='text' class='list-add' id='title' name='title' placeholder='New List'>
-    <label for='title' class='list-label'</label>
-    <div class="add-list-buttons-container">
-    <button class='addSubmitButton'>Submit</button>
-    <button class='listCancelButton'>Cancel</button>
-    </div>
+      <input type='text' class='list-add list-add-edited' id='title' name='title' placeholder='New List'>
+      <label for='title' class='list-label'</label>
+      <div class="add-list-buttons-container">
+        <button class='addSubmitButton'>Submit</button>
+        <button class='listCancelButton'>Cancel</button>
+      </div>
     </form>
   </div>
   </div>
