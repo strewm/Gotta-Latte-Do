@@ -227,7 +227,6 @@
     background-color: #fae5ca;
     border: 1px solid #8A715B;
     font-size: 15px;
-    padding: 10px;
     min-height: 500px;
     min-width: 275px;
 
@@ -250,6 +249,7 @@
     border-radius: 5px;
 
     color: #8A715B;
+    background-color: #faedd9;
 }
 
 /* X button  */
@@ -270,6 +270,7 @@
     font-weight: bold;
     font-size: 20px;
     margin: 10px 0 10px 0;
+    background-color: #fae5ca;
 }
 
 .task-completed-container, .due-container {
@@ -282,7 +283,7 @@
 .task-completed-label, .due-container-label, .comment-header {
     border: 1px solid #8A715B;
     background-color: #8A715B;
-    color: #FAECDA;
+    color: #fae5ca;
     font-size: 12px;
     padding: 4px;
     border-radius: 5px;
@@ -305,6 +306,7 @@
     height: fit-content;
     font-size: 14px;
     margin: 5px;
+    background-color: #fae5ca;
 }
 
 /* Comments section header  */
@@ -318,6 +320,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    background-color: #fae5ca;
 }
 
 .add-comment-field {
@@ -329,6 +332,7 @@
     padding: 5px;
 
     color: #C7A383;
+    background-color: #faedd9;
 }
 
 /* ::placeholder {
@@ -343,11 +347,12 @@
     margin: 3px 0 3px 3px;
 
     color: #8A715B;
+    background-color: #faedd9;
 }
 
 .add-comment-butt:hover {
     background-color: #8A715B;
-    color: #FAECDA;
+    color: #fae5ca;
 }
 
 .add-comment-butt:hover {
@@ -407,12 +412,14 @@
 .edit-comment {
     display: flex;
     margin-top: 3px;
+    background-color: #fae5ca;
 }
 
 .edit-comment-field, .submit-edit-comment-butt {
     border: 1px solid #8A715B;
     font-size: 12px;
     border-radius: 5px;
+    background-color: #FAECDA;
 }
 
 .edit-comment-field {
@@ -432,11 +439,15 @@
 
 .task-butts:hover, .submit-edit-comment-butt:hover {
     background-color: #C7A383;
-    color: #FAECDA;
+    color: #fae5ca;
 }
 
 .task-butts:active, .submit-edit-comment-butt:active {
     box-shadow: inset 0 0 3px #8A715B;
+}
+
+.edit-comment-butt, .delete-comment-butt {
+    background-color: #fae5ca;
 }
 
 .edit-comment-butt:hover, .delete-comment-butt:hover {
@@ -998,6 +1009,7 @@ ul.default-tasks > li:hover {
 .settingHeader, .settingListGroup, #signOut {
     list-style-type: none;
     color: #8A715B;
+    background-color: #FAECDA;
 }
 
 #userName {
@@ -1057,17 +1069,18 @@ ul.default-tasks > li:hover {
 }
 
 .edit-form{
-
-    background-color: #FAECDA;
-    border-radius: 10px;
+    background-color: #fae5ca;
+    border-radius: 25px;
     border: 1px solid #8A715B;
-    box-sizing: border-box;
-
+    /* box-sizing: border-box; */
+    margin: 20px 10px;
+    padding: 10px;
 }
 
 .edit-task {
     padding: 15px;
     border-radius: 15px;
+    background-color: #fae5ca;
 }
 
 .modal-header {
@@ -1087,6 +1100,7 @@ ul.default-tasks > li:hover {
     padding: 7px;
     margin-top: 3px;
     color: #8A715B;
+    background-color: #FAECDA;
 }
 
 .modal-form {
@@ -1100,6 +1114,7 @@ ul.default-tasks > li:hover {
     padding: 7px;
     border-radius: 5px;
     color: #8A715B;
+    background-color: #FAECDA;
     margin-top: 20px;
 }
 
@@ -1118,4 +1133,5 @@ ul.default-tasks > li:hover {
 
 .task-label-headers {
     color: #8A715B;
+    background-color: #fae5ca;
 }
