@@ -113,6 +113,8 @@ export const fetchTask = async (taskId) => {
     taskInfo.innerHTML = taskHtml;
     taskInfo.hidden = false;
 
+    taskInfo.classList.add('task-information-animation')
+
     const check = document.querySelector('.completedTask');
 
     if (task.isCompleted) {
