@@ -169,14 +169,18 @@ export const addTaskInfoListeners = async () => {
       editForm.style.display = 'none';
       const taskInfo = document.querySelector('.fiona');
 
-      if (taskInfo.classList.contains('task-information-animation')) {
-        taskInfo.classList.remove('task-information-animation');
-      } else {
-        taskInfo.classList.add('task-information-animation');
-      }
 
       try {
         await fetchTask(taskId);
+
+        if (taskInfo.classList.contains('task-information-animation') && e.target.id !== taskId) {
+          taskInfo.classList.remove('task-information-animation');
+        } else {
+          taskInfo.hidden = false;
+          setTimeout(() => {
+            taskInfo.classList.add('task-information-animation');
+          }, 0)
+        }
 
         const createComment = document.querySelector('.create-comment');
 

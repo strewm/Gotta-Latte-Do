@@ -152,14 +152,11 @@ export const fetchTask = async (taskId) => {
 
         editForm.hidden = true;
         editForm.style.display = 'none';
-
+        taskInfo.hidden = true;
         taskInfo.classList.remove('task-information-animation')
 
         await fetchTasks();
 
-
-        // let stateObj = { id: "100" }
-        // window.history.replaceState(stateObj, "Task", `/app`)
     })
 
     const deleteTaskButt = document.querySelector(`#delete-task-button-${task.id}`);
