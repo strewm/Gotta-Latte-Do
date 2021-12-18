@@ -193,6 +193,7 @@ export const fetchTask = async (taskId) => {
     editFormHide.setAttribute('class', 'task-butts task-bottom');
     editFormHide.innerText = 'x'
 
+
     if (!editForm.children.length) {
         editForm.appendChild(editFormHide);
         editForm.appendChild(form);
@@ -214,6 +215,8 @@ export const fetchTask = async (taskId) => {
         editFormPlaceholder.value = task.description;
         editForm.hidden = false;
         editForm.style.display = 'block';
+        const cloud = document.querySelector('.cloud');
+        cloud.hidden = false;
 
             editTaskSubmit.addEventListener('click', async (e) => {
                 e.preventDefault();
@@ -237,6 +240,7 @@ export const fetchTask = async (taskId) => {
                     await editTask(taskId, body);
                     editForm.hidden = true;
                     editForm.style.display = 'none'
+                    cloud.hidden = true;
 
                 } catch (e) {
                     console.error(e);

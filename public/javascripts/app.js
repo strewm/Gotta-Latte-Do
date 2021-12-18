@@ -579,6 +579,8 @@ const addList = document.querySelector('.add-lists');
 addList.addEventListener('click', (e) => {
   e.preventDefault();
   e.stopPropagation();
+  const editForm = document.querySelector('.edit-form');
+  editForm.style.display = 'none';
   const addListForm = document.querySelector('.add-list-form');
   addListForm.innerHTML = `
   <div class="cloud"></div>
