@@ -765,7 +765,15 @@ ul.default-tasks > li:hover {
     border: 1px solid #8A715B;
 }
 
+.delete-boxes {
+    width: 30px;
+    height: 30px;
+}
 
+.add-boxes {
+    width: 28px;
+    height: 35px;
+}
 
 .add-lists {
     color: #ffffff !important;
