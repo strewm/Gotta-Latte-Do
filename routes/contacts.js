@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { check } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const db = require('../db/models');
 const { asyncHandler, csrfProtection, handleValidationErrors } = require('../utils');
 const { Contact, User } = db;
@@ -31,7 +31,14 @@ const duplicateContact = (value) => {
   return err;
 };
 
-router.post('/', asyncHandler(async (req, res, next) => {
+const contactValidator = [
+  check("email")
+    .exists({checkFalsy: true})
+    .isEmail()
+    .withMessage("Please provide an email address")
+]
+
+router.post('/', contactValidator, asyncHandler(async (req, res, next) => {
   const { email } = req.body;
   const userId = res.locals.userId;
   const userContact = await User.findAll({
@@ -39,27 +46,29 @@ router.post('/', asyncHandler(async (req, res, next) => {
       email
     }
   })
+  const validatorErrors = validationResult(req)
+  console.log(validatorErrors)
+  if (validatorErrors.isEmpty()) {
+    if(userContact.length) {
+      const contactCheck = await Contact.findAll({
+        where: {
+          userId,
+          contactId: userContact[0].id
+        }
+      })
+      if (!contactCheck.length && (userId !== userContact[0].id)) {
+        const contact = await Contact.create({
+          userId,
+          contactId: userContact[0].id
+        })
+        res.status(201).json({ contact })
+      } else {
+        res.status(200).json({})
+      }
 
-if(userContact.length) {
-  const contactCheck = await Contact.findAll({
-    where: {
-      userId,
-      contactId: userContact[0].id
-    }
-  })
-  if (!contactCheck.length && (userId !== userContact[0].id)) {
-    const contact = await Contact.create({
-      userId,
-      contactId: userContact[0].id
-    })
-    res.status(201).json({ contact })
-  } else {
-    next(duplicateContact(email))
-  }
-
-  } else {
-    next(invalidContact(email))
-  }
+  }}else {
+    res.status(200).json({})
+}
 
 }))
 
