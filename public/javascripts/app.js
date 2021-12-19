@@ -357,6 +357,9 @@ form.addEventListener("submit", async (e) => {
         const tasksDue = document.querySelector('.tasksDueValue');
         tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
 
+        await fetchTasks();
+
+
     } catch (err) {
         handleErrors(err)
     }
@@ -517,7 +520,7 @@ export const fetchLists = async () => {
         const listTitle = `
         <div class="list-title" id="${listId}">
           <h2 class="task-list-header">${list.innerText}</h2>
-          <button class="edit-list-button edit-button-modal" id="${listId}">Edit List</button>
+          <button class="edit-list-button edit-button-modal button-modal" id="${listId}">Edit List</button>
         </div>
         `
 
@@ -579,6 +582,8 @@ const addList = document.querySelector('.add-lists');
 addList.addEventListener('click', (e) => {
   e.preventDefault();
   e.stopPropagation();
+  const editForm = document.querySelector('.edit-form');
+  editForm.style.display = 'none';
   const addListForm = document.querySelector('.add-list-form');
   addListForm.innerHTML = `
   <div class="cloud"></div>
@@ -589,8 +594,8 @@ addList.addEventListener('click', (e) => {
       <input type='text' class='list-add list-add-edited' id='title' name='title' placeholder='New List'>
       <label for='title' class='list-label'</label>
       <div class="add-list-buttons-container">
-        <button class='addSubmitButton'>Submit</button>
-        <button class='listCancelButton'>Cancel</button>
+        <button class='addSubmitButton button-modal'>Submit</button>
+        <button class='listCancelButton button-modal'>Cancel</button>
       </div>
     </form>
   </div>

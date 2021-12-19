@@ -1,4 +1,4 @@
-import { handleErrors, dateFormatter, commentDateFormatter } from "./utils.js";
+import { handleErrors, dateFormatter, commentDateFormatter, addTaskInfoListeners } from "./utils.js";
 import { fetchTasks } from './app.js';
 
 
@@ -86,18 +86,19 @@ export const fetchTask = async (taskId) => {
 
             <div class='task-information-${task.id} task-information-container'>
                 <p class='task-info-header'>${task.description}</p>
-                <div class='task-completed-container'>
-                    <label for="completedTask" class='task-completed-label'>Task Completed? </label>
-                    <input type="checkbox" class="completedTask completed-task-${task.id}" name="completedTask">
-                </div>
-                <div class='due-container'>
-                    <p class='due-container-label'>Due: </p>
-                    <p class='due-container-content'>${due}</p>
+                <div class='due-completed-container'>
+                    <div class='due-container'>
+                        <p class='due-container-label'>Due: </p>
+                        <p class='due-container-content'>${due}</p>
+                    </div>
+                    <div class='task-completed-container'>
+                        <label for="completedTask" class='task-completed-label'>Task Completed? </label>
+                        <input type="checkbox" class="completedTask completed-task-${task.id}" name="completedTask">
+                    </div>
                 </div>
             </div>
 
             <div class='comment-container-${task.id}'>
-                <p class='comment-header'>Comments:</p>
                 <form class='create-comment'>
                     <label for='message'></label>
                     <input name='message' type='text' placeholder='Add a comment...' class='add-comment-field'></input>
@@ -149,12 +150,14 @@ export const fetchTask = async (taskId) => {
     const editForm = document.querySelector('.edit-form');
 
     hideTaskInfoButt.addEventListener('click', async (e) => {
-        taskInfo.hidden = true;
+
         editForm.hidden = true;
         editForm.style.display = 'none';
+        taskInfo.hidden = true;
+        taskInfo.classList.remove('task-information-animation')
 
-        // let stateObj = { id: "100" }
-        // window.history.replaceState(stateObj, "Task", `/app`)
+        await fetchTasks();
+
     })
 
     const deleteTaskButt = document.querySelector(`#delete-task-button-${task.id}`);
@@ -171,32 +174,36 @@ export const fetchTask = async (taskId) => {
         const tasksDue = document.querySelector('.tasksDueValue');
         tasksDue.innerText = (Number(tasksDue.innerText) - 1).toString()
 
+        const fionaDiv = document.querySelector('.fiona');
+        fionaDiv.classList.remove('task-information-animation');
+
+
     })
 
 
-    const form = document.createElement('form');
-    form.setAttribute('class', 'edit-task');
-    form.innerHTML = `
-        <label for='description' class="task-label-headers">Edit Task</label>
-        <input type='text' value='${task.description}' id='description-task-${task.id}' class='description-task modal-input' name='description' required></input>
-        <label for='dueDate' class="task-label-headers">Due Date</label>
-        <input type='datetime-local' id='dueDate' class="modal-input" name='dueDate' required></input>
-        <div>
-        <label for='isCompleted' class="task-label-headers">Completed?</label>
-        <input type='checkbox' id='checkbox' name='isCompleted'>
-        </div>
-        <div>
-        <button class='editTaskButton button-modal' type='submit'>Edit Task
-        </div>
+    // const form = document.createElement('form');
+    // form.setAttribute('class', 'edit-task');
+    // const form = document.querySelector('.edit-form')
+    editForm.innerHTML = `
+            <label for='description' class="task-label-headers modal-header">Edit Task</label>
+            <input type='text' value='${task.description}' id='description-task-${task.id}' class='description-task modal-input' name='description' required></input>
+            <label for='dueDate' class="task-label-headers">Due Date</label>
+            <input type='datetime-local' id='dueDate' class="modal-input" name='dueDate' value='${task.dueDate.slice(0, 16)}' required></input>
+            <label for='isCompleted' class="task-label-headers">Completed?</label>
+            <input type='checkbox' id='checkbox' name='isCompleted'>
+            <button class='editTaskButton button-modal' type='submit'>Edit Task
     `
 
     const editFormHide = document.createElement('button');
-    editFormHide.setAttribute('class', 'task-butts task-bottom');
-    editFormHide.innerText = 'x'
+    editFormHide.classList.add('button-modal');
+    editFormHide.setAttribute('id', 'edit-task-hide')
+    const cancelText = document.createTextNode('Cancel');
+    editFormHide.appendChild(cancelText);
 
-    if (!editForm.children.length) {
+
+    if (!editForm.children[0].length) {
         editForm.appendChild(editFormHide);
-        editForm.appendChild(form);
+
         editForm.hidden = true;
     }
 
@@ -206,6 +213,9 @@ export const fetchTask = async (taskId) => {
         e.preventDefault();
         e.stopPropagation();
         editForm.hidden = true;
+        editForm.style.display = "none";
+        const cloud = document.querySelector('.cloud');
+        cloud.hidden = true;
     })
 
     editTaskButt.addEventListener('click', async(e) => {
@@ -215,12 +225,14 @@ export const fetchTask = async (taskId) => {
         editFormPlaceholder.value = task.description;
         editForm.hidden = false;
         editForm.style.display = 'block';
+        const cloud = document.querySelector('.cloud');
+        cloud.hidden = false;
 
             editTaskSubmit.addEventListener('click', async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
 
-                const formData = new FormData(document.querySelector('.edit-task'));
+                const formData = new FormData(document.querySelector('.edit-form'));
                 const description = formData.get('description');
                 const dueDate = formData.get('dueDate');
                 const checkStatus = formData.get('isCompleted');
@@ -237,6 +249,8 @@ export const fetchTask = async (taskId) => {
                 try {
                     await editTask(taskId, body);
                     editForm.hidden = true;
+                    editForm.style.display = 'none'
+                    cloud.hidden = true;
 
                 } catch (e) {
                     console.error(e);
