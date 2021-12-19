@@ -16,7 +16,7 @@ export const fetchLists = async () => {
     <div class="list-info">
       <li class='list-lists' id=${id}>${title}</li>
     </div>
-    <div > <a class='delete-list' id=${id}> - </a> </div>
+    <div class="delete-boxes"> <a class='delete-list' id=${id}> - </a> </div>
     </div>
     `)
 

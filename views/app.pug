@@ -36,7 +36,7 @@ block content
             li.given-to-me Given To Me
             .list-sidebar
               div Lists
-              div
+              div.add-boxes
                 a.add-lists +
               .add-list-form
               div.cloud(hidden)
@@ -53,7 +53,7 @@ block content
             ul
               div.contact-sidebar
                 div.contacts-title Contacts
-                div
+                div.add-boxes
                   a.add-contacts +
               div.contact-list-sidebar
                 li.contact-list(id=`${me}`)=myName.username + " (me)"
@@ -62,7 +62,7 @@ block content
                     div.list-grid
                       div
                         li.contact-list(id=`${contact.id}`)=contact.username
-                      div
+                      div.delete-boxes
                         a.delete-contact(id=`${contact.id}`) -
               div.add-contact-sidebar
         div.tabbedContainer
