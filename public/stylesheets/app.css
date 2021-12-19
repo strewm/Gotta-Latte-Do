@@ -296,22 +296,21 @@ a {
     background-color: #fae5ca;
 }
 
-.task-completed-container, .due-container {
-    display: flex;
-    align-items: center;
-    margin: 5px 5px 5px 0;
-}
-
+/* Contains both of the below containers  */
 .due-completed-container {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
 }
 
-.task-completed-container {
-    width: 50%;
+.task-completed-container, .due-container {
     display: flex;
-    justify-content: space-evenly;
+    align-items: center;
+    margin: 5px 5px 5px 0;
+
+    display: flex;
+    flex-direction: row;
+    width: 50%;
 }
 
 /* Task completed + Due + Comments  */
@@ -329,22 +328,15 @@ a {
 }
 
 .completedTask {
-    margin: 5px;
+    margin: 5px 15px;
     width: 20px;
     height: 20px;
 }
 
-.due-container {
-    display: flex;
-    flex-direction: row;
-    width: 50%;
-}
-
-
 .due-container-content {
     height: fit-content;
     font-size: 14px;
-    margin: 5px 5px 5px 20px;
+    margin: 5px 15px;
     background-color: #fae5ca;
     font-weight: bold;
 }
@@ -583,7 +575,7 @@ a {
     width: 85%;
     min-width: 170px;
     min-height: auto;
-    max-width: 200px;
+    max-width: 175px;
     max-height: auto;
     background-color: #C7A383;
     margin-bottom: 15px;
@@ -596,6 +588,7 @@ a {
     color: #FFFFFF;
     font-size: 12px;
     padding: 25px;
+    min-width: 325px;
 
     display: flex;
     flex-direction: column;
@@ -606,8 +599,6 @@ a {
     color: #E0A979;
 } */
 
-
-
 ul.default-tasks > li {
     list-style-type: none;
 }
@@ -617,7 +608,6 @@ ul.default-tasks > li:hover {
     padding-left: 10px;
     cursor: pointer;
 }
-
 
 
 
@@ -1123,13 +1113,15 @@ list-add-edited {
     padding: 5px;
 }
 
-.settingList a {
+.settingList {
     text-decoration: none;
     font-size: 13px;
 }
 
+
 .sLGray {
     color: #a3a2a2;
+    cursor: not-allowed;
 }
 
 #signOut {

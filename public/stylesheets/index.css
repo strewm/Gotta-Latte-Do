@@ -58,11 +58,13 @@ li {
     margin: 10px;
 }
 
-.sublist:hover {
-    cursor: default;
+/* Navbar item non-links  */
+.sublist {
+    color: #bdc2c4;
+    cursor: not-allowed;
 }
 
-/* Login navbar button  */
+/* Login navbar button/link  */
 .btn-login {
     border: 1px solid cornsilk;
     padding: 10px;
@@ -80,7 +82,7 @@ li {
     box-shadow: inset 0 0 10px #cab699;
 }
 
-/* Sign-up navbar button  */
+/* Sign-up navbar button/link  */
 .btn {
     border: 1px solid cornsilk;
     padding: 10px;
