@@ -3,7 +3,7 @@ import { fetchLists } from "./lists.js"
 import { fetchComments, postComment } from "./comments.js";
 
 
-
+// Error handler
 export const handleErrors = async (err) => {
     if (err.status >= 400 && err.status < 600) {
       const errorJSON = await err.json();
@@ -95,7 +95,8 @@ export const commentDateFormatter = (createdAt) => {
 }
 
 
-
+// Adds all of the event listeners back to each task, intended to be called after
+// each time the task list is updated (add/edit/delete task)
 export const addTaskInfoListeners = async () => {
 
   const taskInfoContainer = document.querySelectorAll('.task-info');
@@ -155,7 +156,8 @@ export const addTaskInfoListeners = async () => {
 }
 
 
-
+// Adds all of the event listeners back to each list item, intended to be called after
+// each time the list is updated (edit/add/delete list)
 export const editListEventListener = async () => {
   const editListTitle = document.querySelector(".edit-list-button");
         editListTitle.addEventListener('click', async(e) => {
