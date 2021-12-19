@@ -1,6 +1,6 @@
 import { fetchTasks } from './fetch-tasks.js';
 import { fetchComments } from './comments.js';
-import { dateFormatter, updateOverDueValue } from './utils.js';
+import { dateFormatter, updateOverDueValue, commentDateFormatter } from './utils.js';
 import { handleErrors } from './utils.js';
 
 // Edit a task
@@ -119,6 +119,16 @@ export const fetchTask = async (taskId) => {
 
     taskInfo.innerHTML = taskHtml;
     taskInfo.hidden = false;
+
+    const displayedDue = document.querySelector('.due-container-content');
+    if (displayedDue.innerText === 'OVERDUE') {
+        displayedDue.style.color = 'red';
+        displayedDue.innerText = commentDateFormatter(task.dueDate)
+        const dueLabel = document.querySelector('.due-container-label');
+        dueLabel.innerText = 'A LITTLE LATTE'
+
+    }
+
 
     const check = document.querySelector('.completedTask');
 

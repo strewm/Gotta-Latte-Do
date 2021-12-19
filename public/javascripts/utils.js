@@ -65,38 +65,40 @@ export const dateFormatter = (task) => {
 
 
   if (due === today) {
-      return due = 'Today';
+      return due = `Today ${commentDateFormatter(task.dueDate).slice(7)}`;
   }
 
   if (due === tomorrow) {
-      return due = 'Tomorrow';
+      return due = `Tomorrow ${commentDateFormatter(task.dueDate).slice(7)}`;
   }
 
   if (diff > 0) {
-      return due = 'A Little Latte'
+      return due = `OVERDUE`
   }
 
-  return due;
+  return commentDateFormatter(task.dueDate);
 }
 
 
 
-// Formats the createdAt date and time of a comment to a nice format, e.g. 'Dec 14 01:28'
-export const commentDateFormatter = (createdAt) => {
-  let createdAtDate = createdAt.slice(0,10).replace(/-/g, '/');
-  createdAtDate = new Date(createdAt);
-  createdAtDate = createdAtDate.toDateString();
-  createdAtDate = createdAtDate.slice(4, 10);
 
-  let createdAtTime = createdAt.slice(11, 16);
+// Formats the updatedAt date and time of a comment to a nice format, e.g. 'Dec 14 01:28'
+export const commentDateFormatter = (updatedAt) => {
+  let updatedAtDate = updatedAt.slice(0,10).replace(/-/g, '/');
+  updatedAtDate = new Date(updatedAt);
+  updatedAtDate = updatedAtDate.toDateString();
+  updatedAtDate = updatedAtDate.slice(4, 10);
 
-  return `${createdAtDate} ${createdAtTime}`
+  let updatedAtTime = updatedAt.slice(11, 16);
+
+  return `${updatedAtDate} ${updatedAtTime}`
 
 }
 
 
-// Adds all of the event listeners back to each task, intended to be called after
-// each time the task list is updated (add/edit/delete task)
+// Adds all of the event listeners back to each task in the current list of taskscontainer.
+// Should be called any time the list of tasks is updated (e.g. when a task is added,
+// edited, deleted; when the list selected changes, when the list is edited).
 export const addTaskInfoListeners = async () => {
 
   const taskInfoContainer = document.querySelectorAll('.task-info');
@@ -156,8 +158,8 @@ export const addTaskInfoListeners = async () => {
 }
 
 
-// Adds all of the event listeners back to each list item, intended to be called after
-// each time the list is updated (edit/add/delete list)
+// Adds event listener to the edit list button when a specific list is selected.
+// Should be called when switching between lists.
 export const editListEventListener = async () => {
   const editListTitle = document.querySelector(".edit-list-button");
         editListTitle.addEventListener('click', async(e) => {
@@ -221,6 +223,9 @@ export const editListEventListener = async () => {
 }
 
 
+
+// Updates the value for "Overdue" found in the upper right corner.
+// Should be called whenever a task is added, edited, or deleted.
 export const updateOverDueValue = async() => {
   const overDueValue = document.querySelector('#tasksOverdueValue');
   const overDueRes = await fetch('/lists/overdue');
