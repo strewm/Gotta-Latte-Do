@@ -7,13 +7,13 @@ const { Contact, User } = db;
 
 
 
-router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
-  if (!res.locals.userId) {
-    res.redirect('/users/login')
-  }
+// router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
+//   if (!res.locals.userId) {
+//     res.redirect('/users/login')
+//   }
 
-  res.render('add-contact')
-}))
+//   res.render('add-contact')
+// }))
 
 const invalidContact = (value) => {
   const err = Error("Invalid input");
@@ -31,6 +31,7 @@ const duplicateContact = (value) => {
   return err;
 };
 
+
 const contactValidator = [
   check("email")
     .exists({checkFalsy: true})
@@ -38,7 +39,10 @@ const contactValidator = [
     .withMessage("Please provide an email address")
 ]
 
+// Add a new contact for logged in user
+
 router.post('/', contactValidator, asyncHandler(async (req, res, next) => {
+
   const { email } = req.body;
   const userId = res.locals.userId;
   const userContact = await User.findAll({
@@ -72,6 +76,8 @@ router.post('/', contactValidator, asyncHandler(async (req, res, next) => {
 
 }))
 
+
+// Delete a contact
 router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
   const contactId = req.params.id;
   if (contactId) {
@@ -82,7 +88,7 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     });
     res.status(204).end();
   } else {
-    next(listNotFoundError(req.params.id))
+    next(invalidContact(req.params.id))
   }
 }))
 
