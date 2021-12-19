@@ -9,7 +9,7 @@ mixin field(labelText, fieldName, fieldValue, fieldType = 'text', placeholder = 
 
 mixin validationErrorSummary(errors)
   if errors
-    div
+    div.errors-container
       p The following error(s) occurred:
       ul
         each error in errors
