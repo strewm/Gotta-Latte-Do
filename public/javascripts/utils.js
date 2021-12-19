@@ -5,33 +5,33 @@ import { fetchComments, postComment } from "./comments.js";
 
 // Error handler
 export const handleErrors = async (err) => {
-    if (err.status >= 400 && err.status < 600) {
-      const errorJSON = await err.json();
-      const errorsContainer = document.querySelector(".errors-container");
-      let errorsHtml = [
-        `
+  if (err.status >= 400 && err.status < 600) {
+    const errorJSON = await err.json();
+    const errorsContainer = document.querySelector(".errors-container");
+    let errorsHtml = [
+      `
           <div class="alert alert-danger">
               Something went wrong. Please try again.
           </div>
         `,
-      ];
-      const { errors } = errorJSON;
-      if (errors && Array.isArray(errors)) {
-        errorsHtml = errors.map(
-          (message) => `
+    ];
+    const { errors } = errorJSON;
+    if (errors && Array.isArray(errors)) {
+      errorsHtml = errors.map(
+        (message) => `
             <div class="alert alert-danger">
                 ${message}
             </div>
           `
-        );
-      }
-      errorsContainer.innerHTML = errorsHtml.join("");
-    } else {
-      alert(
-        "Something went wrong. Please check your internet connection and try again!"
       );
     }
-  };
+    errorsContainer.innerHTML = errorsHtml.join("");
+  } else {
+    alert(
+      "Something went wrong. Please check your internet connection and try again!"
+    );
+  }
+};
 
 
 
@@ -56,23 +56,23 @@ export const dueDateFormatter = (task) => {
   today = yyyyToday + '-' + mmToday + '-' + ddToday;
   tomorrow = yyyyTom + '-' + mmTom + '-' + ddTom;
 
-  let selectedDate = task.dueDate.slice(0,10).replace(/-/g, '/');
+  let selectedDate = task.dueDate.slice(0, 10).replace(/-/g, '/');
   selectedDate = new Date(selectedDate);
   let diff = new Date().getTime() - selectedDate.getTime();
 
-  let due = task.dueDate.slice(0,10);
+  let due = task.dueDate.slice(0, 10);
 
 
   if (due === today) {
-      return due = `Today ${getTime(task.dueDate)}`;
+    return due = `Today ${getTime(task.dueDate)}`;
   }
 
   if (due === tomorrow) {
-      return due = `Tomorrow ${getTime(task.dueDate)}`;
+    return due = `Tomorrow ${getTime(task.dueDate)}`;
   }
 
   if (diff > 0) {
-      return due = `OVERDUE`
+    return due = `OVERDUE`
   }
 
   return dateFormatter(task.dueDate);
@@ -86,7 +86,7 @@ const getTime = (dueDate) => {
 
 // Formats the date and time of a comment to a nice format, e.g. 'Oct 31 01:16'
 export const dateFormatter = (date) => {
-  let formattedDate = date.slice(0,10).replace(/-/g, '/');
+  let formattedDate = date.slice(0, 10).replace(/-/g, '/');
   formattedDate = new Date(date);
   formattedDate = formattedDate.toDateString();
   formattedDate = formattedDate.slice(4, 10);
@@ -105,8 +105,8 @@ export const addTaskInfoListeners = async () => {
 
   const taskInfoContainer = document.querySelectorAll('.task-info');
 
-  taskInfoContainer.forEach( (task) => {
-    task.addEventListener('click', async(e) => {
+  taskInfoContainer.forEach((task) => {
+    task.addEventListener('click', async (e) => {
       e.stopPropagation();
       const taskId = task.id;
 
@@ -164,15 +164,15 @@ export const addTaskInfoListeners = async () => {
 // Should be called when switching between lists.
 export const editListEventListener = async () => {
   const editListTitle = document.querySelector(".edit-list-button");
-        editListTitle.addEventListener('click', async(e) => {
-          let listId = e.target.id;
+  editListTitle.addEventListener('click', async (e) => {
+    let listId = e.target.id;
 
-          const listToUpdate = await fetch(`/lists/${listId}`);
+    const listToUpdate = await fetch(`/lists/${listId}`);
 
-          const { listName } = await listToUpdate.json();
+    const { listName } = await listToUpdate.json();
 
-          const listForm = document.querySelector('.updateList');
-          listForm.innerHTML = `
+    const listForm = document.querySelector('.updateList');
+    listForm.innerHTML = `
           <div class="cloud"></div>
           <div class="edit-list-pop">
             <h2 class="modal-header">Edit List Name</h2>
@@ -190,45 +190,45 @@ export const editListEventListener = async () => {
             </div>
           `
 
-          const listUpdate = document.querySelector('.list-edit-form')
-          listUpdate.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const formData = new FormData(listUpdate);
-            const title = formData.get('title')
-            const body = { title }
-            const updatedList = await fetch(`/lists/${listId}`, {
-              method: 'PATCH',
-              body: JSON.stringify(body),
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            })
-
-            const { list } = await updatedList.json();
-
-            const listHeader = document.querySelector('.task-list-header');
-            listHeader.innerText = list.title;
-
-            listForm.innerHTML = '';
-            await fetchLists();
-          })
-
-
-        const cancelButton = document.querySelector('.editCancelButton');
-        cancelButton.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          listForm.innerHTML = '';
-        })
+    const listUpdate = document.querySelector('.list-edit-form')
+    listUpdate.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const formData = new FormData(listUpdate);
+      const title = formData.get('title')
+      const body = { title }
+      const updatedList = await fetch(`/lists/${listId}`, {
+        method: 'PATCH',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
+
+      const { list } = await updatedList.json();
+
+      const listHeader = document.querySelector('.task-list-header');
+      listHeader.innerText = list.title;
+
+      listForm.innerHTML = '';
+      await fetchLists();
+    })
+
+
+    const cancelButton = document.querySelector('.editCancelButton');
+    cancelButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      listForm.innerHTML = '';
+    })
+  })
 }
 
 
 
 // Updates the value for "Overdue" found in the upper right corner.
 // Should be called whenever a task is added, edited, or deleted.
-export const updateOverDueValue = async() => {
+export const updateOverDueValue = async () => {
   const overDueValue = document.querySelector('#tasksOverdueValue');
   const overDueRes = await fetch('/lists/overdue');
   const { tasks } = await overDueRes.json();
