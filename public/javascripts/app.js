@@ -171,12 +171,13 @@ addContacts.addEventListener("click", async (e) => {
         throw throwError();
       }
       const { contact } = await res.json();
+
       await addNewContact(contact.contactId)
       form.reset();
       addContactsContainer.innerHTML = ``;
 
     } catch (err) {
-      handleErrors(err)
+
     }
   })
   // close add contact container

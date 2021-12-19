@@ -15,23 +15,39 @@ router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
   res.render('add-contact')
 }))
 
+const invalidContact = (value) => {
+  const err = Error("Invalid input");
+  err.errors = [`You entered an invalid email address, or this email is currently in your contacts.`];
+  err.title = "Invalid input";
+  err.status = 404;
+  return err;
+};
+
+const duplicateContact = (value) => {
+  const err = Error("Invalid input");
+  err.errors = [`You entered an invalid email address, or this email is currently in your contacts.`];
+  err.title = "Invalid input";
+  err.status = 418;
+  return err;
+};
+
 router.post('/', asyncHandler(async (req, res, next) => {
   const { email } = req.body;
   const userId = res.locals.userId;
-
+  console.log('Hello-----------------------------------')
   const userContact = await User.findAll({
     where: {
       email
     }
   })
 
+if(userContact.length) {
   const contactCheck = await Contact.findAll({
     where: {
       userId,
       contactId: userContact[0].id
     }
   })
-
   if (!contactCheck.length && (userId !== userContact[0].id)) {
     const contact = await Contact.create({
       userId,
@@ -39,7 +55,11 @@ router.post('/', asyncHandler(async (req, res, next) => {
     })
     res.status(201).json({ contact })
   } else {
-    throw error;
+    next(duplicateContact(email))
+  }
+
+  } else {
+    next(invalidContact(email))
   }
 
 }))
