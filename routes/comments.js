@@ -8,23 +8,27 @@ const { Task, User, Comment, Contact } = db;
 
 const validateComment =
     check('message')
-    .exists({ checkFalsy: true })
-    .withMessage('Must provide a comment in order to submit.')
+        .exists({ checkFalsy: true })
+        .withMessage('Must provide a comment in order to submit.')
 
+
+// Gets all comments specific to a task
 router.get('/tasks/:id(\\d+)/comments', asyncHandler(async (req, res) => {
     const comments = await Comment.findAll({
         where: {
             taskId: req.params.id
         },
         order: [['updatedAt', 'DESC']],
-        include: [ {
+        include: [{
             model: User
-        } ]
+        }]
     })
 
     res.json({ comments })
 }))
 
+
+// Posts a new comment
 router.post(
     '/tasks/:id(\\d+)/comments',
     validateComment,
@@ -39,8 +43,11 @@ router.post(
             message
         })
         res.status(201).json({ comment });
-    }))
+    })
+)
 
+
+// Updates a comment
 router.put(
     '/comments/:id(\\d+)',
     validateComment,
@@ -49,14 +56,16 @@ router.put(
         const { message } = req.body;
         const comment = await Comment.findByPk(req.params.id, {
             include: [
-                {model: User}
+                { model: User }
             ]
         });
         await comment.update({ message });
         res.json({ comment });
-    }
-))
+    })
+)
 
+
+// Deletes a comment
 router.delete(
     '/comments/:id(\\d+)',
     asyncHandler(async (req, res) => {
