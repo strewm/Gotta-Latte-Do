@@ -148,11 +148,10 @@ router.post(
         loginUser(req, res, user);
         return res.redirect("/app");
       }
-      errors.push("Login failed for the provided email address and password");
     } else {
       errors = validatorErrors.array().map((error) => error.msg);
+      errors.push("Login failed for the provided email address and password");
     }
-    //errors.push("Login failed for the provided email address and password");
     res.render("user-login", {
       title: "Login",
       email,
