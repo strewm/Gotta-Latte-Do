@@ -36,11 +36,10 @@ export const handleErrors = async (err) => {
 
 
 // This function checks the dueDate selected for the task
-// If the task is due today, it changes the task info "due" text to "Today", same for "Tomorrow"
-// If the task is due in the past, it changes it to "OVERDUE!"
-// Otherwise, it writes the due date as a date in yyyy-mm-dd format.
-
-export const dateFormatter = (task) => {
+// If the task is due today or tomorrow, it is indicated and also has the time
+// If the task is due in the past, it changes it to "OVERDUE" with the date&time it was due
+// Otherwise, it writes the due date as a date in a format like 'Oct 31 01:16'.
+export const dueDateFormatter = (task) => {
 
   let today = new Date();
   let tomorrow = new Date(today);
@@ -65,33 +64,36 @@ export const dateFormatter = (task) => {
 
 
   if (due === today) {
-      return due = `Today ${commentDateFormatter(task.dueDate).slice(7)}`;
+      return due = `Today ${getTime(task.dueDate)}`;
   }
 
   if (due === tomorrow) {
-      return due = `Tomorrow ${commentDateFormatter(task.dueDate).slice(7)}`;
+      return due = `Tomorrow ${getTime(task.dueDate)}`;
   }
 
   if (diff > 0) {
       return due = `OVERDUE`
   }
 
-  return commentDateFormatter(task.dueDate);
+  return dateFormatter(task.dueDate);
 }
 
 
+// Returns just the time given a date with a time
+const getTime = (dueDate) => {
+  return dateFormatter(dueDate).slice(7);
+}
 
+// Formats the date and time of a comment to a nice format, e.g. 'Oct 31 01:16'
+export const dateFormatter = (date) => {
+  let formattedDate = date.slice(0,10).replace(/-/g, '/');
+  formattedDate = new Date(date);
+  formattedDate = formattedDate.toDateString();
+  formattedDate = formattedDate.slice(4, 10);
 
-// Formats the updatedAt date and time of a comment to a nice format, e.g. 'Dec 14 01:28'
-export const commentDateFormatter = (updatedAt) => {
-  let updatedAtDate = updatedAt.slice(0,10).replace(/-/g, '/');
-  updatedAtDate = new Date(updatedAt);
-  updatedAtDate = updatedAtDate.toDateString();
-  updatedAtDate = updatedAtDate.slice(4, 10);
+  let updatedAtTime = date.slice(11, 16);
 
-  let updatedAtTime = updatedAt.slice(11, 16);
-
-  return `${updatedAtDate} ${updatedAtTime}`
+  return `${formattedDate} ${updatedAtTime}`
 
 }
 

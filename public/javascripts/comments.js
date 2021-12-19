@@ -1,5 +1,5 @@
 import { fetchUser } from './user.js';
-import { commentDateFormatter } from './utils.js';
+import { dateFormatter } from './utils.js';
 import { handleErrors } from './utils.js';
 
 
@@ -24,7 +24,7 @@ export const fetchComments = async (taskId) => {
                 <span id='comment-${comment.id}-message' class='comment-message'>${comment.message}</span>
             </span>
             <div class='updatedAt-${comment.id} updated-At'>
-                <div class='comment-date'>${commentDateFormatter(comment.updatedAt)}</div>
+                <div class='comment-date'>${dateFormatter(comment.updatedAt)}</div>
                 <div class='comment-buttons-${comment.id} comment-buttons userId-${comment.userId}-${comment.id}'>
                     <div class="comment-buttons-dot comment-butts">•</div>
                     <button class='edit-comment-butt comment-butts' id='${comment.id}'>Edit</button>
@@ -126,7 +126,7 @@ export const fetchComments = async (taskId) => {
                     <span id='comment-${comment.id}-message'>${comment.message}</span>
                 </span>
                 <div class='updatedAt-${comment.id}'>
-                    <span>${commentDateFormatter(comment.updatedAt)}</span>
+                    <span>${dateFormatter(comment.updatedAt)}</span>
                     <span class='comment-buttons-${comment.id}'>
                         <button class='edit-comment-butt' id='${comment.id}'>Edit
                         <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
