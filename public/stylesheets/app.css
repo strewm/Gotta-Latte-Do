@@ -233,7 +233,7 @@ a {
 /* Contains the (x, edit, delete buttons) + (task info) + (comments)  */
 
 .task-information-animation {
-    transition: all 0.75s;
+    transition: all 0.3s;
     transform: translateX(100%);
     opacity: 100;
 
