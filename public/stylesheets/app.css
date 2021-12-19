@@ -934,7 +934,7 @@ list-add-edited {
     overflow: hidden;
     max-width: 305px;
     width: 305px;
-    transition: height .1s ease;
+    transition: height .4s ease;
 }
 
 .lists-drop-container {
@@ -944,7 +944,7 @@ list-add-edited {
     overflow: hidden;
     max-width: 305px;
     width: 305px;
-    transition: height .1s ease;
+    /* transition: height .1s ease; */
 }
 
 .list-sidebar {
@@ -1333,4 +1333,4 @@ list-add-edited {
 
 #drop:checked + .contact-list-sidebar {height: 100%;}
 
-#list-drop:checked + .lists-drop-container {height: 100%}
+#list-drop:checked + .lists-drop-container {height: 100%; transition: height .4s ease;};
