@@ -11,22 +11,22 @@ const router = express.Router();
 const userValidators = [
   check("username")
     .exists({ checkFalsy: true })
-    .withMessage("Please provide a value for Username")
+    .withMessage("Please provide a username")
     .isLength({ max: 50 })
-    .withMessage("First Name must not be more than 50 characters long"),
+    .withMessage("Username cannot be more than 50 characters long"),
   check("email")
     .exists({ checkFalsy: true })
-    .withMessage("Please provide a value for Email Address")
+    .withMessage("Please provide an email address")
     .isLength({ max: 255 })
     .withMessage("Email Address must not be more than 255 characters long")
     .isEmail()
-    .withMessage("Email Address is not a valid email")
+    .withMessage("Please provide a valid email address")
     .custom((value) => {
       return db.User.findOne({ where: { email: value } }).then(
         (user) => {
           if (user) {
             return Promise.reject(
-              "The provided Email Address is already in use by another account"
+              "The provided email address is already in use by another account"
             );
           }
         }
@@ -34,7 +34,7 @@ const userValidators = [
     }),
   check("password")
     .exists({ checkFalsy: true })
-    .withMessage("Please provide a value for Password")
+    .withMessage("Please provide a password")
     .isLength({ max: 50 })
     .withMessage("Password must not be more than 50 characters long")
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/, "g")
@@ -43,12 +43,12 @@ const userValidators = [
     ),
   check("confirmPassword")
     .exists({ checkFalsy: true })
-    .withMessage("Please provide a value for Confirm Password")
+    .withMessage("Please provide your password again")
     .isLength({ max: 50 })
-    .withMessage("Confirm Password must not be more than 50 characters long")
+    .withMessage("Password must not be more than 50 characters long")
     .custom((value, { req }) => {
       if (value !== req.body.password) {
-        throw new Error("Confirm Password does not match Password");
+        throw new Error("Passwords do not match");
       }
       return true;
     }),
