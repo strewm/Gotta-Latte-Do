@@ -110,9 +110,15 @@ export const addTaskInfoListeners = async () => {
       editForm.hidden = true;
       editForm.style.display = 'none';
       const taskInfo = document.querySelector('.fiona');
+      taskInfo.classList.remove('task-information-animation')
 
 
       try {
+        const taskContainer = document.querySelector(".fiona")
+        if(taskContainer.innerHTML.length) {
+          const newTaskContainer = document.querySelector(".task-container");
+          newTaskContainer.remove()
+        }
         await fetchTask(taskId);
 
         if (taskInfo.classList.contains('task-information-animation') && e.target.id !== taskId) {
@@ -121,7 +127,9 @@ export const addTaskInfoListeners = async () => {
           taskInfo.hidden = false;
           setTimeout(() => {
             taskInfo.classList.add('task-information-animation');
-          }, 0)
+
+          }, 0);
+
         }
 
         const createComment = document.querySelector('.create-comment');

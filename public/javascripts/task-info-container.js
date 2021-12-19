@@ -114,7 +114,7 @@ export const fetchTask = async (taskId) => {
             <div id='comments-${task.id}'></div>
         </div>
     `
-
+    taskInfo.hidden = true;
     taskInfo.innerHTML = taskHtml;
     taskInfo.hidden = false;
 
