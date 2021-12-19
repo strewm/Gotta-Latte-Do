@@ -35,15 +35,17 @@ block content
             li.given-to-others Given to Others
             li.given-to-me Given To Me
             .list-sidebar
-              div Lists
+              label.pointer(for="list-drop") Lists
               div.add-boxes
                 a.add-lists +
-              .add-list-form
-              div.cloud(hidden)
-              form.edit-form
-            div
-            div.list-list-sidebar
-              div.lists-grid-container
+              input(type="checkbox" id="list-drop")
+              div.lists-drop-container
+                .add-list-form
+                div.cloud(hidden)
+                form.edit-form
+                div
+                div.list-list-sidebar
+                  div.lists-grid-container
                   //- each list in myLists
                     //- div
                     //-   li.list-lists(id=`${list.id}`)=list.title
@@ -52,18 +54,20 @@ block content
 
             ul
               div.contact-sidebar
-                div.contacts-title Contacts
+                label.contacts-title.pointer(for="drop") Contacts
+
                 div.add-boxes
                   a.add-contacts +
-              div.contact-list-sidebar
-                li.contact-list(id=`${me}`)=myName.username + " (me)"
-                if contactsAll
-                  each contact in contactsAll
-                    div.list-grid
-                      div
-                        li.contact-list(id=`${contact.id}`)=contact.username
-                      div.delete-boxes
-                        a.delete-contact(id=`${contact.id}`) -
+                input(type="checkbox" id="drop")
+                div.contact-list-sidebar
+
+                  if contactsAll
+                    each contact in contactsAll
+                      div.list-grid
+                        div
+                          li.contact-list(id=`${contact.id}`)=contact.username
+                        div.delete-boxes
+                          a.delete-contact(id=`${contact.id}`) -
               div.add-contact-sidebar
         div.tabbedContainer
             div.tabbedGroup
