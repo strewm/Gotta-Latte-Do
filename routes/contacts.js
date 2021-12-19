@@ -6,13 +6,14 @@ const { asyncHandler, csrfProtection, handleValidationErrors } = require('../uti
 const { Contact, User } = db;
 
 
-router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
-    if(!res.locals.userId) {
-      res.redirect('/users/login')
-    }
 
-    res.render('add-contact')
-  }))
+router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
+  if (!res.locals.userId) {
+    res.redirect('/users/login')
+  }
+
+  res.render('add-contact')
+}))
 
 router.post('/', asyncHandler(async (req, res, next) => {
   const { email } = req.body;
@@ -36,7 +37,7 @@ router.post('/', asyncHandler(async (req, res, next) => {
       userId,
       contactId: userContact[0].id
     })
-    res.status(201).json({contact})
+    res.status(201).json({ contact })
   } else {
     throw error;
   }
