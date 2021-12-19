@@ -114,10 +114,10 @@ router.get("/login", csrfProtection, (req, res) => {
 const loginValidators = [
   check("email")
     .exists({ checkFalsy: true })
-    .withMessage("Please provide a value for Email Address"),
+    .withMessage("Please provide an email address"),
   check("password")
     .exists({ checkFalsy: true })
-    .withMessage("Please provide a value for Password"),
+    .withMessage("Please provide a password"),
 ];
 
 router.post(
