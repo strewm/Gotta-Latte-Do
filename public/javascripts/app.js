@@ -357,6 +357,9 @@ form.addEventListener("submit", async (e) => {
         const tasksDue = document.querySelector('.tasksDueValue');
         tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
 
+        await fetchTasks();
+
+
     } catch (err) {
         handleErrors(err)
     }
@@ -517,7 +520,7 @@ export const fetchLists = async () => {
         const listTitle = `
         <div class="list-title" id="${listId}">
           <h2 class="task-list-header">${list.innerText}</h2>
-          <button class="edit-list-button edit-button-modal" id="${listId}">Edit List</button>
+          <button class="edit-list-button edit-button-modal button-modal" id="${listId}">Edit List</button>
         </div>
         `
 

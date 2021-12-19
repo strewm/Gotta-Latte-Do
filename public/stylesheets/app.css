@@ -308,6 +308,12 @@ a {
     margin-bottom: 30px;
 }
 
+.task-completed-container {
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
 /* Task completed + Due + Comments  */
 .task-completed-label, .due-container-label, .comment-header {
     border: 1px solid #8A715B;
@@ -331,13 +337,16 @@ a {
 .due-container {
     display: flex;
     flex-direction: row;
+    width: 50%;
 }
+
 
 .due-container-content {
     height: fit-content;
     font-size: 14px;
-    margin: 5px;
+    margin: 5px 5px 5px 20px;
     background-color: #fae5ca;
+    font-weight: bold;
 }
 
 /* Comments section header  */
@@ -536,6 +545,7 @@ a {
 
 .task-list-header {
     padding: 10px 0;
+    font-weight: bold;
 }
 
 .task-list-header strong {
@@ -1249,4 +1259,18 @@ list-add-edited {
     color: #8A715B;
     /* background-color: #fae5ca; */
     background-color: transparent;
+}
+
+.list-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly !important;
+    width: 100%;
+
+}
+
+.edit-list-button {
+    display: flex;
+    align-items: center;
+    margin: 0 !important;
 }

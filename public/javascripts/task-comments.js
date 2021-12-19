@@ -174,6 +174,10 @@ export const fetchTask = async (taskId) => {
         const tasksDue = document.querySelector('.tasksDueValue');
         tasksDue.innerText = (Number(tasksDue.innerText) - 1).toString()
 
+        const fionaDiv = document.querySelector('.fiona');
+        fionaDiv.classList.remove('task-information-animation');
+
+
     })
 
 
