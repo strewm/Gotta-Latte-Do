@@ -924,7 +924,7 @@ list-add-edited {
     padding: 15px 0px;
     margin-bottom: 5px;
     border-top: 1px solid rgba(255, 255 , 255, .3);
-    transition: height .4s ease;
+    transition: height .1s ease-in-out;
 }
 
 .contact-list-sidebar {
@@ -934,7 +934,7 @@ list-add-edited {
     overflow: hidden;
     max-width: 305px;
     width: 305px;
-    transition: height .1s ease;
+    transition: height .1s ease-in-out;
 }
 
 .lists-drop-container {
@@ -944,7 +944,7 @@ list-add-edited {
     overflow: hidden;
     max-width: 305px;
     width: 305px;
-    transition: height .1s ease;
+    transition: height .1s ease-in-out;
 }
 
 .list-sidebar {
