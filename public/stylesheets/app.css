@@ -820,7 +820,8 @@ ul.default-tasks > li:hover {
 }
 
 .list-lists:hover {
-    background-color: #8A715B;
+    color: #8A715B !important;
+    font-weight: bold;
     padding-left: 10px;
 }
 
@@ -910,7 +911,8 @@ list-add-edited {
 }
 
 .contact-list:hover {
-    background-color: #8A715B;
+    color: #8A715B !important;
+    font-weight: bold;
     padding-left: 10px;
 }
 
@@ -920,29 +922,36 @@ list-add-edited {
     color: #ffffff;
     font-weight: bold;
     padding: 15px 0px;
-    margin-top: 20px;
     margin-bottom: 5px;
-    margin-left: -8px;
-    max-width: 307px;
     border-top: 1px solid rgba(255, 255 , 255, .3);
+    transition: height .4s ease;
 }
 
 .contact-list-sidebar {
     clear:both;
-    border-bottom: 1px solid rgba(255, 255 , 255, .3);
     height: 0px;
     margin-top: 7px;
     overflow: hidden;
     max-width: 305px;
     width: 305px;
-    transition: height .4s ease;
+    transition: height .1s ease;
+}
+
+.lists-drop-container {
+    clear:both;
+    height: 0px;
+    margin-top: 7px;
+    overflow: hidden;
+    max-width: 305px;
+    width: 305px;
+    transition: height .1s ease;
 }
 
 .list-sidebar {
     display: grid;
     grid-template-columns: 90% 10%;
     color: #ffffff;
-    padding: 15px 0px;
+    padding: 15px 0px 0px 0px;
     margin-top: 20px;
     margin-bottom: 5px;
     border-top: 1px solid rgba(255, 255 , 255, .3);
@@ -1316,4 +1325,12 @@ list-add-edited {
     height: 0px;
 }
 
+#list-drop {
+    position: absolute;
+    opacity: 0;
+    height: 0px;
+}
+
 #drop:checked + .contact-list-sidebar {height: 100%;}
+
+#list-drop:checked + .lists-drop-container {height: 100%}

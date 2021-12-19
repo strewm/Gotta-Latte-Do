@@ -35,15 +35,17 @@ block content
             li.given-to-others Given to Others
             li.given-to-me Given To Me
             .list-sidebar
-              div Lists
+              label.pointer(for="list-drop") Lists
               div.add-boxes
                 a.add-lists +
-              .add-list-form
-              div.cloud(hidden)
-              form.edit-form
-            div
-            div.list-list-sidebar
-              div.lists-grid-container
+              input(type="checkbox" id="list-drop")
+              div.lists-drop-container
+                .add-list-form
+                div.cloud(hidden)
+                form.edit-form
+                div
+                div.list-list-sidebar
+                  div.lists-grid-container
                   //- each list in myLists
                     //- div
                     //-   li.list-lists(id=`${list.id}`)=list.title

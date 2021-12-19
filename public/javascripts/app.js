@@ -267,7 +267,7 @@ addList.addEventListener('click', (e) => {
   <h2 class="h2-add-list">Add List</h2>
   <div id='list-add'>
     <form class='addNewList'>
-      <input type='text' class='list-add list-add-edited' id='title' name='title' placeholder='New List'>
+      <input type='text' class='list-add list-add-edited modal-input' id='title' name='title' placeholder='New List'>
       <label for='title' class='list-label'</label>
       <div class="add-list-buttons-container">
         <button class='addSubmitButton button-modal'>Submit</button>
