@@ -730,13 +730,13 @@ ul.default-tasks > li:hover {
 
 .form_error {
     font-size: 8px;
-    background-color: #E0A979;
+    background-color: #ecb98d;
     color: #8A715B;
 }
 
 .form-error-p {
     font-size: 10px;
-    background-color: #E0A979;
+    background-color: #ecb98d;
     color: red;
     margin: -5px 0px 0px 0px;
 }
