@@ -34,7 +34,6 @@ const duplicateContact = (value) => {
 router.post('/', asyncHandler(async (req, res, next) => {
   const { email } = req.body;
   const userId = res.locals.userId;
-  console.log('Hello-----------------------------------')
   const userContact = await User.findAll({
     where: {
       email
