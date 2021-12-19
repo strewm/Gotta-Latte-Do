@@ -168,7 +168,6 @@ addContacts.addEventListener("click", async (e) => {
         return;
       }
       if (!res.ok) {
-
         throw throwError();
       }
       const { contact } = await res.json();

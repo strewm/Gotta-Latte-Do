@@ -178,8 +178,8 @@ export const editListEventListener = async () => {
             <h2 class="modal-header">Edit List Name</h2>
             <div id='list-edit'>
               <form class='list-edit-form modal-form'>
-              <input type='text' class='list-edit modal-input' id='title' name='title' placeholder=${listName.title}>
               <label for='title' class='list-label'${listName.title} </label>
+              <input type='text' class='list-edit modal-input' id='title' name='title' placeholder=${listName.title}>
               <div class='edit-list-button-container'>
               <button class='submitButton button-modal' id='${listId}'>Submit</button>
 
