@@ -181,7 +181,7 @@ export const editListEventListener = async () => {
               <label for='title' class='list-label'${listName.title} </label>
               <div class="add-list-buttons-container">
               <input type='text' class='list-edit modal-input' id='title' name='title' placeholder=${listName.title}>
-              <div class='edit-list-button-container'>
+    
               <button class='submitButton button-modal' id='${listId}'>Submit</button>
 
               <button class='editCancelButton button-modal' id='${listId}'>Cancel</button>
