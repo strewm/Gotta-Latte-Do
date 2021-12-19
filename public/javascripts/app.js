@@ -33,7 +33,8 @@ incompleteTaskList.addEventListener("click", async (e) => {
   // }
 })
 
-// completed button
+
+// Displays all completed tasks
 const completeTaskList = document.querySelector('#complete')
 completeTaskList.addEventListener("click", async (e) => {
   await fetchCompletedTasks();
@@ -42,8 +43,7 @@ completeTaskList.addEventListener("click", async (e) => {
 })
 
 
-
-
+// Loads all lists and all tasks
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     await fetchLists();
@@ -103,8 +103,6 @@ form.addEventListener("submit", async (e) => {
     tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
 
     await fetchTasks();
-    await updateOverDueValue();
-
 
   } catch (err) {
     handleErrors(err)
@@ -312,7 +310,7 @@ addList.addEventListener('click', (e) => {
 })
 
 
-
+// Opens drop down menu for user settings
 window.addEventListener('DOMContentLoaded', async () => {
   const settings = document.querySelector('#settings');
 
@@ -331,7 +329,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 
 
-
+// Signs user out and redirects to home page
 const signOutButton = document.querySelector("#signOut");
 
 signOutButton.addEventListener("click", async (e) => {
@@ -365,12 +363,16 @@ searchContainer.addEventListener("keypress", async (e) => {
 })
 
 
+// Shows all user's tasks, excludes tasks that have been given to user and tasks
+// that user has given to others
 const allTasksList = document.querySelector('.all-tasks');
 allTasksList.addEventListener('click', async (e) => {
   e.stopPropagation();
   await fetchTasks();
 })
 
+
+// Displays all tasks the user has given to others
 const givenToOthersList = document.querySelector('.given-to-others');
 
 givenToOthersList.addEventListener('click', async (e) => {
@@ -411,6 +413,7 @@ givenToOthersList.addEventListener('click', async (e) => {
 })
 
 
+// Displays all tasks given to the user by someone else
 const givenToMeList = document.querySelector('.given-to-me');
 
 givenToMeList.addEventListener('click', async (e) => {
@@ -456,12 +459,11 @@ givenToMeList.addEventListener('click', async (e) => {
     tasksListContainer.innerHTML = listName + tasksHtml;
   }
 
-
   await addTaskInfoListeners();
 })
 
 
-
+// Displays all tasks due today
 const todaysTasks = document.querySelector('.due-today');
 todaysTasks.addEventListener('click', async (e) => {
   e.stopPropagation();
@@ -494,6 +496,7 @@ todaysTasks.addEventListener('click', async (e) => {
 })
 
 
+// Displays all tasks due tomorrow
 const tomorrowTasks = document.querySelector('.due-tomorrow');
 tomorrowTasks.addEventListener('click', async (e) => {
   e.stopPropagation();
@@ -526,6 +529,7 @@ tomorrowTasks.addEventListener('click', async (e) => {
 })
 
 
+// Displays all overdue tasks
 const overdueTasks = document.querySelector('.overdue');
 overdueTasks.addEventListener('click', async (e) => {
   e.stopPropagation();
