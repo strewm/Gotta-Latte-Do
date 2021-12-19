@@ -250,7 +250,7 @@ export const updateTotalTaskValue = async () => {
   } else {
     myTasks = 0;
   }
-  const givenToMe = await fetch('/lists/given-to-me');
+  const givenToMe = await fetch('/lists/given-to-me-incomplete');
   let { tasksGivenToMe } = await givenToMe.json();
   let numTasksGivenToMe;
   if (tasksGivenToMe) {
