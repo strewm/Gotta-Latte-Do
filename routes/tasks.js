@@ -51,7 +51,8 @@ router.get('/', asyncHandler(async(req, res) => {
     where: {
       userId,
       givenTo: null,
-    }
+    },
+    order: [['createdAt']]
   })
 
   const user = await User.findByPk(userId);
