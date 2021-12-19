@@ -19,8 +19,8 @@ block content
         +validationErrorSummary(errors)
         form(action='/users/login' method='post' id="login-form")
             input(type='hidden' name='_csrf' value=csrfToken)
-            +field('', 'email', email)
-            +field('', 'password', null, 'password')
+            +field('', 'email', email, required)
+            +field('', 'password', null, 'password', required)
             div.buttons
               button(type='submit' id='button-login') Login
               div: a#button-cancel(href='/') Cancel

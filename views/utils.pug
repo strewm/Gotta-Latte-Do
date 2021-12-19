@@ -1,10 +1,10 @@
-mixin field(labelText, fieldName, fieldValue, fieldType = 'text', placeholder = null)
+mixin field(labelText, fieldName, fieldValue, fieldType = 'text', placeholder = null, required = true)
   div
     label(for=fieldName)= labelText
     if fieldType === 'textarea'
       textarea(id=fieldName name=fieldName rows='5')= fieldValue
     else
-      input(type=fieldType id=fieldName name=fieldName value=fieldValue placeholder=fieldName)
+      input(type=fieldType id=fieldName name=fieldName value=fieldValue placeholder=fieldName required = true)
 
 
 mixin validationErrorSummary(errors)
