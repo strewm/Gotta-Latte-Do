@@ -146,6 +146,7 @@ export const fetchTask = async (taskId) => {
                 }
             })
             await updateOverDueValue();
+            await updateTotalTaskValue();
 
         } else {
             const res = await fetch(`/tasks/${task.id}`, {
@@ -156,6 +157,7 @@ export const fetchTask = async (taskId) => {
                 }
             })
             await updateOverDueValue();
+            await updateTotalTaskValue();
 
         }
     })

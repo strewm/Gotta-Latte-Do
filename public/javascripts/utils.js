@@ -181,7 +181,7 @@ export const editListEventListener = async () => {
               <label for='title' class='list-label'${listName.title} </label>
               <div class="add-list-buttons-container">
               <input type='text' class='list-edit modal-input' id='title' name='title' placeholder=${listName.title}>
-    
+
               <button class='submitButton button-modal' id='${listId}'>Submit</button>
 
               <button class='editCancelButton button-modal' id='${listId}'>Cancel</button>
@@ -242,7 +242,7 @@ export const updateOverDueValue = async () => {
 // Called in fetchTasks() because we do that every time
 export const updateTotalTaskValue = async () => {
   const totalTaskValue = document.querySelector('.tasksDueValue');
-  const res = await fetch('/tasks');
+  const res = await fetch('/tasks/incomplete');
   let { tasks } = await res.json();
   let myTasks;
   if (tasks) {
