@@ -228,9 +228,34 @@ export const editListEventListener = async () => {
 
 // Updates the value for "Overdue" found in the upper right corner.
 // Should be called whenever a task is added, edited, or deleted.
+// Called in fetchTasks() because we do that every time
 export const updateOverDueValue = async () => {
   const overDueValue = document.querySelector('#tasksOverdueValue');
   const overDueRes = await fetch('/lists/overdue');
   const { tasks } = await overDueRes.json();
   overDueValue.innerHTML = `${tasks.length}<div id="tasksOverdue">Overdue</div>`
+}
+
+// Updates the value for "Tasks" found in upper right corner
+// Should be called whenever a task is added, edited, or deleted
+// Called in fetchTasks() because we do that every time
+export const updateTotalTaskValue = async () => {
+  const totalTaskValue = document.querySelector('.tasksDueValue');
+  const res = await fetch('/tasks');
+  let { tasks } = await res.json();
+  let myTasks;
+  if (tasks) {
+    myTasks = tasks.length;
+  } else {
+    myTasks = 0;
+  }
+  const givenToMe = await fetch('/lists/given-to-me');
+  let { tasksGivenToMe } = await givenToMe.json();
+  let numTasksGivenToMe;
+  if (tasksGivenToMe) {
+    numTasksGivenToMe = tasksGivenToMe.length;
+  } else {
+    numTasksGivenToMe = 0;
+  }
+  totalTaskValue.innerText = myTasks + numTasksGivenToMe;
 }

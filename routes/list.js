@@ -109,12 +109,12 @@ router.get('/given-to-others', asyncHandler(async (req, res, next) => {
 
 router.get('/given-to-me', asyncHandler(async(req, res) => {
   const userId = res.locals.userId;
-  const tasks = await Task.findAll({
+  const tasksGivenToMe = await Task.findAll({
     where: {
       givenTo: userId
     }
   })
-  res.json({ tasks })
+  res.json({ tasksGivenToMe })
 }))
 
 router.get('/today', asyncHandler(async (req, res) => {

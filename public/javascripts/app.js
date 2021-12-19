@@ -1,5 +1,5 @@
 import { handleErrors, addTaskInfoListeners, updateOverDueValue } from "./utils.js";
-import { fetchTasks, fetchAssignTasks, fetchIncompleteTasks,fetchCompletedTasks } from "./fetch-tasks.js";
+import { fetchTasks, fetchAssignTasks, fetchIncompleteTasks, fetchCompletedTasks } from "./fetch-tasks.js";
 import { search } from "./search.js";
 import { fetchContactTasks, addNewContact } from "./contacts.js";
 import { fetchLists } from "./lists.js";
@@ -45,14 +45,14 @@ completeTaskList.addEventListener("click", async (e) => {
 
 
 document.addEventListener("DOMContentLoaded", async () => {
-    try {
-      await fetchLists();
-      await fetchTasks();
-      //await fetchAssignTasks();
-    } catch (e) {
-      console.error(e);
-    }
+  try {
+    await fetchLists();
+    await fetchTasks();
+    //await fetchAssignTasks();
+  } catch (e) {
+    console.error(e);
   }
+}
 );
 
 
@@ -60,55 +60,55 @@ document.addEventListener("DOMContentLoaded", async () => {
 const form = document.querySelector(".create-task");
 
 form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const formData = new FormData(form);
-    const description = formData.get("description")
-    const dueDate = formData.get("dueDate")
-    const checkStatus = formData.get("isCompleted")
-    const givenTo = formData.get("givenTo")
-    const title = formData.get("title");
-    let isCompleted;
+  const formData = new FormData(form);
+  const description = formData.get("description")
+  const dueDate = formData.get("dueDate")
+  const checkStatus = formData.get("isCompleted")
+  const givenTo = formData.get("givenTo")
+  const title = formData.get("title");
+  let isCompleted;
 
-    //convert checkbox to boolean value
-    if (checkStatus === 'on') {
-        isCompleted = true;
-    } else {
-        isCompleted = false;
+  //convert checkbox to boolean value
+  if (checkStatus === 'on') {
+    isCompleted = true;
+  } else {
+    isCompleted = false;
+  }
+
+  const body = { description, dueDate, isCompleted, givenTo, title }
+
+  try {
+    const res = await fetch("/tasks", {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+
+      }
+    })
+
+    if (res.status === 401) {
+      window.location.href = "/log-in";
+      return;
+    }
+    if (!res.ok) {
+      throw res;
     }
 
-    const body = { description, dueDate, isCompleted, givenTo, title }
+    form.reset();
 
-    try {
-        const res = await fetch("/tasks", {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-                "Content-Type": "application/json",
+    const tasksDue = document.querySelector('.tasksDueValue');
+    tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
 
-            }
-        })
-
-        if (res.status === 401) {
-            window.location.href = "/log-in";
-            return;
-          }
-        if (!res.ok) {
-            throw res;
-          }
-
-        form.reset();
-
-        const tasksDue = document.querySelector('.tasksDueValue');
-        tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
-
-        await fetchTasks();
-        await updateOverDueValue();
+    await fetchTasks();
+    await updateOverDueValue();
 
 
-    } catch (err) {
-        handleErrors(err)
-    }
+  } catch (err) {
+    handleErrors(err)
+  }
 })
 
 // add contacts
@@ -141,46 +141,46 @@ addContacts.addEventListener("click", async (e) => {
   const form = document.querySelector(".contacts-form");
 
   const throwError = () => {
-      const formError = document.querySelector(".form_error")
-      formError.innerHTML = `
+    const formError = document.querySelector(".form_error")
+    formError.innerHTML = `
               <p class="form-error-p">You entered an invalid email address, or this email is currently in your contacts.</p>
             `
-}
+  }
   // create new contact
   form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    e.preventDefault();
 
-      const formData = new FormData(form);
-      const email = formData.get("email")
+    const formData = new FormData(form);
+    const email = formData.get("email")
 
-      const body = { email }
+    const body = { email }
 
-      try {
-          const res = await fetch("/contacts", {
-              method: "POST",
-              body: JSON.stringify(body),
-              headers: {
-                  "Content-Type": "application/json",
+    try {
+      const res = await fetch("/contacts", {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
 
-              }
-          })
+        }
+      })
 
-          if (res.status === 401) {
-              window.location.href = "/log-in";
-              return;
-            }
-          if (!res.ok) {
-
-              throw throwError();
-            }
-          const { contact } = await res.json();
-          await addNewContact(contact.contactId)
-          form.reset();
-          addContactsContainer.innerHTML = ``;
-
-      } catch (err) {
-          handleErrors(err)
+      if (res.status === 401) {
+        window.location.href = "/log-in";
+        return;
       }
+      if (!res.ok) {
+
+        throw throwError();
+      }
+      const { contact } = await res.json();
+      await addNewContact(contact.contactId)
+      form.reset();
+      addContactsContainer.innerHTML = ``;
+
+    } catch (err) {
+      handleErrors(err)
+    }
   })
   // close add contact container
   const closeAddContact = document.querySelector('.add-contact-cancel')
@@ -206,7 +206,7 @@ const deleteContact = document.querySelector('.contact-list-sidebar')
 deleteContact.addEventListener("click", async (e) => {
   e.stopPropagation();
   e.preventDefault();
-  if(e.target.innerText === '-'){
+  if (e.target.innerText === '-') {
     const targetRemoval = e.target.parentNode.parentNode
     const deleteContactId = e.target.id;
     targetRemoval.remove();
@@ -278,37 +278,37 @@ addList.addEventListener('click', (e) => {
   </div>
   </div>
     `
-    const addList = document.querySelector('.addNewList');
-    addList.addEventListener('submit', async (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      const formData = new FormData(addList);
+  const addList = document.querySelector('.addNewList');
+  addList.addEventListener('submit', async (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const formData = new FormData(addList);
 
-      const title = formData.get('title');
-      const body = { title };
+    const title = formData.get('title');
+    const body = { title };
 
-      try {
-        await fetch(`/lists`, {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
-          addListForm.innerHTML = '';
-          await fetchLists();
-      } catch(e) {
-        console.error(e);
-      }
-
+    try {
+      await fetch(`/lists`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
-    const addCancelButton = document.querySelector('.listCancelButton');
-
-    addCancelButton.addEventListener('click', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
       addListForm.innerHTML = '';
-    })
+      await fetchLists();
+    } catch (e) {
+      console.error(e);
+    }
+
+  });
+  const addCancelButton = document.querySelector('.listCancelButton');
+
+  addCancelButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    addListForm.innerHTML = '';
+  })
 })
 
 
@@ -366,14 +366,14 @@ searchContainer.addEventListener("keypress", async (e) => {
 
 
 const allTasksList = document.querySelector('.all-tasks');
-allTasksList.addEventListener('click', async(e) => {
+allTasksList.addEventListener('click', async (e) => {
   e.stopPropagation();
   await fetchTasks();
 })
 
 const givenToOthersList = document.querySelector('.given-to-others');
 
-givenToOthersList.addEventListener('click', async(e) => {
+givenToOthersList.addEventListener('click', async (e) => {
   e.stopPropagation();
   const res = await fetch('/lists/given-to-others');
 
@@ -389,14 +389,14 @@ givenToOthersList.addEventListener('click', async(e) => {
       <h2 class="task-list-header">Tasks Given to Others</h2>
 `
   const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
-      if (isCompleted === true) {
-        return `
+    if (isCompleted === true) {
+      return `
         <div class='task-info' id=${id}>
             <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
             <label for=${id} id=${id} class="task-check-box">${description}</label>
         </div>
         `
-      } else {
+    } else {
       return `<div class='task-info' id=${id}>
                 <input type="checkbox" class="task-check-box" id=${id} name=${id}>
                 <label for=${id} id=${id} class="task-check-box">${description}</label>
@@ -413,7 +413,7 @@ givenToOthersList.addEventListener('click', async(e) => {
 
 const givenToMeList = document.querySelector('.given-to-me');
 
-givenToMeList.addEventListener('click', async(e) => {
+givenToMeList.addEventListener('click', async (e) => {
   e.stopPropagation();
   const res = await fetch('/lists/given-to-me');
 
@@ -422,30 +422,40 @@ givenToMeList.addEventListener('click', async(e) => {
     return;
   }
 
-  const { tasks } = await res.json();
+  const { tasksGivenToMe } = await res.json();
 
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
       <h2 class="task-list-header">Tasks Given to Me</h2>
 `
-  const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
-    if (isCompleted === true) {
-      return `
-      <div class='task-info' id=${id}>
-          <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
-          <label for=${id} id=${id} class="task-check-box">${description}</label>
-      </div>
-      `
-    } else {
-    return `<div class='task-info' id=${id}>
-              <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-              <label for=${id} id=${id} class="task-check-box">${description}</label>
-          </div>
-      `
-  }
-})
+  if (tasksGivenToMe) {
+    const tasksHtml = tasksGivenToMe.map(({ id, description, isCompleted }) => {
+      if (isCompleted === true) {
+        return `
+        <div class='task-info' id=${id}>
+            <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
+            <label for=${id} id=${id} class="task-check-box">${description}</label>
+        </div>
+        `
+      } else {
+        return `<div class='task-info' id=${id}>
+                <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+                <label for=${id} id=${id} class="task-check-box">${description}</label>
+            </div>
+        `
+      }
+    })
+    tasksListContainer.innerHTML = listName + tasksHtml.join("");
 
-  tasksListContainer.innerHTML = listName + tasksHtml.join("");
+  } else {
+    const tasksHtml = `
+      <div>
+        <p style='background-color: #fae5ca'>You haven't been given any tasks!</p>
+      </div>
+    `
+    tasksListContainer.innerHTML = listName + tasksHtml;
+  }
+
 
   await addTaskInfoListeners();
 })
@@ -453,7 +463,7 @@ givenToMeList.addEventListener('click', async(e) => {
 
 
 const todaysTasks = document.querySelector('.due-today');
-todaysTasks.addEventListener('click', async(e) => {
+todaysTasks.addEventListener('click', async (e) => {
   e.stopPropagation();
   const res = await fetch('/lists/today');
 
@@ -463,29 +473,29 @@ todaysTasks.addEventListener('click', async(e) => {
   const listName = `
       <h2 class="task-list-header">Tasks Due Today</h2>
 `
-const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
-  if (isCompleted === true) {
-    return `
+  const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+    if (isCompleted === true) {
+      return `
     <div class='task-info' id=${id}>
         <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
         <label for=${id} id=${id} class="task-check-box">${description}</label>
     </div>
     `
-  } else {
-  return `<div class='task-info' id=${id}>
+    } else {
+      return `<div class='task-info' id=${id}>
             <input type="checkbox" class="task-check-box" id=${id} name=${id}>
             <label for=${id} id=${id} class="task-check-box">${description}</label>
         </div>
     `
     }
-    })
+  })
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
   await addTaskInfoListeners();
 })
 
 
 const tomorrowTasks = document.querySelector('.due-tomorrow');
-tomorrowTasks.addEventListener('click', async(e) => {
+tomorrowTasks.addEventListener('click', async (e) => {
   e.stopPropagation();
   const res = await fetch('/lists/tomorrow');
 
@@ -495,29 +505,29 @@ tomorrowTasks.addEventListener('click', async(e) => {
   const listName = `
       <h2 class="task-list-header">Tasks Due Tomorrow</h2>
 `
-const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
-  if (isCompleted === true) {
-    return `
+  const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+    if (isCompleted === true) {
+      return `
     <div class='task-info' id=${id}>
         <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
         <label for=${id} id=${id} class="task-check-box">${description}</label>
     </div>
     `
-  } else {
-  return `<div class='task-info' id=${id}>
+    } else {
+      return `<div class='task-info' id=${id}>
             <input type="checkbox" class="task-check-box" id=${id} name=${id}>
             <label for=${id} id=${id} class="task-check-box">${description}</label>
         </div>
     `
     }
-    })
+  })
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
   await addTaskInfoListeners();
 })
 
 
 const overdueTasks = document.querySelector('.overdue');
-overdueTasks.addEventListener('click', async(e) => {
+overdueTasks.addEventListener('click', async (e) => {
   e.stopPropagation();
   const res = await fetch('/lists/overdue');
 
@@ -527,22 +537,22 @@ overdueTasks.addEventListener('click', async(e) => {
   const listName = `
       <h2 class="task-list-header">Overdue Tasks</h2>
 `
-const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
-  if (isCompleted === true) {
-    return `
+  const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+    if (isCompleted === true) {
+      return `
     <div class='task-info' id=${id}>
         <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
         <label for=${id} id=${id} class="task-check-box">${description}</label>
     </div>
     `
-  } else {
-  return `<div class='task-info' id=${id}>
+    } else {
+      return `<div class='task-info' id=${id}>
             <input type="checkbox" class="task-check-box" id=${id} name=${id}>
             <label for=${id} id=${id} class="task-check-box">${description}</label>
         </div>
     `
     }
-    })
+  })
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
   await addTaskInfoListeners();
 })
