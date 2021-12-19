@@ -1,6 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const { check } = require("express-validator");
+const { check, validationResult } = require("express-validator");
 
 const db = require("../db/models");
 const { csrfProtection, asyncHandler, handleValidationErrors } = require("../utils");
@@ -76,7 +76,6 @@ router.post(
   "/signup",
   csrfProtection,
   userValidators,
-  handleValidationErrors,
   asyncHandler(async (req, res) => {
     const { username, email, password } = req.body;
 
@@ -84,25 +83,25 @@ router.post(
         username,
         email
     });
-    const hashedPassword = await bcrypt.hash(password, 10);
-    user.hashedPassword = hashedPassword;
 
-    await user.save();
+    const validatorErrors = validationResult(req);
 
-    const defaultList = await db.List.bulkCreate([{
-      userId: user.id,
-      title: 'Personal'
-    }, {
-      userId: user.id,
-      title: 'Work'
-    },
-  ])
-
-    loginUser(req, res, user);
-
-    res.redirect("/");
-  })
-);
+    if (validatorErrors.isEmpty()) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user.hashedPassword = hashedPassword;
+      await user.save();
+      loginUser(req, res, user);
+      res.redirect("/");
+    } else {
+      const errors = validatorErrors.array().map((error) => error.msg);
+      res.render('user-signup', {
+        title: 'Register',
+        user,
+        errors,
+        csrfToken: req.csrfToken(),
+    });
+  }
+}));
 
 
 router.get("/login", csrfProtection, (req, res) => {
@@ -125,11 +124,12 @@ router.post(
   "/login",
   csrfProtection,
   loginValidators,
-  handleValidationErrors,
   asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     const user = await db.User.findOne({ where: { email } });
     let errors = [];
+    const validatorErrors = validationResult(req);
+
       if (user !== null) {
 
         const passwordMatch = await bcrypt.compare(
@@ -141,9 +141,11 @@ router.post(
           loginUser(req, res, user);
           return res.redirect("/app");
         }
-
+        errors.push("Login failed for the provided email address and password");
+      } else {
+        errors = validatorErrors.array().map((error) => error.msg);
       }
-      errors.push("Login failed for the provided email address and password");
+      //errors.push("Login failed for the provided email address and password");
       res.render("user-login", {
         title: "Login",
         email,
