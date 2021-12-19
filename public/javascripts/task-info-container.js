@@ -1,6 +1,6 @@
 import { fetchTasks } from './fetch-tasks.js';
 import { fetchComments } from './comments.js';
-import { dateFormatter } from './utils.js';
+import { dateFormatter, updateOverDueValue } from './utils.js';
 import { handleErrors } from './utils.js';
 
 // Edit a task
@@ -24,6 +24,7 @@ export const editTask = async (taskId, body) => {
         await fetchTasks();
         await fetchTask(taskId);
         await fetchComments(taskId);
+        await updateOverDueValue();
         } catch (err) {
             handleErrors(err)
         }
@@ -47,6 +48,7 @@ export const deleteTask = async (taskId) => {
             throw res;
         }
         await fetchTasks();
+        await updateOverDueValue();
         return;
         } catch (err) {
             handleErrors(err)
@@ -135,6 +137,8 @@ export const fetchTask = async (taskId) => {
                     "Content-Type": "application/json",
                 }
             })
+            await updateOverDueValue();
+
         } else {
             const res = await fetch(`/tasks/${task.id}`, {
                 method: "PATCH",
@@ -143,6 +147,8 @@ export const fetchTask = async (taskId) => {
                     "Content-Type": "application/json",
                 }
             })
+            await updateOverDueValue();
+
         }
     })
 
@@ -161,6 +167,7 @@ export const fetchTask = async (taskId) => {
         taskInfo.classList.remove('task-information-animation')
 
         await fetchTasks();
+        await updateOverDueValue();
 
     })
 

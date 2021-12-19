@@ -219,3 +219,11 @@ export const editListEventListener = async () => {
         })
       })
 }
+
+
+export const updateOverDueValue = async() => {
+  const overDueValue = document.querySelector('#tasksOverdueValue');
+  const overDueRes = await fetch('/lists/overdue');
+  const { tasks } = await overDueRes.json();
+  overDueValue.innerHTML = `${tasks.length}<div id="tasksOverdue">Overdue</div>`
+}

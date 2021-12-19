@@ -1,4 +1,4 @@
-import { handleErrors, addTaskInfoListeners } from "./utils.js";
+import { handleErrors, addTaskInfoListeners, updateOverDueValue } from "./utils.js";
 import { fetchTasks, fetchAssignTasks, fetchIncompleteTasks,fetchCompletedTasks } from "./fetch-tasks.js";
 import { search } from "./search.js";
 import { fetchContactTasks, addNewContact } from "./contacts.js";
@@ -103,6 +103,7 @@ form.addEventListener("submit", async (e) => {
         tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
 
         await fetchTasks();
+        await updateOverDueValue();
 
 
     } catch (err) {
