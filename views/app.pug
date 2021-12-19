@@ -52,18 +52,20 @@ block content
 
             ul
               div.contact-sidebar
-                div.contacts-title Contacts
+                label.contacts-title.pointer(for="drop") Contacts
+
                 div.add-boxes
                   a.add-contacts +
-              div.contact-list-sidebar
-                li.contact-list(id=`${me}`)=myName.username + " (me)"
-                if contactsAll
-                  each contact in contactsAll
-                    div.list-grid
-                      div
-                        li.contact-list(id=`${contact.id}`)=contact.username
-                      div.delete-boxes
-                        a.delete-contact(id=`${contact.id}`) -
+                input(type="checkbox" id="drop")
+                div.contact-list-sidebar
+
+                  if contactsAll
+                    each contact in contactsAll
+                      div.list-grid
+                        div
+                          li.contact-list(id=`${contact.id}`)=contact.username
+                        div.delete-boxes
+                          a.delete-contact(id=`${contact.id}`) -
               div.add-contact-sidebar
         div.tabbedContainer
             div.tabbedGroup

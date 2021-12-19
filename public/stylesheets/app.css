@@ -828,7 +828,7 @@ ul.default-tasks > li:hover {
     display: grid;
     grid-template-columns: 90% 10%;
     color: #ffffff;
-    margin: 6px 0px;
+    margin: 6px 0px 6px 6px;
 }
 
 list-add-edited {
@@ -922,12 +922,20 @@ list-add-edited {
     padding: 15px 0px;
     margin-top: 20px;
     margin-bottom: 5px;
+    margin-left: -8px;
+    max-width: 307px;
     border-top: 1px solid rgba(255, 255 , 255, .3);
 }
 
 .contact-list-sidebar {
+    clear:both;
     border-bottom: 1px solid rgba(255, 255 , 255, .3);
-    padding-bottom: 12px;
+    height: 0px;
+    margin-top: 7px;
+    overflow: hidden;
+    max-width: 305px;
+    width: 305px;
+    transition: height .4s ease;
 }
 
 .list-sidebar {
@@ -1283,3 +1291,29 @@ list-add-edited {
     align-items: center;
     margin: 0 !important;
 }
+
+/* %%%%%%%%%%%%%%%%%%%%% slide down left list %%%%%%%%%%%%%%%%%%%%% */
+
+.pointer {
+    font-size: 1rem;
+    color: inherit;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    font-weight: normal;
+}
+.pointer::before {
+    float: left;
+    right: 10%;
+    content: "➤";
+    margin-right: 5px;
+}
+
+#drop {
+    position: absolute;
+    opacity: 0;
+    height: 0px;
+}
+
+#drop:checked + .contact-list-sidebar {height: 100%;}
