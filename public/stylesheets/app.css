@@ -824,12 +824,12 @@ ul.default-tasks > li:hover {
 .list-lists:hover {
     color: #8A715B !important;
     font-weight: bold;
-    padding-left: 10px;
+    padding-left: 7px;
 }
 
 .list-grid {
     display: grid;
-    grid-template-columns: 90% 10%;
+    grid-template-columns: 85% 15%;
     color: #ffffff;
     margin: 6px 0px 6px 6px;
 }
@@ -855,6 +855,10 @@ list-add-edited {
     margin: 6px 0px;
 }
 
+/* #delete-hover-parent {
+    color: blue;
+
+} */
 
 
 .list-grid:hover .delete-list {
@@ -935,7 +939,7 @@ list-add-edited {
     margin-top: 7px;
     overflow: hidden;
     max-width: 305px;
-    width: 305px;
+    width: 100%;
     transition: height .1s ease-in-out;
 }
 
@@ -945,7 +949,7 @@ list-add-edited {
     margin-top: 7px;
     overflow: hidden;
     max-width: 305px;
-    width: 305px;
+    width: 100%;
     transition: height .1s ease-in-out;
 }
 
