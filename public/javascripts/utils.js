@@ -246,14 +246,14 @@ export const updateOverDueValue = async () => {
   const overDueValue = document.querySelector('#tasksOverdueValue');
   const overDueRes = await fetch('/lists/overdue');
   const { tasks } = await overDueRes.json();
-  overDueValue.innerHTML = `${tasks.length}<div id="tasksOverdue">Overdue</div>`
+  overDueValue.innerHTML = `${tasks.length}<div id="tasksOverdue">Overdue</div>`;
 }
 
 // Updates the value for "Tasks" found in upper right corner
 // Should be called whenever a task is added, edited, or deleted
 // Called in fetchTasks() because we do that every time
 export const updateTotalTaskValue = async () => {
-  const totalTaskValue = document.querySelector('.tasksDueValue');
+  const totalTaskValue = document.querySelector('#tasksDueValue');
   const res = await fetch('/tasks/incomplete');
   let { tasks } = await res.json();
   let myTasks;
@@ -262,6 +262,7 @@ export const updateTotalTaskValue = async () => {
   } else {
     myTasks = 0;
   }
+
   const givenToMe = await fetch('/lists/given-to-me-incomplete');
   let { tasksGivenToMe } = await givenToMe.json();
   let numTasksGivenToMe;
@@ -270,5 +271,34 @@ export const updateTotalTaskValue = async () => {
   } else {
     numTasksGivenToMe = 0;
   }
-  totalTaskValue.innerText = myTasks + numTasksGivenToMe;
+
+  totalTaskValue.innerHTML = `${myTasks + numTasksGivenToMe}<div id="tasksOverdue">Tasks Due</div>`;
+}
+
+// Updates the value for "Tasks" found in upper right corner
+// Should be called whenever a task is added, edited, or deleted
+// Called in fetchTasks() because we do that every time
+export const updateTasksCompletedValue = async () => {
+  const tasksCompleted = document.querySelector('#tasksCompletedValue');
+  const res = await fetch('/tasks/complete');
+  let { tasks } = await res.json();
+  let tasksComplete;
+
+  if (tasks) {
+    tasksComplete = tasks.length;
+  } else {
+    tasksComplete = 0;
+  }
+
+  const given = await fetch('/lists/given-to-me-complete');
+  let { tasksGiven } = await given.json();
+  let tasksGivenComplete;
+
+  if (tasksGiven) {
+    tasksGivenComplete = tasksGiven.length;
+  } else {
+    tasksGivenComplete = 0;
+  }
+
+  tasksCompleted.innerHTML = `${tasksComplete + tasksGivenComplete}<div id="tasksCompleted">Completed</div>`;
 }

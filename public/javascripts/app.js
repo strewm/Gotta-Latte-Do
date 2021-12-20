@@ -7,30 +7,16 @@ import { fetchLists } from "./lists.js";
 
 
 
-// // Change the color of incomplete/complete tabs when fetching their respective lists
-// function changeColor() {
-//   this.style.backgroundColor = "#FAECDA";
-//   this.style.color = "#8A715B";
-//   return;
-// }
-
 // toggle between incomplete and completed tasks
 // incomplete button
 
-
-const incompleteTaskList = document.querySelector('#incomplete')
+const incompleteTaskList = document.querySelector('#incomplete');
 incompleteTaskList.addEventListener("click", async (e) => {
   await fetchIncompleteTasks();
   const clearAssignedList = document.querySelector('.assigned-list');
   clearAssignedList.innerHTML = ``;
 
-  // const currColor = this.style.backgroundColor;
 
-  // if (currColor === "#E0A979") {
-  //   this.style.backgroundColor = "#FAECDA";
-  // } else {
-  //   this.style.backgroundColor = "#E0A979";
-  // }
 })
 
 
@@ -99,8 +85,8 @@ form.addEventListener("submit", async (e) => {
 
     form.reset();
 
-    const tasksDue = document.querySelector('.tasksDueValue');
-    tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
+    // const tasksDue = document.querySelector('.tasksDueValue');
+    // tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
 
     await fetchTasks();
 
@@ -204,7 +190,6 @@ contacts.addEventListener("click", async (e) => {
 
 
 // delete a contact
-
 const deleteContact = document.querySelector('.contact-list-sidebar')
 
 deleteContact.addEventListener("click", async (e) => {

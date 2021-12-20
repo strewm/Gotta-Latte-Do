@@ -1,4 +1,4 @@
-import { addTaskInfoListeners, updateTotalTaskValue, updateOverDueValue } from "./utils.js";
+import { addTaskInfoListeners, updateTotalTaskValue, updateOverDueValue, updateTasksCompletedValue } from "./utils.js";
 
 // fetch user's tasks (all)
 export const fetchTasks = async () => {
@@ -13,7 +13,7 @@ export const fetchTasks = async () => {
 
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
-  <h2 class="task-list-header">All of <strong>${user.username}'s</strong> self-assigned tasks.</h2>
+  <h2 class="task-list-header"><strong>All of My Tasks</strong></h2>
   `
   const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
     if (isCompleted === true) {
@@ -35,6 +35,7 @@ export const fetchTasks = async () => {
   await addTaskInfoListeners();
   await updateOverDueValue();
   await updateTotalTaskValue();
+  await updateTasksCompletedValue();
 }
 
 
@@ -87,7 +88,7 @@ export const fetchIncompleteTasks = async () => {
 
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
-    <h2 class="task-list-header"><strong>${user.username}'s</strong> incomplete tasks.</h2>
+    <h2 class="task-list-header"><strong>Still Need To Brew</strong></h2>
     `
   const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
     if (isCompleted === true) {
@@ -125,7 +126,7 @@ export const fetchCompletedTasks = async () => {
 
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
-    <h2 class="task-list-header"><strong>${user.username}'s</strong> completed tasks.</h2>
+    <h2 class="task-list-header"><strong>Got a latte done!</strong></h2>
     `
   const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
     if (isCompleted === true) {

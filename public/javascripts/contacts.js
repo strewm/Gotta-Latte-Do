@@ -19,7 +19,7 @@ export const fetchContactTasks = async (id) => {
       //await fetchAssignTasks();
     } else {
       listName = `
-    <h2 class="task-list-header">Tasks that you've assigned to <strong>${user.username}</strong>.</h2>
+    <h2 class="task-list-header">Tasks you've given to <strong>${user.username}</strong></h2>
     `
     const clearAssignedList = document.querySelector('.assigned-list')
     clearAssignedList.innerHTML = ``;
