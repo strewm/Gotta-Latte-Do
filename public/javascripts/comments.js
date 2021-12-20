@@ -1,10 +1,9 @@
 import { fetchUser } from './user.js';
-import { commentDateFormatter } from './utils.js';
+import { dateFormatter } from './utils.js';
 import { handleErrors } from './utils.js';
 
 
-// fetch comments for a task
-
+// Fetch all comments for a task
 export const fetchComments = async (taskId) => {
     const res = await fetch(`/tasks/${taskId}/comments`);
     if (res.status === 401) {
@@ -14,6 +13,8 @@ export const fetchComments = async (taskId) => {
 
     const { comments } = await res.json();
 
+    // Each comment contains the username of the user who created the comment,
+    // the date and time the comment was updated, and edit/delete buttons
     const commentsDiv = document.querySelector(`#comments-${taskId}`);
     const commentsHtml = comments.map((comment) => `
         <div class="comment-container-${comment.id} comment-container">
@@ -24,7 +25,7 @@ export const fetchComments = async (taskId) => {
                 <span id='comment-${comment.id}-message' class='comment-message'>${comment.message}</span>
             </span>
             <div class='updatedAt-${comment.id} updated-At'>
-                <div class='comment-date'>${commentDateFormatter(comment.updatedAt)}</div>
+                <div class='comment-date'>${dateFormatter(comment.updatedAt)}</div>
                 <div class='comment-buttons-${comment.id} comment-buttons userId-${comment.userId}-${comment.id}'>
                     <div class="comment-buttons-dot comment-butts">•</div>
                     <button class='edit-comment-butt comment-butts' id='${comment.id}'>Edit</button>
@@ -38,28 +39,28 @@ export const fetchComments = async (taskId) => {
 
     commentsDiv.innerHTML = commentsHtml.join("");
 
-    // only show edit/delete if userId of comment matches logged in user
-
+    // Only show edit/delete buttons for comments made by the logged in user
     const user = await fetchUser();
 
     comments.forEach((comment) => {
         const editDeleteButtons = document.querySelector(`.userId-${comment.userId}-${comment.id}`);
 
         if (user.id === comment.userId) {
-            editDeleteButtons.style.display="flex";
+            editDeleteButtons.style.display = "flex";
         } else {
-            editDeleteButtons.style.display="none";
+            editDeleteButtons.style.display = "none";
         }
     })
 
+    // Add delete functionality to the delete comment button
     const deleteComments = document.querySelectorAll('.delete-comment-butt');
 
     for (let i = 0; i < deleteComments.length; i++) {
         const deleteButton = deleteComments[i];
-        deleteButton.addEventListener('click', async(e) => {
+        deleteButton.addEventListener('click', async (e) => {
             e.preventDefault();
             const commentId = e.target.id;
-            const res = await fetch(`/comments/${commentId}`, {
+            await fetch(`/comments/${commentId}`, {
                 method: 'DELETE'
             })
 
@@ -70,11 +71,12 @@ export const fetchComments = async (taskId) => {
         })
     }
 
+    // Add edit functionality to the edit comment button
     const editComments = document.querySelectorAll('.edit-comment-butt');
 
     for (let i = 0; i < editComments.length; i++) {
         const editButton = editComments[i];
-        editButton.addEventListener('click', async(e) => {
+        editButton.addEventListener('click', async (e) => {
             e.preventDefault();
             const commentId = e.target.id;
             const messageSpan = document.querySelector(`#comment-${commentId}-message`);
@@ -96,9 +98,10 @@ export const fetchComments = async (taskId) => {
                 </span>
             `
 
+            // Add submit functionality for the edited comment
             const submitEdit = document.querySelector(`.submit-edit-comment-butt`);
 
-            submitEdit.addEventListener('click', async(e) => {
+            submitEdit.addEventListener('click', async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 const newMessageForm = new FormData(document.querySelector('.edit-comment'));
@@ -107,26 +110,17 @@ export const fetchComments = async (taskId) => {
 
                 const body = { message };
 
-                const res = await fetch(`/comments/${commentId}`, {
-                    method: "PUT",
-                    body: JSON.stringify(body),
-                    headers: {
-                        "Content-Type": "application/json",
-                    }
-                })
+                const comment = await editComment(commentId, body);
 
-                const { comment } = await res.json();
-
-
+                // Update comment message
                 const commentContainer = document.querySelector(`.comment-container-${comment.id}`);
-                // const userId = document.querySelector(`#comment-${comment.id}-userId`).innerText
                 commentContainer.innerHTML = `
                 <span id='comment-${comment.id}'>
                     ${comment.User.id}
                     <span id='comment-${comment.id}-message'>${comment.message}</span>
                 </span>
                 <div class='updatedAt-${comment.id}'>
-                    <span>${commentDateFormatter(comment.updatedAt)}</span>
+                    <span>${dateFormatter(comment.updatedAt)}</span>
                     <span class='comment-buttons-${comment.id}'>
                         <button class='edit-comment-butt' id='${comment.id}'>Edit
                         <button class='delete-comment-butt' id='${comment.id}'>Delete</button>
@@ -137,16 +131,12 @@ export const fetchComments = async (taskId) => {
             })
         })
     }
-  }
+}
 
 
-
-  // Post a comment on a task
-
+// Post a new comment on a task
 export const postComment = async (taskId, body) => {
-
     const createComment = document.querySelector('.create-comment');
-
     try {
         const res = await fetch(`/tasks/${taskId}/comments`, {
             method: "POST",
@@ -165,14 +155,14 @@ export const postComment = async (taskId, body) => {
         }
         createComment.reset();
         await fetchComments(taskId);
-        } catch (err) {
-            handleErrors(err)
-        }
-  }
+    } catch (err) {
+        handleErrors(err)
+    }
+}
 
 
-  // Delete a comment on a task
-  export const deleteComment = async (commentId) => {
+// Delete a comment on a task
+export const deleteComment = async (commentId) => {
     try {
         const res = await fetch(`/comments/${commentId}`, {
             method: "DELETE",
@@ -186,13 +176,14 @@ export const postComment = async (taskId, body) => {
             throw res;
         }
         await fetchComments(taskId);
-        } catch (err) {
-            handleErrors(err)
-        }
-  }
+    } catch (err) {
+        handleErrors(err)
+    }
+}
 
-  // Edit a comment on a task
-  export const editComment = async (commentId, body) => {
+
+// Edit a comment on a task
+export const editComment = async (commentId, body) => {
     try {
         const res = await fetch(`/comments/${commentId}`, {
             method: "PUT",
@@ -209,9 +200,12 @@ export const postComment = async (taskId, body) => {
         if (!res.ok) {
             throw res;
         }
-        await fetchComments(taskId);
-        } catch (err) {
-            handleErrors(err)
-        }
 
+        const { comment } = await res.json();
+        return comment;
+
+    } catch (err) {
+        handleErrors(err)
     }
+
+}

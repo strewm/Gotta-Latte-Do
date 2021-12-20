@@ -4,18 +4,20 @@ const db = require('../db/models');
 const { Contact, Task, User, List } = db;
 const { Op } = require('sequelize');
 
-var router = express.Router();
+const router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   if (res.locals.authenticated) {
     return res.redirect('/app')
   }
   res.render('index', { title: 'Gotta Latte Do' });
 });
 
+
+// Gets logged in user's home page
 router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
-  if(!res.locals.userId) {
+  if (!res.locals.userId) {
     res.redirect('/users/login')
   }
 
@@ -59,12 +61,13 @@ router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
   const overdue = await Task.findAll({
     where: {
       [Op.and]: [{
-      dueDate: { [Op.lt]: today }
+        dueDate: { [Op.lt]: today }
       },
       { isCompleted: false },
       { userId: me }
       ],
-  }})
+    }
+  })
 
   res.render('app', { csrfToken: req.csrfToken(), contactsAll, tasks, tasksGivenToMe, currUser, me, myName, myLists, overdue })
 }));

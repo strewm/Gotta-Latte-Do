@@ -24,12 +24,15 @@ const taskNotFoundError = (id) => {
   return error;
 }
 
+
+// Gets all of logged in user's tasks
 router.get('/users/:id(\\d+)/tasks', csrfProtection, asyncHandler(async(req, res) => {
   const tasks = await Task.findAll({where: {userId: req.params.id}});
   res.json({tasks})
 }))
 
 
+// Create a new task for logged in user
 router.post('/users/:id(\\d+)/tasks', validateTask, handleValidationErrors, csrfProtection, asyncHandler(async(req, res) => {
   const { description, dueDate, givenTo } = req.body;
   const userId = res.locals.userId
@@ -42,8 +45,8 @@ router.post('/users/:id(\\d+)/tasks', validateTask, handleValidationErrors, csrf
   res.status(201).json({task});
 }));
 
-// route to fetch user's tasks (all)
 
+// route to fetch user's tasks (all)
 router.get('/', asyncHandler(async(req, res) => {
   const userId = res.locals.userId
 
@@ -61,8 +64,8 @@ router.get('/', asyncHandler(async(req, res) => {
 
 }));
 
-// route to fetch user's tasks that are incomplete
 
+// route to fetch user's tasks that are incomplete
 router.get('/incomplete', asyncHandler(async(req, res) => {
   const userId = res.locals.userId
 
@@ -80,8 +83,8 @@ router.get('/incomplete', asyncHandler(async(req, res) => {
 
 }));
 
-// route to fetch user's tasks that are completed
 
+// route to fetch user's tasks that are completed
 router.get('/complete', asyncHandler(async(req, res) => {
   const userId = res.locals.userId
 
@@ -99,8 +102,8 @@ router.get('/complete', asyncHandler(async(req, res) => {
 
 }));
 
-// route to fetch user's tasks that are assigned to user
 
+// route to fetch user's tasks that are assigned to user
 router.get('/assigned', asyncHandler(async(req, res, next) => {
   const givenTo = res.locals.userId
 
@@ -121,6 +124,7 @@ try {
 
 }));
 
+// Get a specific task
 router.get('/task/:id(\\d+)', asyncHandler(async(req, res) => {
   const givenTo = parseInt(req.params.id, 10);
   const userId = res.locals.userId;
@@ -150,6 +154,8 @@ router.get('/task/:id(\\d+)', asyncHandler(async(req, res) => {
 
 }));
 
+
+// Create a new task for logged in user
 router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, res) => {
   const { description, dueDate, isCompleted, givenTo, title } = req.body;
   const userId = res.locals.userId
@@ -197,6 +203,8 @@ router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, r
 
 }));
 
+
+// Get a specific task
 router.get('/:id(\\d+)', asyncHandler(async(req, res, next) => {
   const task = await Task.findByPk(req.params.id);
 
@@ -207,6 +215,8 @@ router.get('/:id(\\d+)', asyncHandler(async(req, res, next) => {
   }
 }))
 
+
+// Edit a task
 router.put ('/:id(\\d+)', validateTask, handleValidationErrors, asyncHandler(async(req, res, next) => {
   const { description, dueDate, isCompleted } = req.body;
   const task = await Task.findByPk(req.params.id);
@@ -223,6 +233,7 @@ router.put ('/:id(\\d+)', validateTask, handleValidationErrors, asyncHandler(asy
 }))
 
 
+// Delete a task
 router.delete('/:id(\\d+)', asyncHandler(async(req, res, next) => {
   const task = await Task.findByPk(req.params.id);
   if (task) {
@@ -233,6 +244,8 @@ router.delete('/:id(\\d+)', asyncHandler(async(req, res, next) => {
   }
 }))
 
+
+// Edit a task's completed status
 router.patch('/:id(\\d+)', asyncHandler(async (req, res, next) => {
   const { isCompleted } = req.body;
   const task = await Task.findByPk(req.params.id);

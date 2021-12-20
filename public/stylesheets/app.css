@@ -800,7 +800,7 @@ ul.default-tasks > li:hover {
 .add-list-buttons-container {
     margin: 10px 0px;
     background-color: #ecb98d;
-    margin-top: 30px;
+    margin-top: 15px;
 }
 
 .list-list {
@@ -924,7 +924,7 @@ list-add-edited {
     padding: 15px 0px;
     margin-bottom: 5px;
     border-top: 1px solid rgba(255, 255 , 255, .3);
-    transition: height .4s ease;
+    transition: height .1s ease-in-out;
 }
 
 .contact-list-sidebar {
@@ -934,7 +934,7 @@ list-add-edited {
     overflow: hidden;
     max-width: 305px;
     width: 305px;
-    transition: height .4s ease;
+    transition: height .1s ease-in-out;
 }
 
 .lists-drop-container {
@@ -944,7 +944,7 @@ list-add-edited {
     overflow: hidden;
     max-width: 305px;
     width: 305px;
-    /* transition: height .1s ease; */
+    transition: height .1s ease-in-out;
 }
 
 .list-sidebar {
@@ -1195,6 +1195,11 @@ list-add-edited {
 
 }
 
+.edit-list-button-container {
+    margin: 10px 0px;
+    margin-top: 30px;
+}
+
 .editTaskButton {
     margin-left: 6rem;
     margin-right: 1rem;
@@ -1227,6 +1232,10 @@ list-add-edited {
     margin-top: 3px;
     color: #8A715B;
     background-color: #FAECDA;
+}
+
+.list-modal-input {
+    margin-bottom: 20px;
 }
 
 .modal-form {

@@ -1,6 +1,6 @@
 import { fetchTasks } from './fetch-tasks.js';
 import { fetchComments } from './comments.js';
-import { dateFormatter } from './utils.js';
+import { updateOverDueValue, dueDateFormatter, dateFormatter, updateTotalTaskValue } from './utils.js';
 import { handleErrors } from './utils.js';
 
 // Edit a task
@@ -24,15 +24,14 @@ export const editTask = async (taskId, body) => {
         await fetchTasks();
         await fetchTask(taskId);
         await fetchComments(taskId);
-        } catch (err) {
-            handleErrors(err)
-        }
-  }
+    } catch (err) {
+        handleErrors(err)
+    }
+}
 
 
 
-// Delete Task
-
+// Delete a task and updates task container list, as well as the overdue task value on the page
 export const deleteTask = async (taskId) => {
     try {
         const res = await fetch(`/tasks/${taskId}`, {
@@ -48,15 +47,14 @@ export const deleteTask = async (taskId) => {
         }
         await fetchTasks();
         return;
-        } catch (err) {
-            handleErrors(err)
-        }
-  }
+    } catch (err) {
+        handleErrors(err)
+    }
+}
 
 
 
-  // Fetch specific task container
-
+// Fetch specific task container
 export const fetchTask = async (taskId) => {
     const res = await fetch(`/tasks/${taskId}`);
 
@@ -67,16 +65,17 @@ export const fetchTask = async (taskId) => {
 
     const { task } = await res.json();
 
-    const due = dateFormatter(task);
+    const due = dueDateFormatter(task);
 
+    // Return checked checkbox if the task is completed
     let checked;
-
     if (task.isCompleted) {
         checked = "on";
     } else {
         checked = "off";
     }
 
+    // Task container contains Edit/Delete buttons, task message, task due date, task completion status, and a comment container
     const taskInfo = document.querySelector('.fiona');
     const taskHtml = `
         <div class='task-${task.id} task-container'>
@@ -118,23 +117,37 @@ export const fetchTask = async (taskId) => {
     taskInfo.innerHTML = taskHtml;
     taskInfo.hidden = false;
 
-    const check = document.querySelector('.completedTask');
+    // If the task is overdue, style due date section to reflect overdue status
+    const displayedDue = document.querySelector('.due-container-content');
+    if (displayedDue.innerText === 'OVERDUE') {
+        displayedDue.style.color = 'red';
+        displayedDue.innerText = dateFormatter(task.dueDate)
+        const dueLabel = document.querySelector('.due-container-label');
+        dueLabel.innerText = 'A LITTLE LATTE'
 
+    }
+
+
+    // Updates the completed status of the task with a checkbox
+    const check = document.querySelector('.completedTask');
     if (task.isCompleted) {
         check.checked = true;
     } else {
         check.checked = false;
     }
 
-    check.addEventListener('change', async(e) => {
+    check.addEventListener('change', async (e) => {
         if (check.checked) {
-            const res = await fetch(`/tasks/${task.id}`, {
+            await fetch(`/tasks/${task.id}`, {
                 method: "PATCH",
                 body: JSON.stringify({ "isCompleted": "true" }),
                 headers: {
                     "Content-Type": "application/json",
                 }
             })
+            await updateOverDueValue();
+            await updateTotalTaskValue();
+
         } else {
             const res = await fetch(`/tasks/${task.id}`, {
                 method: "PATCH",
@@ -143,51 +156,42 @@ export const fetchTask = async (taskId) => {
                     "Content-Type": "application/json",
                 }
             })
+            await updateOverDueValue();
+            await updateTotalTaskValue();
+
         }
     })
 
 
-
-
+    // Add functionality to task info container buttons
     const hideTaskInfoButt = document.querySelector('#task-info-x');
     const editTaskButt = document.querySelector(`.edit-task-button`);
     const editForm = document.querySelector('.edit-form');
 
+    // Hides the task info container and removes animation class so it can be applied to next opened task
     hideTaskInfoButt.addEventListener('click', async (e) => {
 
-        editForm.hidden = true;
-        editForm.style.display = 'none';
+        // editForm.hidden = true;
+        // editForm.style.display = 'none';
         taskInfo.hidden = true;
         taskInfo.classList.remove('task-information-animation')
 
-        await fetchTasks();
-
     })
 
+    // Deleting a task hides the container
     const deleteTaskButt = document.querySelector(`#delete-task-button-${task.id}`);
-
-    deleteTaskButt.addEventListener('click', async(e) => {
+    deleteTaskButt.addEventListener('click', async (e) => {
         e.preventDefault();
 
         deleteTask(task.id);
         const taskInfo = document.querySelector(`.task-${task.id}`);
         taskInfo.hidden = true;
-        editForm.hidden = true;
-        editForm.style.display = 'none';
-
-        const tasksDue = document.querySelector('.tasksDueValue');
-        tasksDue.innerText = (Number(tasksDue.innerText) - 1).toString()
 
         const fionaDiv = document.querySelector('.fiona');
         fionaDiv.classList.remove('task-information-animation');
-
-
     })
 
-
-    // const form = document.createElement('form');
-    // form.setAttribute('class', 'edit-task');
-    // const form = document.querySelector('.edit-form')
+    // Create the form to edit the task
     editForm.innerHTML = `
             <label for='description' class="task-label-headers modal-header">Edit Task</label>
             <input type='text' value='${task.description}' id='description-task-${task.id}' class='description-task modal-input' name='description' required></input>
@@ -204,16 +208,16 @@ export const fetchTask = async (taskId) => {
     const cancelText = document.createTextNode('Cancel');
     editFormHide.appendChild(cancelText);
 
-
+    // Prevents more than one edit form hide button being appended to the document
     if (!editForm.children[0].length) {
         editForm.appendChild(editFormHide);
-
         editForm.hidden = true;
     }
 
+    // Functionality to edit task button(s)
     const editTaskSubmit = document.querySelector('.editTaskButton');
 
-    editFormHide.addEventListener('click', async(e) => {
+    editFormHide.addEventListener('click', async (e) => {
         e.preventDefault();
         e.stopPropagation();
         editForm.hidden = true;
@@ -222,7 +226,7 @@ export const fetchTask = async (taskId) => {
         cloud.hidden = true;
     })
 
-    editTaskButt.addEventListener('click', async(e) => {
+    editTaskButt.addEventListener('click', async (e) => {
         e.preventDefault();
         e.stopPropagation();
         const editFormPlaceholder = document.querySelector(`.description-task`);
@@ -232,34 +236,35 @@ export const fetchTask = async (taskId) => {
         const cloud = document.querySelector('.cloud');
         cloud.hidden = false;
 
-            editTaskSubmit.addEventListener('click', async (e) => {
-                e.preventDefault();
-                e.stopPropagation();
+        // Submission of an edited task
+        editTaskSubmit.addEventListener('click', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
 
-                const formData = new FormData(document.querySelector('.edit-form'));
-                const description = formData.get('description');
-                const dueDate = formData.get('dueDate');
-                const checkStatus = formData.get('isCompleted');
-                let isCompleted;
+            const formData = new FormData(document.querySelector('.edit-form'));
+            const description = formData.get('description');
+            const dueDate = formData.get('dueDate');
+            const checkStatus = formData.get('isCompleted');
+            let isCompleted;
 
-                if (checkStatus === 'on') {
-                    isCompleted = true;
-                } else {
-                    isCompleted = false;
-                }
+            if (checkStatus === 'on') {
+                isCompleted = true;
+            } else {
+                isCompleted = false;
+            }
 
-                const body = { description, dueDate, isCompleted };
+            const body = { description, dueDate, isCompleted };
 
-                try {
-                    await editTask(taskId, body);
-                    editForm.hidden = true;
-                    editForm.style.display = 'none'
-                    cloud.hidden = true;
+            try {
+                await editTask(taskId, body);
+                editForm.hidden = true;
+                editForm.style.display = 'none'
+                cloud.hidden = true;
 
-                } catch (e) {
-                    console.error(e);
-                }
-            })
+            } catch (e) {
+                console.error(e);
+            }
+        })
     })
 
-  }
+}

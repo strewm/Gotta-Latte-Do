@@ -54,14 +54,26 @@ const userValidators = [
     }),
 ];
 
+
+const loginValidators = [
+  check("email")
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide an email address"),
+  check("password")
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a password"),
+];
+
+
+// Gets user info
 router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
   const userId = parseInt(req.params.id, 10);
-  console.log(userId, '------------------------------')
   const userInfo = await db.User.findByPk(userId);
-  console.log(userInfo, '!!!!!!!!!!!!!!!!!!!!!!!!')
-  res.status(201).json({userInfo})
+  res.status(201).json({ userInfo })
 }))
 
+
+// Renders sign up page
 router.get("/signup", csrfProtection, asyncHandler(async (req, res) => {
   const user = db.User.build();
   res.render("user-signup", {
@@ -72,6 +84,7 @@ router.get("/signup", csrfProtection, asyncHandler(async (req, res) => {
 }));
 
 
+// Registers a new user
 router.post(
   "/signup",
   csrfProtection,
@@ -80,8 +93,8 @@ router.post(
     const { username, email, password } = req.body;
 
     const user = await db.User.build({
-        username,
-        email
+      username,
+      email
     });
 
     const validatorErrors = validationResult(req);
@@ -99,11 +112,12 @@ router.post(
         user,
         errors,
         csrfToken: req.csrfToken(),
-    });
-  }
-}));
+      });
+    }
+  }));
 
 
+// Renders user login page
 router.get("/login", csrfProtection, (req, res) => {
   res.render("user-login", {
     title: "Login",
@@ -111,15 +125,8 @@ router.get("/login", csrfProtection, (req, res) => {
   });
 });
 
-const loginValidators = [
-  check("email")
-    .exists({ checkFalsy: true })
-    .withMessage("Please provide an email address"),
-  check("password")
-    .exists({ checkFalsy: true })
-    .withMessage("Please provide a password"),
-];
 
+// Logs user in if email and password are correct
 router.post(
   "/login",
   csrfProtection,
@@ -130,38 +137,38 @@ router.post(
     let errors = [];
     const validatorErrors = validationResult(req);
 
-      if (user !== null) {
+    if (user !== null) {
 
-        const passwordMatch = await bcrypt.compare(
-          password,
-          user.hashedPassword.toString()
-        );
+      const passwordMatch = await bcrypt.compare(
+        password,
+        user.hashedPassword.toString()
+      );
 
-        if (passwordMatch) {
-          loginUser(req, res, user);
-          return res.redirect("/app");
-        }
-        errors.push("Login failed for the provided email address and password");
-      } else {
-        errors = validatorErrors.array().map((error) => error.msg);
+      if (passwordMatch) {
+        loginUser(req, res, user);
+        return res.redirect("/app");
       }
-      //errors.push("Login failed for the provided email address and password");
-      res.render("user-login", {
-        title: "Login",
-        email,
-        errors,
-        csrfToken: req.csrfToken(),
-      });
+    } else {
+      errors = validatorErrors.array().map((error) => error.msg);
+      errors.push("Login failed for the provided email address and password");
+    }
+    res.render("user-login", {
+      title: "Login",
+      email,
+      errors,
+      csrfToken: req.csrfToken(),
+    });
   }));
 
 
-
+// Logs user out
 router.post("/logout", (req, res) => {
   logoutUser(req, res);
   res.redirect("/");
 });
 
 
+// Logs demo user in
 router.post('/demo', asyncHandler(async (req, res) => {
   const user = await db.User.findByPk(4);
   loginUser(req, res, user);
@@ -169,15 +176,12 @@ router.post('/demo', asyncHandler(async (req, res) => {
 }))
 
 
+// Grabs currently logged in user
 router.get('/current', asyncHandler(async (req, res) => {
   const userId = res.locals.userId;
   const user = await db.User.findByPk(userId);
   res.json({ user });
 }))
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
 
 module.exports = router;
