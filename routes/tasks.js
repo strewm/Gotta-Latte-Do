@@ -109,7 +109,7 @@ router.get('/assigned', asyncHandler(async(req, res, next) => {
 
 try {
   const tasks = await Task.findAll({
-     where: {
+    where: {
       givenTo
     },
     include: {model: User}

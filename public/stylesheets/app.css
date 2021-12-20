@@ -96,6 +96,7 @@ a {
     padding: 10px;
     margin: 0 5px;
     color: #8A715B;
+    border-bottom: thin dotted #f0c299;
 
     background-color: #fae5ca;
     font-size: 15px;
@@ -103,7 +104,14 @@ a {
 
 .tabbedLink:hover {
     cursor: pointer;
-    background-color: #eccea5;
+    font-weight: bold;
+    border-bottom: none;
+}
+
+.tabbedLink:active {
+    cursor: pointer;
+    font-weight: bold;
+    border-bottom: none;
 }
 
 /* #incomplete:hover + #complete {
@@ -633,7 +641,7 @@ ul.default-tasks > li:hover {
     margin: 5px;
 }
 
-#tasksDueValue, #tasksOverdueValue {
+#tasksDueValue, #tasksOverdueValue, #tasksCompletedValue {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -657,7 +665,7 @@ ul.default-tasks > li:hover {
     color: #eb4d4d;
 }
 
-#tasksDue, #tasksOverdue {
+#tasksDue, #tasksOverdue, #tasksCompleted {
     color: #75604d;
 }
 
@@ -1083,7 +1091,7 @@ list-add-edited {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 5px;
+    margin: 5px;
 }
 
 .settingUserInfo {
@@ -1111,11 +1119,13 @@ list-add-edited {
 
 .settingListGroup {
     padding: 5px;
+    margin: 6px 6px 0 6px;
 }
 
 .settingList {
     text-decoration: none;
     font-size: 13px;
+    margin: 5px 0px;
 }
 
 

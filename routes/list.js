@@ -140,6 +140,17 @@ router.get('/given-to-me-incomplete', asyncHandler(async (req, res) => {
   res.json({ tasksGivenToMe })
 }))
 
+// Gets all tasks that have been given to the user and are complete
+router.get('/given-to-me-complete', asyncHandler(async (req, res) => {
+  const userId = res.locals.userId;
+  const tasksGiven = await Task.findAll({
+    where: {
+      givenTo: userId,
+      isCompleted: 'true'
+    }
+  })
+  res.json({ tasksGiven })
+}))
 
 // Gets all tasks due today
 router.get('/today', asyncHandler(async (req, res) => {
