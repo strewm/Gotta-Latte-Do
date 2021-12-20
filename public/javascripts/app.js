@@ -252,10 +252,16 @@ deleteList.addEventListener("click", async (e) => {
   if (e.target.innerText === '-') {
     const targetRemoval = e.target.parentNode.parentNode
     targetRemoval.remove();
+    const token = cookieMonster(document.cookie)
     try {
 
       await fetch(`/lists/${deleteListId}`, {
         method: "DELETE",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "CSRF-Token": token
+        }
       })
 
     } catch (err) {
@@ -296,13 +302,15 @@ addList.addEventListener('click', (e) => {
 
     const title = formData.get('title');
     const body = { title };
-
+    const token = cookieMonster(document.cookie)
     try {
       await fetch(`/lists`, {
         method: 'POST',
+        credentials: "same-origin",
         body: JSON.stringify(body),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          "CSRF-Token": token
         }
       });
       addListForm.innerHTML = '';
