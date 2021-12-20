@@ -60,7 +60,7 @@ router.get('/:id(\\d+)/tasks', asyncHandler(async (req, res) => {
 
 
 // Creates a new list
-router.post('/', validateLists, asyncHandler(async (req, res, next) => {
+router.post('/', csrfProtection, validateLists, asyncHandler(async (req, res, next) => {
   const { title } = req.body;
   const userId = res.locals.userId;
 
@@ -79,7 +79,7 @@ router.post('/', validateLists, asyncHandler(async (req, res, next) => {
 
 
 // Edits a list
-router.patch('/:id(\\d+)', asyncHandler(async (req, res) => {
+router.patch('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
   const { title } = req.body;
   const list = await List.findByPk(req.params.id);
   await list.update({
@@ -90,7 +90,7 @@ router.patch('/:id(\\d+)', asyncHandler(async (req, res) => {
 
 
 // Deletes a list
-router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
+router.delete('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
   const list = await List.findByPk(req.params.id);
   if (list) {
     await list.destroy()

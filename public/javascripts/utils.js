@@ -210,11 +210,14 @@ export const editListEventListener = async () => {
       const formData = new FormData(listUpdate);
       const title = formData.get('title')
       const body = { title }
+      const token = cookieMonster(document.cookie)
       const updatedList = await fetch(`/lists/${listId}`, {
         method: 'PATCH',
+        credentials: "same-origin",
         body: JSON.stringify(body),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          "CSRF-Token": token
         }
       })
 
