@@ -27,7 +27,7 @@ const taskNotFoundError = (id) => {
 
 // Gets all of logged in user's tasks
 router.get('/users/:id(\\d+)/tasks', csrfProtection, asyncHandler(async(req, res) => {
-  const tasks = await Task.findAll({where: {userId: req.params.id}});
+  const tasks = await Task.findAll({where: {userId: req.params.id, order: [['dueDate']]}});
   res.json({tasks})
 }))
 
@@ -55,7 +55,7 @@ router.get('/', asyncHandler(async(req, res) => {
       userId,
       givenTo: null,
     },
-    order: [['createdAt']]
+    order: [['dueDate']]
   })
 
   const user = await User.findByPk(userId);
@@ -74,7 +74,8 @@ router.get('/incomplete', asyncHandler(async(req, res) => {
       userId,
       givenTo: null,
       isCompleted: 'false'
-    }
+    },
+    order: [['dueDate']]
   })
 
   const user = await User.findByPk(userId);
@@ -93,7 +94,8 @@ router.get('/complete', asyncHandler(async(req, res) => {
       userId,
       givenTo: null,
       isCompleted: 'true'
-    }
+    },
+    order: [['dueDate']]
   })
 
   const user = await User.findByPk(userId);
@@ -112,7 +114,8 @@ try {
     where: {
       givenTo
     },
-    include: {model: User}
+    include: {model: User},
+    order: [['dueDate']]
   })
   if (tasks) {
 
@@ -134,7 +137,8 @@ router.get('/task/:id(\\d+)', asyncHandler(async(req, res) => {
       where: {
         userId,
         givenTo: null
-      }
+      },
+      order: [['dueDate']]
     })
     const isContact = false;
     const user = await User.findByPk(userId)
@@ -144,7 +148,8 @@ router.get('/task/:id(\\d+)', asyncHandler(async(req, res) => {
       where: {
         userId,
         givenTo,
-      }
+      },
+      order: [['dueDate']]
     })
     const isContact = true;
     const user = await User.findByPk(givenTo)

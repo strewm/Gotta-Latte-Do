@@ -52,7 +52,8 @@ router.get('/', asyncHandler(async (req, res) => {
 router.get('/:id(\\d+)/tasks', asyncHandler(async (req, res) => {
   const tasks = await TaskList.findAll({
     include: [{ model: Task }, { model: List }],
-    where: { listId: req.params.id }
+    where: { listId: req.params.id },
+    order: [['dueDate']]
   })
   res.json({ tasks });
 }))
@@ -110,7 +111,8 @@ router.get('/given-to-others', asyncHandler(async (req, res, next) => {
       givenTo: {
         [Op.ne]: null
       }
-    }
+    },
+    order: [['dueDate']]
   })
   res.json({ tasks })
 }))
@@ -122,7 +124,8 @@ router.get('/given-to-me', asyncHandler(async (req, res) => {
   const tasksGivenToMe = await Task.findAll({
     where: {
       givenTo: userId
-    }
+    },
+    order: [['dueDate']]
   })
   res.json({ tasksGivenToMe })
 }))
@@ -135,7 +138,8 @@ router.get('/given-to-me-incomplete', asyncHandler(async (req, res) => {
     where: {
       givenTo: userId,
       isCompleted: 'false'
-    }
+    },
+    order: [['dueDate']]
   })
   res.json({ tasksGivenToMe })
 }))
@@ -147,7 +151,8 @@ router.get('/given-to-me-complete', asyncHandler(async (req, res) => {
     where: {
       givenTo: userId,
       isCompleted: 'true'
-    }
+    },
+    order: [['dueDate']]
   })
   res.json({ tasksGiven })
 }))
@@ -163,7 +168,8 @@ router.get('/today', asyncHandler(async (req, res) => {
       dueDate: {
         [Op.between]: [start, end]
       }
-    }
+    },
+    order: [['dueDate']]
   })
   res.json({ tasks });
 }))
@@ -183,7 +189,8 @@ router.get('/tomorrow', asyncHandler(async (req, res) => {
       dueDate: {
         [Op.between]: [start, end]
       }
-    }
+    },
+    order: [['dueDate']]
   })
   res.json({ tasks })
 }))
@@ -201,7 +208,8 @@ router.get('/overdue', asyncHandler(async (req, res) => {
       { isCompleted: false },
       { userId }
       ],
-    }
+    },
+    order: [['dueDate']]
   })
   res.json({ tasks })
 }))
