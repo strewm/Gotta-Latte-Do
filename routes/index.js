@@ -21,6 +21,8 @@ router.get('/app', csrfProtection, asyncHandler(async (req, res, next) => {
     res.redirect('/users/login')
   }
 
+  res.cookie('XSRF-TOKEN', req.csrfToken())
+
   const me = res.locals.userId
   const myName = await User.findByPk(me)
 
