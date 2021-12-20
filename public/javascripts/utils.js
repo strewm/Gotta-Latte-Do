@@ -105,8 +105,8 @@ export const addTaskInfoListeners = async () => {
 
   const taskInfoContainer = document.querySelectorAll('.task-info');
 
-  taskInfoContainer.forEach((task) => {
-    task.addEventListener('click', async (e) => {
+  taskInfoContainer.forEach( (task) => {
+    task.addEventListener('click', async(e) => {
       e.stopPropagation();
       const taskId = task.id;
 
@@ -114,9 +114,11 @@ export const addTaskInfoListeners = async () => {
       editForm.hidden = true;
       editForm.style.display = 'none';
       const taskInfo = document.querySelector('.fiona');
+      taskInfo.classList.remove('task-information-animation')
 
 
       try {
+
         await fetchTask(taskId);
 
         if (taskInfo.classList.contains('task-information-animation') && e.target.id !== taskId) {
@@ -125,7 +127,9 @@ export const addTaskInfoListeners = async () => {
           taskInfo.hidden = false;
           setTimeout(() => {
             taskInfo.classList.add('task-information-animation');
-          }, 0)
+
+          }, 0);
+
         }
 
         const createComment = document.querySelector('.create-comment');

@@ -21,7 +21,7 @@ a {
     grid-area: header;
 
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
 
     background-color: #8A715B;
@@ -29,6 +29,14 @@ a {
     padding: 5px;
     line-height: 20px;
     font-size: 15px;
+}
+
+.navbar-container {
+    width: 890px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    justify-content: space-between;
 }
 
 /* .nav-logo-first {
@@ -39,16 +47,15 @@ a {
 } */
 
 .nav-logo-img {
-    width: 50px;
+    width: 150px;
     height: auto;
-    margin: 15px;
-    margin-left: 50px;
+
 }
 
 .navlist {
     display: flex;
     align-items: center;
-    margin-right: 50px;
+
 }
 
 /* Navbar items */
@@ -60,7 +67,7 @@ li {
 
 /* Navbar item non-links  */
 .sublist {
-    color: #bdc2c4;
+    color: #c7cdcf;
     cursor: not-allowed;
 }
 
@@ -151,22 +158,22 @@ h1 {
 }
 
 .hero-btn {
-    border: 1px solid #B6CF88;
+    border: 1px solid #b2db83;
     padding: 15px 25px 15px 25px;
     border-radius: 5px;
-    background-color: #B6CF88;
+    background-color: #b2db83;
     color: cornsilk;
     font-weight: bold;
 }
 
 .hero-btn:hover {
-    border: 1px solid #99AD72;
-    background-color: #99AD72;
+    border: 1px solid #a6cc7a;
+    background-color: #a6cc7a;
 }
 
 .hero-btn:active {
-    border: 1px solid #829462;
-    box-shadow: inset 0 0 15px #829462;
+    border: 1px solid #97b96f;
+    box-shadow: inset 0 0 15px #97b96f;
 }
 
 
@@ -186,7 +193,25 @@ h1 {
 
 .creators {
     display: flex;
+    justify-content: space-around;
+    width: 80vh;
 }
+
+.creator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.aboutmelink {
+    font-size: 0.75rem;
+}
+
+.copyright {
+    display: flex;
+
+}
+
 
 
 
