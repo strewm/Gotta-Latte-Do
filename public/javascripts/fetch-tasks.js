@@ -13,7 +13,7 @@ export const fetchTasks = async () => {
 
   const tasksListContainer = document.querySelector(".task-list");
   const listName = `
-  <h2 class="task-list-header">All of <strong>${user.username}'s</strong> self-assigned tasks.</h2>
+  <h2 class="task-list-header"><strong>All of My Tasks</strong></h2>
   `
   const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
     if (isCompleted === true) {
