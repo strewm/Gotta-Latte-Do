@@ -1,4 +1,4 @@
-import { addTaskInfoListeners, updateTotalTaskValue, updateOverDueValue } from "./utils.js";
+import { addTaskInfoListeners, updateTotalTaskValue, updateOverDueValue, updateTasksCompletedValue } from "./utils.js";
 
 // fetch user's tasks (all)
 export const fetchTasks = async () => {
@@ -35,6 +35,7 @@ export const fetchTasks = async () => {
   await addTaskInfoListeners();
   await updateOverDueValue();
   await updateTotalTaskValue();
+  await updateTasksCompletedValue();
 }
 
 
