@@ -1,6 +1,6 @@
 import { fetchTasks } from './fetch-tasks.js';
 import { fetchComments } from './comments.js';
-import { updateOverDueValue, dueDateFormatter, dateFormatter, updateTotalTaskValue } from './utils.js';
+import { updateOverDueValue, dueDateFormatter, dateFormatter, updateTotalTaskValue, updateTasksCompletedValue } from './utils.js';
 import { handleErrors } from './utils.js';
 
 // Edit a task
@@ -147,6 +147,7 @@ export const fetchTask = async (taskId) => {
             })
             await updateOverDueValue();
             await updateTotalTaskValue();
+            await updateTasksCompletedValue();
 
         } else {
             const res = await fetch(`/tasks/${task.id}`, {
@@ -158,7 +159,7 @@ export const fetchTask = async (taskId) => {
             })
             await updateOverDueValue();
             await updateTotalTaskValue();
-
+            await updateTasksCompletedValue();
         }
     })
 

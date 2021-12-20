@@ -33,7 +33,15 @@ export const handleErrors = async (err) => {
   }
 };
 
-
+// Parse csrf token
+export const cookieMonster = (token) => {
+  const cookie = token.split(";")
+  const cookies = cookie.filter(ele => {
+    if (ele.includes("XSRF-TOKEN")) return ele
+  })
+  const edibleCookie = cookies.map(ele => ele.split("=")).flat();
+  return edibleCookie[1];
+}
 
 // This function checks the dueDate selected for the task
 // If the task is due today or tomorrow, it is indicated and also has the time
@@ -114,9 +122,11 @@ export const addTaskInfoListeners = async () => {
       editForm.hidden = true;
       editForm.style.display = 'none';
       const taskInfo = document.querySelector('.fiona');
+      taskInfo.classList.remove('task-information-animation')
 
 
       try {
+
         await fetchTask(taskId);
 
         if (taskInfo.classList.contains('task-information-animation') && e.target.id !== taskId) {
@@ -125,7 +135,9 @@ export const addTaskInfoListeners = async () => {
           taskInfo.hidden = false;
           setTimeout(() => {
             taskInfo.classList.add('task-information-animation');
-          }, 0)
+
+          }, 0);
+
         }
 
         const createComment = document.querySelector('.create-comment');
@@ -198,11 +210,14 @@ export const editListEventListener = async () => {
       const formData = new FormData(listUpdate);
       const title = formData.get('title')
       const body = { title }
+      const token = cookieMonster(document.cookie)
       const updatedList = await fetch(`/lists/${listId}`, {
         method: 'PATCH',
+        credentials: "same-origin",
         body: JSON.stringify(body),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          "CSRF-Token": token
         }
       })
 
@@ -234,14 +249,14 @@ export const updateOverDueValue = async () => {
   const overDueValue = document.querySelector('#tasksOverdueValue');
   const overDueRes = await fetch('/lists/overdue');
   const { tasks } = await overDueRes.json();
-  overDueValue.innerHTML = `${tasks.length}<div id="tasksOverdue">Overdue</div>`
+  overDueValue.innerHTML = `${tasks.length}<div id="tasksOverdue">Overdue</div>`;
 }
 
 // Updates the value for "Tasks" found in upper right corner
 // Should be called whenever a task is added, edited, or deleted
 // Called in fetchTasks() because we do that every time
 export const updateTotalTaskValue = async () => {
-  const totalTaskValue = document.querySelector('.tasksDueValue');
+  const totalTaskValue = document.querySelector('#tasksDueValue');
   const res = await fetch('/tasks/incomplete');
   let { tasks } = await res.json();
   let myTasks;
@@ -250,6 +265,7 @@ export const updateTotalTaskValue = async () => {
   } else {
     myTasks = 0;
   }
+
   const givenToMe = await fetch('/lists/given-to-me-incomplete');
   let { tasksGivenToMe } = await givenToMe.json();
   let numTasksGivenToMe;
@@ -258,5 +274,58 @@ export const updateTotalTaskValue = async () => {
   } else {
     numTasksGivenToMe = 0;
   }
-  totalTaskValue.innerText = myTasks + numTasksGivenToMe;
+
+  totalTaskValue.innerHTML = `${myTasks + numTasksGivenToMe}<div id="tasksOverdue">Tasks Due</div>`;
+}
+
+// Updates the value for "Tasks" found in upper right corner
+// Should be called whenever a task is added, edited, or deleted
+// Called in fetchTasks() because we do that every time
+export const updateTasksCompletedValue = async () => {
+  const tasksCompleted = document.querySelector('#tasksCompletedValue');
+  const res = await fetch('/tasks/complete');
+  let { tasks } = await res.json();
+  let tasksComplete;
+
+  if (tasks) {
+    tasksComplete = tasks.length;
+  } else {
+    tasksComplete = 0;
+  }
+
+  const given = await fetch('/lists/given-to-me-complete');
+  let { tasksGiven } = await given.json();
+  let tasksGivenComplete;
+
+  if (tasksGiven) {
+    tasksGivenComplete = tasksGiven.length;
+  } else {
+    tasksGivenComplete = 0;
+  }
+
+  tasksCompleted.innerHTML = `${tasksComplete + tasksGivenComplete}<div id="tasksCompleted">Completed</div>`;
+}
+
+
+// Updates the task list container, passing in the tasks and listName
+export const updateTaskListContainer = async (tasks, listName) => {
+  const tasksListContainer = document.querySelector(".task-list");
+
+  const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+    if (isCompleted === true) {
+      return `
+        <div class='task-info' id=${id}>
+            <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
+            <label for=${id} id=${id} class="task-check-box">${description}</label>
+        </div>
+        `
+    } else {
+      return `<div class='task-info' id=${id}>
+                <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+                <label for=${id} id=${id} class="task-check-box">${description}</label>
+            </div>
+        `
+    }
+  })
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
 }

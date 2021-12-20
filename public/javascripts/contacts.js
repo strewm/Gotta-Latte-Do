@@ -1,4 +1,4 @@
-import { addTaskInfoListeners } from "./utils.js";
+import { addTaskInfoListeners, updateTaskListContainer } from "./utils.js";
 
 
 // shows tasks that user assigns to their contacts
@@ -10,7 +10,7 @@ export const fetchContactTasks = async (id) => {
       }
 
     const { tasks, user, isContact } = await res.json();
-    const tasksListContainer = document.querySelector(".task-list");
+
     let listName = ``;
     if(!isContact) {
       listName = `
@@ -19,29 +19,12 @@ export const fetchContactTasks = async (id) => {
       //await fetchAssignTasks();
     } else {
       listName = `
-    <h2 class="task-list-header">Tasks that you've assigned to <strong>${user.username}</strong>.</h2>
+    <h2 class="task-list-header">Tasks you've given to <strong>${user.username}</strong></h2>
     `
     const clearAssignedList = document.querySelector('.assigned-list')
     clearAssignedList.innerHTML = ``;
     }
-    const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
-      if (isCompleted === true) {
-        return `
-        <div class='task-info' id=${id}>
-            <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
-            <label for=${id} id=${id} class="task-check-box">${description}</label>
-        </div>
-        `
-      } else {
-      return `<div class='task-info' id=${id}>
-                <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-                <label for=${id} id=${id} class="task-check-box">${description}</label>
-            </div>
-        `
-    }
-  })
-
-    tasksListContainer.innerHTML = listName + tasksHtml.join("");
+    await updateTaskListContainer(tasks, listName);
 
     await addTaskInfoListeners();
 
