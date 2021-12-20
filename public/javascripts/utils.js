@@ -37,7 +37,7 @@ export const handleErrors = async (err) => {
 export const cookieMonster = (token) => {
   const cookie = token.split(";")
   const cookies = cookie.filter(ele => {
-    if(ele.includes("XSRF-TOKEN")) return ele
+    if (ele.includes("XSRF-TOKEN")) return ele
   })
   const edibleCookie = cookies.map(ele => ele.split("=")).flat();
   return edibleCookie[1];
@@ -113,8 +113,8 @@ export const addTaskInfoListeners = async () => {
 
   const taskInfoContainer = document.querySelectorAll('.task-info');
 
-  taskInfoContainer.forEach( (task) => {
-    task.addEventListener('click', async(e) => {
+  taskInfoContainer.forEach((task) => {
+    task.addEventListener('click', async (e) => {
       e.stopPropagation();
       const taskId = task.id;
 
@@ -304,4 +304,28 @@ export const updateTasksCompletedValue = async () => {
   }
 
   tasksCompleted.innerHTML = `${tasksComplete + tasksGivenComplete}<div id="tasksCompleted">Completed</div>`;
+}
+
+
+// Updates the task list container, passing in the tasks and listName
+export const updateTaskListContainer = async (tasks, listName) => {
+  const tasksListContainer = document.querySelector(".task-list");
+
+  const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
+    if (isCompleted === true) {
+      return `
+        <div class='task-info' id=${id}>
+            <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
+            <label for=${id} id=${id} class="task-check-box">${description}</label>
+        </div>
+        `
+    } else {
+      return `<div class='task-info' id=${id}>
+                <input type="checkbox" class="task-check-box" id=${id} name=${id}>
+                <label for=${id} id=${id} class="task-check-box">${description}</label>
+            </div>
+        `
+    }
+  })
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
 }
