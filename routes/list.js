@@ -208,7 +208,8 @@ router.get('/overdue', asyncHandler(async (req, res) => {
       { userId }
       ],
     },
-    order: [['dueDate']]
+    order: [['dueDate']],
+    include: [{ model: User }]
   })
   res.json({ tasks })
 }))

@@ -312,7 +312,7 @@ a {
     margin-bottom: 30px;
 }
 
-.task-completed-container, .due-container {
+.task-completed-container, .due-container, .given-to-container {
     display: flex;
     align-items: center;
     margin: 5px 5px 5px 0;
@@ -323,7 +323,7 @@ a {
 }
 
 /* Task completed + Due + Comments  */
-.task-completed-label, .due-container-label, .comment-header {
+.task-completed-label, .due-container-label, .comment-header, .given-to-label {
     border: 1px solid #8A715B;
     background-color: #8A715B;
     color: #fae5ca;
@@ -336,13 +336,17 @@ a {
     /* align-items: center; */
 }
 
+.given-to-container {
+    padding-bottom: 2rem;
+}
+
 .completedTask {
     margin: 5px 15px;
     width: 20px;
     height: 20px;
 }
 
-.due-container-content {
+.due-container-content, .given-to-username {
     height: fit-content;
     font-size: 14px;
     margin: 5px 15px;
