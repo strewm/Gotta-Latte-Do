@@ -5,7 +5,7 @@ a {
 
 .mainPage {
     display: grid;
-    grid-template-rows: 0.5fr 8fr 1fr;
+    grid-template-rows: 0.5fr 6fr 1.5fr;
     grid-template-areas:
     "header"
     "main"
@@ -184,7 +184,25 @@ h1 {
 
 .creators {
     display: flex;
+    justify-content: space-around;
+    width: 80vh;
 }
+
+.creator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.aboutmelink {
+    font-size: 0.75rem;
+}
+
+.copyright {
+    display: flex;
+
+}
+
 
 
 
