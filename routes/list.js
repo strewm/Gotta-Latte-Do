@@ -52,8 +52,7 @@ router.get('/', asyncHandler(async (req, res) => {
 router.get('/:id(\\d+)/tasks', asyncHandler(async (req, res) => {
   const tasks = await TaskList.findAll({
     include: [{ model: Task }, { model: List }],
-    where: { listId: req.params.id },
-    order: [['dueDate']]
+    where: { listId: req.params.id }
   })
   res.json({ tasks });
 }))
