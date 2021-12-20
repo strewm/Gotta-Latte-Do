@@ -65,11 +65,13 @@ li {
     margin: 10px;
 }
 
-.sublist:hover {
-    cursor: default;
+/* Navbar item non-links  */
+.sublist {
+    color: #c7cdcf;
+    cursor: not-allowed;
 }
 
-/* Login navbar button  */
+/* Login navbar button/link  */
 .btn-login {
     border: 1px solid cornsilk;
     padding: 10px;
@@ -87,7 +89,7 @@ li {
     box-shadow: inset 0 0 10px #cab699;
 }
 
-/* Sign-up navbar button  */
+/* Sign-up navbar button/link  */
 .btn {
     border: 1px solid cornsilk;
     padding: 10px;
@@ -156,22 +158,22 @@ h1 {
 }
 
 .hero-btn {
-    border: 1px solid #B6CF88;
+    border: 1px solid #b2db83;
     padding: 15px 25px 15px 25px;
     border-radius: 5px;
-    background-color: #B6CF88;
+    background-color: #b2db83;
     color: cornsilk;
     font-weight: bold;
 }
 
 .hero-btn:hover {
-    border: 1px solid #99AD72;
-    background-color: #99AD72;
+    border: 1px solid #a6cc7a;
+    background-color: #a6cc7a;
 }
 
 .hero-btn:active {
-    border: 1px solid #829462;
-    box-shadow: inset 0 0 15px #829462;
+    border: 1px solid #97b96f;
+    box-shadow: inset 0 0 15px #97b96f;
 }
 
 
