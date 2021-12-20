@@ -266,4 +266,10 @@ router.patch('/:id(\\d+)', asyncHandler(async (req, res, next) => {
 }))
 
 
+router.get('/:id(\\d+)/given-to', asyncHandler(async(req, res, next) => {
+  const givenToUser = await User.findByPk(req.params.id);
+
+  res.json({ givenToUser })
+}))
+
 module.exports = router;

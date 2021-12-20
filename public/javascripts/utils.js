@@ -314,25 +314,31 @@ export const updateTaskListContainer = async (tasks, listName) => {
   const tasksHtml = tasks.map((task) => {
     if (task.isCompleted === true) {
       return `
-        <div class='task-info' id=${task.id}>
-            <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id} checked>
-            <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
-        </div>
-        `
-    } else if (task.isCompleted === false && dueDateFormatter(task) === 'OVERDUE') {
+      <div class='task-info' id=${task.id}>
+      <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id} checked>
+      <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
+      </div>
+      `
+    } else if (task.isCompleted === false && dueDateFormatter(task) === 'OVERDUE' && !task.givenTo) {
       return `<div class='task-info' id=${task.id}>
-                <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
-                <label for=${task.id} id=${task.id} class="task-check-box" style='color: red'>${task.description}</label>
-            </div>
-        `
+      <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
+      <label for=${task.id} id=${task.id} class="task-check-box" style='color: red'>${task.description}</label>
+      </div>
+      `
+    } else if (task.isCompleted === false && dueDateFormatter(task) === 'OVERDUE' && task.givenTo) {
+      console.log('HELLO', task.givenTo)
+      return `<div class='task-info' id=${task.id}>
+      <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
+      <label for=${task.id} id=${task.id} class="task-check-box" style='color: red'>${task.description}</label>
+      </div>
+      `
     } else if (task.isCompleted === false) {
       return `<div class='task-info' id=${task.id}>
-                <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
-                <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
-            </div>
-        `
+      <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
+      <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
+      </div>
+      `
     }
-
   })
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 }
