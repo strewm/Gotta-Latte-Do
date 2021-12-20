@@ -311,21 +311,28 @@ export const updateTasksCompletedValue = async () => {
 export const updateTaskListContainer = async (tasks, listName) => {
   const tasksListContainer = document.querySelector(".task-list");
 
-  const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
-    if (isCompleted === true) {
+  const tasksHtml = tasks.map((task) => {
+    if (task.isCompleted === true) {
       return `
-        <div class='task-info' id=${id}>
-            <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
-            <label for=${id} id=${id} class="task-check-box">${description}</label>
+        <div class='task-info' id=${task.id}>
+            <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id} checked>
+            <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
         </div>
         `
-    } else {
-      return `<div class='task-info' id=${id}>
-                <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-                <label for=${id} id=${id} class="task-check-box">${description}</label>
+    } else if (task.isCompleted === false && dueDateFormatter(task) === 'OVERDUE') {
+      return `<div class='task-info' id=${task.id}>
+                <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
+                <label for=${task.id} id=${task.id} class="task-check-box" style='color: red'>${task.description}</label>
+            </div>
+        `
+    } else if (task.isCompleted === false) {
+      return `<div class='task-info' id=${task.id}>
+                <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
+                <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
             </div>
         `
     }
+
   })
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
 }
