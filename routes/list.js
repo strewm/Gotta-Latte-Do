@@ -215,5 +215,24 @@ router.get('/overdue', asyncHandler(async (req, res) => {
 }))
 
 
+// Gets all overdue tasks given to me
+router.get('/overdue/given-to-me', asyncHandler(async (req, res) => {
+  const userId = res.locals.userId;
+  const today = new Date().setHours(0, 0, 0, 0);
+  const overdueGivenToMe = await Task.findAll({
+    where: {
+      [Op.and]: [{
+        dueDate: { [Op.lt]: today }
+      },
+      { isCompleted: false },
+      { givenTo: userId }
+      ],
+    },
+    order: [['dueDate']],
+    include: [{ model: User }]
+  })
+  res.json({ overdueGivenToMe })
+}))
+
 
 module.exports = router;

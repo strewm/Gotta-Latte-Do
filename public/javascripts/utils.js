@@ -249,7 +249,10 @@ export const updateOverDueValue = async () => {
   const overDueValue = document.querySelector('#tasksOverdueValue');
   const overDueRes = await fetch('/lists/overdue');
   const { tasks } = await overDueRes.json();
-  overDueValue.innerHTML = `${tasks.length}<div id="tasksOverdue">Overdue</div>`;
+
+  const overDueGivenRes = await fetch('/lists/overdue/given-to-me');
+  const { overdueGivenToMe } = await overDueGivenRes.json();
+  overDueValue.innerHTML = `${tasks.length + overdueGivenToMe.length}<div id="tasksOverdue">Overdue</div>`;
 }
 
 // Updates the value for "Tasks" found in upper right corner
