@@ -22,15 +22,33 @@ block content
             a.btn-login(href='/users/login') Log in
           li.mainlist
             a.btn(href='/users/signup') Sign up for free
+    div.main-header
+        h1 A to-do app made espresso-ly for you.
+        a.signup-btn(href='/users/signup') Sign Up Free
     main.main
-      div.hero-image
-        img.inner-image(src='../images/maybe-logo-3.png')
-        div.text-under-inner-img
-          p.hero-header Gotta Latte Do? We'll keep you grounded.
-          p.hero-p You'll never say 'affogato do that!' again
-      header.main-header
-          h1 A To-Do App Made Espresso-ly For You
-          a.hero-btn(href='/users/signup') Sign Up Free
+      div.slides-container
+        div.first-slide
+          img.first-image(src='../images/1-maybe-logo.png')
+          div.text-under-inner-img
+            div.slide-header Gotta Latte Do? We'll keep you grounded.
+            div.slide-text You'll never say 'affogato do that!' again
+        div.second-slide
+          img.second-image(src='../images/2-coffee-break.png')
+          div.text-under-inner-img
+            div.slide-header Bean busy? Make a to-brew list.
+            div.slide-text You'll never say 'affogato do that!' again
+        div.third-slide
+          img.third-image(src='../images/3-coffee-network.png')
+          div.text-under-inner-img
+            div.slide-header Gotta Latte Do? We'll keep you grounded.
+            div.slide-text You'll never say 'affogato do that!' again
+      div.arrow-butts
+        button.left-button &#10620;
+        button.right-button &#10621;
+      div.circle-butts
+        button.circle
+        button.circle
+        button.circle
     div.footer
       small.names
         ul.creators

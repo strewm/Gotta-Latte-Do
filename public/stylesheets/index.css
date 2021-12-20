@@ -5,9 +5,10 @@ a {
 
 .mainPage {
     display: grid;
-    grid-template-rows: 0.5fr 8fr 1fr;
+    grid-template-rows: 0.5fr 1fr 5fr 1.5fr;
     grid-template-areas:
     "header"
+    "main-header"
     "main"
     "footer";
 
@@ -110,6 +111,91 @@ li {
 
 
 
+/* %%%%%%%%%%%%%%%%% Main header content layout  %%%%%%%%%%%%%%%%% */
+.main-header {
+    grid-area: main-header;
+    background-color: #E0A979;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    color: cornsilk;
+    font-size: 35px;
+    margin: 50px 0 35px 0;
+}
+
+.signup-btn {
+    border: 1px solid #b2db83;
+    padding: 15px 25px 15px 25px;
+    border-radius: 5px;
+    background-color: #b2db83;
+    color: cornsilk;
+    font-weight: bold;
+}
+
+.signup-btn:hover {
+    border: 1px solid #a6cc7a;
+    background-color: #a6cc7a;
+}
+
+.signup-btn:active {
+    border: 1px solid #97b96f;
+    box-shadow: inset 0 0 15px #97b96f;
+}
+
+
+
+/* %%%%%%%%%%%%%%%%% Main carousel layout  %%%%%%%%%%%%%%%%% */
+.slides-container {
+    margin: 50px;
+    width: 600px;
+    height: auto;
+    /* height: 100%; */
+    position: relative;
+}
+
+.first-slide, .second-slide, .third-slide {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.arrow-butts {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+}
+
+.left-button, .right-button {
+    background-color: transparent;
+    border: none;
+    font-size: 30px;
+    color: #FFF8DC;
+}
+
+.left-button {
+    left: -15px;
+}
+
+.right-button {
+    right: -15px;
+}
+
+.first-image, .second-image, .third-image {
+    /* position: absolute; */
+    margin: 50px;
+    /* width: 500px; */
+    width: 100%;
+    height: auto;
+}
+
+
 /* %%%%%%%%%%%%%%%%% Main content layout  %%%%%%%%%%%%%%%%% */
 .main {
     grid-area: main;
@@ -121,60 +207,35 @@ li {
     justify-content: center;
 }
 
-.inner-image {
-    margin: 65px 50px 50px 50px;
-    width: 500px;
-    height: auto;
+.first-slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.text-under-inner-img, .hero-p {
+
+
+.text-under-inner-img, .slide-text {
     display: flex;
     flex-direction: column;
     align-items: center;
     color: cornsilk;
+    margin-bottom: 25px;
+    width: 100%;
 }
 
-.hero-header {
+.slide-header {
+    margin: 5px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.slide-text {
     margin: 5px;
     font-size: 20px;
-    font-weight: bold;
 }
 
-.hero-p {
-    margin: 5px;
-    font-size: 18px;
-}
-
-.main-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-h1 {
-    color: cornsilk;
-    font-size: 40px;
-}
-
-.hero-btn {
-    border: 1px solid #b2db83;
-    padding: 15px 25px 15px 25px;
-    border-radius: 5px;
-    background-color: #b2db83;
-    color: cornsilk;
-    font-weight: bold;
-}
-
-.hero-btn:hover {
-    border: 1px solid #a6cc7a;
-    background-color: #a6cc7a;
-}
-
-.hero-btn:active {
-    border: 1px solid #97b96f;
-    box-shadow: inset 0 0 15px #97b96f;
-}
 
 
 /* %%%%%%%%%%%%%%%%% Footer layout  %%%%%%%%%%%%%%%%% */
@@ -194,7 +255,7 @@ h1 {
 .creators {
     display: flex;
     justify-content: space-around;
-    width: 80vh;
+    width: 70vh;
 }
 
 .creator {
@@ -230,19 +291,19 @@ When page reaches 815px in width:
 }
 
 @media (max-width: 700px) {
-    .inner-image {
+    .first-image {
         margin: 50px 78px 35px 78px;
         width: 400px;
         height: auto;
     }
 
-    .hero-header {
+    .slide-header {
         margin: 5px;
         font-size: 15px;
         font-weight: bold;
     }
 
-    .hero-p {
+    .slide-text {
         margin: 5px;
         font-size: 13px;
     }
@@ -267,19 +328,19 @@ When page reaches 815px in width:
         display: none;
     }
 
-    .inner-image {
+    .first-image {
         margin: 50px 78px 35px 78px;
         width: 400px;
         height: auto;
     }
 
-    .hero-header {
+    .slide-header {
         margin: 5px;
         font-size: 15px;
         font-weight: bold;
     }
 
-    .hero-p {
+    .slide-text {
         margin: 5px;
         font-size: 13px;
     }
