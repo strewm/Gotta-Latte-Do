@@ -12,6 +12,7 @@ Try making your own to-do lists at our live site: [Gotta Latte Do](https://gotta
 [Frontend Routes](https://github.com/strewm/Gotta-Latte-Do/wiki/Frontend-Routes) |
 [User Stories](https://github.com/strewm/Gotta-Latte-Do/wiki/User-Stories) |
 
+
 # Technologies Used
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height=40/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" height=40/>
@@ -60,9 +61,12 @@ Try making your own to-do lists at our live site: [Gotta Latte Do](https://gotta
 
 
 ## Welcome Page
+
+
 ![Welcome Page](./images/readme/welcomepage.png)
 
 ## App Page
+
 ![Logged In](./images/readme/frontpage.png)
 
 
