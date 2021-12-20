@@ -69,7 +69,6 @@ export const fetchTask = async (taskId) => {
     if (task.givenTo) {
         const givenToUserRes = await fetch(`/tasks/${task.givenTo}/given-to`);
         const { givenToUser } = await givenToUserRes.json();
-        console.log(givenToUser.username)
         givenToUserText = givenToUser.username;
     }
 

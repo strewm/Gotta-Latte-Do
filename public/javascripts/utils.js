@@ -319,14 +319,7 @@ export const updateTaskListContainer = async (tasks, listName) => {
       <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
       </div>
       `
-    } else if (task.isCompleted === false && dueDateFormatter(task) === 'OVERDUE' && !task.givenTo) {
-      return `<div class='task-info' id=${task.id}>
-      <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
-      <label for=${task.id} id=${task.id} class="task-check-box" style='color: red'>${task.description}</label>
-      </div>
-      `
-    } else if (task.isCompleted === false && dueDateFormatter(task) === 'OVERDUE' && task.givenTo) {
-      console.log('HELLO', task.givenTo)
+    } else if (task.isCompleted === false && dueDateFormatter(task) === 'OVERDUE') {
       return `<div class='task-info' id=${task.id}>
       <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
       <label for=${task.id} id=${task.id} class="task-check-box" style='color: red'>${task.description}</label>
