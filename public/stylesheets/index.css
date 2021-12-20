@@ -5,7 +5,7 @@ a {
 
 .mainPage {
     display: grid;
-    grid-template-rows: 0.5fr 6fr 1.5fr;
+    grid-template-rows: 0.5fr 8fr 1fr;
     grid-template-areas:
     "header"
     "main"
