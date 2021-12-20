@@ -1,4 +1,4 @@
-import { editListEventListener, addTaskInfoListeners, handleErrors } from "./utils.js";
+import { editListEventListener, addTaskInfoListeners, handleErrors, dueDateFormatter } from "./utils.js";
 
 // Fetch all lists and populate on left hand side
 export const fetchLists = async () => {
@@ -47,19 +47,23 @@ export const fetchLists = async () => {
       const tasksHtml = tasks.map((task) => {
         if (task.Task.isCompleted === true) {
           return `
-                <div class="task-info" id=${task.Task.id}>
-                  <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id} checked>
-                  <label for=${task.Task.id} id=${task.Task.id} class="task-check-box">${task.Task.description}</label>
-                </div>
+              <div class='task-info' id=${task.Task.id}>
+              <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id} checked>
+              <label for=${task.Task.id} id=${task.Task.id} class="task-check-box">${task.Task.description}</label>
+              </div>
               `
-        } else {
-
-          return `
-                <div class="task-info" id=${task.Task.id}>
-                  <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id}>
-                  <label for=${task.Task.id} id=${task.Task.id} class="task-check-box">${task.Task.description}</label>
-                </div>
-            `
+        } else if (task.Task.isCompleted === false && dueDateFormatter(task.Task) === 'OVERDUE') {
+          return `<div class='task-info' id=${task.Task.id}>
+              <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id}>
+              <label for=${task.Task.id} id=${task.Task.id} class="task-check-box" style='color: red'>${task.Task.description}</label>
+              </div>
+              `
+        } else if (task.Task.isCompleted === false) {
+          return `<div class='task-info' id=${task.Task.id}>
+              <input type="checkbox" class="task-check-box" id=${task.Task.id} name=${task.Task.id}>
+              <label for=${task.Task.id} id=${task.Task.id} class="task-check-box">${task.Task.description}</label>
+              </div>
+              `
         }
       })
 
