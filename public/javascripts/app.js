@@ -1,4 +1,4 @@
-import { handleErrors, addTaskInfoListeners, updateOverDueValue } from "./utils.js";
+import { handleErrors, addTaskInfoListeners, updateOverDueValue, cookieMonster } from "./utils.js";
 import { fetchTasks, fetchAssignTasks, fetchIncompleteTasks, fetchCompletedTasks } from "./fetch-tasks.js";
 import { search } from "./search.js";
 import { fetchContactTasks, addNewContact } from "./contacts.js";
@@ -152,14 +152,16 @@ addContacts.addEventListener("click", async (e) => {
     const email = formData.get("email")
 
     const body = { email }
+    const token = cookieMonster(document.cookie)
 
     try {
       const res = await fetch("/contacts", {
         method: "POST",
+        credentials: "same-origin",
         body: JSON.stringify(body),
         headers: {
           "Content-Type": "application/json",
-
+          "CSRF-Token": token
         }
       })
 
@@ -214,11 +216,17 @@ deleteContact.addEventListener("click", async (e) => {
     targetRemoval.remove();
 
     await fetchTasks();
-
+    const token = cookieMonster(document.cookie)
+    console.log(token)
     try {
 
       await fetch(`/contacts/${deleteContactId}`, {
         method: "DELETE",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "CSRF-Token": token
+        }
       })
 
 

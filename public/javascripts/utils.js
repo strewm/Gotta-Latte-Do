@@ -33,7 +33,15 @@ export const handleErrors = async (err) => {
   }
 };
 
-
+// Parse csrf token
+export const cookieMonster = (token) => {
+  const cookie = token.split(";")
+  const cookies = cookie.filter(ele => {
+    if(ele.includes("XSRF-TOKEN")) return ele
+  })
+  const edibleCookie = cookies.map(ele => ele.split("=")).flat();
+  return edibleCookie[1];
+}
 
 // This function checks the dueDate selected for the task
 // If the task is due today or tomorrow, it is indicated and also has the time
