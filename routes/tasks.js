@@ -265,7 +265,7 @@ router.patch('/:id(\\d+)', asyncHandler(async (req, res, next) => {
   }
 }))
 
-
+// gets user that a task was given to
 router.get('/:id(\\d+)/given-to', asyncHandler(async(req, res, next) => {
   const givenToUser = await User.findByPk(req.params.id);
 
