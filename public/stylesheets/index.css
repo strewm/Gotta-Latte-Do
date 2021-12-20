@@ -21,7 +21,7 @@ a {
     grid-area: header;
 
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
 
     background-color: #8A715B;
@@ -29,6 +29,14 @@ a {
     padding: 5px;
     line-height: 20px;
     font-size: 15px;
+}
+
+.navbar-container {
+    width: 890px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    justify-content: space-between;
 }
 
 /* .nav-logo-first {
@@ -39,16 +47,15 @@ a {
 } */
 
 .nav-logo-img {
-    width: 50px;
+    width: 150px;
     height: auto;
-    margin: 15px;
-    margin-left: 50px;
+
 }
 
 .navlist {
     display: flex;
     align-items: center;
-    margin-right: 50px;
+
 }
 
 /* Navbar items */

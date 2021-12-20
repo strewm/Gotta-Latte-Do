@@ -76,12 +76,9 @@ block content
 
         div.summaryContainer
           div.summaryHeader
-            //- h2.summary#search Search
             div#tasksDueValue
-              div.tasksDueValue=(tasks.length + tasksGivenToMe.length)
-              div#tasksDue Tasks
-            div#tasksOverdueValue=overdue.length
-              div#tasksOverdue Overdue
+            div#tasksOverdueValue
+            div#tasksCompletedValue
           .updateList
           .newList
           div.fiona

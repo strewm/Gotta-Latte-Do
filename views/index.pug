@@ -9,18 +9,19 @@ append head
 block content
   div.mainPage
     nav.navbar
-      a.nav-logo(href="/")
-        //- img.nav-logo-first(src='../images/favicon.png')
-        img.nav-logo-img(src='../images/logo-text.png')
-      ul.navlist
-        li.sublist Tour
-        li.sublist What's New
-        li.sublist Upgrade
-        li.sublist Help
-        li.mainlist
-          a.btn-login(href='/users/login') Log in
-        li.mainlist
-          a.btn(href='/users/signup') Sign up for free
+      .navbar-container
+        a.nav-logo(href="/")
+          //- img.nav-logo-first(src='../images/favicon.png')
+          img.nav-logo-img(src='../images/gottalattedologo_coffee.png')
+        ul.navlist
+          li.sublist Tour
+          li.sublist What's New
+          li.sublist Upgrade
+          li.sublist Help
+          li.mainlist
+            a.btn-login(href='/users/login') Log in
+          li.mainlist
+            a.btn(href='/users/signup') Sign up for free
     main.main
       div.hero-image
         img.inner-image(src='../images/maybe-logo-3.png')
@@ -50,6 +51,5 @@ block content
             a.aboutmelink(href='https://github.com/katsutori' target="_blank") Github
             a.aboutmelink(href='https://www.linkedin.com/in/thien-dang-ct/' target="_blank") LinkedIn
       small.copyright
-        .copyright-year © 2021 |
-        .space= '\n'
-        a(href='https://github.com/strewm/Gotta-Latte-Do' target="_blank") Gotta Latte Do
+        .copyright-year © 2021 |!{' '}
+          a(href='https://github.com/strewm/Gotta-Latte-Do' target="_blank") Gotta Latte Do

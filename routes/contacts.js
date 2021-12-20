@@ -41,7 +41,7 @@ const contactValidator = [
 
 // Add a new contact for logged in user
 
-router.post('/', contactValidator, asyncHandler(async (req, res, next) => {
+router.post('/', csrfProtection, contactValidator, asyncHandler(async (req, res, next) => {
 
   const { email } = req.body;
   const userId = res.locals.userId;
@@ -78,7 +78,7 @@ router.post('/', contactValidator, asyncHandler(async (req, res, next) => {
 
 
 // Delete a contact
-router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
+router.delete('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const contactId = req.params.id;
   if (contactId) {
     await Contact.destroy({

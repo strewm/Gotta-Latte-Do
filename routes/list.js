@@ -59,7 +59,7 @@ router.get('/:id(\\d+)/tasks', asyncHandler(async (req, res) => {
 
 
 // Creates a new list
-router.post('/', validateLists, asyncHandler(async (req, res, next) => {
+router.post('/', csrfProtection, validateLists, asyncHandler(async (req, res, next) => {
   const { title } = req.body;
   const userId = res.locals.userId;
 
@@ -78,7 +78,7 @@ router.post('/', validateLists, asyncHandler(async (req, res, next) => {
 
 
 // Edits a list
-router.patch('/:id(\\d+)', asyncHandler(async (req, res) => {
+router.patch('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
   const { title } = req.body;
   const list = await List.findByPk(req.params.id);
   await list.update({
@@ -89,7 +89,7 @@ router.patch('/:id(\\d+)', asyncHandler(async (req, res) => {
 
 
 // Deletes a list
-router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
+router.delete('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
   const list = await List.findByPk(req.params.id);
   if (list) {
     await list.destroy()
@@ -110,7 +110,8 @@ router.get('/given-to-others', asyncHandler(async (req, res, next) => {
       givenTo: {
         [Op.ne]: null
       }
-    }
+    },
+    order: [['dueDate']]
   })
   res.json({ tasks })
 }))
@@ -122,7 +123,8 @@ router.get('/given-to-me', asyncHandler(async (req, res) => {
   const tasksGivenToMe = await Task.findAll({
     where: {
       givenTo: userId
-    }
+    },
+    order: [['dueDate']]
   })
   res.json({ tasksGivenToMe })
 }))
@@ -135,11 +137,24 @@ router.get('/given-to-me-incomplete', asyncHandler(async (req, res) => {
     where: {
       givenTo: userId,
       isCompleted: 'false'
-    }
+    },
+    order: [['dueDate']]
   })
   res.json({ tasksGivenToMe })
 }))
 
+// Gets all tasks that have been given to the user and are complete
+router.get('/given-to-me-complete', asyncHandler(async (req, res) => {
+  const userId = res.locals.userId;
+  const tasksGiven = await Task.findAll({
+    where: {
+      givenTo: userId,
+      isCompleted: 'true'
+    },
+    order: [['dueDate']]
+  })
+  res.json({ tasksGiven })
+}))
 
 // Gets all tasks due today
 router.get('/today', asyncHandler(async (req, res) => {
@@ -152,7 +167,8 @@ router.get('/today', asyncHandler(async (req, res) => {
       dueDate: {
         [Op.between]: [start, end]
       }
-    }
+    },
+    order: [['dueDate']]
   })
   res.json({ tasks });
 }))
@@ -172,7 +188,8 @@ router.get('/tomorrow', asyncHandler(async (req, res) => {
       dueDate: {
         [Op.between]: [start, end]
       }
-    }
+    },
+    order: [['dueDate']]
   })
   res.json({ tasks })
 }))
@@ -190,7 +207,8 @@ router.get('/overdue', asyncHandler(async (req, res) => {
       { isCompleted: false },
       { userId }
       ],
-    }
+    },
+    order: [['dueDate']]
   })
   res.json({ tasks })
 }))

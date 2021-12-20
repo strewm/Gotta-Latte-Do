@@ -598,7 +598,6 @@ a {
     font-size: 12px;
     padding: 25px;
     min-width: 305px;
-
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -617,7 +616,6 @@ ul.default-tasks > li:hover {
     padding-left: 10px;
     cursor: pointer;
 }
-
 
 
 
@@ -1133,6 +1131,7 @@ list-add-edited {
     font-size: 13px;
     margin: 5px 0px;
 }
+
 
 .sLGray {
     color: #a3a2a2;
