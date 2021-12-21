@@ -56,8 +56,6 @@ form.addEventListener("submit", async (e) => {
   const title = formData.get("title");
   let isCompleted;
 
-  console.log(dueDate);
-
   //convert checkbox to boolean value
   if (checkStatus === 'on') {
     isCompleted = true;
