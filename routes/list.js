@@ -198,7 +198,7 @@ router.get('/tomorrow', asyncHandler(async (req, res) => {
 // Gets all overdue tasks
 router.get('/overdue', asyncHandler(async (req, res) => {
   const userId = res.locals.userId;
-  const today = new Date().setHours(0, 0, 0, 0);
+  const today = new Date();
   const tasks = await Task.findAll({
     where: {
       [Op.and]: [{
