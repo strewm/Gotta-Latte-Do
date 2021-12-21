@@ -66,10 +66,10 @@ export const dueDateFormatter = (task) => {
 
   let selectedDate = task.dueDate;
   selectedDate = new Date(selectedDate);
-  let diff = (new Date().getTime()) - selectedDate.getTime();
 
   let selectedDateTime = selectedDate.getTime();
   let actualDateTime = new Date(selectedDateTime)
+  let diff = (new Date().getTime()) - actualDateTime.getTime();
 
   let adjustedDateTime = adjustDateTime(actualDateTime)
 
