@@ -64,20 +64,16 @@ export const dueDateFormatter = (task) => {
   today = yyyyToday + '-' + mmToday + '-' + ddToday;
   tomorrow = yyyyTom + '-' + mmTom + '-' + ddTom;
 
-  console.log('TODAY IS', today);
-  console.log('TOMORROW IS', tomorrow);
-
   let selectedDate = task.dueDate;
+  selectedDate = selectedDate.replace(/-/g, '/').slice(0,10);
   selectedDate = new Date(selectedDate);
 
-  let diff = (new Date().getTime()) - selectedDate.getTime();
 
-  console.log(task.dueDate);
-  console.log('THE SELECTED DATE IS', selectedDate)
+  let diff = (new Date(today.replace(/-/, '/')).getTime()) - selectedDate.getTime();
+
 
   let selectedDateTime = selectedDate.getTime();
   let actualDateTime = new Date(selectedDateTime)
-  actualDateTime = new Date(actualDateTime.getTime())
 
   let ddactualDate = String(actualDateTime.getDate()).padStart(2, '0');
   let mmactualDate = String(actualDateTime.getMonth() + 1).padStart(2, '0');
@@ -86,19 +82,20 @@ export const dueDateFormatter = (task) => {
   let actualDate = yyyyactualDate + '-' + mmactualDate + '-' + ddactualDate;
 
   let due = actualDate;
+  console.log(task.dueDate)
 
   if (diff > 0) {
     return due = `OVERDUE`
   }
 
   if (due === today) {
-    return due = `Today ${dateFormatter(task.dueDate).slice(0,6)}`;
+    return due = `Today ${selectedDate.toDateString().slice(4,10)}`;
   }
 
   if (due === tomorrow) {
-    return due = `Tomorrow ${dateFormatter(task.dueDate).slice(0,6)}`;
+    return due = `Tomorrow ${selectedDate.toDateString().slice(4,10)}`;
   }
-  return (dateFormatter(task.dueDate)).slice(0,6);
+  return (selectedDate.toDateString().slice(4,10));
 }
 
 export const dueDateToYYYMMDD = (date) => {
