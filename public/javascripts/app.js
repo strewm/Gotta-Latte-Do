@@ -85,12 +85,19 @@ form.addEventListener("submit", async (e) => {
       throw res;
     }
 
+
     form.reset();
 
     // const tasksDue = document.querySelector('.tasksDueValue');
     // tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
+    const taskPopUp = document.querySelector(".task-pop-up-container");
+    taskPopUp.innerHTML= `<div class="task-pop-up">New Task Added!</div>`;
 
     await fetchTasks();
+
+    setTimeout(() => {
+      taskPopUp.innerHTML= ``;
+    }, 3000);
 
   } catch (err) {
     handleErrors(err)
