@@ -69,9 +69,10 @@ export const dueDateFormatter = (task) => {
 
   let selectedDateTime = selectedDate.getTime();
   let actualDateTime = new Date(selectedDateTime)
-  let diff = (new Date().getTime()) - actualDateTime.getTime();
 
   let adjustedDateTime = adjustDateTime(actualDateTime)
+
+  let diff = (new Date().getTime()) - adjustedDateTime.getTime();
 
   let ddactualDate = String(adjustedDateTime.getDate()).padStart(2, '0');
   let mmactualDate = String(adjustedDateTime.getMonth() + 1).padStart(2, '0');
@@ -99,6 +100,7 @@ export const dueDateFormatter = (task) => {
 
 export const adjustDateTime = (actualDateTime) => {
   let getLocal = new Date();
+  console.log(getLocal);
   getLocal = getLocal.toString().slice(28, 31);
   let plusOrMinus;
   if (getLocal[0] === '-') plusOrMinus = '+'
