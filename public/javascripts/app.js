@@ -91,7 +91,7 @@ form.addEventListener("submit", async (e) => {
     // const tasksDue = document.querySelector('.tasksDueValue');
     // tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
     const taskPopUp = document.querySelector(".task-pop-up-container");
-    taskPopUp.innerHTML= `<div class="task-pop-up">New Task Added!</div>`;
+    taskPopUp.innerHTML= `<div class="task-pop-up">Task <span>'${description}'</span> Added!</div>`;
 
     await fetchTasks();
 
