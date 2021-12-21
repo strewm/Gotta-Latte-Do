@@ -7,7 +7,7 @@
 
 .page {
     display: grid;
-    grid-template-columns: 1.5fr 4fr 2.75fr;
+    grid-template-columns: 1fr 4fr 2.75fr;
     grid-template-rows: 65px 0.5fr 9fr;
     grid-template-areas:
     "header navbar navbar"
