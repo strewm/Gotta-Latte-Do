@@ -1,70 +1,65 @@
-window.addEventListener("load", (event)=>{
-
-})
-
 const slidesContainer = document.querySelector('.slides-container');
-const slides = slidesContainer.children;
-console.log(slides);
+const slides = [...slidesContainer.children];
 
-
-
+const circleButts = document.querySelector('.circle-butts');
+const circles = document.getElementsByClassName('circle');
+const circlesArr = [...circles];
 
 // Get the width of the current slide
 const slidesWidth = slides[0].getBoundingClientRect().width;
-console.log(slidesWidth);
 
 // Get slides next to each other
 slides[0].style.left = (slidesWidth * 0) + 'px';
 slides[1].style.left = (slidesWidth * 1) + 'px';
 slides[2].style.left = (slidesWidth * 2) + 'px';
 
+// Function for slides to move to left/right side when clicking respective arrows
+const changeSlide = (slidesContainer, currSlide, clickedSlide) => {
+    // Get the value of the left property, in order to apply how much to move image
+    slidesContainer.style.transform = `translateX(-${clickedSlide.style.left})`;
+
+    // Moving the currSlide class to the slide's clicked sibling!
+    currSlide.classList.remove('currSlide');
+    clickedSlide.classList.add('currSlide');
+}
+
 // Move to left on click of left arrow
 const leftButt = document.querySelector('.left-button');
 leftButt.addEventListener('click', (e) => {
-    const currSlide = slidesContainer.querySelector('.currSlide');
-    const prevSlide = currSlide.previousElementSibling;
+    const currSlide = document.querySelector('.currSlide');
+    const leftSlide = currSlide.previousElementSibling;
 
-    // Get the value of the left property, in order to apply how much to move image
-    const move = prevSlide.style.left;
+    changeSlide(slidesContainer, currSlide, leftSlide);
 
-    slidesContainer.style.transform = `translateX(-${move})`;
-
-    // Moving the currSlide class to the slide's next sibling!
-    currSlide.classList.remove('currSlide');
-    prevSlide.classList.add('currSlide');
+    // Will change the highlighted circle to the clicked circle
+    const currCircle = circleButts.querySelector('.currSlide');
+    const leftCircle = currCircle.previousElementSibling;
+    currCircle.classList.remove('currSlide');
+    leftCircle.classList.add('currSlide');
 })
 
 // Move to right on click of right arrow
 const rightButt = document.querySelector('.right-button');
 rightButt.addEventListener('click', (e) => {
-    const currSlide = slidesContainer.querySelector('.currSlide');
-    const nextSlide = currSlide.nextElementSibling;
+    const currSlide = document.querySelector('.currSlide'); // Could be slidesContainer.querySelector
+    const rightSlide = currSlide.nextElementSibling;
 
-    // Get the value of the left property, in order to apply how much to move image
-    const move = nextSlide.style.left;
+    changeSlide(slidesContainer, currSlide, rightSlide);
 
-    slidesContainer.style.transform = `translateX(-${move})`;
-
-    // Moving the currSlide class to the slide's next sibling!
-    currSlide.classList.remove('currSlide');
-    nextSlide.classList.add('currSlide');
-})
-
-// ////////////// Change above slidesContainer.querySelector to document. !
+    // Will change the highlighted circle to the clicked circle
+    const currCircle = circleButts.querySelector('.currSlide');
+    const rightCircle = currCircle.nextElementSibling;
+    currCircle.classList.remove('currSlide');
+    rightCircle.classList.add('currSlide');
+});
 
 // Move to slide associated with circle click
-const circleButts = document.querySelector('.circle-butts');
-const circles = document.getElementsByClassName('circle');
-const circlesToo = Array.from(circleButts.children);
-console.log(circles);
-console.log(circlesToo)
-// const circlesToo = circleButts.children;
-
 circleButts.addEventListener('click', (e) => {
     // Which circle was clicked? Set clickedCircle to null if click is not on circle
     const clickedCircle = e.target.closest('button');
+    console.log(clickedCircle);
 
-    // If not clicking on circle, return to exit
+    // If not clicking on circle, return (to exit)
     if (!clickedCircle) return;
 
     const currSlide = slidesContainer.querySelector('.currSlide');
@@ -72,20 +67,12 @@ circleButts.addEventListener('click', (e) => {
 
     // Find the index of the clicked circle by checking each of the circle positions
     // in the array against the value of the clickedCircle
-    const circleIndex = (ele) => ele === clickedCircle;
-    const clickedIndex = circles.findIndex(circleIndex);
+    const clickedIndex = circlesArr.findIndex((ele) => ele == clickedCircle);
     const clickedSlide = slides[clickedIndex];
 
-    console.log(clickedIndex);
+    changeSlide(slidesContainer, currSlide, clickedSlide);
 
-
-    const move = nextSlide.style.left;
-    slidesContainer.style.transform = `translateX(-${move})`;
-    currSlide.classList.remove('currSlide');
-    clickedSlide.classList.add('currSlide');
-
-    // const move = nextSlide.style.left;
-    slidesContainer.style.transform = `translateX(-${move})`;
+    // Will change the highlighted circle to the clicked circle
     currCircle.classList.remove('currSlide');
     clickedCircle.classList.add('currSlide');
 })
