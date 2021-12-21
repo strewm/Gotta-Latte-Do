@@ -1,6 +1,7 @@
 import { fetchUser } from './user.js';
 import { dateFormatter } from './utils.js';
 import { handleErrors } from './utils.js';
+import { cookieMonster } from './utils.js';
 
 
 // Fetch all comments for a task
@@ -60,8 +61,14 @@ export const fetchComments = async (taskId) => {
         deleteButton.addEventListener('click', async (e) => {
             e.preventDefault();
             const commentId = e.target.id;
+            const token = cookieMonster(document.cookie)
             await fetch(`/comments/${commentId}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                    "CSRF-Token": token
+                  }
             })
 
             const comment = document.querySelector(`.comment-container-${commentId}`);
@@ -137,12 +144,15 @@ export const fetchComments = async (taskId) => {
 // Post a new comment on a task
 export const postComment = async (taskId, body) => {
     const createComment = document.querySelector('.create-comment');
+    const token = cookieMonster(document.cookie);
     try {
         const res = await fetch(`/tasks/${taskId}/comments`, {
             method: "POST",
+            credentials: "same-origin",
             body: JSON.stringify(body),
             headers: {
                 "Content-Type": "application/json",
+                "CSRF-Token": token
             }
         })
 
@@ -163,9 +173,15 @@ export const postComment = async (taskId, body) => {
 
 // Delete a comment on a task
 export const deleteComment = async (commentId) => {
+    const token = cookieMonster(document.cookie)
     try {
         const res = await fetch(`/comments/${commentId}`, {
             method: "DELETE",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "CSRF-Token": token
+            }
         })
 
         if (res.status === 401) {
@@ -184,12 +200,15 @@ export const deleteComment = async (commentId) => {
 
 // Edit a comment on a task
 export const editComment = async (commentId, body) => {
+    const token = cookieMonster(document.cookie);
     try {
         const res = await fetch(`/comments/${commentId}`, {
             method: "PUT",
+            credentials: "same-origin",
             body: JSON.stringify(body),
             headers: {
                 "Content-Type": "application/json",
+                "CSRF-Token": token
             }
         })
 

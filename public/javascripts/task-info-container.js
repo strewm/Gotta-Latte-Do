@@ -1,16 +1,19 @@
 import { fetchTasks } from './fetch-tasks.js';
 import { fetchComments } from './comments.js';
-import { updateOverDueValue, dueDateFormatter, dateFormatter, updateTotalTaskValue, updateTasksCompletedValue, dueDateToYYYMMDD } from './utils.js';
+import { updateOverDueValue, dueDateFormatter, dateFormatter, updateTotalTaskValue, updateTasksCompletedValue, dueDateToYYYMMDD, cookieMonster } from './utils.js';
 import { handleErrors } from './utils.js';
 
 // Edit a task
 export const editTask = async (taskId, body) => {
+    const token = cookieMonster(document.cookie);
     try {
         const res = await fetch(`/tasks/${taskId}`, {
             method: "PUT",
+            credentials: "same-origin",
             body: JSON.stringify(body),
             headers: {
                 "Content-Type": "application/json",
+                "CSRF-Token": token
             }
         })
 
@@ -33,9 +36,15 @@ export const editTask = async (taskId, body) => {
 
 // Delete a task and updates task container list, as well as the overdue task value on the page
 export const deleteTask = async (taskId) => {
+    const token = cookieMonster(document.cookie)
     try {
         const res = await fetch(`/tasks/${taskId}`, {
             method: "DELETE",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "CSRF-Token": token
+              }
         })
 
         if (res.status === 401) {
@@ -181,12 +190,15 @@ export const fetchTask = async (taskId) => {
     }
 
     check.addEventListener('change', async (e) => {
+        const token = cookieMonster(document.cookie);
         if (check.checked) {
             await fetch(`/tasks/${task.id}`, {
                 method: "PATCH",
+                credentials: "same-origin",
                 body: JSON.stringify({ "isCompleted": "true" }),
                 headers: {
                     "Content-Type": "application/json",
+                    "CSRF-Token": token
                 }
             })
             await updateOverDueValue();
@@ -196,9 +208,11 @@ export const fetchTask = async (taskId) => {
         } else {
             const res = await fetch(`/tasks/${task.id}`, {
                 method: "PATCH",
+                credentials: "same-origin",
                 body: JSON.stringify({ "isCompleted": "false" }),
                 headers: {
                     "Content-Type": "application/json",
+                    "CSRF-Token": token
                 }
             })
             await updateOverDueValue();

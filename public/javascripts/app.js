@@ -64,13 +64,15 @@ form.addEventListener("submit", async (e) => {
   }
 
   const body = { description, dueDate, isCompleted, givenTo, title }
-
+  const token = cookieMonster(document.cookie)
   try {
     const res = await fetch("/tasks", {
       method: "POST",
+      credentials: "same-origin",
       body: JSON.stringify(body),
       headers: {
         "Content-Type": "application/json",
+        "CSRF-Token": token
 
       }
     })
