@@ -184,12 +184,15 @@ export const fetchTask = async (taskId) => {
     }
 
     check.addEventListener('change', async (e) => {
+        const token = cookieMonster(document.cookie);
         if (check.checked) {
             await fetch(`/tasks/${task.id}`, {
                 method: "PATCH",
+                credentials: "same-origin",
                 body: JSON.stringify({ "isCompleted": "true" }),
                 headers: {
                     "Content-Type": "application/json",
+                    "CSRF-Token": token
                 }
             })
             await updateOverDueValue();
@@ -199,9 +202,11 @@ export const fetchTask = async (taskId) => {
         } else {
             const res = await fetch(`/tasks/${task.id}`, {
                 method: "PATCH",
+                credentials: "same-origin",
                 body: JSON.stringify({ "isCompleted": "false" }),
                 headers: {
                     "Content-Type": "application/json",
+                    "CSRF-Token": token
                 }
             })
             await updateOverDueValue();
