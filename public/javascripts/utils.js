@@ -94,6 +94,19 @@ export const dueDateFormatter = (task) => {
   return dateFormatter(task.dueDate);
 }
 
+export const dueDateToYYYMMDD = (date) => {
+  let selectedDate = date;
+  selectedDate = new Date(selectedDate);
+  let selectedDateTime = selectedDate.getTime();
+  let actualDateTime = new Date(selectedDateTime)
+
+  let ddactualDate = String(actualDateTime.getDate()).padStart(2, '0');
+  let mmactualDate = String(actualDateTime.getMonth() + 1).padStart(2, '0');
+  let yyyyactualDate = actualDateTime.getFullYear()
+
+  let actualDate = yyyyactualDate + '-' + mmactualDate + '-' + ddactualDate + 'T' + getTime(actualDateTime);
+  return actualDate;
+}
 
 // Returns just the time given a date with a time
 const getTime = (dueDate) => {
