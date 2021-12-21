@@ -64,12 +64,20 @@ export const dueDateFormatter = (task) => {
   today = yyyyToday + '-' + mmToday + '-' + ddToday;
   tomorrow = yyyyTom + '-' + mmTom + '-' + ddTom;
 
-  let selectedDate = task.dueDate.slice(0, 10).replace(/-/g, '/');
+  let selectedDate = task.dueDate;
   selectedDate = new Date(selectedDate);
   let diff = new Date().getTime() - selectedDate.getTime();
 
-  let due = task.dueDate.slice(0, 10);
+  let selectedDateTime = selectedDate.getTime();
+  let actualDateTime = new Date(selectedDateTime)
 
+  let ddactualDate = String(actualDateTime.getDate()).padStart(2, '0');
+  let mmactualDate = String(actualDateTime.getMonth() + 1).padStart(2, '0');
+  let yyyyactualDate = actualDateTime.getFullYear()
+
+  let actualDate = yyyyactualDate + '-' + mmactualDate + '-' + ddactualDate;
+
+  let due = actualDate;
 
   if (due === today) {
     return due = `Today ${getTime(task.dueDate)}`;
@@ -94,15 +102,8 @@ const getTime = (dueDate) => {
 
 // Formats the date and time of a comment to a nice format, e.g. 'Oct 31 01:16'
 export const dateFormatter = (date) => {
-  let formattedDate = date.slice(0, 10).replace(/-/g, '/');
-  formattedDate = new Date(date);
-  formattedDate = formattedDate.toDateString();
-  formattedDate = formattedDate.slice(4, 10);
-
-  let updatedAtTime = date.slice(11, 16);
-
-  return `${formattedDate} ${updatedAtTime}`
-
+  let actualDate = new Date(date);
+  return `${actualDate.toDateString().slice(4,10)} ${actualDate.toString().slice(16,21)}`
 }
 
 

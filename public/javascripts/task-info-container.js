@@ -1,6 +1,6 @@
 import { fetchTasks } from './fetch-tasks.js';
 import { fetchComments } from './comments.js';
-import { updateOverDueValue, dueDateFormatter, dateFormatter, updateTotalTaskValue, updateTasksCompletedValue } from './utils.js';
+import { updateOverDueValue, dueDateFormatter, dateFormatter, updateTotalTaskValue, updateTasksCompletedValue, updateTaskListContainer } from './utils.js';
 import { handleErrors } from './utils.js';
 
 // Edit a task
@@ -220,6 +220,7 @@ export const fetchTask = async (taskId) => {
         // editForm.style.display = 'none';
         taskInfo.hidden = true;
         taskInfo.classList.remove('task-information-animation')
+
 
     })
 
