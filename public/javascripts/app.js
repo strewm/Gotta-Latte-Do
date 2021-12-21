@@ -1,4 +1,4 @@
-import { handleErrors, addTaskInfoListeners, updateOverDueValue, cookieMonster, updateTaskListContainer } from "./utils.js";
+import { handleErrors, addTaskInfoListeners, updateOverDueValue, cookieMonster, updateTaskListContainer, dueDateFormatter } from "./utils.js";
 import { fetchTasks, fetchAssignTasks, fetchIncompleteTasks, fetchCompletedTasks } from "./fetch-tasks.js";
 import { search } from "./search.js";
 import { fetchContactTasks, addNewContact } from "./contacts.js";
@@ -481,6 +481,24 @@ overdueTasks.addEventListener('click', async (e) => {
   const listName = `
       <h2 class="task-list-header">Overdue Tasks</h2>
 `
-  await updateTaskListContainer(tasks, listName);
+
+  const tasksListContainer = document.querySelector(".task-list");
+
+  const tasksHtml = tasks.map((task) => {
+    if (task.isCompleted === true) {
+      return null;
+    } else if (dueDateFormatter(task) !== 'OVERDUE') {
+      return null;
+    } else if (task.isCompleted === false && dueDateFormatter(task) === 'OVERDUE') {
+      return `<div class='task-info' id=${task.id}>
+    <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
+    <label for=${task.id} id=${task.id} class="task-check-box" style='color: red'>${task.description}</label>
+    </div>
+    `
+    }
+  })
+
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
+
   await addTaskInfoListeners();
 })

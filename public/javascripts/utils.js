@@ -289,7 +289,10 @@ export const updateOverDueValue = async () => {
   let numOverdueTasks;
   let numOverdueGivenToMe;
   if (tasks) {
-    numOverdueTasks = tasks.length;
+    let actualOverdue = tasks.filter((task) => {
+      return dueDateFormatter(task) === 'OVERDUE';
+    })
+    numOverdueTasks = actualOverdue.length;
   } else {
     numOverdueTasks = 0;
   }
@@ -298,7 +301,10 @@ export const updateOverDueValue = async () => {
   const overDueGivenRes = await fetch('/lists/overdue/given-to-me');
   const { overdueGivenToMe } = await overDueGivenRes.json();
   if (overdueGivenToMe) {
-    numOverdueGivenToMe = overdueGivenToMe.length;
+    let actualOverdueGivenToMe = overdueGivenToMe.filter((task) => {
+      return dueDateFormatter(task) === 'OVERDUE';
+    })
+    numOverdueGivenToMe = actualOverdueGivenToMe.length;
   } else {
     numOverdueGivenToMe = 0;
   }
