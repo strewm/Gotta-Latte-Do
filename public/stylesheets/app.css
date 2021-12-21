@@ -47,6 +47,26 @@ a {
 
 }
 
+.top-right-nav {
+    display: flex;
+    align-items: center;
+}
+
+.welcome {
+    display: flex;
+    padding: 5px;
+    color: #fae5cacc;
+}
+
+.current-user {
+    color: #FAE5CAcc;
+}
+
+.exclamation {
+    margin-right: 30px;
+    color: #FAE5CAcc;
+}
+
 #settings {
     padding: 0;
     width: auto;
@@ -1103,6 +1123,7 @@ list-add-edited {
     width: fit-content;
     min-width: 215px;
     min-height: 230px;
+    margin-right: 2rem;
 }
 
 .settingGroup:hover {
