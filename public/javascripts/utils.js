@@ -100,7 +100,6 @@ export const dueDateFormatter = (task) => {
 
 export const adjustDateTime = (actualDateTime) => {
   let getLocal = new Date();
-  console.log(getLocal);
   getLocal = getLocal.toString().slice(28, 31);
   let plusOrMinus;
   if (getLocal[0] === '-') plusOrMinus = '+'
@@ -120,12 +119,15 @@ export const dueDateToYYYMMDD = (date) => {
   selectedDate = new Date(selectedDate);
   // let selectedDateTime = selectedDate.getTime();
   let actualDateTime = adjustDateTime(selectedDate)
+  console.log(actualDateTime)
 
   let ddactualDate = String(actualDateTime.getDate()).padStart(2, '0');
   let mmactualDate = String(actualDateTime.getMonth() + 1).padStart(2, '0');
   let yyyyactualDate = actualDateTime.getFullYear()
 
   let actualDate = yyyyactualDate + '-' + mmactualDate + '-' + ddactualDate + 'T' + getTime(actualDateTime);
+  console.log(actualDate)
+
   return actualDate;
 }
 
