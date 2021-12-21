@@ -114,10 +114,9 @@ export const adjustDateTime = (actualDateTime) => {
   }
 }
 
+// For the edit form
 export const dueDateToYYYMMDD = (date) => {
-  let selectedDate = date;
-  selectedDate = new Date(selectedDate);
-  // let selectedDateTime = selectedDate.getTime();
+  let selectedDate = new Date(date);
   let actualDateTime = adjustDateTime(selectedDate)
 
   let ddactualDate = String(actualDateTime.getDate()).padStart(2, '0');
@@ -134,18 +133,6 @@ const getTime = (adjustedDueDate) => {
   return adjustedDueDate.toString().slice(16, 21);
 }
 
-// For comment times only
-const getCommentTime = (date) => {
-  return dateFormatter(date).slice(7);
-}
-
-export const commentUpdatedAt = (date) => {
-  let actualDate = new Date(date);
-  let actualDateTime = adjustDateTime(actualDate)
-
-  return `${actualDateTime.toDateString().slice(4,10)} ${getCommentTime(date)}`
-}
-
 // Formats the date and time of a comment to a nice format, e.g. 'Oct 31 01:16'
 export const dateFormatter = (date) => {
   let actualDate = new Date(date);
@@ -153,7 +140,6 @@ export const dateFormatter = (date) => {
 
   return `${actualDateTime.toDateString().slice(4,10)} ${getTime(actualDateTime)}`
 }
-
 
 // Adds all of the event listeners back to each task in the current list of taskscontainer.
 // Should be called any time the list of tasks is updated (e.g. when a task is added,
