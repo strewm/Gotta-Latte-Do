@@ -10,20 +10,25 @@ block content
     .page
         nav.navbar
             input.navbar#searchBar(type="text", placeholder="Search here...")
-            div.navbar#settings
-                img.navbar#settingsGear(src="../images/gear.png")
-                div.settingGroup.settingHide
-                    div.settingHeaderGroup
-                        img.settingHeader#userProfile(src="../images/favicon.png")
-                        div.settingUserInfo
-                          div.settingHeader#userName=currUser.username
-                          div.settingHeader#userEmail=currUser.email
-                    ul.settingListGroup
-                        li.settingList.sLGray Notifications
-                        li.settingList.sLGray Help
-                        li.settingList.sLGray Keyboard shortcuts
-                        li.settingList.sLGray Account Settings
-                        li.settingList.sLSO: button#signOut(type='submit') Sign Out
+            div.headerspace
+            .top-right-nav
+              div.welcome Welcome, !{' '}
+              .current-user= currUser.username
+              .exclamation !
+              div.navbar#settings
+                  img.navbar#settingsGear(src="../images/gear.png")
+                  div.settingGroup.settingHide
+                      div.settingHeaderGroup
+                          img.settingHeader#userProfile(src="../images/favicon.png")
+                          div.settingUserInfo
+                            div.settingHeader#userName=currUser.username
+                            div.settingHeader#userEmail=currUser.email
+                      ul.settingListGroup
+                          li.settingList.sLGray Notifications
+                          li.settingList.sLGray Help
+                          li.settingList.sLGray Keyboard shortcuts
+                          li.settingList.sLGray Account Settings
+                          li.settingList.sLSO: button#signOut(type='submit') Sign Out
         div.sidebar
           div.logoContainer
               img.logo(src="../images/logo-text.png")

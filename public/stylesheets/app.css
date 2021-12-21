@@ -7,15 +7,17 @@
 
 .page {
     display: grid;
-    grid-template-columns: 1.5fr 4fr 2.75fr;
+    grid-template-columns: 1fr 4fr 2.75fr;
     grid-template-rows: 65px 0.5fr 9fr;
     grid-template-areas:
-    "header header header"
+    "header navbar navbar"
     "sidebar tabs summary"
     "sidebar main summary";
 
     height: 100vh;
     cursor: default;
+
+    background-color: #8A715B;
 }
 
 a {
@@ -24,12 +26,17 @@ a {
 
 
 /* %%%%%%%%%%%%%%%%%%%%% Navigation bar %%%%%%%%%%%%%%%%%%%%% */
-.navbar {
+.headerspace {
     grid-area: header;
+    background-color: #8A715B;
+}
+
+.navbar {
+    grid-area: navbar;
 
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
 
     background-color: #8A715B;
@@ -37,12 +44,34 @@ a {
     padding: 5px;
     line-height: 25px;
     font-size: 15px;
+
+}
+
+.top-right-nav {
+    display: flex;
+    align-items: center;
+}
+
+.welcome {
+    display: flex;
+    padding: 5px;
+    color: #fae5cacc;
+}
+
+.current-user {
+    color: #FAE5CAcc;
+}
+
+.exclamation {
+    margin-right: 30px;
+    color: #FAE5CAcc;
 }
 
 #settings {
     padding: 0;
     width: auto;
 }
+
 
 #settings:hover {
     cursor: pointer;
@@ -60,10 +89,17 @@ a {
     padding-bottom: 3px;
     padding-left: 10px;
     padding-right: 10px;
-    margin-left: 5px;
     border-radius: 10px;
     border: none;
     align-items: center;
+}
+
+#searchBar {
+    width: 35%;
+}
+
+#settings {
+    margin-right: 2rem;
 }
 
 ::placeholder {
@@ -657,6 +693,8 @@ ul.default-tasks > li:hover {
     opacity: 0.7;
     padding: 12px;
     border-radius: 5px;
+
+    min-width: 99px;
 }
 
 .tasksDueValue {
@@ -1085,6 +1123,7 @@ list-add-edited {
     width: fit-content;
     min-width: 215px;
     min-height: 230px;
+    margin-right: 2rem;
 }
 
 .settingGroup:hover {
