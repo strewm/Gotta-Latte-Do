@@ -56,6 +56,7 @@ form.addEventListener("submit", async (e) => {
   const title = formData.get("title");
   let isCompleted;
 
+
   //convert checkbox to boolean value
   if (checkStatus === 'on') {
     isCompleted = true;
