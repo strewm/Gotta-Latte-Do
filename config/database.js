@@ -21,6 +21,5 @@ module.exports = {
     dialectOptions: {
       useUTC: false, //for reading from database
     },
-
   }
 };
