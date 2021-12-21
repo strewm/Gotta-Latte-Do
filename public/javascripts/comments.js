@@ -1,5 +1,5 @@
 import { fetchUser } from './user.js';
-import { dateFormatter } from './utils.js';
+import { dateFormatter, dueDateFormatter } from './utils.js';
 import { handleErrors } from './utils.js';
 import { cookieMonster } from './utils.js';
 
@@ -13,6 +13,7 @@ export const fetchComments = async (taskId) => {
     }
 
     const { comments } = await res.json();
+
 
     // Each comment contains the username of the user who created the comment,
     // the date and time the comment was updated, and edit/delete buttons
@@ -68,7 +69,7 @@ export const fetchComments = async (taskId) => {
                 headers: {
                     "Content-Type": "application/json",
                     "CSRF-Token": token
-                  }
+                }
             })
 
             const comment = document.querySelector(`.comment-container-${commentId}`);
