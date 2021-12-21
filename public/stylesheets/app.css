@@ -596,6 +596,12 @@ a {
 .task-check-box {
     background: transparent;
 }
+.task-info {
+    border-bottom: 1px dotted rgba(0,0,0,.1);
+    width: 100%;
+    padding-bottom: 5px;
+    margin-bottom: 7px;
+}
 
 .task-info:hover {
     padding: 3px;
@@ -968,7 +974,7 @@ list-add-edited {
     padding: 15px 0px;
     margin-bottom: 5px;
     border-top: 1px solid rgba(255, 255 , 255, .3);
-    transition: height .1s ease-in-out;
+    transition: height .4s ease-in-out;
 }
 
 .contact-list-sidebar {
@@ -978,7 +984,7 @@ list-add-edited {
     overflow: hidden;
     max-width: 305px;
     width: 100%;
-    transition: height .1s ease-in-out;
+    transition: height .4s ease-in-out;
 }
 
 .lists-drop-container {
@@ -988,7 +994,7 @@ list-add-edited {
     overflow: hidden;
     max-width: 305px;
     width: 100%;
-    transition: height .1s ease-in-out;
+    transition: height .4s ease-in-out;
 }
 
 .list-sidebar {
@@ -1369,6 +1375,7 @@ list-add-edited {
     padding: 0;
     outline: 0;
     font-weight: normal;
+    cursor: pointer;
 }
 .pointer::before {
     float: left;

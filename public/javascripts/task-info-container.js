@@ -1,6 +1,6 @@
 import { fetchTasks } from './fetch-tasks.js';
 import { fetchComments } from './comments.js';
-import { updateOverDueValue, dueDateFormatter, dateFormatter, updateTotalTaskValue, updateTasksCompletedValue } from './utils.js';
+import { updateOverDueValue, dueDateFormatter, dateFormatter, updateTotalTaskValue, updateTasksCompletedValue, dueDateToYYYMMDD } from './utils.js';
 import { handleErrors } from './utils.js';
 
 // Edit a task
@@ -221,6 +221,7 @@ export const fetchTask = async (taskId) => {
         taskInfo.hidden = true;
         taskInfo.classList.remove('task-information-animation')
 
+
     })
 
     // Deleting a task hides the container
@@ -241,7 +242,7 @@ export const fetchTask = async (taskId) => {
             <label for='description' class="task-label-headers modal-header">Edit Task</label>
             <input type='text' value='${task.description}' id='description-task-${task.id}' class='description-task modal-input' name='description' required></input>
             <label for='dueDate' class="task-label-headers">Due Date</label>
-            <input type='datetime-local' id='dueDate' class="modal-input" name='dueDate' value='${task.dueDate.slice(0, 16)}' required></input>
+            <input type='datetime-local' id='dueDate' class="modal-input" name='dueDate' value='${dueDateToYYYMMDD(task.dueDate)}' required></input>
             <label for='isCompleted' class="task-label-headers">Completed?</label>
             <input type='checkbox' id='checkbox' name='isCompleted'>
             <button class='editTaskButton button-modal' type='submit'>Edit Task
