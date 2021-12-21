@@ -55,19 +55,37 @@ rightButt.addEventListener('click', (e) => {
 // Move to slide associated with circle click
 const circleButts = document.querySelector('.circle-butts');
 const circles = document.getElementsByClassName('circle');
-
-const circlesToo = circleButts.children;
+const circlesToo = Array.from(circleButts.children);
+console.log(circles);
+console.log(circlesToo)
+// const circlesToo = circleButts.children;
 
 circleButts.addEventListener('click', (e) => {
-    // Which circle was clicked?
-    const clickedCircle = e;
+    // Which circle was clicked? Set clickedCircle to null if click is not on circle
+    const clickedCircle = e.target.closest('button');
+
+    // If not clicking on circle, return to exit
+    if (!clickedCircle) return;
 
     const currSlide = slidesContainer.querySelector('.currSlide');
     const currCircle = circleButts.querySelector('.currSlide');
 
-    // Find the index of the clicked circle
-    // const clickedCircle = (ele) => ele === clickedCircle;
-    const clickedIndex = circlesToo.findIndex(circle => circle === clickedCircle);
+    // Find the index of the clicked circle by checking each of the circle positions
+    // in the array against the value of the clickedCircle
+    const circleIndex = (ele) => ele === clickedCircle;
+    const clickedIndex = circles.findIndex(circleIndex);
+    const clickedSlide = slides[clickedIndex];
 
     console.log(clickedIndex);
+
+
+    const move = nextSlide.style.left;
+    slidesContainer.style.transform = `translateX(-${move})`;
+    currSlide.classList.remove('currSlide');
+    clickedSlide.classList.add('currSlide');
+
+    // const move = nextSlide.style.left;
+    slidesContainer.style.transform = `translateX(-${move})`;
+    currCircle.classList.remove('currSlide');
+    clickedCircle.classList.add('currSlide');
 })
