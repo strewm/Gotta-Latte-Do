@@ -70,11 +70,12 @@ export const dueDateFormatter = (task) => {
 
   let selectedDateTime = selectedDate.getTime();
   let actualDateTime = new Date(selectedDateTime)
-  actualDateTime = new Date(actualDateTime.getTime() + (8 * 60 * 60 * 1000))
 
-  let ddactualDate = String(actualDateTime.getDate()).padStart(2, '0');
-  let mmactualDate = String(actualDateTime.getMonth() + 1).padStart(2, '0');
-  let yyyyactualDate = actualDateTime.getFullYear()
+  let adjustedDateTime = adjustDateTime(actualDateTime)
+
+  let ddactualDate = String(adjustedDateTime.getDate()).padStart(2, '0');
+  let mmactualDate = String(adjustedDateTime.getMonth() + 1).padStart(2, '0');
+  let yyyyactualDate = adjustedDateTime.getFullYear()
 
   let actualDate = yyyyactualDate + '-' + mmactualDate + '-' + ddactualDate;
 
@@ -96,11 +97,27 @@ export const dueDateFormatter = (task) => {
   return dateFormatter(task.dueDate);
 }
 
+export const adjustDateTime = (actualDateTime) => {
+  let getLocal = new Date();
+  getLocal = getLocal.toString().slice(28, 31);
+  let plusOrMinus;
+  if (getLocal[0] === '-') plusOrMinus = '+'
+  else plusOrMinus = '-';
+  let change = Number(getLocal.slice(1, 3))
+  if (plusOrMinus === '-') {
+    let adjustedDateTime = new Date(actualDateTime.getTime() - (change * 60 * 60 * 1000))
+    return adjustedDateTime
+  } else {
+    let adjustedDateTime = new Date(actualDateTime.getTime() + (change * 60 * 60 * 1000))
+    return adjustedDateTime
+  }
+}
+
 export const dueDateToYYYMMDD = (date) => {
   let selectedDate = date;
   selectedDate = new Date(selectedDate);
-  let selectedDateTime = selectedDate.getTime();
-  let actualDateTime = new Date(selectedDateTime + (8 * 60 * 60 * 1000))
+  // let selectedDateTime = selectedDate.getTime();
+  let actualDateTime = adjustDateTime(selectedDate)
 
   let ddactualDate = String(actualDateTime.getDate()).padStart(2, '0');
   let mmactualDate = String(actualDateTime.getMonth() + 1).padStart(2, '0');
@@ -118,7 +135,7 @@ const getTime = (dueDate) => {
 // Formats the date and time of a comment to a nice format, e.g. 'Oct 31 01:16'
 export const dateFormatter = (date) => {
   let actualDate = new Date(date);
-  let actualDateTime = new Date(actualDate.getTime() + (8 * 60 * 60 * 1000))
+  let actualDateTime = adjustDateTime(actualDate)
   return `${actualDateTime.toDateString().slice(4,10)} ${actualDateTime.toString().slice(16,21)}`
 }
 
