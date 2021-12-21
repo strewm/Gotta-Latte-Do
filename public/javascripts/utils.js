@@ -87,11 +87,11 @@ export const dueDateFormatter = (task) => {
   }
 
   if (due === today) {
-    return due = `Today ${getTime(task.dueDate)}`;
+    return due = `Today ${getTime(adjustedDateTime)}`;
   }
 
   if (due === tomorrow) {
-    return due = `Tomorrow ${getTime(task.dueDate)}`;
+    return due = `Tomorrow ${getTime(adjustedDateTime)}`;
   }
 
 
@@ -119,28 +119,39 @@ export const dueDateToYYYMMDD = (date) => {
   selectedDate = new Date(selectedDate);
   // let selectedDateTime = selectedDate.getTime();
   let actualDateTime = adjustDateTime(selectedDate)
-  console.log(actualDateTime)
 
   let ddactualDate = String(actualDateTime.getDate()).padStart(2, '0');
   let mmactualDate = String(actualDateTime.getMonth() + 1).padStart(2, '0');
   let yyyyactualDate = actualDateTime.getFullYear()
 
   let actualDate = yyyyactualDate + '-' + mmactualDate + '-' + ddactualDate + 'T' + getTime(actualDateTime);
-  console.log(actualDate)
 
   return actualDate;
 }
 
 // Returns just the time given a date with a time
-const getTime = (dueDate) => {
-  return dateFormatter(dueDate).slice(7);
+const getTime = (adjustedDueDate) => {
+  return adjustedDueDate.toString().slice(16, 21);
+}
+
+// For comment times only
+const getCommentTime = (date) => {
+  return dateFormatter(date).slice(7);
+}
+
+export const commentUpdatedAt = (date) => {
+  let actualDate = new Date(date);
+  let actualDateTime = adjustDateTime(actualDate)
+
+  return `${actualDateTime.toDateString().slice(4,10)} ${getCommentTime(date)}`
 }
 
 // Formats the date and time of a comment to a nice format, e.g. 'Oct 31 01:16'
 export const dateFormatter = (date) => {
   let actualDate = new Date(date);
   let actualDateTime = adjustDateTime(actualDate)
-  return `${actualDateTime.toDateString().slice(4,10)} ${actualDateTime.toString().slice(16,21)}`
+
+  return `${actualDateTime.toDateString().slice(4,10)} ${getTime(actualDateTime)}`
 }
 
 

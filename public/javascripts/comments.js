@@ -1,5 +1,5 @@
 import { fetchUser } from './user.js';
-import { dateFormatter } from './utils.js';
+import { dateFormatter, commentUpdatedAt } from './utils.js';
 import { handleErrors } from './utils.js';
 import { cookieMonster } from './utils.js';
 
@@ -26,7 +26,7 @@ export const fetchComments = async (taskId) => {
                 <span id='comment-${comment.id}-message' class='comment-message'>${comment.message}</span>
             </span>
             <div class='updatedAt-${comment.id} updated-At'>
-                <div class='comment-date'>${dateFormatter(comment.updatedAt)}</div>
+                <div class='comment-date'>${commentUpdatedAt(comment.updatedAt)}</div>
                 <div class='comment-buttons-${comment.id} comment-buttons userId-${comment.userId}-${comment.id}'>
                     <div class="comment-buttons-dot comment-butts">•</div>
                     <button class='edit-comment-butt comment-butts' id='${comment.id}'>Edit</button>
