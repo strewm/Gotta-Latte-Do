@@ -203,8 +203,16 @@ h1 {
     align-items: center;
 }
 
+.aboutme {
+    font-weight: bold;
+}
+
 .aboutmelink {
     font-size: 0.75rem;
+}
+
+.aboutmelink:hover {
+    background-color: rgba(188, 194, 201, 0.466);
 }
 
 .copyright {
