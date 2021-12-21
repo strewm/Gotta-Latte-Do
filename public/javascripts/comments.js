@@ -61,8 +61,14 @@ export const fetchComments = async (taskId) => {
         deleteButton.addEventListener('click', async (e) => {
             e.preventDefault();
             const commentId = e.target.id;
+            const token = cookieMonster(document.cookie)
             await fetch(`/comments/${commentId}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                    "CSRF-Token": token
+                  }
             })
 
             const comment = document.querySelector(`.comment-container-${commentId}`);
@@ -167,9 +173,15 @@ export const postComment = async (taskId, body) => {
 
 // Delete a comment on a task
 export const deleteComment = async (commentId) => {
+    const token = cookieMonster(document.cookie)
     try {
         const res = await fetch(`/comments/${commentId}`, {
             method: "DELETE",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "CSRF-Token": token
+            }
         })
 
         if (res.status === 401) {
