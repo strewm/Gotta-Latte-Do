@@ -70,6 +70,7 @@ export const dueDateFormatter = (task) => {
 
   let selectedDateTime = selectedDate.getTime();
   let actualDateTime = new Date(selectedDateTime)
+  actualDateTime = new Date(actualDateTime.getTime() + (8 * 60 * 60 * 1000))
 
   let ddactualDate = String(actualDateTime.getDate()).padStart(2, '0');
   let mmactualDate = String(actualDateTime.getMonth() + 1).padStart(2, '0');
@@ -99,7 +100,7 @@ export const dueDateToYYYMMDD = (date) => {
   let selectedDate = date;
   selectedDate = new Date(selectedDate);
   let selectedDateTime = selectedDate.getTime();
-  let actualDateTime = new Date(selectedDateTime)
+  let actualDateTime = new Date(selectedDateTime + (8 * 60 * 60 * 1000))
 
   let ddactualDate = String(actualDateTime.getDate()).padStart(2, '0');
   let mmactualDate = String(actualDateTime.getMonth() + 1).padStart(2, '0');
@@ -117,7 +118,8 @@ const getTime = (dueDate) => {
 // Formats the date and time of a comment to a nice format, e.g. 'Oct 31 01:16'
 export const dateFormatter = (date) => {
   let actualDate = new Date(date);
-  return `${actualDate.toDateString().slice(4,10)} ${actualDate.toString().slice(16,21)}`
+  let actualDateTime = new Date(actualDate.getTime() + (8 * 60 * 60 * 1000))
+  return `${actualDateTime.toDateString().slice(4,10)} ${actualDateTime.toString().slice(16,21)}`
 }
 
 
