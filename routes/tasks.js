@@ -33,7 +33,7 @@ router.get('/users/:id(\\d+)/tasks', csrfProtection, asyncHandler(async(req, res
 
 
 // Create a new task for logged in user
-router.post('/users/:id(\\d+)/tasks', validateTask, handleValidationErrors, csrfProtection, asyncHandler(async(req, res) => {
+router.post('/users/:id(\\d+)/tasks', csrfProtection, validateTask, handleValidationErrors, csrfProtection, asyncHandler(async(req, res) => {
   const { description, dueDate, givenTo } = req.body;
   const userId = res.locals.userId
   const task = await Task.create({
@@ -161,7 +161,7 @@ router.get('/task/:id(\\d+)', asyncHandler(async(req, res) => {
 
 
 // Create a new task for logged in user
-router.post('/', validateTask, handleValidationErrors, asyncHandler(async(req, res) => {
+router.post('/', csrfProtection, validateTask, handleValidationErrors, asyncHandler(async(req, res) => {
   const { description, dueDate, isCompleted, givenTo, title } = req.body;
   const userId = res.locals.userId
   if(givenTo.length) {
@@ -222,7 +222,7 @@ router.get('/:id(\\d+)', asyncHandler(async(req, res, next) => {
 
 
 // Edit a task
-router.put ('/:id(\\d+)', validateTask, handleValidationErrors, asyncHandler(async(req, res, next) => {
+router.put ('/:id(\\d+)', csrfProtection, validateTask, handleValidationErrors, asyncHandler(async(req, res, next) => {
   const { description, dueDate, isCompleted } = req.body;
   const task = await Task.findByPk(req.params.id);
   if (task) {
@@ -239,7 +239,7 @@ router.put ('/:id(\\d+)', validateTask, handleValidationErrors, asyncHandler(asy
 
 
 // Delete a task
-router.delete('/:id(\\d+)', asyncHandler(async(req, res, next) => {
+router.delete('/:id(\\d+)', csrfProtection, asyncHandler(async(req, res, next) => {
   const task = await Task.findByPk(req.params.id);
   if (task) {
     await task.destroy()
@@ -251,7 +251,7 @@ router.delete('/:id(\\d+)', asyncHandler(async(req, res, next) => {
 
 
 // Edit a task's completed status
-router.patch('/:id(\\d+)', asyncHandler(async (req, res, next) => {
+router.patch('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const { isCompleted } = req.body;
   const task = await Task.findByPk(req.params.id);
   if (task) {
