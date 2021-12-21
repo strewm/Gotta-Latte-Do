@@ -65,6 +65,24 @@ export const fetchTask = async (taskId) => {
 
     const { task } = await res.json();
 
+    let givenToUserText = '';
+    if (task.givenTo) {
+        const givenToUserRes = await fetch(`/tasks/${task.givenTo}/given-to`);
+        const { givenToUser } = await givenToUserRes.json();
+        givenToUserText = givenToUser.username;
+    }
+
+    const currUser = await fetch('/users/current');
+    const { user } = await currUser.json();
+
+
+    let givenByUserText = '';
+    if (user.id !== task.userId) {
+        const givenToUserRes = await fetch(`/tasks/${task.userId}/given-to`);
+        const { givenToUser } = await givenToUserRes.json();
+        givenByUserText = givenToUser.username;
+    }
+
     const due = dueDateFormatter(task);
 
     // Return checked checkbox if the task is completed
@@ -74,6 +92,8 @@ export const fetchTask = async (taskId) => {
     } else {
         checked = "off";
     }
+
+
 
     // Task container contains Edit/Delete buttons, task message, task due date, task completion status, and a comment container
     const taskInfo = document.querySelector('.fiona');
@@ -99,6 +119,8 @@ export const fetchTask = async (taskId) => {
                         <input type="checkbox" class="completedTask completed-task-${task.id}" name="completedTask">
                     </div>
                 </div>
+                <div class='given-to-container' style='display: none' hidden>
+                </div>
             </div>
 
             <div class='comment-container-${task.id}'>
@@ -115,6 +137,28 @@ export const fetchTask = async (taskId) => {
     `
 
     taskInfo.innerHTML = taskHtml;
+
+    if (givenToUserText) {
+        const givenToUserDiv = document.querySelector('.given-to-container');
+        givenToUserDiv.innerHTML = `
+            <p class='given-to-label'>Given To </p>
+            <p class='given-to-username'>${givenToUserText}</p>
+        `
+        givenToUserDiv.style.display = 'flex';
+        givenToUserDiv.hidden = false;
+    }
+
+    if (givenByUserText) {
+        const givenToUserDiv = document.querySelector('.given-to-container');
+        givenToUserDiv.innerHTML = `
+            <p class='given-to-label'>Given By </p>
+            <p class='given-to-username'>${givenByUserText}</p>
+        `
+        givenToUserDiv.style.display = 'flex';
+        givenToUserDiv.hidden = false;
+    }
+
+
     taskInfo.hidden = false;
 
     // If the task is overdue, style due date section to reflect overdue status

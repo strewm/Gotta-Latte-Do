@@ -249,7 +249,24 @@ export const updateOverDueValue = async () => {
   const overDueValue = document.querySelector('#tasksOverdueValue');
   const overDueRes = await fetch('/lists/overdue');
   const { tasks } = await overDueRes.json();
-  overDueValue.innerHTML = `${tasks.length}<div id="tasksOverdue">Overdue</div>`;
+
+  let numOverdueTasks;
+  let numOverdueGivenToMe;
+  if (tasks) {
+    numOverdueTasks = tasks.length;
+  } else {
+    numOverdueTasks = 0;
+  }
+
+
+  const overDueGivenRes = await fetch('/lists/overdue/given-to-me');
+  const { overdueGivenToMe } = await overDueGivenRes.json();
+  if (overdueGivenToMe) {
+    numOverdueGivenToMe = overdueGivenToMe.length;
+  } else {
+    numOverdueGivenToMe = 0;
+  }
+  overDueValue.innerHTML = `${numOverdueTasks + numOverdueGivenToMe}<div id="tasksOverdue">Overdue</div>`;
 }
 
 // Updates the value for "Tasks" found in upper right corner
@@ -311,20 +328,26 @@ export const updateTasksCompletedValue = async () => {
 export const updateTaskListContainer = async (tasks, listName) => {
   const tasksListContainer = document.querySelector(".task-list");
 
-  const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
-    if (isCompleted === true) {
+  const tasksHtml = tasks.map((task) => {
+    if (task.isCompleted === true) {
       return `
-        <div class='task-info' id=${id}>
-            <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
-            <label for=${id} id=${id} class="task-check-box">${description}</label>
-        </div>
-        `
-    } else {
-      return `<div class='task-info' id=${id}>
-                <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-                <label for=${id} id=${id} class="task-check-box">${description}</label>
-            </div>
-        `
+      <div class='task-info' id=${task.id}>
+      <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id} checked>
+      <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
+      </div>
+      `
+    } else if (task.isCompleted === false && dueDateFormatter(task) === 'OVERDUE') {
+      return `<div class='task-info' id=${task.id}>
+      <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
+      <label for=${task.id} id=${task.id} class="task-check-box" style='color: red'>${task.description}</label>
+      </div>
+      `
+    } else if (task.isCompleted === false) {
+      return `<div class='task-info' id=${task.id}>
+      <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
+      <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
+      </div>
+      `
     }
   })
   tasksListContainer.innerHTML = listName + tasksHtml.join("");
