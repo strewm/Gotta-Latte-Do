@@ -27,6 +27,7 @@ block content
         a.signup-btn(href='/users/signup') Sign Up Free
     main.main
       div.slides-container
+        //- div.slides-second-container
         div.first-slide.currSlide
           img.first-image(src='../images/1-maybe-logo.png')
           div.text-under-inner-img
@@ -43,7 +44,7 @@ block content
             div.slide-header Tired of notepads? You'll love our brew-tiful design.
             div.slide-text We're meant to bean together!
       div.arrow-butts
-        button.left-button &#8610;
+        button.left-button.hidden &#8610;
         button.right-button &#8611;
       div.circle-butts
         button.circle.currSlide

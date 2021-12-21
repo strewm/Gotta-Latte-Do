@@ -1,3 +1,4 @@
+// const slidesContainer = document.querySelector('.slides-second-container');
 const slidesContainer = document.querySelector('.slides-container');
 const slides = [...slidesContainer.children];
 
@@ -75,4 +76,9 @@ circleButts.addEventListener('click', (e) => {
     // Will change the highlighted circle to the clicked circle
     currCircle.classList.remove('currSlide');
     clickedCircle.classList.add('currSlide');
+
+
+    // if (clickedIndex === 0) {
+
+    // }
 })
