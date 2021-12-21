@@ -36,9 +36,15 @@ export const editTask = async (taskId, body) => {
 
 // Delete a task and updates task container list, as well as the overdue task value on the page
 export const deleteTask = async (taskId) => {
+    const token = cookieMonster(document.cookie)
     try {
         const res = await fetch(`/tasks/${taskId}`, {
             method: "DELETE",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "CSRF-Token": token
+              }
         })
 
         if (res.status === 401) {
