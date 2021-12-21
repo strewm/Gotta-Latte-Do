@@ -151,25 +151,52 @@ h1 {
 
 /* %%%%%%%%%%%%%%%%% Main carousel layout  %%%%%%%%%%%%%%%%% */
 .slides-container {
-    margin: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    /* margin: 50px;
     width: 600px;
-    height: auto;
+    height: auto; */
     /* height: 100%; */
+    height: 100%;
+    width: 50%;
     position: relative;
+
+    /* padding: 0;
+    margin: 0; */
 }
 
 .first-slide, .second-slide, .third-slide {
     position: absolute;
-    top: 0;
+    /* top: 0;
     bottom: 0;
-    width: 100%;
+    width: 100%; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.first-image, .second-image, .third-image {
+    /* position: absolute; */
+    /* margin: 50px; */
+    /* width: 500px; */
+    width: 60%;
+    height: auto;
+
 }
 
 .arrow-butts {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
-    width: auto;
+    /* transform: translateY(-50%); */
+    width: 65%;
+    z-index: 2;
+
+    display: flex;
+    justify-content: space-between;
 }
 
 .left-button, .right-button {
@@ -177,23 +204,40 @@ h1 {
     border: none;
     font-size: 30px;
     color: #FFF8DC;
+    /* width: 50%; */
+    height: auto;
 }
 
-.left-button {
+/* .left-button {
     left: -15px;
 }
 
 .right-button {
     right: -15px;
+} */
+
+.circle-butts {
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+    /* width: 50%; */
+    z-index: 2;
 }
 
-.first-image, .second-image, .third-image {
-    /* position: absolute; */
-    margin: 50px;
-    /* width: 500px; */
-    width: 100%;
-    height: auto;
+.circle {
+    border-radius: 50px;
+    border: none;
+    margin: 5px;
+    padding: 7px;
+    background: rgba(255, 248, 220, 0.6);
 }
+
+.circle.currSlide {
+    background: rgba(196, 190, 164, 0.8);
+}
+
 
 
 /* %%%%%%%%%%%%%%%%% Main content layout  %%%%%%%%%%%%%%%%% */
@@ -205,6 +249,10 @@ h1 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    /* position: relative; */
+    /* height: 600px; */
+    /* width: 50%; */
 }
 
 .first-slide {
@@ -214,14 +262,12 @@ h1 {
     align-items: center;
 }
 
-
-
 .text-under-inner-img, .slide-text {
     display: flex;
     flex-direction: column;
     align-items: center;
     color: cornsilk;
-    margin-bottom: 25px;
+    /* margin-bottom: 25px; */
     width: 100%;
 }
 
