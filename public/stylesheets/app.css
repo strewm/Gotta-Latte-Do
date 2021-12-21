@@ -741,6 +741,24 @@ ul.default-tasks > li:hover {
     justify-content: center; */
 }
 
+.task-pop-up {
+    position: absolute;
+    z-index: 9;
+    top: 15%;
+    left: 50%;
+    background-color: #ecb98d;
+    padding: 21px 30px;
+    margin-left: -125px;
+    margin-top: -50px;
+    width: 250px;
+    border: 2px solid #C7A383;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: -5px 5px 5px rgba(0,0,0,.5);
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
 /* .list-pop {
     position: absolute;
     z-index: 9;
