@@ -1,16 +1,19 @@
 import { fetchTasks } from './fetch-tasks.js';
 import { fetchComments } from './comments.js';
-import { updateOverDueValue, dueDateFormatter, dateFormatter, updateTotalTaskValue, updateTasksCompletedValue, dueDateToYYYMMDD } from './utils.js';
+import { updateOverDueValue, dueDateFormatter, dateFormatter, updateTotalTaskValue, updateTasksCompletedValue, dueDateToYYYMMDD, cookieMonster } from './utils.js';
 import { handleErrors } from './utils.js';
 
 // Edit a task
 export const editTask = async (taskId, body) => {
+    const token = cookieMonster(document.cookie);
     try {
         const res = await fetch(`/tasks/${taskId}`, {
             method: "PUT",
+            credentials: "same-origin",
             body: JSON.stringify(body),
             headers: {
                 "Content-Type": "application/json",
+                "CSRF-Token": token
             }
         })
 
