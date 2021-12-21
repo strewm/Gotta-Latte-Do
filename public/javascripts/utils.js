@@ -66,7 +66,10 @@ export const dueDateFormatter = (task) => {
 
   let selectedDate = task.dueDate;
   selectedDate = new Date(selectedDate);
-  let diff = new Date().getTime() - selectedDate.getTime();
+  let diff = (new Date().getTime()) - selectedDate.getTime();
+  console.log(new Date().getTime())
+  console.log(selectedDate.getTime())
+  console.log(diff)
 
   let selectedDateTime = selectedDate.getTime();
   let actualDateTime = new Date(selectedDateTime)
@@ -79,6 +82,10 @@ export const dueDateFormatter = (task) => {
 
   let due = actualDate;
 
+  if (diff > 0) {
+    return due = `OVERDUE`
+  }
+
   if (due === today) {
     return due = `Today ${getTime(task.dueDate)}`;
   }
@@ -87,9 +94,6 @@ export const dueDateFormatter = (task) => {
     return due = `Tomorrow ${getTime(task.dueDate)}`;
   }
 
-  if (diff > 0) {
-    return due = `OVERDUE`
-  }
 
   return dateFormatter(task.dueDate);
 }
