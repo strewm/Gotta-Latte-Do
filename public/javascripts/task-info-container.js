@@ -256,7 +256,7 @@ export const fetchTask = async (taskId) => {
             <label for='description' class="task-label-headers modal-header">Edit Task</label>
             <input type='text' value='${task.description}' id='description-task-${task.id}' class='description-task modal-input' name='description' required></input>
             <label for='dueDate' class="task-label-headers">Due Date</label>
-            <input type='datetime-local' id='dueDate' class="modal-input" name='dueDate' value='${dueDateToYYYMMDD(dateFormatter(task.dueDate))}' required></input>
+            <input type='datetime-local' id='dueDate' class="modal-input" name='dueDate' value='${dueDateToYYYMMDD(task.dueDate)}' required></input>
             <label for='isCompleted' class="task-label-headers">Completed?</label>
             <input type='checkbox' id='checkbox' name='isCompleted'>
             <button class='editTaskButton button-modal' type='submit'>Edit Task
