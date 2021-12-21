@@ -63,6 +63,12 @@ form.addEventListener("submit", async (e) => {
     isCompleted = false;
   }
 
+  //adding to UTC test
+  const offset = new Date().getTimezoneOffset();
+  const timeOffset = offset / -60
+  console.log(dueDate)
+  console.log(timeOffset)
+
   const body = { description, dueDate, isCompleted, givenTo, title }
   const token = cookieMonster(document.cookie)
   try {

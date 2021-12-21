@@ -163,6 +163,8 @@ router.get('/task/:id(\\d+)', asyncHandler(async(req, res) => {
 // Create a new task for logged in user
 router.post('/', csrfProtection, validateTask, handleValidationErrors, asyncHandler(async(req, res) => {
   const { description, dueDate, isCompleted, givenTo, title } = req.body;
+
+
   const userId = res.locals.userId
   if(givenTo.length) {
     const contactId = await User.findAll({
