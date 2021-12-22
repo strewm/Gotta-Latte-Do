@@ -77,8 +77,15 @@ circleButts.addEventListener('click', (e) => {
     currCircle.classList.remove('currSlide');
     clickedCircle.classList.add('currSlide');
 
-
-    // if (clickedIndex === 0) {
-
-    // }
+    // Will hide arrows when user reaches ends of slides
+    if (clickedIndex === 0) {
+        leftButt.classList.add('hidden');
+        rightButt.classList.remove('hidden');
+    } else if (clickedIndex === slides.length - 1) {
+        leftButt.classList.remove('hidden');
+        rightButt.classList.add('hidden');
+    } else {
+        leftButt.classList.remove('hidden');
+        rightButt.classList.remove('hidden');
+    }
 })

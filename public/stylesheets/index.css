@@ -253,6 +253,9 @@ h1 {
     background: rgba(196, 190, 164, 0.8);
 }
 
+.hidden {
+    color: transparent;
+}
 
 
 /* %%%%%%%%%%%%%%%%% Main content layout  %%%%%%%%%%%%%%%%% */
