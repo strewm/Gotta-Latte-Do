@@ -48,19 +48,24 @@ Try making your own to-do lists at our live site: [Gotta Latte Do](https://gotta
 7. You can use the Demo user or create an account
 
 
-# Primary Components
+# Live
 
 
-## Welcome Page
+### Welcome Page
 
 
 ![Welcome Page](./images/readme/welcomepage.png)
 
-## App Page
+### App Page
+
 
 ![Logged In](./images/readme/frontpage.png)
 
+### Modals
+![New List](./images/readme/listmodal.png)
+![New Contact](./images/readme/contactmodal.png)
 
-## Database
+
+# Database
 
 ![Database Diagram](./images/db-diagram.png)
