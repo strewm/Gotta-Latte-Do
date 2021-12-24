@@ -50,6 +50,20 @@ Try making your own to-do lists at our live site: [Gotta Latte Do](https://gotta
 
 # Live
 
+## Features
+
+Gotta-Latte-Do is a completely dynamic website allowing users to add/edit/delete/get features without ever redirecting from the root after being logged in.
+
+Logged in users can:
+ - Add/Edit/Delete Lists
+ - Add/Edit/Delete Tasks
+ - Add/Edit/Delete Comments on Tasks
+ - Add/Delete Contacts
+ - Give Tasks to Contacts
+ - View Tasks due Today, Tomorrow, Tasks Given to User, Tasks User Gave to Contact, Incomplete, and Completed
+ - Search for Tasks
+
+
 
 ### Welcome Page
 
@@ -64,5 +78,15 @@ Try making your own to-do lists at our live site: [Gotta Latte Do](https://gotta
 ### Modals
 ![New List](./images/readme/listmodal.png)
 ![New Contact](./images/readme/contactmodal.png)
+
+
+
+
+# To-do's/Future features
+
+- Add/Finish Carousel to Welcome/Splash Page
+- User notifications
+- User profiles
+- Keyboard shortcuts
 
 
