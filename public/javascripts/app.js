@@ -1,4 +1,4 @@
-import { handleErrors, addTaskInfoListeners, updateOverDueValue, cookieMonster, updateTaskListContainer } from "./utils.js";
+import { handleErrors, addTaskInfoListeners, updateOverDueValue, cookieMonster, updateTaskListContainer, dueDateFormatter } from "./utils.js";
 import { fetchTasks, fetchAssignTasks, fetchIncompleteTasks, fetchCompletedTasks } from "./fetch-tasks.js";
 import { search } from "./search.js";
 import { fetchContactTasks, addNewContact } from "./contacts.js";
@@ -64,13 +64,15 @@ form.addEventListener("submit", async (e) => {
   }
 
   const body = { description, dueDate, isCompleted, givenTo, title }
-
+  const token = cookieMonster(document.cookie)
   try {
     const res = await fetch("/tasks", {
       method: "POST",
+      credentials: "same-origin",
       body: JSON.stringify(body),
       headers: {
         "Content-Type": "application/json",
+        "CSRF-Token": token
 
       }
     })
@@ -83,12 +85,19 @@ form.addEventListener("submit", async (e) => {
       throw res;
     }
 
+
     form.reset();
 
     // const tasksDue = document.querySelector('.tasksDueValue');
     // tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
+    const taskPopUp = document.querySelector(".task-pop-up-container");
+    taskPopUp.innerHTML= `<div class="task-pop-up">Task <span>'${description}'</span> Added!</div>`;
 
     await fetchTasks();
+
+    setTimeout(() => {
+      taskPopUp.innerHTML= ``;
+    }, 3000);
 
   } catch (err) {
     handleErrors(err)
@@ -202,7 +211,7 @@ deleteContact.addEventListener("click", async (e) => {
 
     await fetchTasks();
     const token = cookieMonster(document.cookie)
-    console.log(token)
+    // console.log(token)
     try {
 
       await fetch(`/contacts/${deleteContactId}`, {
@@ -479,6 +488,24 @@ overdueTasks.addEventListener('click', async (e) => {
   const listName = `
       <h2 class="task-list-header">Overdue Tasks</h2>
 `
-  await updateTaskListContainer(tasks, listName);
+
+  const tasksListContainer = document.querySelector(".task-list");
+
+  const tasksHtml = tasks.map((task) => {
+    if (task.isCompleted === true) {
+      return null;
+    } else if (dueDateFormatter(task) !== 'OVERDUE') {
+      return null;
+    } else if (task.isCompleted === false && dueDateFormatter(task) === 'OVERDUE') {
+      return `<div class='task-info' id=${task.id}>
+    <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
+    <label for=${task.id} id=${task.id} class="task-check-box" style='color: red'>${task.description}</label>
+    </div>
+    `
+    }
+  })
+
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
+
   await addTaskInfoListeners();
 })

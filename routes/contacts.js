@@ -51,7 +51,7 @@ router.post('/', csrfProtection, contactValidator, asyncHandler(async (req, res,
     }
   })
   const validatorErrors = validationResult(req)
-  console.log(validatorErrors)
+  // console.log(validatorErrors)
   if (validatorErrors.isEmpty()) {
     if(userContact.length) {
       const contactCheck = await Contact.findAll({

@@ -64,47 +64,82 @@ export const dueDateFormatter = (task) => {
   today = yyyyToday + '-' + mmToday + '-' + ddToday;
   tomorrow = yyyyTom + '-' + mmTom + '-' + ddTom;
 
-  let selectedDate = task.dueDate.slice(0, 10).replace(/-/g, '/');
+  let selectedDate = task.dueDate;
   selectedDate = new Date(selectedDate);
-  let diff = new Date().getTime() - selectedDate.getTime();
 
-  let due = task.dueDate.slice(0, 10);
+  let selectedDateTime = selectedDate.getTime();
+  let actualDateTime = new Date(selectedDateTime)
 
+  let adjustedDateTime = adjustDateTime(actualDateTime)
 
-  if (due === today) {
-    return due = `Today ${getTime(task.dueDate)}`;
-  }
+  let diff = (new Date().getTime()) - adjustedDateTime.getTime();
 
-  if (due === tomorrow) {
-    return due = `Tomorrow ${getTime(task.dueDate)}`;
-  }
+  let ddactualDate = String(adjustedDateTime.getDate()).padStart(2, '0');
+  let mmactualDate = String(adjustedDateTime.getMonth() + 1).padStart(2, '0');
+  let yyyyactualDate = adjustedDateTime.getFullYear()
+
+  let actualDate = yyyyactualDate + '-' + mmactualDate + '-' + ddactualDate;
+
+  let due = actualDate;
 
   if (diff > 0) {
     return due = `OVERDUE`
   }
 
+  if (due === today) {
+    return due = `Today ${getTime(adjustedDateTime)}`;
+  }
+
+  if (due === tomorrow) {
+    return due = `Tomorrow ${getTime(adjustedDateTime)}`;
+  }
+
+
   return dateFormatter(task.dueDate);
 }
 
+export const adjustDateTime = (actualDateTime) => {
+  let getLocal = new Date();
+  getLocal = getLocal.toString().slice(28, 31);
+  let plusOrMinus;
+  if (getLocal[0] === '-') plusOrMinus = '+'
+  else plusOrMinus = '-';
+  let change = Number(getLocal.slice(1, 3))
+  if (plusOrMinus === '-') {
+    let adjustedDateTime = new Date(actualDateTime.getTime() - (change * 60 * 60 * 1000))
+    return adjustedDateTime
+  } else {
+    let adjustedDateTime = new Date(actualDateTime.getTime() + (change * 60 * 60 * 1000))
+    return adjustedDateTime
+  }
+}
+
+// For the edit form
+export const dueDateToYYYMMDD = (date) => {
+  let selectedDate = new Date(date);
+  let actualDateTime = adjustDateTime(selectedDate)
+
+  let ddactualDate = String(actualDateTime.getDate()).padStart(2, '0');
+  let mmactualDate = String(actualDateTime.getMonth() + 1).padStart(2, '0');
+  let yyyyactualDate = actualDateTime.getFullYear()
+
+  let actualDate = yyyyactualDate + '-' + mmactualDate + '-' + ddactualDate + 'T' + getTime(actualDateTime);
+
+  return actualDate;
+}
 
 // Returns just the time given a date with a time
-const getTime = (dueDate) => {
-  return dateFormatter(dueDate).slice(7);
+const getTime = (adjustedDueDate) => {
+  return adjustedDueDate.toString().slice(16, 21);
 }
 
 // Formats the date and time of a comment to a nice format, e.g. 'Oct 31 01:16'
 export const dateFormatter = (date) => {
-  let formattedDate = date.slice(0, 10).replace(/-/g, '/');
-  formattedDate = new Date(date);
-  formattedDate = formattedDate.toDateString();
-  formattedDate = formattedDate.slice(4, 10);
+  let actualDate = new Date(date);
+  let actualDateTime = adjustDateTime(actualDate)
 
-  let updatedAtTime = date.slice(11, 16);
-
-  return `${formattedDate} ${updatedAtTime}`
-
+  return `${actualDateTime.toDateString().slice(4,10)} ${getTime(actualDateTime)}`
 }
-
 
 // Adds all of the event listeners back to each task in the current list of taskscontainer.
 // Should be called any time the list of tasks is updated (e.g. when a task is added,
@@ -249,7 +284,30 @@ export const updateOverDueValue = async () => {
   const overDueValue = document.querySelector('#tasksOverdueValue');
   const overDueRes = await fetch('/lists/overdue');
   const { tasks } = await overDueRes.json();
-  overDueValue.innerHTML = `${tasks.length}<div id="tasksOverdue">Overdue</div>`;
+
+  let numOverdueTasks;
+  let numOverdueGivenToMe;
+  if (tasks) {
+    let actualOverdue = tasks.filter((task) => {
+      return dueDateFormatter(task) === 'OVERDUE';
+    })
+    numOverdueTasks = actualOverdue.length;
+  } else {
+    numOverdueTasks = 0;
+  }
+
+
+  const overDueGivenRes = await fetch('/lists/overdue/given-to-me');
+  const { overdueGivenToMe } = await overDueGivenRes.json();
+  if (overdueGivenToMe) {
+    let actualOverdueGivenToMe = overdueGivenToMe.filter((task) => {
+      return dueDateFormatter(task) === 'OVERDUE';
+    })
+    numOverdueGivenToMe = actualOverdueGivenToMe.length;
+  } else {
+    numOverdueGivenToMe = 0;
+  }
+  overDueValue.innerHTML = `${numOverdueTasks + numOverdueGivenToMe}<div id="tasksOverdue">Overdue</div>`;
 }
 
 // Updates the value for "Tasks" found in upper right corner
@@ -311,20 +369,26 @@ export const updateTasksCompletedValue = async () => {
 export const updateTaskListContainer = async (tasks, listName) => {
   const tasksListContainer = document.querySelector(".task-list");
 
-  const tasksHtml = tasks.map(({ id, description, isCompleted }) => {
-    if (isCompleted === true) {
+  const tasksHtml = tasks.map((task) => {
+    if (task.isCompleted === true) {
       return `
-        <div class='task-info' id=${id}>
-            <input type="checkbox" class="task-check-box" id=${id} name=${id} checked>
-            <label for=${id} id=${id} class="task-check-box">${description}</label>
-        </div>
-        `
-    } else {
-      return `<div class='task-info' id=${id}>
-                <input type="checkbox" class="task-check-box" id=${id} name=${id}>
-                <label for=${id} id=${id} class="task-check-box">${description}</label>
-            </div>
-        `
+      <div class='task-info' id=${task.id}>
+      <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id} checked>
+      <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
+      </div>
+      `
+    } else if (task.isCompleted === false && dueDateFormatter(task) === 'OVERDUE') {
+      return `<div class='task-info' id=${task.id}>
+      <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
+      <label for=${task.id} id=${task.id} class="task-check-box" style='color: red'>${task.description}</label>
+      </div>
+      `
+    } else if (task.isCompleted === false) {
+      return `<div class='task-info' id=${task.id}>
+      <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
+      <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
+      </div>
+      `
     }
   })
   tasksListContainer.innerHTML = listName + tasksHtml.join("");

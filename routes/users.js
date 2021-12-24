@@ -103,6 +103,18 @@ router.post(
       const hashedPassword = await bcrypt.hash(password, 10);
       user.hashedPassword = hashedPassword;
       await user.save();
+
+      const defaultList = await db.List.bulkCreate([
+        {
+        userId: user.id,
+        title: 'Personal'
+      }, {
+        userId: user.id,
+        title: 'Work'
+      },
+    ])
+
+
       loginUser(req, res, user);
       res.redirect("/");
     } else {

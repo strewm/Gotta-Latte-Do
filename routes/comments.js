@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
 const db = require('../db/models');
-const { asyncHandler, handleValidationErrors } = require('../utils');
+const { asyncHandler, handleValidationErrors, csrfProtection } = require('../utils');
 const { Task, User, Comment, Contact } = db;
 
 
@@ -31,6 +31,7 @@ router.get('/tasks/:id(\\d+)/comments', asyncHandler(async (req, res) => {
 // Posts a new comment
 router.post(
     '/tasks/:id(\\d+)/comments',
+    csrfProtection,
     validateComment,
     handleValidationErrors,
     asyncHandler(async (req, res) => {
@@ -50,6 +51,7 @@ router.post(
 // Updates a comment
 router.put(
     '/comments/:id(\\d+)',
+    csrfProtection,
     validateComment,
     handleValidationErrors,
     asyncHandler(async (req, res) => {
@@ -68,6 +70,7 @@ router.put(
 // Deletes a comment
 router.delete(
     '/comments/:id(\\d+)',
+    csrfProtection,
     asyncHandler(async (req, res) => {
         const comment = await Comment.findByPk(req.params.id);
         await comment.destroy();

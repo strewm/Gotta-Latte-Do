@@ -1,16 +1,19 @@
 import { fetchTasks } from './fetch-tasks.js';
 import { fetchComments } from './comments.js';
-import { updateOverDueValue, dueDateFormatter, dateFormatter, updateTotalTaskValue, updateTasksCompletedValue } from './utils.js';
+import { updateOverDueValue, dueDateFormatter, dateFormatter, updateTotalTaskValue, updateTasksCompletedValue, dueDateToYYYMMDD, cookieMonster } from './utils.js';
 import { handleErrors } from './utils.js';
 
 // Edit a task
 export const editTask = async (taskId, body) => {
+    const token = cookieMonster(document.cookie);
     try {
         const res = await fetch(`/tasks/${taskId}`, {
             method: "PUT",
+            credentials: "same-origin",
             body: JSON.stringify(body),
             headers: {
                 "Content-Type": "application/json",
+                "CSRF-Token": token
             }
         })
 
@@ -33,9 +36,15 @@ export const editTask = async (taskId, body) => {
 
 // Delete a task and updates task container list, as well as the overdue task value on the page
 export const deleteTask = async (taskId) => {
+    const token = cookieMonster(document.cookie)
     try {
         const res = await fetch(`/tasks/${taskId}`, {
             method: "DELETE",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "CSRF-Token": token
+              }
         })
 
         if (res.status === 401) {
@@ -65,6 +74,24 @@ export const fetchTask = async (taskId) => {
 
     const { task } = await res.json();
 
+    let givenToUserText = '';
+    if (task.givenTo) {
+        const givenToUserRes = await fetch(`/tasks/${task.givenTo}/given-to`);
+        const { givenToUser } = await givenToUserRes.json();
+        givenToUserText = givenToUser.username;
+    }
+
+    const currUser = await fetch('/users/current');
+    const { user } = await currUser.json();
+
+
+    let givenByUserText = '';
+    if (user.id !== task.userId) {
+        const givenToUserRes = await fetch(`/tasks/${task.userId}/given-to`);
+        const { givenToUser } = await givenToUserRes.json();
+        givenByUserText = givenToUser.username;
+    }
+
     const due = dueDateFormatter(task);
 
     // Return checked checkbox if the task is completed
@@ -74,6 +101,8 @@ export const fetchTask = async (taskId) => {
     } else {
         checked = "off";
     }
+
+
 
     // Task container contains Edit/Delete buttons, task message, task due date, task completion status, and a comment container
     const taskInfo = document.querySelector('.fiona');
@@ -99,6 +128,8 @@ export const fetchTask = async (taskId) => {
                         <input type="checkbox" class="completedTask completed-task-${task.id}" name="completedTask">
                     </div>
                 </div>
+                <div class='given-to-container' style='display: none' hidden>
+                </div>
             </div>
 
             <div class='comment-container-${task.id}'>
@@ -115,6 +146,28 @@ export const fetchTask = async (taskId) => {
     `
 
     taskInfo.innerHTML = taskHtml;
+
+    if (givenToUserText) {
+        const givenToUserDiv = document.querySelector('.given-to-container');
+        givenToUserDiv.innerHTML = `
+            <p class='given-to-label'>Given To </p>
+            <p class='given-to-username'>${givenToUserText}</p>
+        `
+        givenToUserDiv.style.display = 'flex';
+        givenToUserDiv.hidden = false;
+    }
+
+    if (givenByUserText) {
+        const givenToUserDiv = document.querySelector('.given-to-container');
+        givenToUserDiv.innerHTML = `
+            <p class='given-to-label'>Given By </p>
+            <p class='given-to-username'>${givenByUserText}</p>
+        `
+        givenToUserDiv.style.display = 'flex';
+        givenToUserDiv.hidden = false;
+    }
+
+
     taskInfo.hidden = false;
 
     // If the task is overdue, style due date section to reflect overdue status
@@ -137,12 +190,15 @@ export const fetchTask = async (taskId) => {
     }
 
     check.addEventListener('change', async (e) => {
+        const token = cookieMonster(document.cookie);
         if (check.checked) {
             await fetch(`/tasks/${task.id}`, {
                 method: "PATCH",
+                credentials: "same-origin",
                 body: JSON.stringify({ "isCompleted": "true" }),
                 headers: {
                     "Content-Type": "application/json",
+                    "CSRF-Token": token
                 }
             })
             await updateOverDueValue();
@@ -152,9 +208,11 @@ export const fetchTask = async (taskId) => {
         } else {
             const res = await fetch(`/tasks/${task.id}`, {
                 method: "PATCH",
+                credentials: "same-origin",
                 body: JSON.stringify({ "isCompleted": "false" }),
                 headers: {
                     "Content-Type": "application/json",
+                    "CSRF-Token": token
                 }
             })
             await updateOverDueValue();
@@ -177,6 +235,7 @@ export const fetchTask = async (taskId) => {
         taskInfo.hidden = true;
         taskInfo.classList.remove('task-information-animation')
 
+
     })
 
     // Deleting a task hides the container
@@ -197,7 +256,7 @@ export const fetchTask = async (taskId) => {
             <label for='description' class="task-label-headers modal-header">Edit Task</label>
             <input type='text' value='${task.description}' id='description-task-${task.id}' class='description-task modal-input' name='description' required></input>
             <label for='dueDate' class="task-label-headers">Due Date</label>
-            <input type='datetime-local' id='dueDate' class="modal-input" name='dueDate' value='${task.dueDate.slice(0, 16)}' required></input>
+            <input type='datetime-local' id='dueDate' class="modal-input" name='dueDate' value='${dueDateToYYYMMDD(task.dueDate)}' required></input>
             <label for='isCompleted' class="task-label-headers">Completed?</label>
             <input type='checkbox' id='checkbox' name='isCompleted'>
             <button class='editTaskButton button-modal' type='submit'>Edit Task
