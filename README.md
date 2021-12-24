@@ -90,3 +90,13 @@ Logged in users can:
 - Keyboard shortcuts
 
 
+# Technical Implementation
+
+One of our first challenges to figure out was associating User.id's to themselves so that Users can have Contacts
+
+![Self Join](./images/readme/userSelfJoin.png)
+![Self Join 2](./images/readme/selfjoin2.png)
+
+In a similar vain, having lists created also add to a join table for Lists with the proper Task and List Id's
+
+![TaskList](./images/readme/taskList.png)
