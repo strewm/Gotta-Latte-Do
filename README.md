@@ -66,6 +66,3 @@ Try making your own to-do lists at our live site: [Gotta Latte Do](https://gotta
 ![New Contact](./images/readme/contactmodal.png)
 
 
-# Database
-
-![Database Diagram](./images/db-diagram.png)
