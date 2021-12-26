@@ -9,28 +9,23 @@ append head
 block content
   div.mainPage
     nav.navbar
-      .navbar-container
+      div.navbar-container
         a.nav-logo(href="/")
-          //- img.nav-logo-first(src='../images/favicon.png')
           img.nav-logo-img(src='../images/gottalattedologo_coffee.png')
         ul.navlist
-          li.sublist Tour
-          li.sublist What's New
-          li.sublist Upgrade
-          li.sublist Help
           li.mainlist
             a.btn-login(href='/users/login') Log in
           li.mainlist
             a.btn(href='/users/signup') Sign up for free
+    div.main-header
+        h1 A To-Do App Made Espresso-ly For You
+        a.signup-btn(href='/users/signup') Sign Up Free
     main.main
       div.hero-image
         img.inner-image(src='../images/maybe-logo-3.png')
         div.text-under-inner-img
           p.hero-header Gotta Latte Do? We'll keep you grounded.
           p.hero-p You'll never say 'affogato do that!' again
-      header.main-header
-          h1 A To-Do App Made Espresso-ly For You
-          a.hero-btn(href='/users/signup') Sign Up Free
     div.footer
       small.names
         ul.creators
