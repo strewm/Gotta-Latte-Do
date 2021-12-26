@@ -5,7 +5,7 @@ a {
 
 .mainPage {
     display: grid;
-    grid-template-rows: 0.5fr 8fr 1fr;
+    grid-template-rows: 0.5fr 8fr 1.5fr;
     grid-template-areas:
     "header"
     "main"
@@ -15,6 +15,8 @@ a {
 
     font-family: MuseoSansRounded, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+
 
 /* %%%%%%%%%%%%%%%%% Navbar (header) layout  %%%%%%%%%%%%%%%%% */
 .navbar {
@@ -32,19 +34,14 @@ a {
 }
 
 .navbar-container {
-    width: 890px;
+    /* width: 890px; */
+    width: 70%;
+    max-width: 975px;
     margin-right: auto;
     margin-left: auto;
     display: flex;
     justify-content: space-between;
 }
-
-/* .nav-logo-first {
-    width: 50x;
-    height: auto;
-    margin: 15px;
-    margin-left: 50px;
-} */
 
 .nav-logo-img {
     width: 150px;
@@ -110,6 +107,40 @@ li {
 
 
 
+/* %%%%%%%%%%%%%%%%% Main header content layout  %%%%%%%%%%%%%%%%% */
+.main-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: cornsilk;
+    font-size: 35px;
+    margin: 50px 0 35px 0;
+}
+
+.hero-btn {
+    border: 1px solid #b2db83;
+    padding: 15px 25px 15px 25px;
+    border-radius: 5px;
+    background-color: #b2db83;
+    color: cornsilk;
+    font-weight: bold;
+}
+
+.hero-btn:hover {
+    border: 1px solid #a6cc7a;
+    background-color: #a6cc7a;
+}
+
+.hero-btn:active {
+    border: 1px solid #97b96f;
+    box-shadow: inset 0 0 15px #97b96f;
+}
+
+
+
 /* %%%%%%%%%%%%%%%%% Main content layout  %%%%%%%%%%%%%%%%% */
 .main {
     grid-area: main;
@@ -121,9 +152,15 @@ li {
     justify-content: center;
 }
 
+/* .hero-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+} */
+
 .inner-image {
-    margin: 65px 50px 50px 50px;
-    width: 500px;
+    margin: 50px;
     height: auto;
     -webkit-animation: ease-in 5s;
     animation: fadein 3s;
@@ -163,8 +200,9 @@ li {
 
 .hero-container {
     width: 100%;
-    display: grid;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .swiper {
@@ -240,36 +278,6 @@ li {
     background-color: #fff;
 }
 
-.main-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-h1 {
-    color: cornsilk;
-    font-size: 40px;
-}
-
-.hero-btn {
-    border: 1px solid #b2db83;
-    padding: 15px 25px 15px 25px;
-    border-radius: 5px;
-    background-color: #b2db83;
-    color: cornsilk;
-    font-weight: bold;
-}
-
-.hero-btn:hover {
-    border: 1px solid #a6cc7a;
-    background-color: #a6cc7a;
-}
-
-.hero-btn:active {
-    border: 1px solid #97b96f;
-    box-shadow: inset 0 0 15px #97b96f;
-}
-
 
 /* %%%%%%%%%%%%%%%%% Footer layout  %%%%%%%%%%%%%%%%% */
 .footer {
@@ -289,6 +297,7 @@ h1 {
     display: flex;
     justify-content: space-around;
     width: 80vh;
+    margin: 5px;
 }
 
 .creator {
@@ -303,18 +312,31 @@ h1 {
 
 .aboutmelink {
     font-size: 0.75rem;
+    padding: 2px;
 }
 
 .aboutmelink:hover {
     background-color: rgba(188, 194, 201, 0.466);
+    border-radius: 5px;
+    padding: 2px;
 }
 
 .copyright {
     display: flex;
-
+    margin: 5px;
 }
 
+.copyright-year, .copyright-year a {
+    font-size: 14px;
+}
 
+.copyright-year a:hover {
+    color: yellowgreen;
+}
+
+.copyright-year a:active {
+    color: rgb(123, 165, 39);
+}
 
 
 
@@ -326,27 +348,19 @@ When page reaches 815px in width:
     - change text font sizes
 */
 @media (max-width: 815px) {
-    .sublist {
-        display: none;
-    }
-}
-
-@media (max-width: 700px) {
     .inner-image {
-        margin: 50px 78px 35px 78px;
-        width: 400px;
-        height: auto;
+        margin: 35px;
     }
 
     .hero-header {
         margin: 5px;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: bold;
     }
 
     .hero-p {
         margin: 5px;
-        font-size: 13px;
+        font-size: 14px;
     }
 
     h1 {
@@ -355,40 +369,39 @@ When page reaches 815px in width:
     }
 }
 
-@media (max-width: 400px), screen and (orientation: portrait) {
-    .mainPage {
-        display: grid;
-        grid-template-rows: 2fr 10fr 2fr;
-        grid-template-areas:
-        "header"
-        "main"
-        "footer";
-    }
-
-    .sublist {
-        display: none;
-    }
-
-
-    .header {
-        font-size: 3rem;
-    }
-
+@media (max-width: 400px) {
     .inner-image {
-        margin: 50px 78px 35px 78px;
-        width: auto;
-        height: auto;
+        margin: 25px;
     }
 
+    .hero-header {
+        margin: 5px;
+        font-size: 14px;
+        font-weight: bold;
+    }
 
+    .hero-p {
+        margin: 5px;
+        font-size: 12px;
+    }
 
     h1 {
         color: cornsilk;
+        font-size: 25px;
+    }
+
+    .hero-btn {
+        border: 1px solid #b2db83;
+        padding: 10.5px 17.5px 10.5px 17.5px;
+        border-radius: 5px;
+        background-color: #b2db83;
+        color: cornsilk;
         font-size: 40px;
+        font-size: 13px;
+        font-weight: bold;
     }
 
     .navbar-container {
         width: 75%
     }
-
 }
