@@ -157,7 +157,6 @@ h1 {
 
 
 
-
 /* %%%%%%%%%%%%%%%%% Main content layout  %%%%%%%%%%%%%%%%% */
 .main {
     grid-area: main;
@@ -171,7 +170,7 @@ h1 {
     /* height: 100%; */
 }
 
-.first-image, .second-image, .third-image {
+.first-slide {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -193,6 +192,7 @@ h1 {
     flex-direction: column;
     align-items: center;
     color: cornsilk;
+    margin: 10px;
 }
 
 .slide-header {
