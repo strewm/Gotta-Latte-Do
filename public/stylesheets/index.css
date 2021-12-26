@@ -211,6 +211,7 @@ h1 {
     display: flex;
     justify-content: space-around;
     width: 80vh;
+    margin: 5px;
 }
 
 .creator {
@@ -233,7 +234,11 @@ h1 {
 
 .copyright {
     display: flex;
+    margin: 5px;
+}
 
+.copyright-year, .copyright-year a {
+    font-size: 14px;
 }
 
 
@@ -314,5 +319,4 @@ When page reaches 700px in width:
     .navbar-container {
         width: 70%
     }
-
 }
