@@ -125,6 +125,17 @@ li {
     margin: 65px 50px 50px 50px;
     width: 500px;
     height: auto;
+    -webkit-animation: ease-in 5s;
+    animation: fadein 3s;
+}
+
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
 }
 
 .text-under-inner-img, .hero-p {
@@ -138,18 +149,85 @@ li {
     margin: 5px;
     font-size: 20px;
     font-weight: bold;
+    -webkit-animation: ease-in 5s;
+    animation: fadein 3s;
 }
 
 .hero-p {
     margin: 5px;
     font-size: 18px;
+    -webkit-animation: ease-in 5s;
+    animation: fadein 3s;
+    transition: ease 3s;
+}
+
+.hero-container {
+    width: 100%;
+    display: grid;
+    justify-content: center;
+}
+
+.swiper {
+    margin-top: 25px;
+}
+
+.bullet-1 {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    margin: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+    opacity: 1;
+    display: inline-block;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.bullet-2 {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    margin: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+    opacity: 1;
+    display: inline-block;
+    border-radius: 50%;
+    cursor: pointer;
+
+}
+
+.bullet-3 {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    margin: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+    opacity: 1;
+    display: inline-block;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.bullet-4 {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    margin: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+    opacity: 1;
+    display: inline-block;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.bullet-active {
+    background-color: #fff;
 }
 
 .main-header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 30px;
 }
 
 h1 {
