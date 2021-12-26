@@ -20,12 +20,29 @@ block content
     div.main-header
       h1 A To-Do App Made Espresso-ly For You
       a.signup-btn(href='/users/signup') Sign Up Free
-    main.main
-      div.first-slide
-        img.first-image(src='../images/maybe-logo-3.png')
-        div.text-under-inner-img
-          p.slide-header Gotta Latte Do? We'll keep you grounded.
-          p.slide-text You'll never say 'affogato do that!' again
+    main.main-carousel
+      div.slides-container
+          div.slides(style="display:none")
+            img.first-image(src='../images/1-maybe-logo.png')
+            div.text-under-inner-img
+              p.slide-header Gotta Latte Do? We'll keep you grounded.
+              p.slide-text You'll never say 'affogato do that!' again
+          div.slides(style="display:none")
+            img.second-image(src='../images/2-coffee-break.png')
+            div.text-under-inner-img
+              div.slide-header Bean busy? Make a to-brew list.
+              div.slide-text Never be bitter about missing a roast again
+          div.slides(style="display:none")
+            img.third-image(src='../images/3-coffee-network.png')
+            div.text-under-inner-img
+              div.slide-header Tired of notepads? You'll love our brew-tiful design.
+              div.slide-text We're meant to bean together!
+          a.left-button(onclick="changeSlide(-1)") &#8610;
+          a.right-button(onclick="changeSlide(1)") &#8611;
+      div.circle-butts
+        span.circle(onclick="currSlide(1)")
+        span.circle(onclick="currSlide(2)")
+        span.circle(onclick="currSlide(3)")
     div.footer
       small.names
         ul.creators

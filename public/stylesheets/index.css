@@ -1,4 +1,8 @@
 /* %%%%%%%%%%%%%%%%% Main page grid layout  %%%%%%%%%%%%%%%%% */
+* {
+    box-sizing: border-box;
+}
+
 a {
     text-decoration: none;
 }
@@ -152,13 +156,7 @@ h1 {
 
 
 /* %%%%%%%%%%%%%%%%% Main carousel layout  %%%%%%%%%%%%%%%%% */
-
-
-
-
-
-/* %%%%%%%%%%%%%%%%% Main content layout  %%%%%%%%%%%%%%%%% */
-.main {
+.main-carousel {
     grid-area: main;
     background-color: #E0A979;
 
@@ -170,16 +168,78 @@ h1 {
     /* height: 100%; */
 }
 
-.first-slide {
+.slides-container {
+    max-width: 800px;
+    position: relative;
+}
+
+/* Hiding slides initially */
+.slides {
+    display: none;
+
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+}
+
+/* .first-slide {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     /* width: 60%; */
     /* height: 100%; */
-    max-width: 800px;
+/* } */
+
+/* Left + right buttons */
+.left-button, .right-button {
+    /* position: absolute; */
+    top: 50%;
+    width: auto;
+    padding: 15px;
+    margin-top: -50px;
+    font-size: 30px;
+    color: #FFF8DC;
+
+    user-select: none;
+    cursor: pointer;
 }
 
+/* .right-button {
+    right: 0;
+} */
+
+.left-button:hover, .right-button:hover {
+    font-size: 35px;
+}
+
+/* Circle buttons under carousel */
+.circle-butts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.circle {
+    border-radius: 50px;
+    border: none;
+    margin: 5px;
+    padding: 7px;
+    background: rgba(255, 248, 220, 0.6);
+
+    transition: background 0.2s ease;
+    cursor: pointer;
+}
+
+.circle:hover {
+    background: rgba(211, 205, 176, 0.8);
+}
+
+
+
+/* %%%%%%%%%%%%%%%%% Slide layout  %%%%%%%%%%%%%%%%% */
 .first-image {
     margin: 50px;
     /* width: 500px; */
@@ -285,7 +345,7 @@ When page reaches 700px in width:
         "footer";
     }
 
-    .first-image {
+    .first-image, .second-image, .third-image {
         margin: 35px;
         width: 400px;
         height: auto;
@@ -309,7 +369,7 @@ When page reaches 700px in width:
 }
 
 @media (max-width: 400px) {
-    .first-image {
+    .first-image, .second-image, .third-image {
         margin: 25px;
         width: 300px;
         height: auto;
