@@ -1,5 +1,10 @@
-window.addEventListener("load", (event)=>{
+const swipeOne = document.querySelector(".swipe-one")
+const swipeTwo = document.querySelector(".swipe-two")
+const swipeThree = document.querySelector(".swipe-three")
 
+window.addEventListener("load", (event)=>{
+    swipeTwo.classList.add('swipe-hide')
+    swipeThree.classList.add('swipe-hide')
 })
 
 
@@ -7,9 +12,6 @@ const swiper = document.querySelector(".swiper")
 
 swiper.addEventListener("click", e => {
     e.stopPropagation
-    const heroImg = document.querySelector(".inner-image")
-    const heroTitle = document.querySelector(".hero-header")
-    const heroSub = document.querySelector(".hero-p")
 
     const bulletOne = document.querySelector(".bullet-1")
     const bulletTwo = document.querySelector(".bullet-2")
@@ -39,9 +41,9 @@ swiper.addEventListener("click", e => {
         bulletTwo.classList.remove('bullet-active')
         bulletThree.classList.remove('bullet-active')
 
-        heroImg.src = `../images/maybe-logo-3.png`
-        heroTitle.innerText = `Gotta Latte Do? We'll keep you grounded.`
-        heroSub.innerText = `You'll never say 'affogato do that!' again`
+        swipeOne.classList.remove('swipe-hide')
+        swipeTwo.classList.add('swipe-hide')
+        swipeThree.classList.add('swipe-hide')
     }
 
     if (counter === 2) {
@@ -49,9 +51,9 @@ swiper.addEventListener("click", e => {
         bulletOne.classList.remove('bullet-active')
         bulletThree.classList.remove('bullet-active')
 
-        heroImg.src = `../images/2-coffee-break.png`
-        heroTitle.innerText = `Bean busy? Make a to-brew list.`
-        heroSub.innerText = `Never be bitter about missing a roast again`
+        swipeOne.classList.add('swipe-hide')
+        swipeTwo.classList.remove('swipe-hide')
+        swipeThree.classList.add('swipe-hide')
     }
 
     if (counter === 3) {
@@ -59,9 +61,9 @@ swiper.addEventListener("click", e => {
         bulletTwo.classList.remove('bullet-active')
         bulletOne.classList.remove('bullet-active')
 
-        heroImg.src = `../images/3-coffee-network.png`
-        heroTitle.innerText = `Tired of notepads? You'll love our brew-tiful design.`
-        heroSub.innerText = `We're meant to bean together!`
+        swipeOne.classList.add('swipe-hide')
+        swipeTwo.classList.add('swipe-hide')
+        swipeThree.classList.remove('swipe-hide')
     }
 
 })

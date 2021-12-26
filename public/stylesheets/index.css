@@ -220,6 +220,22 @@ li {
     cursor: pointer;
 }
 
+.swipe-one {
+
+}
+
+.swipe-two {
+
+}
+
+.swipe-three {
+
+}
+
+.swipe-hide {
+    display: none;
+}
+
 .bullet-active {
     background-color: #fff;
 }
