@@ -6,7 +6,7 @@ window.addEventListener("load", (event)=>{
 const swiper = document.querySelector(".swiper")
 
 swiper.addEventListener("click", e => {
-
+    e.stopPropagation
     const heroImg = document.querySelector(".inner-image")
     const heroTitle = document.querySelector(".hero-header")
     const heroSub = document.querySelector(".hero-p")
@@ -22,12 +22,16 @@ swiper.addEventListener("click", e => {
         counter = 1
     }
 
-    if(clicked === "bullet-2") {
+    else if(clicked === "bullet-2") {
         counter = 2
     }
 
-    if (clicked === "bullet-3") {
+    else if (clicked === "bullet-3") {
         counter = 3
+    }
+
+    else {
+        return
     }
 
     if (counter === 1) {
