@@ -67,12 +67,6 @@ a {
     color: #FAE5CAcc;
 }
 
-#settings {
-    padding: 0;
-    width: auto;
-}
-
-
 #settings:hover {
     cursor: pointer;
 }
@@ -85,10 +79,7 @@ a {
 
 #searchBar, #settings {
     background-color: #C7A383;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 4px 10px;
     border-radius: 10px;
     border: none;
     align-items: center;
@@ -243,6 +234,7 @@ a {
 }
 
 .createTaskButton {
+    padding: 7px;
     margin-left: 2px;
     background-color: #E0A979;
     border: none;
