@@ -5,7 +5,7 @@ a {
 
 .mainPage {
     display: grid;
-    grid-template-rows: 0.5fr 8fr 1fr;
+    grid-template-rows: 0.5fr 8fr 1.5fr;
     grid-template-areas:
     "header"
     "main"
@@ -15,6 +15,8 @@ a {
 
     font-family: MuseoSansRounded, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+
 
 /* %%%%%%%%%%%%%%%%% Navbar (header) layout  %%%%%%%%%%%%%%%%% */
 .navbar {
@@ -32,7 +34,9 @@ a {
 }
 
 .navbar-container {
-    width: 890px;
+    /* width: 890px; */
+    width: 70%;
+    max-width: 975px;
     margin-right: auto;
     margin-left: auto;
     display: flex;
@@ -49,13 +53,11 @@ a {
 .nav-logo-img {
     width: 150px;
     height: auto;
-
 }
 
 .navlist {
     display: flex;
     align-items: center;
-
 }
 
 /* Navbar items */
@@ -119,11 +121,24 @@ li {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    /* justify-content: space-between; */
+    /* height: 100%; */
+}
+
+.hero-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* width: 60%; */
+    /* height: 100%; */
+    max-width: 800px;
 }
 
 .inner-image {
-    margin: 65px 50px 50px 50px;
-    width: 500px;
+    margin: 50px;
+    /* width: 500px; */
+    width: 70%;
     height: auto;
 }
 
@@ -177,6 +192,7 @@ h1 {
 }
 
 
+
 /* %%%%%%%%%%%%%%%%% Footer layout  %%%%%%%%%%%%%%%%% */
 .footer {
     grid-area: footer;
@@ -222,24 +238,25 @@ h1 {
 
 
 
-
-
 /* %%%%%%%%%%%%%%%%% MEDIA QUERIES  %%%%%%%%%%%%%%%%% */
 /*
-When page reaches 815px in width:
+When page reaches 700px in width:
     - hide the sublist items in navbar
     - change size of main logo image
     - change text font sizes
 */
 @media (max-width: 815px) {
-    .sublist {
-        display: none;
+    .mainPage {
+        display: grid;
+        grid-template-rows: 2fr 7fr 2fr;
+        grid-template-areas:
+        "header"
+        "main"
+        "footer";
     }
-}
 
-@media (max-width: 700px) {
     .inner-image {
-        margin: 50px 78px 35px 78px;
+        margin: 35px;
         width: 400px;
         height: auto;
     }
@@ -261,40 +278,41 @@ When page reaches 815px in width:
     }
 }
 
-@media (max-width: 400px), screen and (orientation: portrait) {
-    .mainPage {
-        display: grid;
-        grid-template-rows: 2fr 10fr 2fr;
-        grid-template-areas:
-        "header"
-        "main"
-        "footer";
-    }
-
-    .sublist {
-        display: none;
-    }
-
-
-    .header {
-        font-size: 3rem;
-    }
-
+@media (max-width: 400px) {
     .inner-image {
-        margin: 50px 78px 35px 78px;
-        width: auto;
+        margin: 25px;
+        width: 300px;
         height: auto;
     }
 
+    .hero-header {
+        margin: 5px;
+        font-size: 13px;
+        font-weight: bold;
+    }
 
+    .hero-p {
+        margin: 5px;
+        font-size: 11px;
+    }
 
     h1 {
         color: cornsilk;
-        font-size: 40px;
+        font-size: 20px;
+    }
+
+    .hero-btn {
+        border: 1px solid #b2db83;
+        padding: 10.5px 17.5px 10.5px 17.5px;
+        border-radius: 5px;
+        background-color: #b2db83;
+        color: cornsilk;
+        font-size: 13px;
+        font-weight: bold;
     }
 
     .navbar-container {
-        width: 75%
+        width: 70%
     }
 
 }
