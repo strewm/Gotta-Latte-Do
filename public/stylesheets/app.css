@@ -1148,7 +1148,7 @@ list-add-edited {
     z-index: 2;
     width: fit-content;
     min-width: 215px;
-    min-height: 230px;
+    min-height: 123px;
     margin-right: 2rem;
 }
 
@@ -1162,9 +1162,10 @@ list-add-edited {
 
 .settingHeaderGroup {
     display: flex;
-    flex-direction: row;
     align-items: center;
     margin: 5px;
+    padding-bottom: 7px;
+    border-bottom: thin dotted rgb(168, 132, 86);
 }
 
 .settingUserInfo {
@@ -1172,10 +1173,10 @@ list-add-edited {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    margin: 7px;
+    margin: 3px 7px 3px 7px;
 }
 
-.settingHeader, .settingListGroup, #signOut {
+.settingHeader, #signOut {
     list-style-type: none;
     color: #8A715B;
     background-color: #FAECDA;
@@ -1190,31 +1191,17 @@ list-add-edited {
     font-size: 15px;
 }
 
-.settingListGroup {
-    padding: 5px;
-    margin: 6px 6px 0 6px;
-}
-
-.settingList {
-    text-decoration: none;
-    font-size: 13px;
-    margin: 5px 0px;
-}
-
-
-.sLGray {
-    color: #a3a2a2;
-    cursor: not-allowed;
+.signOutContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
 }
 
 #signOut {
     border: none;
     font-size: 13px;
-    padding: 0;
-}
-
-.sLSO:hover {
-    color: yellowgreen;
+    padding: 10px 10px 3px 10px;
 }
 
 #signOut:hover {
