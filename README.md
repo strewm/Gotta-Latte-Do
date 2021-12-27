@@ -50,7 +50,7 @@ Try making your own to-do lists at our live site: [Gotta Latte Do](https://gotta
 
 # Live
 
-## Features
+### Features
 
 Gotta-Latte-Do is a completely dynamic website that allows logged-in users to add/edit/delete/get features from the home page without ever redirecting from the root.
 
@@ -81,12 +81,12 @@ Logged in users can:
 
 
 
-# To-do's/Future features
+# Future Features
 
 - User notifications when:
   - A task is coming due
-  - Another user adds you as a contact
-  - Another user assigns you a task
+  - Another user adds user as a contact
+  - Another user assigns user a task
 - User profiles
 - Keyboard shortcuts
 
@@ -96,6 +96,12 @@ Logged in users can:
 # Technical Implementation
 
  - One of our first challenges was associating User IDs to themselves so that Users can have Contacts:
+ ```javascript
+   User.associate = function(models) {
+    // associations can be defined here
+    User.belongsToMany(models.User, {foreignKey: 'userId', through: 'Contact', otherKey: 'contactId', as: 'contacts'})
+    User.belongsToMany(models.User, {foreignKey: 'contactId', through: 'Contact', otherKey: 'userId', as: 'contactees'})
+ ```
 
 ![Self Join](./images/readme/userSelfJoin.png)
 ![Self Join 2](./images/readme/selfjoin2.png)
