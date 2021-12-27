@@ -1,5 +1,5 @@
 import { fetchUser } from './user.js';
-import { dateFormatter, dueDateFormatter } from './utils.js';
+import { dateFormatter } from './utils.js';
 import { handleErrors } from './utils.js';
 import { cookieMonster } from './utils.js';
 

@@ -1,5 +1,5 @@
-import { handleErrors, addTaskInfoListeners, updateOverDueValue, cookieMonster, updateTaskListContainer, dueDateFormatter } from "./utils.js";
-import { fetchTasks, fetchAssignTasks, fetchIncompleteTasks, fetchCompletedTasks } from "./fetch-tasks.js";
+import { handleErrors, addTaskInfoListeners, cookieMonster, updateTaskListContainer, dueDateFormatter } from "./utils.js";
+import { fetchTasks, fetchIncompleteTasks, fetchCompletedTasks } from "./fetch-tasks.js";
 import { search } from "./search.js";
 import { fetchContactTasks, addNewContact } from "./contacts.js";
 import { fetchLists } from "./lists.js";

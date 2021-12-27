@@ -29,14 +29,6 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
   res.status(200).json({ listName });
 }))
 
-// Renders add list form
-// router.get('/new', csrfProtection, asyncHandler(async (req, res, next) => {
-//   if (!res.locals.userId) {
-//     res.redirect('/users/login')
-//   }
-//   res.render('add-list')
-// }))
-
 
 // Gets all lists
 router.get('/', asyncHandler(async (req, res) => {

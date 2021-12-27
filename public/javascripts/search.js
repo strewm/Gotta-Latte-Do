@@ -1,5 +1,5 @@
 import { addTaskInfoListeners, updateTaskListContainer } from "./utils.js";
-import { handleErrors } from './utils.js';
+
 
 // fetch user's search query
 export const search = async (searchValue) => {
