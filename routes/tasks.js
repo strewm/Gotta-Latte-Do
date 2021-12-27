@@ -22,14 +22,14 @@ const taskNotFoundError = (id) => {
   error.title = 'Task not found'
   error.status = 404;
   return error;
-}
+};
 
 
 // Gets all of logged in user's tasks
 router.get('/users/:id(\\d+)/tasks', csrfProtection, asyncHandler(async(req, res) => {
   const tasks = await Task.findAll({where: {userId: req.params.id, order: [['dueDate']]}});
   res.json({tasks})
-}))
+}));
 
 
 // Create a new task for logged in user
@@ -61,7 +61,6 @@ router.get('/', asyncHandler(async(req, res) => {
   const user = await User.findByPk(userId);
 
   res.status(201).json({tasks, user});
-
 }));
 
 
@@ -81,7 +80,6 @@ router.get('/incomplete', asyncHandler(async(req, res) => {
   const user = await User.findByPk(userId);
 
   res.status(201).json({tasks, user});
-
 }));
 
 
@@ -101,7 +99,6 @@ router.get('/complete', asyncHandler(async(req, res) => {
   const user = await User.findByPk(userId);
 
   res.status(201).json({tasks, user});
-
 }));
 
 
@@ -109,22 +106,21 @@ router.get('/complete', asyncHandler(async(req, res) => {
 router.get('/assigned', asyncHandler(async(req, res, next) => {
   const givenTo = res.locals.userId
 
-try {
-  const tasks = await Task.findAll({
-    where: {
-      givenTo
-    },
-    include: {model: User},
-    order: [['dueDate']]
-  })
-  if (tasks) {
+  try {
+    const tasks = await Task.findAll({
+      where: {
+        givenTo
+      },
+      include: {model: User},
+      order: [['dueDate']]
+    })
 
-  res.status(201).json({tasks});
+    if (tasks) {
+      res.status(201).json({tasks});
+    }
+  } catch (e) {
+    next(e)
   }
-} catch (e) {
-  next(e)
-}
-
 }));
 
 // Get a specific task
@@ -154,9 +150,7 @@ router.get('/task/:id(\\d+)', asyncHandler(async(req, res) => {
     const isContact = true;
     const user = await User.findByPk(givenTo)
     res.status(201).json({tasks, user, isContact});
-
   }
-
 }));
 
 
@@ -179,8 +173,6 @@ router.post('/', csrfProtection, validateTask, handleValidationErrors, asyncHand
       givenTo: contactId[0].id
     })
 
-
-
     res.status(201).json({task});
   } else {
     const task = await Task.create({
@@ -194,7 +186,6 @@ router.post('/', csrfProtection, validateTask, handleValidationErrors, asyncHand
       where: [{ title, userId }]
     })
 
-
     const taskId = task.id
     const listId = listInfo.id
 
@@ -205,7 +196,6 @@ router.post('/', csrfProtection, validateTask, handleValidationErrors, asyncHand
 
     res.status(201).json({task, taskList});
   }
-
 }));
 
 
