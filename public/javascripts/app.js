@@ -211,7 +211,7 @@ deleteContact.addEventListener("click", async (e) => {
 
     await fetchTasks();
     const token = cookieMonster(document.cookie)
-    // console.log(token)
+
     try {
 
       await fetch(`/contacts/${deleteContactId}`, {
