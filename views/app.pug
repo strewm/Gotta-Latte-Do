@@ -24,12 +24,8 @@ block content
                           div.settingUserInfo
                             div.settingHeader#userName=currUser.username
                             div.settingHeader#userEmail=currUser.email
-                      ul.settingListGroup
-                          li.settingList.sLGray Notifications
-                          li.settingList.sLGray Help
-                          li.settingList.sLGray Keyboard shortcuts
-                          li.settingList.sLGray Account Settings
-                          li.settingList.sLSO: button#signOut(type='submit') Sign Out
+                      div.signOutContainer
+                        button#signOut(type='submit') Sign Out
         div.sidebar
           div.logoContainer
               img.logo(src="../images/logo-text.png")

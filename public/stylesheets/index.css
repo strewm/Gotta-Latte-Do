@@ -5,7 +5,7 @@ a {
 
 .mainPage {
     display: grid;
-    grid-template-rows: 0.5fr 8fr 1fr;
+    grid-template-rows: 0.5fr 8fr 1.5fr;
     grid-template-areas:
     "header"
     "main"
@@ -15,6 +15,8 @@ a {
 
     font-family: MuseoSansRounded, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+
 
 /* %%%%%%%%%%%%%%%%% Navbar (header) layout  %%%%%%%%%%%%%%%%% */
 .navbar {
@@ -32,19 +34,14 @@ a {
 }
 
 .navbar-container {
-    width: 890px;
+    /* width: 890px; */
+    width: 70%;
+    max-width: 975px;
     margin-right: auto;
     margin-left: auto;
     display: flex;
     justify-content: space-between;
 }
-
-/* .nav-logo-first {
-    width: 50x;
-    height: auto;
-    margin: 15px;
-    margin-left: 50px;
-} */
 
 .nav-logo-img {
     width: 150px;
@@ -110,136 +107,7 @@ li {
 
 
 
-/* %%%%%%%%%%%%%%%%% Main content layout  %%%%%%%%%%%%%%%%% */
-.main {
-    grid-area: main;
-    background-color: #E0A979;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.inner-image {
-    margin: 65px 50px 50px 50px;
-    width: 500px;
-    height: auto;
-    -webkit-animation: ease-in 5s;
-    animation: fadein 3s;
-}
-
-@keyframes fadein {
-    from {
-        opacity:0;
-    }
-    to {
-        opacity:1;
-    }
-}
-
-.text-under-inner-img, .hero-p {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: cornsilk;
-}
-
-.hero-header {
-    margin: 5px;
-    font-size: 20px;
-    font-weight: bold;
-    -webkit-animation: ease-in 5s;
-    animation: fadein 3s;
-}
-
-.hero-p {
-    margin: 5px;
-    font-size: 18px;
-    -webkit-animation: ease-in 5s;
-    animation: fadein 3s;
-    transition: ease 3s;
-}
-
-.hero-container {
-    width: 100%;
-    display: grid;
-    justify-content: center;
-}
-
-.swiper {
-    margin-top: 25px;
-}
-
-.bullet-1 {
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    margin: 5px;
-    width: 10px;
-    height: 10px;
-    background-color: transparent;
-    opacity: 1;
-    display: inline-block;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.bullet-2 {
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    margin: 5px;
-    width: 10px;
-    height: 10px;
-    background-color: transparent;
-    opacity: 1;
-    display: inline-block;
-    border-radius: 50%;
-    cursor: pointer;
-
-}
-
-.bullet-3 {
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    margin: 5px;
-    width: 10px;
-    height: 10px;
-    background-color: transparent;
-    opacity: 1;
-    display: inline-block;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.bullet-4 {
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    margin: 5px;
-    width: 10px;
-    height: 10px;
-    background-color: transparent;
-    opacity: 1;
-    display: inline-block;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.swipe-one {
-
-}
-
-.swipe-two {
-
-}
-
-.swipe-three {
-
-}
-
-.swipe-hide {
-    display: none;
-}
-
-.bullet-active {
-    background-color: #fff;
-}
-
+/* %%%%%%%%%%%%%%%%% Main header content layout  %%%%%%%%%%%%%%%%% */
 .main-header {
     display: flex;
     flex-direction: column;
@@ -248,7 +116,8 @@ li {
 
 h1 {
     color: cornsilk;
-    font-size: 40px;
+    font-size: 33px;
+    margin: 50px 0 35px 0;
 }
 
 .hero-btn {
@@ -271,6 +140,81 @@ h1 {
 }
 
 
+
+/* %%%%%%%%%%%%%%%%% Main content layout  %%%%%%%%%%%%%%%%% */
+.main {
+    grid-area: main;
+    background-color: #E0A979;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.inner-image {
+    margin: 50px;
+    height: auto;
+    animation: fade 5s linear;
+}
+
+@keyframes fade {
+    0%, 100% { opacity: 0 }
+    30%, 70% { opacity: 1 }
+}
+
+.text-under-inner-img, .hero-p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: cornsilk;
+}
+
+.hero-header {
+    margin: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    animation: fade 5s linear;
+}
+
+.hero-p {
+    margin: 5px;
+    font-size: 18px;
+    animation: fade 5s linear;
+}
+
+.hero-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.swiper {
+    margin: 30px 0 20px 0;
+}
+
+.bullet-1, .bullet-2, .bullet-3 {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    margin: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+    opacity: 1;
+    display: inline-block;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.swipe-hide {
+    display: none;
+}
+
+.bullet-active {
+    background-color: #fff;
+}
+
+
 /* %%%%%%%%%%%%%%%%% Footer layout  %%%%%%%%%%%%%%%%% */
 .footer {
     grid-area: footer;
@@ -289,12 +233,14 @@ h1 {
     display: flex;
     justify-content: space-around;
     width: 80vh;
+    margin: 5px;
 }
 
 .creator {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 10px 10px 5px 10px;
 }
 
 .aboutme {
@@ -303,18 +249,31 @@ h1 {
 
 .aboutmelink {
     font-size: 0.75rem;
+    padding: 2px;
 }
 
 .aboutmelink:hover {
     background-color: rgba(188, 194, 201, 0.466);
+    border-radius: 5px;
+    padding: 2px;
 }
 
 .copyright {
     display: flex;
-
+    margin: 5px;
 }
 
+.copyright-year, .copyright-year a {
+    font-size: 14px;
+}
 
+.copyright-year a:hover {
+    color: yellowgreen;
+}
+
+.copyright-year a:active {
+    color: rgb(123, 165, 39);
+}
 
 
 
@@ -326,27 +285,19 @@ When page reaches 815px in width:
     - change text font sizes
 */
 @media (max-width: 815px) {
-    .sublist {
-        display: none;
-    }
-}
-
-@media (max-width: 700px) {
     .inner-image {
-        margin: 50px 78px 35px 78px;
-        width: 400px;
-        height: auto;
+        margin: 35px;
     }
 
     .hero-header {
         margin: 5px;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: bold;
     }
 
     .hero-p {
         margin: 5px;
-        font-size: 13px;
+        font-size: 14px;
     }
 
     h1 {
@@ -355,40 +306,39 @@ When page reaches 815px in width:
     }
 }
 
-@media (max-width: 400px), screen and (orientation: portrait) {
-    .mainPage {
-        display: grid;
-        grid-template-rows: 2fr 10fr 2fr;
-        grid-template-areas:
-        "header"
-        "main"
-        "footer";
-    }
-
-    .sublist {
-        display: none;
-    }
-
-
-    .header {
-        font-size: 3rem;
-    }
-
+@media (max-width: 400px) {
     .inner-image {
-        margin: 50px 78px 35px 78px;
-        width: auto;
-        height: auto;
+        margin: 25px;
     }
 
+    .hero-header {
+        margin: 5px;
+        font-size: 14px;
+        font-weight: bold;
+    }
 
+    .hero-p {
+        margin: 5px;
+        font-size: 12px;
+    }
 
     h1 {
         color: cornsilk;
+        font-size: 25px;
+    }
+
+    .hero-btn {
+        border: 1px solid #b2db83;
+        padding: 10.5px 17.5px 10.5px 17.5px;
+        border-radius: 5px;
+        background-color: #b2db83;
+        color: cornsilk;
         font-size: 40px;
+        font-size: 13px;
+        font-weight: bold;
     }
 
     .navbar-container {
         width: 75%
     }
-
 }
