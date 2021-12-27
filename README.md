@@ -102,20 +102,87 @@ Logged in users can:
     User.belongsToMany(models.User, {foreignKey: 'userId', through: 'Contact', otherKey: 'contactId', as: 'contacts'})
     User.belongsToMany(models.User, {foreignKey: 'contactId', through: 'Contact', otherKey: 'userId', as: 'contactees'})
  ```
-
-![Self Join](./images/readme/userSelfJoin.png)
 ![Self Join 2](./images/readme/selfjoin2.png)
 
  - In a similar vein, adding created lists to a join table for Lists with the proper Task and List IDs:
+```javascript
+    const task = await Task.create({
+      userId,
+      description,
+      dueDate,
+      isCompleted
+    })
 
-![TaskList](./images/readme/taskList.png)
+    const listInfo = await List.findOne({
+      where: [{ title, userId }]
+    })
+
+    const taskId = task.id
+    const listId = listInfo.id
+
+    const taskList = await TaskList.create({
+      taskId,
+      listId
+    })
+
+    res.status(201).json({task, taskList});
+```
 
 
 - The dreaded Date Object:
-
-![TomorrowList](./images/readme/tomorrowList.png)
-
+```javascript
+router.get('/tomorrow', asyncHandler(async (req, res) => {
+  const userId = res.locals.userId;
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  const start = tomorrow.setHours(0, 0, 0, 0);
+  const end = tomorrow.setHours(23, 59, 59, 999);
+  const tasks = await Task.findAll({
+    where: {
+      userId,
+      dueDate: {
+        [Op.between]: [start, end]
+      }
+    },
+    order: [['dueDate']]
+  })
+  res.json({ tasks })
+}))
+```
 
 - Search bar functionality:
+```javascript
+router.get('/:id', asyncHandler(async (req, res, next) => {
+    const searchQuery = req.params.id;
+    const firstThree = searchQuery.slice(0, 3);
+    const firstThreeUp = firstThree.charAt(0).toUpperCase() + firstThree.slice(1);
+    const lastThree = searchQuery.slice(-3);
 
-![Search](./images/readme/search.png)
+    const userId = res.locals.userId;
+    try{
+        const results = await Task.findAll({
+            where: {
+                userId,
+                [Op.or]: [
+                    {description: { [Op.substring]: `${searchQuery}`}},
+                    {description: { [Op.substring]: `${firstThree}`}},
+                    {description: { [Op.substring]: `${lastThree}`}},
+                    {description: { [Op.substring]: `${firstThreeUp}`}},
+                    {description: { [Op.iLike]: `${firstThree}`}},
+                    {description: { [Op.iLike]: `${lastThree}`}},
+                ]
+
+            },
+            include: {
+                model: List,
+            }
+        })
+
+        res.status(201).json({results})
+
+    } catch (e) {
+        next(e)
+    }
+}))
+```
