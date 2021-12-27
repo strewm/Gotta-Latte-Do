@@ -1,6 +1,6 @@
 # Gotta Latte Do
 
-Gotta Latte Do is a smart to-do app that organizes user tasks, and allows for interactivity on tasks between users. It was inspired by [Remember the Milk](https://www.rememberthemilk.com/).
+Gotta Latte Do is a "smart to-do app" that organizes user tasks, and allows for interactivity on tasks between users. It is inspired by [Remember the Milk](https://www.rememberthemilk.com/).
 
 Try making your own to-do lists at our live site: [Gotta Latte Do](https://gotta-latte-do.herokuapp.com/)
 
@@ -52,7 +52,7 @@ Try making your own to-do lists at our live site: [Gotta Latte Do](https://gotta
 
 ## Features
 
-Gotta-Latte-Do is a completely dynamic website allowing users to add/edit/delete/get features without ever redirecting from the root after being logged in.
+Gotta-Latte-Do is a completely dynamic website that allows logged-in users to add/edit/delete/get features from the home page without ever redirecting from the root.
 
 Logged in users can:
  - Add/Edit/Delete Lists
@@ -60,20 +60,19 @@ Logged in users can:
  - Add/Edit/Delete Comments on Tasks
  - Add/Delete Contacts
  - Give Tasks to Contacts
- - View Tasks due Today, Tomorrow, Tasks Given to User, Tasks User Gave to Contact, Incomplete, and Completed
+ - View Tasks by Category: All, Due Today, Due Tomorrow, Given to User by Contact, Given to Contact by User, Incomplete, Completed, and User-Created List Categories
  - Search for Tasks
 
 
 
 ### Welcome Page
-
-
 ![Welcome Page](./images/readme/welcomepage.png)
 
 ### App Page
+![Logged In](./images/readme/homepage.png)
 
-
-![Logged In](./images/readme/frontpage.png)
+### Drop-downs + Pop-ups
+![Drop Downs and Pop Ups](./images/readme/dropdownpopup.png)
 
 ### Modals
 ![New List](./images/readme/listmodal.png)
@@ -84,8 +83,10 @@ Logged in users can:
 
 # To-do's/Future features
 
-- Add/Finish Carousel to Welcome/Splash Page
-- User notifications
+- User notifications when:
+  - A task is coming due
+  - Another user adds you as a contact
+  - Another user assigns you a task
 - User profiles
 - Keyboard shortcuts
 
@@ -94,21 +95,21 @@ Logged in users can:
 
 # Technical Implementation
 
- - One of our first challenges to figure out was associating User Id's to themselves so that Users can have Contacts
+ - One of our first challenges was associating User IDs to themselves so that Users can have Contacts:
 
 ![Self Join](./images/readme/userSelfJoin.png)
 ![Self Join 2](./images/readme/selfjoin2.png)
 
- - In a similar vain, having lists created also add to a join table for Lists with the proper Task and List Id's
+ - In a similar vein, adding created lists to a join table for Lists with the proper Task and List IDs:
 
 ![TaskList](./images/readme/taskList.png)
 
 
-- The Dreaded Date Object
+- The dreaded Date Object:
 
 ![TomorrowList](./images/readme/tomorrowList.png)
 
 
-- Searching
+- Search bar functionality:
 
 ![Search](./images/readme/search.png)
