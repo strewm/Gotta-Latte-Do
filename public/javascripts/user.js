@@ -1,4 +1,4 @@
-import { handleErrors } from './utils.js';
+
 
 // Fetches current logged in user
 export const fetchUser = async () => {

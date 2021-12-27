@@ -1,4 +1,4 @@
-import { editListEventListener, addTaskInfoListeners, handleErrors, dueDateFormatter } from "./utils.js";
+import { editListEventListener, addTaskInfoListeners, dueDateFormatter } from "./utils.js";
 
 // Fetch all lists and populate on left hand side
 export const fetchLists = async () => {

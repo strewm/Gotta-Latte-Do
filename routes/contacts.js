@@ -6,15 +6,6 @@ const { asyncHandler, csrfProtection, handleValidationErrors } = require('../uti
 const { Contact, User } = db;
 
 
-
-// router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
-//   if (!res.locals.userId) {
-//     res.redirect('/users/login')
-//   }
-
-//   res.render('add-contact')
-// }))
-
 const invalidContact = (value) => {
   const err = Error("Invalid input");
   err.errors = [`You entered an invalid email address, or this email is currently in your contacts.`];
@@ -51,7 +42,7 @@ router.post('/', csrfProtection, contactValidator, asyncHandler(async (req, res,
     }
   })
   const validatorErrors = validationResult(req)
-  // console.log(validatorErrors)
+
   if (validatorErrors.isEmpty()) {
     if(userContact.length) {
       const contactCheck = await Contact.findAll({
