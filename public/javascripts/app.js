@@ -91,12 +91,12 @@ form.addEventListener("submit", async (e) => {
     // const tasksDue = document.querySelector('.tasksDueValue');
     // tasksDue.innerText = (Number(tasksDue.innerText) + 1).toString()
     const taskPopUp = document.querySelector(".task-pop-up-container");
-    taskPopUp.innerHTML= `<div class="task-pop-up">Task <span>'${description}'</span> Added!</div>`;
+    taskPopUp.innerHTML = `<div class="task-pop-up">Task <span>'${description}'</span> Added!</div>`;
 
     await fetchTasks();
 
     setTimeout(() => {
-      taskPopUp.innerHTML= ``;
+      taskPopUp.innerHTML = ``;
     }, 3000);
 
   } catch (err) {
@@ -448,7 +448,7 @@ givenToMeList.addEventListener('click', async (e) => {
 const todaysTasks = document.querySelector('.due-today');
 todaysTasks.addEventListener('click', async (e) => {
   e.stopPropagation();
-  const res = await fetch('/lists/today');
+  const res = await fetch('/tasks');
 
   const { tasks } = await res.json();
 
@@ -456,7 +456,29 @@ todaysTasks.addEventListener('click', async (e) => {
   const listName = `
       <h2 class="task-list-header">Tasks Due Today</h2>
 `
-  await updateTaskListContainer(tasks, listName);
+  const tasksListContainer = document.querySelector(".task-list");
+
+  const tasksHtml = tasks.map((task) => {
+    if (dueDateFormatter(task).includes('Today') && task.isCompleted === true) {
+      return `
+      <div class='task-info' id=${task.id}>
+      <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id} checked>
+      <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
+      </div>
+      `
+    } else if (dueDateFormatter(task).includes('Today') && task.isCompleted === false) {
+      return `<div class='task-info' id=${task.id}>
+      <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
+      <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
+      </div>
+      `
+    } else {
+      return null;
+    }
+  })
+
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
+
   await addTaskInfoListeners();
 })
 
@@ -465,14 +487,36 @@ todaysTasks.addEventListener('click', async (e) => {
 const tomorrowTasks = document.querySelector('.due-tomorrow');
 tomorrowTasks.addEventListener('click', async (e) => {
   e.stopPropagation();
-  const res = await fetch('/lists/tomorrow');
+  const res = await fetch('/tasks');
 
   const { tasks } = await res.json();
 
   const listName = `
       <h2 class="task-list-header">Tasks Due Tomorrow</h2>
 `
-  await updateTaskListContainer(tasks, listName);
+  const tasksListContainer = document.querySelector(".task-list");
+
+  const tasksHtml = tasks.map((task) => {
+    if (dueDateFormatter(task).includes('Tomorrow') && task.isCompleted === true) {
+      return `
+    <div class='task-info' id=${task.id}>
+    <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id} checked>
+    <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
+    </div>
+    `
+    } else if (dueDateFormatter(task).includes('Tomorrow') && task.isCompleted === false) {
+      return `<div class='task-info' id=${task.id}>
+    <input type="checkbox" class="task-check-box" id=${task.id} name=${task.id}>
+    <label for=${task.id} id=${task.id} class="task-check-box">${task.description}</label>
+    </div>
+    `
+    } else {
+      return null;
+    }
+  })
+
+  tasksListContainer.innerHTML = listName + tasksHtml.join("");
+
   await addTaskInfoListeners();
 })
 
