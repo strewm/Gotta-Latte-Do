@@ -14,7 +14,7 @@ window.addEventListener("load", (event)=>{
     swipeThree.classList.add('swipe-hide')
 });
 
-// Autoplay slides (5 sec interval)
+// Autoplay slides (5 sec interval) by adding/removing hidden properties
 function addCount() {
     if (counter === 1) {
         bulletOne.classList.add('bullet-active')
@@ -54,7 +54,7 @@ function addCount() {
 
 setInterval(addCount, 5000);
 
-// Bullets that allow user to click through slides
+// Bullets that allow user to click through slides by adding/removing hidden properties
 const swiper = document.querySelector(".swiper")
 
 swiper.addEventListener("click", e => {
