@@ -38,9 +38,6 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
     } catch (e) {
         next(e)
     }
-
-
-
 }))
 
 module.exports = router;
